@@ -1,0 +1,102 @@
+$blueColor: #3c6ef0;
+$lightFontColor: #999;
+
+.card-tag {
+  position: absolute;
+  top: 12px;
+  left: -4px;
+  width: 22px;
+  height: 28px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+  line-height: 24px;
+  text-align: center;
+
+  &.dispatch {
+    background: url('~@/assets/img/pages/tag-blue.png') no-repeat;
+    background-size: 100%;
+  }
+
+  &.collection {
+    background: url('~@/assets/img/pages/tag-red.png') no-repeat;
+    background-size: 100%;
+  }
+}
+
+.list-card-title {
+  margin-bottom: 15px;
+  font-weight: 600;
+
+  .copy {
+    cursor: pointer;
+  }
+}
+
+.page-tableImg {
+  width: 55px;
+  height: 55px;
+}
+
+.gyl-mod-card {
+  > .el-card__header {
+    padding: 13px 20px;
+  }
+
+  .gyl-title {
+    margin-bottom: 0;
+  }
+
+  > .el-card__body {
+  }
+
+  > .el-card__body {
+    &::before {
+      display: table;
+      content: ' ';
+    }
+
+    &::after {
+      display: table;
+      clear: both;
+      content: ' ';
+    }
+  }
+
+  .el-button--tex {
+    color: $blueColor;
+    font-weight: normal;
+  }
+}
+
+.common-more-link {
+  float: right;
+  float: right;
+  color: #999;
+  font-weight: normal;
+  font-size: 14px;
+
+  i {
+    color: #e6e6e6;
+  }
+
+  &:hover,
+  &:hover i {
+    @include font_color('main-color');
+  }
+}
+
+.common-card-img {
+  border-radius: 0;
+
+  > .el-card__body {
+    padding: 0;
+  }
+
+  .time {
+    color: $lightFontColor;
+  }
+}
+
+.common-c-both {
+  clear: both;
+}

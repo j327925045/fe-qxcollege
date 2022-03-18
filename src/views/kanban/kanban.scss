@@ -1,0 +1,133 @@
+@import '../../assets/styles/mixins.scss';
+
+.gyl-data-card {
+  height: 208px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 4px;
+
+  .card-bottom {
+    height: 38px;
+    padding: 8px 30px;
+    color: #666;
+    border-top: 1px solid #efefef;
+
+    span {
+      margin-left: 10px;
+      color: #333;
+    }
+  }
+
+  .card-body {
+    position: relative;
+    height: 170px;
+    padding: 30px 30px 0;
+
+    .title {
+      margin-bottom: 5px;
+      color: #999;
+
+      i {
+        margin-left: 5px;
+        color: #ccc;
+      }
+    }
+
+    .number {
+      height: 30px;
+      margin-bottom: 25px;
+      color: rgba(51, 51, 51, 1);
+      font-weight: bold;
+      font-size: 36px;
+      font-family: JDZhengHT;
+      line-height: 30px;
+    }
+
+    .ringNumber {
+      color: #666;
+
+      span {
+        position: relative;
+        display: inline-block;
+        padding-left: 15px;
+
+        &::before {
+          position: absolute;
+          top: 4px;
+          left: 0;
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          overflow: hidden;
+          content: '';
+        }
+
+        &.up {
+          color: #f84f4f;
+        }
+
+        &.down {
+          color: #3ccc9f;
+        }
+
+        &.up::before {
+          background: url('./img/up.png') no-repeat;
+          background-size: 100%;
+        }
+
+        &.down::before {
+          background: url('./img/down.png') no-repeat;
+          background-size: 100%;
+        }
+      }
+    }
+  }
+
+  .pie-chart {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 125px;
+    height: 125px;
+  }
+}
+
+.gyl-data-card2 {
+  height: 160px;
+  border: 1px solid rgba(233, 233, 233, 1);
+  border-radius: 4px;
+
+  /* box-shadow:  0px 0px 10px 0px rgba(0,0,0,0.08); */
+
+  h5 {
+    height: 36px;
+    padding: 8px 16px;
+    color: rgba(51, 51, 51, 1);
+    font-size: 14px;
+    line-height: 20px;
+    background: rgba(247, 247, 247, 1);
+  }
+
+  .card-body {
+  }
+
+  .card-sub-item {
+    height: 124px;
+    padding: 30px 10px 30px 16px;
+    background: url('./img/card-bg.png') right bottom no-repeat;
+    background-size: 85%;
+
+    p {
+      color: #999;
+    }
+
+    div {
+      overflow: hidden;
+      color: rgba(51, 51, 51, 1);
+      font-weight: bold;
+      font-size: 25px;
+      font-family: JDZhengHT;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

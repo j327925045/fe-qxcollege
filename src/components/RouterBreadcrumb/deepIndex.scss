@@ -1,0 +1,27 @@
+@import '~@/assets/styles/mixins.scss';
+.router-breadcrumb {
+  .el-breadcrumb {
+    line-height: 32px;
+
+    .is-link {
+      font-weight: 600;
+      text-decoration: none;
+      transition: color .2s cubic-bezier(.645,.045,.355,1);
+      &:hover {
+        text-decoration: underline;
+        @include font_color("main-color");
+      }
+    }
+
+    .is-last {
+      // cursor: not-allowed;
+      .is-link {
+        font-weight: normal;
+        &:hover {
+          text-decoration: none;
+          color: #666!important;
+        }
+      }
+    }
+  }
+}
