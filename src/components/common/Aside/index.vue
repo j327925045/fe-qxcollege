@@ -11,7 +11,7 @@
       </div>
       <el-menu ref="sideMenu" :collapse="isCollapse" mode="vertical" router :default-active="defaultActive">
         <el-menu-item-group title="导航菜单">
-          <sidebar-item v-for="route in subMenus" :key="route.path" :item="route" :base-path="route.path" :search-key="searchKey" />
+          <sidebar-item v-for="route in menus" :key="route.path" :item="route" :base-path="route.path" :search-key="searchKey" />
         </el-menu-item-group>
       </el-menu>
     </el-scrollbar>
@@ -24,30 +24,28 @@ import Hamburger from '@/components/common/Hamburger/index.vue'
 import SidebarItem from './SidebarItem.vue'
 import Favourites from './Favourites.vue'
 import { routes } from '@/router/index.js'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { SidebarItem, Hamburger, Favourites },
   provide() {
     return {
-      showToolTip: this.$store.state.app.sidebar.showToolTip
+      showToolTip: this.sidebar.showToolTip
     }
   },
   inject: ['features'],
   data() {
     return {
-      searchKey: '',
-      menus: []
+      searchKey: ''
     }
   },
   computed: {
+    ...mapGetters(['sidebar', 'menus', 'topMenuActiveIndex']),
     favouritesNav() {
       return !!this.features.favouritesNav
     },
-    sidebar() {
-      return this.$store.state.app.sidebar
-    },
     isCollapse() {
-      return !this.$store.state.app.sidebar.opened
+      return !this.sidebar.opened
     },
     defaultActive() {
       let path = this.$route.path
@@ -61,56 +59,15 @@ export default {
         path = pathArr.join('/')
       }
       return path
-    },
-    subMenus() {
-      if (this.$store.state.app.isSubMenus) {
-        let subMenu = null
-        for (let i = 0, len = this.menus.length; i < len; i++) {
-          const item = this.menus[i]
-          const result = this.hasItem(item)
-          if (result) {
-            subMenu = item
-            break
-          }
-        }
-        if (subMenu) {
-          return [subMenu]
-        } else {
-          return []
-        }
-      } else {
-        return routes.filter(item => !item.hidden)
-      }
     }
   },
   created() {
-    this.filterRoute()
+    this.getInitMenus()
   },
   methods: {
-    hasItem(parent) {
-      let result = false
-      const children = parent.children
-      if (children && children.length > 0) {
-        for (let i = 0, len = children.length; i < len; i++) {
-          const item = children[i]
-          if (item.path === this.$route.path) {
-            result = true
-          }
-          if (result) {
-            return result
-          }
-          result = this.hasItem(item)
-          if (result) {
-            return result
-          }
-        }
-        return result
-      } else {
-        return result
-      }
-    },
-    filterRoute() {
-      this.menus = routes.filter(item => !item.hidden)
+    getInitMenus() {
+      const topRoutes = routes.filter(route => !route.hidden)
+      this.$store.commit('app/SET_MENUS', topRoutes[this.topMenuActiveIndex].children)
     },
     toggleSideBar() {
       this.$store.commit('app/TOGGLE_SIDEBAR')

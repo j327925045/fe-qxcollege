@@ -1,10 +1,12 @@
 <template>
   <section class="app-main">
     <el-scrollbar wrap-class="app-scrollbar-wrapper" class="app-main-scrollbar" style="height: 100%">
-      <keep-alive :max="maxPageNumber" :include="keepAliveComponents">
-        <router-view v-if="isRouterAlive" :key="key" />
-      </keep-alive>
-      <router-view v-if="!isRouterAlive" />
+      <div class="app-container">
+        <keep-alive :max="maxPageNumber" :include="keepAliveComponents">
+          <router-view v-if="isRouterAlive" :key="key" />
+        </keep-alive>
+        <router-view v-if="!isRouterAlive" />
+      </div>
     </el-scrollbar>
   </section>
 </template>
@@ -29,6 +31,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@/assets/styles/variables.scss';
+
+.app-container {
+  position: absolute;
+  width: calc(100% - 16px);
+  height: 100%;
+  background: white;
+}
 
 /* fix css style bug in open el-dialog */
 /deep/ .app-main-scrollbar {

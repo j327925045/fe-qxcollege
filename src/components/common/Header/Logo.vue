@@ -16,7 +16,7 @@ export default {
   name: 'NavbarLogo',
   data() {
     return {
-      title: '后台系统'
+      title: 'ImeikAdmin'
     }
   }
 }
@@ -27,9 +27,10 @@ export default {
 
 .navbar-logo-container {
   float: left;
+  width: 200px;
   height: 100%;
-  margin: 0 53px 0 18px;
   line-height: $navHeight;
+  text-align: center;
 
   .navbar-logo-link {
     display: block;

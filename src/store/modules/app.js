@@ -24,7 +24,7 @@ const state = {
   themeColor: 'blue',
   menus: [],
   // 侧边栏是否以二级子菜单的形式展示
-  isSubMenus: false,
+  isSubMenus: true,
   // 是否显示tab 默认显示
   showTab: true,
   // 用于tab页面刷新
