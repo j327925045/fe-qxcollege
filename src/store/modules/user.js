@@ -73,7 +73,10 @@ const actions = {
         fullname: 'mockFullname',
         username: 'mockUserName',
         email: 'mockEmail',
-        avatar: 'https://notion-avatar.vercel.app/api/img/eyJmYWNlIjo3LCJub3NlIjo3LCJtb3V0aCI6OCwiZXllcyI6MCwiZXllYnJvd3MiOjAsImdsYXNzZXMiOjEsImhhaXIiOjUsImFjY2Vzc29yaWVzIjowLCJkZXRhaWxzIjowLCJiZWFyZCI6MCwiZmxpcCI6MCwiY29sb3IiOiJyZ2JhKDI1NSwgMCwgMCwgMCkiLCJzaGFwZSI6Im5vbmUifQ==',
+        avatar: 'https://notion-avatar.vercel.app/api' +
+        '/img/eyJmYWNlIjo3LCJub3NlIjo3LCJtb3V0aCI6OCwiZXllcyI6MCwi' +
+        'ZXllYnJvd3MiOjAsImdsYXNzZXMiOjEsImhhaXIiOjUsImFjY2Vzc29yaWVzIjowLCJkZXRhaWxzIjowLCJiZWFyZCI6MCwiZmxpcCI6MCwiY29sb3I' +
+        'iOiJyZ2JhKDI1NSwgMCwgMCwgMCkiLCJzaGFwZSI6Im5vbmUifQ==',
         userId: '001'
       }
     }

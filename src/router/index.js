@@ -69,7 +69,7 @@ console.log('originRoutes', originRoutes)
 export const routes = originRoutes
 
 const router = new Router({
-  mode: 'hash', // 推荐使用 history 便于埋点统计且地址栏路径较直观
+  mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

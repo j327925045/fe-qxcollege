@@ -12,7 +12,7 @@ export default {
     }
   },
   computed: {
-    word: function () {
+    word: function() {
       if (this.showAll === false) {
         // 对文字进行处理
         return '展开'
@@ -22,7 +22,7 @@ export default {
     }
   },
   methods: {
-    contentSwitch: function () {
+    contentSwitch: function() {
       if (this.showAll === false) {
         this.showAll = true
         this.$emit('showChange', true)

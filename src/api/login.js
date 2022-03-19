@@ -1,5 +1,13 @@
 import request from '@/utils/request.js'
 
+export function login(data) {
+  return request({
+    url: '/qxcollege/sso/login',
+    method: 'post',
+    data
+  })
+}
+
 /**
  * 获取用户信息
  * @param {*} params

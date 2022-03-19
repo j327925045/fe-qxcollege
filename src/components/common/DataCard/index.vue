@@ -1,8 +1,11 @@
 <!-- 可以考虑使用 v-slot 进行扩展 -->
 <template>
   <ul class="common-data-card cf">
-    <li v-for="(item, index) in dataList" :key="index"
-        :class="current === item.value ? 'active': ''" @click="tabToggle(item)"
+    <li
+      v-for="(item, index) in dataList"
+      :key="index"
+      :class="current === item.value ? 'active': ''"
+      @click="tabToggle(item)"
     >
       <div class="item">
         <p class="data-title">{{ item.title }}</p>

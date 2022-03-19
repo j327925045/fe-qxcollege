@@ -28,10 +28,11 @@ import WaterMark from 'watermark-dom'
 import Logo from './Logo.vue'
 import TopMenu from './TopMenu.vue'
 import { mapGetters } from 'vuex'
-import { doLogout } from '@/api/login.js'
+// import { doLogout } from '@/api/login.js'
+import { removeToken } from '@/utils/auth.js'
 
 // 主题存储的key
-const THEME_KEY = 'jdwl-admin-theme'
+const THEME_KEY = 'admin-theme'
 export default {
   components: {
     Logo,
@@ -78,9 +79,16 @@ export default {
       this.$router.push('/').catch((err) => err)
     },
     logout() {
-      doLogout().then(res => {
-        this.$router.push({ name: 'Login' })
+      this.$confirm('确定要退出登录吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '点错了'
       })
+        .then(() => {
+          removeToken()
+          this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+        })
+        .catch(() => {
+        })
     },
     changeTheme(e) {
       const themeColor = e.target.dataset.theme

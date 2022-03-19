@@ -5,8 +5,7 @@
     </h3>
     <ul class="column-notice-item">
       <li v-for="(item, index) in noticeList" :key="index">
-        <span class="date">{{ item.date }}</span
-        ><a href="#">{{ item.title }}</a>
+        <span class="date">{{ item.date }}</span><a href="#">{{ item.title }}</a>
       </li>
     </ul>
   </div>

@@ -38,20 +38,8 @@ service.interceptors.response.use(
       return res
     }
     // 业务接口统一处理response异常
-    if (res.code) {
-      switch (res.code) {
-        case 2:
-        case 65:
-          Message('网络拥挤，请稍候再试~')
-          break
-        case 120:
-          Message('您的账号存在安全风险，请联系客服~')
-          break
-        default:
-          // 条件 code !== 142 && code !== 143
-          Message('系统开小差了，请稍候再试~')
-          break
-      }
+    if (res.code !== 200) {
+      Message(res.message)
       return Promise.reject(new Error(res.message || 'Error'))
     }
     return res
