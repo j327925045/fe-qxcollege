@@ -69,7 +69,7 @@ console.log('originRoutes', originRoutes)
 export const routes = originRoutes
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

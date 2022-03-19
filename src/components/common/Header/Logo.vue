@@ -2,11 +2,11 @@
   <div class="navbar-logo-container">
     <router-link class="navbar-logo-link" to="/">
       <!-- 图片logo  样式一-->
-      <!-- <img src="@/assets/img/framework/logo.png" class="sidebar-logo" /> -->
+      <img src="@/assets/img/pages/logo.png" class="sidebar-logo" />
       <!--<span v-show="title" class="dep" />-->
 
       <!-- 文字 logo  样式二 -->
-      <h1 class="sidebar-title">{{ title }}</h1>
+      <!-- <h1 class="sidebar-title">{{ title }}</h1> -->
     </router-link>
   </div>
 </template>
@@ -38,8 +38,12 @@ export default {
   }
 
   .sidebar-logo {
+    display: inline;
+    width: 160px;
+    height: auto;
     max-height: $logoHeight;
     vertical-align: middle;
+    border-style: solid;
   }
 
   .dep {

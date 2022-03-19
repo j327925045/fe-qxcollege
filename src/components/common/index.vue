@@ -19,7 +19,7 @@
     <div v-else class="main-container">
       <app-main />
     </div>
-    <div class="footer-container">后台系统2022</div>
+    <div class="footer-container">爱美客 {{ year }}</div>
     <!-- tab右键菜单 -->
     <ContextMenu :context-menu-info="contextMenuInfo" />
   </div>
@@ -49,7 +49,8 @@ export default {
       contextMenuInfo: {
         bShow: false, // 是否展示右键菜单
         event: null
-      }
+      },
+      year: (new Date()).getFullYear()
     }
   },
   computed: {
