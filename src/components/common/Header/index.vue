@@ -28,7 +28,7 @@ import WaterMark from 'watermark-dom'
 import Logo from './Logo.vue'
 import TopMenu from './TopMenu.vue'
 import { mapGetters } from 'vuex'
-// import SearchBox from './Search.vue'
+import { doLogout } from '@/api/login.js'
 
 // 主题存储的key
 const THEME_KEY = 'jdwl-admin-theme'
@@ -78,7 +78,9 @@ export default {
       this.$router.push('/').catch((err) => err)
     },
     logout() {
-      this.$store.dispatch('user/logOut')
+      doLogout().then(res => {
+        this.$router.push({ name: 'Login' })
+      })
     },
     changeTheme(e) {
       const themeColor = e.target.dataset.theme

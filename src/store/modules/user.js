@@ -1,4 +1,3 @@
-import { doLogout, getUserInfoRequest } from '@/api/login'
 
 const getDefaultState = () => {
   return {
@@ -63,13 +62,6 @@ const login = function() {
 
 const actions = {
   login,
-
-  async logOut({ commit }) {
-    commit('SET_TOKEN', '')
-    await doLogout()
-    // todo 跳转到登录页面
-    // window.location.href = '' // erp内网 登出
-  },
 
   async getUserInfo({ commit }) {
     // 强校验

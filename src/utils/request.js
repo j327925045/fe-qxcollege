@@ -3,9 +3,10 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 
 const service = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  timeout: 5000,
-  withCredentials: true // 跨域时需要带上cookie需要开启
+  baseURL: process.env.VUE_APP_BASE_API,
+  timeout: 60000,
+  // 跨域时需要带上cookie需要开启
+  withCredentials: true
 })
 
 // 不需要拦截响应错误的url白名单

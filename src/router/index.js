@@ -50,6 +50,13 @@ const originRoutes = [
       }
     ]
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/login/index.vue'),
+    hidden: true,
+    meta: { title: '登录' }
+  },
   ...Production,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
