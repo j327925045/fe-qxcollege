@@ -28,7 +28,7 @@ jobs:
       - name: Setup node.js environment
         uses: actions/setup-node@v2.5.1
         with:
-          node-version: 12.x
+          node-version: 14.x
       - name: Npm install & npm build
         run: |
           npm install -g yarn
@@ -67,4 +67,4 @@ jobs:
           port: 22
           key: ${{ secrets.ACCESS_TOKEN }}
           source: "dist"
-          target: "/home/work/www/web-front/"
+          target: "/opt/www/template/"
