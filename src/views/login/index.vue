@@ -1,6 +1,8 @@
 <template>
   <div :class="prefixCls" class="absolute w-full h-full px-4">
-    <span class="-enter-x xl:hidden"> appLogo </span>
+    <span class="-enter-x xl:hidden">
+      <img alt="logo" src="../../assets/img/pages/logo.png" class="w-[124px] mt-4 enter-x" />
+    </span>
 
     <div class="container relative h-full py-2 mx-auto sm:px-10">
       <div class="flex h-full">
