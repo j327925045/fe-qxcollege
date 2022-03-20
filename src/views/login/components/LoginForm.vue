@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="login-form">
     <h2 class="mb-3 pl-4 text-2xl font-bold text-center xl:text-3xl enter-x xl:text-left enter-x">登录</h2>
     <el-form ref="formRef" class="p-4 enter-x" :model="formData" :rules="getFormRules" @keypress.enter="handleLogin">
       <el-form-item label="" class="" prop="account">
-        <el-input v-model="formData.account" size="medium" placeholder="账号" class="fix-auto-fill"></el-input>
+        <el-input v-model="formData.account" size="medium" placeholder="账号" auto-complete="new-password" class="fix-auto-fill"></el-input>
       </el-form-item>
       <el-form-item label="" class="" prop="password">
-        <el-input v-model="formData.password" size="medium" placeholder="密码" class="fix-auto-fill" show-password></el-input>
+        <el-input v-model="formData.password" size="medium" placeholder="密码" auto-complete="new-password" class="fix-auto-fill" show-password></el-input>
       </el-form-item>
       <el-row class="enter-x">
         <el-col :span="12">
@@ -36,8 +36,8 @@ export default {
   data() {
     return {
       formData: {
-        account: '18600320375',
-        password: '123456',
+        account: '',
+        password: '',
         rememberMe: false
       },
       getFormRules: {
@@ -76,3 +76,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .fix-auto-fill input {
+    -webkit-text-fill-color: #c9d1d9 !important;
+    box-shadow: inherit !important;
+  }
+
+  .login-form {
+    /deep/ .el-input__inner {
+      height: 48px;
+      font-size: 16px;
+      line-height: 48px;
+    }
+  }
+</style>
