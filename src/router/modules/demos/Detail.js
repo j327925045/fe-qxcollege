@@ -11,13 +11,13 @@ export const Detail = [
       {
         path: '/detail/detail',
         name: 'DetailDetail',
-        component: () => import('@/views/detail/Index.vue'),
+        component: () => import('@/views/demos/detail/Index.vue'),
         meta: { title: '详情页(标准/高级)' }
       },
       {
         path: '/detail/detailMultilevel',
         name: 'DetailDetailMultilevel',
-        component: () => import('@/views/detail/DetailMultilevel.vue'),
+        component: () => import('@/views/demos/detail/DetailMultilevel.vue'),
         meta: { title: '详情页(多级)' }
       }
     ]

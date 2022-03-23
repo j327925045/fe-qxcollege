@@ -1,4 +1,4 @@
-var EleResize = {
+const EleResize = {
   _handleResize: function(e) {
     const ele = e.target || e.srcElement
     const trigger = ele.__resizeTrigger__
@@ -30,8 +30,7 @@ var EleResize = {
   },
   _createResizeTrigger: function(ele) {
     const obj = document.createElement('object')
-    obj.setAttribute('style',
-      'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden;opacity: 0; pointer-events: none; z-index: -1;')
+    obj.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden;opacity: 0; pointer-events: none; z-index: -1;')
     obj.onload = EleResize._handleObjectLoad
     obj.type = 'text/html'
     ele.appendChild(obj)
@@ -43,7 +42,8 @@ var EleResize = {
     this.contentDocument.defaultView.addEventListener('resize', EleResize._handleResize)
   }
 }
-if (document.attachEvent) { // ie9-10
+if (document.attachEvent) {
+  // ie9-10
   EleResize.on = function(ele, handler, context) {
     let handlers = ele.__z_resizeListeners
     if (!handlers) {

@@ -36,7 +36,7 @@ export default {
   position: absolute;
   width: calc(100% - 16px);
   height: 100%;
-  background: white;
+  overflow: auto;
 }
 
 /* fix css style bug in open el-dialog */

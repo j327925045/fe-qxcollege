@@ -9,6 +9,7 @@
             <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name" :closable="item.name !== 'home'" />
           </el-tabs>
         </div>
+        <!-- <RouterBreadcrumb style="margin-bottom: 10px;"></RouterBreadcrumb> -->
         <div class="content-wrapper">
           <div slot="content">
             <app-main />
@@ -28,6 +29,7 @@
 <script>
 import { Navbar, Sidebar, AppMain, ContextMenu } from '@/components/common'
 import { mapGetters } from 'vuex'
+// import RouterBreadcrumb from '@/components/RouterBreadcrumb/index.vue'
 // let lastMatched = [] // 上次路由匹配的路径
 export default {
   name: 'Layout',
@@ -36,6 +38,7 @@ export default {
     Sidebar,
     AppMain,
     ContextMenu
+    // RouterBreadcrumb
   },
   provide: {
     // 模板工程特性配置开关，可以通过此配置开关相应的特性
@@ -84,13 +87,13 @@ export default {
           this.$store.commit('app/SET_TOP_MENU_ACTIVE_INDEX', newValue.meta.topIndex)
         }
         // 当需要展示框架时：首页与帮助中心隐藏左边菜单其他展示
-        if (this.showCommonView !== false) {
-          if (newValue.path === '/' || newValue.path === '/helpCenter') {
-            this.$store.commit('app/HIDE_SIDEBAR')
-          } else {
-            this.$store.commit('app/SHOW_SIDEBAR')
-          }
-        }
+        // if (this.showCommonView) {
+        //   if (newValue.path === '/') {
+        //     this.$store.commit('app/HIDE_SIDEBAR')
+        //   } else {
+        //     this.$store.commit('app/SHOW_SIDEBAR')
+        //   }
+        // }
         // 支持首次加载首页
         // const matchedArr = newValue.matched.map(item => item.path).filter(item => item !== '/' && item !== '')
         if (this.editableTabsValue !== newValue.path) {

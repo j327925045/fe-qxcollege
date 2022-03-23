@@ -10,13 +10,13 @@ export const HtmlStyle = [
       {
         path: '/htmlStyle/index',
         name: 'HtmlStyleHome',
-        component: () => import('@/views/htmlStyle/index.vue'),
+        component: () => import('@/views/demos/htmlStyle/index.vue'),
         meta: { title: '常用样式', icon: 'el-icon-s-marketing' }
       },
       {
         path: '/htmlStyle/flex',
         name: 'HtmlStyleFlex',
-        component: () => import('@/views/htmlStyle/Flex.vue'),
+        component: () => import('@/views/demos/htmlStyle/Flex.vue'),
         meta: { title: 'Flex布局' }
       }
     ]

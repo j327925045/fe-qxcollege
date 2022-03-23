@@ -67,5 +67,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/views/detail/detail.scss';
+@import '@/views/demos/detail/detail.scss';
 </style>

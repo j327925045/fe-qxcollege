@@ -40,7 +40,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'menus', 'topMenuActiveIndex']),
+    ...mapGetters(['sidebar', 'topMenuActiveIndex']),
     favouritesNav() {
       return !!this.features.favouritesNav
     },
@@ -48,27 +48,13 @@ export default {
       return !this.sidebar.opened
     },
     defaultActive() {
-      let path = this.$route.path
-      // 不在菜单中的路径， 找到其父路径
-      if (this.$route.meta.notInMenu) {
-        const pathArr = this.$route.path.split('/')
-        pathArr.pop()
-        if (pathArr.length === 0) {
-          return null
-        }
-        path = pathArr.join('/')
-      }
-      return path
+      return this.$route.meta.highlightPath || this.$route.path
+    },
+    menus() {
+      return routes
     }
   },
-  created() {
-    this.getInitMenus()
-  },
   methods: {
-    getInitMenus() {
-      const topRoutes = routes.filter(route => !route.hidden)
-      this.$store.commit('app/SET_MENUS', topRoutes[this.topMenuActiveIndex].children)
-    },
     toggleSideBar() {
       this.$store.commit('app/TOGGLE_SIDEBAR')
     }

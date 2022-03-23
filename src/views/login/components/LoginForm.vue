@@ -1,9 +1,9 @@
 <template>
   <div class="login-form">
-    <h2 class="mb-3 pl-4 text-2xl font-bold text-center xl:text-3xl enter-x xl:text-left enter-x">登录</h2>
+    <h2 class="mb-3 pl-4 text-2xl font-bold text-center xl:text-3xl enter-x xl:text-left enter-x">账号登录</h2>
     <el-form ref="formRef" class="p-4 enter-x" :model="formData" :rules="getFormRules" @keypress.enter="handleLogin">
       <el-form-item label="" class="" prop="account">
-        <el-input v-model="formData.account" size="medium" placeholder="账号" auto-complete="new-password" class="fix-auto-fill"></el-input>
+        <el-input v-model="formData.account" size="medium" placeholder="手机号" auto-complete="new-password" class="fix-auto-fill"></el-input>
       </el-form-item>
       <el-form-item label="" class="" prop="password">
         <el-input v-model="formData.password" size="medium" placeholder="密码" auto-complete="new-password" class="fix-auto-fill" show-password></el-input>

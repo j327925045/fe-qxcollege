@@ -32,5 +32,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/views/notice/notice.scss';
+@import '@/views/demos/notice/notice.scss';
 </style>

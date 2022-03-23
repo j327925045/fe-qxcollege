@@ -39,7 +39,6 @@ export default {
 
   .sidebar-logo {
     display: inline;
-    width: 160px;
     height: auto;
     max-height: $logoHeight;
     vertical-align: middle;

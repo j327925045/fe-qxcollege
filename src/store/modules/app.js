@@ -23,8 +23,6 @@ const state = {
   // 主题色
   themeColor: 'blue',
   menus: [],
-  // 侧边栏是否以二级子菜单的形式展示
-  isSubMenus: true,
   // 是否显示tab 默认显示
   showTab: true,
   // 用于tab页面刷新
@@ -62,7 +60,7 @@ const mutations = {
   },
 
   INIT_FRAMEWORK(state) {
-    state.showCommonView = JSON.parse(Utils.queryUrl(window.location.href).showCommonView || 1)
+    state.showCommonView = !!Utils.queryUrl(window.location.href).showCommonView || true
     state.sidebar.showSidebar = state.showCommonView
   },
 

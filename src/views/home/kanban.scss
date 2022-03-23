@@ -1,4 +1,4 @@
-@import '../../assets/styles/mixins.scss';
+@import '@/assets/styles/mixins.scss';
 
 .gyl-data-card {
   height: 208px;
@@ -38,7 +38,6 @@
       color: rgba(51, 51, 51, 1);
       font-weight: bold;
       font-size: 36px;
-      font-family: JDZhengHT;
       line-height: 30px;
     }
 
@@ -125,7 +124,6 @@
       color: rgba(51, 51, 51, 1);
       font-weight: bold;
       font-size: 25px;
-      font-family: JDZhengHT;
       white-space: nowrap;
       text-overflow: ellipsis;
     }

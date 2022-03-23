@@ -119,5 +119,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/views/notice/notice.scss';
+@import '@/views/demos/notice/notice.scss';
 </style>

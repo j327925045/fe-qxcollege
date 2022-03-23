@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <logo class="hidden-xs-only" />
-    <top-menu />
+    <!-- <top-menu /> -->
     <div class="right-menu">
       <!--      <search-box />-->
       <!-- <a href="javascript:;" class="navbar-ico">
@@ -26,7 +26,7 @@
 <script>
 import WaterMark from 'watermark-dom'
 import Logo from './Logo.vue'
-import TopMenu from './TopMenu.vue'
+// import TopMenu from './TopMenu.vue'
 import { mapGetters } from 'vuex'
 // import { doLogout } from '@/api/login.js'
 import { removeToken } from '@/utils/auth.js'
@@ -35,8 +35,8 @@ import { removeToken } from '@/utils/auth.js'
 const THEME_KEY = 'admin-theme'
 export default {
   components: {
-    Logo,
-    TopMenu
+    Logo
+    // TopMenu
     // SearchBox
   },
   data() {

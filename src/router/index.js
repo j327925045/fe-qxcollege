@@ -2,7 +2,11 @@ import Layout from '@/components/common/index.vue'
 import store from '@/store/index'
 import Vue from 'vue'
 import Router from 'vue-router'
-import { Production } from './modules/Production'
+import { Employees } from './modules/Employees'
+import { Hospital } from './modules/Hospital'
+import { Organization } from './modules/Organization'
+import { System } from './modules/System'
+import { User } from './modules/User'
 
 Vue.use(Router)
 
@@ -45,7 +49,7 @@ const originRoutes = [
       {
         path: '/',
         name: 'home',
-        component: () => import('@/views/Index.vue'),
+        component: () => import('@/views/home/index'),
         meta: { title: '首页', icon: 'el-icon-s-marketing' }
       }
     ]
@@ -57,7 +61,11 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
-  ...Production,
+  ...Employees,
+  ...System,
+  ...User,
+  ...Organization,
+  ...Hospital,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

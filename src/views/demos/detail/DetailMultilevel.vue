@@ -31,7 +31,7 @@
 
 <script>
 import InfoList from './components/InfoList'
-import InfoList2 from '@/views/detail/components/InfoList2'
+import InfoList2 from '@/views/demos/detail/components/InfoList2'
 import InfoListMultilevel from './components/InfoListMultilevel.vue'
 
 export default {
@@ -52,5 +52,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/views/detail/detail.scss';
+@import '@/views/demos/detail/detail.scss';
 </style>

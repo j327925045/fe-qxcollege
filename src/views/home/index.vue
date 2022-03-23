@@ -47,5 +47,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/views/kanban/kanban.scss';
+@import '@/views/home/kanban.scss';
 </style>

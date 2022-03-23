@@ -353,5 +353,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/views/form/advanced.scss';
+@import '@/views/demos/form/advanced.scss';
 </style>
