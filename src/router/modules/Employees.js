@@ -6,7 +6,7 @@ export const Employees = [
     name: 'Employees',
     component: Layout,
     redirect: '/employees/list',
-    meta: { title: '员工管理', icon: 'el-icon-s-marketing' },
+    meta: { title: '员工管理', icon: 'menu-icon-employees' },
     children: [
       {
         path: '/employees/list',

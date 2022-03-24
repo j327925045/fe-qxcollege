@@ -1,4 +1,5 @@
 import App from '@/App.vue'
+import '@/assets/icons/index'
 import * as filters from '@/filters'
 import store from '@/store'
 import 'babel-polyfill'

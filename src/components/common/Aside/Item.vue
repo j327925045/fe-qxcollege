@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <i v-if="icon" :class="`${'sidebar-icon' + ' '}${icon}`" />
+  <div class="side-item-container">
+    <svg-icon v-if="icon" class="sidebar-icon" :icon-class="icon"></svg-icon>
     <span v-if="title" class="menu-text">{{ title }}</span>
     <el-tooltip v-if="features.favouritesNav && isLeaf" :open-delay="300" class="item-tooltip menu-favourite" effect="dark" :content="isFavourite ? '取消收藏' : '收藏'" placement="top">
       <i
@@ -61,9 +61,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sidebar-icon {
-  margin-right: 8px;
-  font-size: 18px;
+.side-item-container {
+  display: flex;
+  align-items: center;
+
+  .sidebar-icon {
+    margin-right: 8px;
+    font-size: 18px;
+  }
 }
 
 .hideSidebar {

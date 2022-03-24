@@ -6,7 +6,7 @@ export const System = [
     name: 'System',
     component: Layout,
     redirect: '/system/permissions',
-    meta: { title: '系统设置', icon: 'el-icon-s-marketing' },
+    meta: { title: '系统设置', icon: 'menu-icon-system' },
     children: [
       {
         path: '/system/permissions',

@@ -6,7 +6,7 @@ export const User = [
     name: 'User',
     component: Layout,
     redirect: '/user/list',
-    meta: { title: '用户管理', icon: 'el-icon-s-marketing' },
+    meta: { title: '用户管理', icon: 'menu-icon-user' },
     children: [
       {
         path: '/user/list',

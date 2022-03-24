@@ -44,13 +44,13 @@ const originRoutes = [
   {
     path: '/',
     component: Layout,
-    meta: { title: '首页', linkPageName: 'home' },
+    meta: { title: '首页', icon: 'menu-icon-home' },
     children: [
       {
         path: '/',
         name: 'home',
         component: () => import('@/views/home/index'),
-        meta: { title: '首页', icon: 'el-icon-s-marketing' }
+        meta: { title: '首页' }
       }
     ]
   },

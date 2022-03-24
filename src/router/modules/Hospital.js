@@ -6,7 +6,7 @@ export const Hospital = [
     name: 'Hospital',
     component: Layout,
     redirect: '/hospital/list',
-    meta: { title: '医院管理', icon: 'el-icon-s-marketing' },
+    meta: { title: '医院管理', icon: 'menu-icon-hospital' },
     children: [
       {
         path: '/hospital/list',
