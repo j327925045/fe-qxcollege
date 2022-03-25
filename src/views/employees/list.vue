@@ -5,13 +5,8 @@
       <el-form ref="form" :model="filterForm" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="姓名" prop="name">
+            <el-form-item label="员工姓名" prop="name">
               <el-input v-model="filterForm.name" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="账号" prop="account">
-              <el-input v-model="filterForm.account" placeholder="请输入" />
             </el-form-item>
           </el-col>
           <el-form-item class="gyl-form-btn-wrap">
@@ -47,9 +42,9 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
-              <el-button type="text" size="mini" @click="showDetail(scope.row)">查看</el-button>
-              <el-button type="text" size="mini" @click="editItem(scope.row)">编辑</el-button>
-              <el-button type="text" size="mini" @click="deleteItem(scope.row)">删除</el-button>
+              <el-button type="text" @click="showDetail(scope.row)">查看</el-button>
+              <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
+              <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -82,8 +77,7 @@ export default {
   data() {
     return {
       filterForm: {
-        name: undefined,
-        account: undefined
+        name: undefined
       },
       tableData: [],
       loading: false,
@@ -154,9 +148,7 @@ export default {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        params: {
-          ...this.filterForm
-        }
+        ...this.filterForm
       }
       this.loading = true
       getEmployeesList(params).then(res => {

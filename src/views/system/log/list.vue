@@ -5,25 +5,12 @@
       <el-form ref="form" :model="form" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="输入框" prop="f1">
-              <el-input v-model="form.f1" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="输入框" prop="f2">
-              <el-input v-model="form.f2" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="下拉框" prop="f3">
-              <el-select v-model="form.f3" placeholder="请选择">
-                <el-option label="区域一" value="shanghai" />
-                <el-option label="区域二" value="beijing" />
-              </el-select>
+            <el-form-item label="操作名称" prop="name">
+              <el-input v-model="form.name" placeholder="请输入" />
             </el-form-item>
           </el-col>
           <el-form-item class="gyl-form-btn-wrap">
-            <el-button @click="resetForm('form')">重 置</el-button>
+            <el-button @click="resetForm">重 置</el-button>
             <el-button type="primary" @click="search">查 询</el-button>
           </el-form-item>
         </el-row>
@@ -71,9 +58,7 @@ export default {
   data() {
     return {
       form: {
-        f1: '',
-        f2: '',
-        f3: ''
+        name: ''
       },
       tableData: [],
       loading: false,
@@ -102,11 +87,8 @@ export default {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        params: {
-          ...this.form
-        }
+        ...this.form
       }
-      console.log('params', params)
       this.loading = true
       getLogList(params).then(res => {
         this.loading = false
