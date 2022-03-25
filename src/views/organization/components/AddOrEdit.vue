@@ -60,13 +60,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="实缴资本(万)" prop="paidCapital">
-            <el-input v-model="form.paidCapital" placeholder="请输入" />
+            <el-input-number v-model="form.paidCapital" :min="0" controls-position="right" placeholder="请输入"></el-input-number>
           </el-form-item>
           <el-form-item label="所在区域(省市县)" prop="regionCode">
-            <el-input v-model="form.regionCode" placeholder="请输入" />
+            <RegionSelect v-model="form.regionCode"></RegionSelect>
           </el-form-item>
           <el-form-item label="注册资本(万)" prop="registeredCapital">
-            <el-input v-model="form.registeredCapital" placeholder="请输入" />
+            <el-input-number v-model="form.registeredCapital" :min="0" controls-position="right" placeholder="请输入"></el-input-number>
           </el-form-item>
           <el-form-item label="机构规模" prop="scale">
             <el-select v-model="form.scale" placeholder="请选择">
@@ -112,8 +112,13 @@
 <script>
 import { addOrganizationItem, getOrganizationDetail, updateOrganizationItem } from '@/api/organization'
 import { mapGetters } from 'vuex'
+import RegionSelect from '@/views/components/RegionSelect'
+
 export default {
   name: 'OrganizationCreate',
+  components: {
+    RegionSelect
+  },
   data() {
     return {
       form: {
@@ -175,6 +180,9 @@ export default {
         }
         const data = {
           ...this.form
+        }
+        if (this.form.regionCode && this.form.regionCode.length > 0) {
+          data.regionCode = this.form.regionCode[this.form.regionCode.length - 1]
         }
         if (this.editId) {
           data.id = this.editId

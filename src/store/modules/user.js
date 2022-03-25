@@ -88,7 +88,6 @@ const actions = {
     commit('SET_EMAIL', email)
     commit('SET_AVATAR', avatar)
     commit('SET_USER_ID', userId)
-
     //   return true
     // }
   },

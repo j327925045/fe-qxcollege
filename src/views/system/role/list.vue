@@ -24,7 +24,7 @@
     <div class="gyl-table-view">
       <el-row class="table-tools">
         <div class="fl">
-          <el-button type="primary" @click="addItem">添加角色</el-button>
+          <el-button type="primary" @click="addItem">新建角色</el-button>
         </div>
       </el-row>
       <div class="gyl-form-view-box">

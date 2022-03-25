@@ -23,7 +23,7 @@
 
     <div class="gyl-table-view">
       <el-row class="table-tools">
-        <el-button type="primary" @click="addItem">添加医院</el-button>
+        <el-button type="primary" @click="addItem">新建医院</el-button>
       </el-row>
       <div class="gyl-form-view-box">
         <el-table v-loading="loading" :data="tableData" stripe border>

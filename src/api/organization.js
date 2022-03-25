@@ -61,6 +61,14 @@ export function getOrganizationList(params) {
   return request({
     url: '/qxcollege/organization/list',
     method: 'get',
-    params: params
+    params
+  })
+}
+
+export function getAllOrganizationItems(params) {
+  return request({
+    url: '/qxcollege/organization/findAll',
+    method: 'get',
+    params
   })
 }

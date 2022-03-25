@@ -24,7 +24,7 @@ export function updateHospitalItem(data) {
   })
 }
 
-export function getAllHospitalList(params) {
+export function getAllHospitalItems(params) {
   return request({
     url: '/qxcollege/hospital/findAll',
     method: 'get',

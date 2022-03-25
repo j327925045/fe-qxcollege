@@ -2,6 +2,7 @@ import Layout from '@/components/common/index.vue'
 import store from '@/store/index'
 import Vue from 'vue'
 import Router from 'vue-router'
+import { Dictionary } from './modules/Dictionary'
 // import { Search } from './modules/demos/Search'
 import { Employees } from './modules/Employees'
 import { Hospital } from './modules/Hospital'
@@ -67,6 +68,7 @@ const originRoutes = [
   ...User,
   ...Organization,
   ...Hospital,
+  ...Dictionary,
   // ...Search,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

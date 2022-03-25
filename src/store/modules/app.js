@@ -83,6 +83,10 @@ Object.defineProperty(state, 'currentTab', {
 })
 
 const mutations = {
+  SET_ENUMS(state, enums) {
+    state.enums = [...state.enums, ...enums]
+  },
+
   SET_TOP_MENU_ACTIVE_INDEX(state, index) {
     state.topMenuActiveIndex = index
   },

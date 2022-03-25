@@ -11,22 +11,30 @@
     </div>
     <div class="drawer-content">
       <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>{{ editId?'编辑用户':'新建用户' }}</h2>
+        <h2>{{ editId?'编辑医院':'新建医院' }}</h2>
       </el-row>
       <div class="gyl-form-view pb-[60px]">
         <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
         <el-form ref="form" :model="form" :rules="rules" label-width="140px">
           <el-form-item label="医院名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入医院名称" />
+            <el-input v-model.trim="form.name" placeholder="请输入医院名称" />
           </el-form-item>
           <el-form-item label="所属机构" prop="organizationCode">
-            <el-input v-model="form.organizationCode" placeholder="请选择所属机构" />
+            <OrganizationSelect v-model="form.organizationCode" placeholder="请选择所属机构"></OrganizationSelect>
           </el-form-item>
           <el-form-item label="区域" prop="regionCode">
-            <el-input v-model="form.regionCode" placeholder="请选择区域" />
+            <RegionSelect v-model="form.regionCode" placeholder="请选择区域"></RegionSelect>
           </el-form-item>
           <el-form-item label="医院状态" prop="status">
-            <el-input v-model="form.status" placeholder="请选择医院状态" />
+            <el-select v-model="form.status" placeholder="请选择医院状态">
+              <el-option
+                v-for="item in [{label: '正常', value: 1},{label: '关闭', value: 2}]"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-form>
       </div>
@@ -41,8 +49,15 @@
 <script>
 import { addHospitalItem, getHospitalDetail, updateHospitalItem } from '@/api/hospital'
 import { mapGetters } from 'vuex'
+import OrganizationSelect from '@/views/components/OrganizationSelect'
+import RegionSelect from '@/views/components/RegionSelect'
+
 export default {
   name: 'AddOrEdit',
+  components: {
+    OrganizationSelect,
+    RegionSelect
+  },
   data() {
     return {
       form: {
@@ -51,7 +66,12 @@ export default {
         regionCode: undefined,
         status: undefined
       },
-      rules: {},
+      rules: {
+        name: [{ required: true, message: '请输入医院名称' }],
+        organizationCode: [{ required: true, message: '请选择所属机构' }],
+        regionCode: [{ required: true, message: '请选择区域' }],
+        status: [{ required: true, message: '请选择医院状态' }]
+      },
       editId: undefined,
       drawerVisible: false
     }
@@ -92,6 +112,10 @@ export default {
         }
         const data = {
           ...this.form
+        }
+        const formRegionCode = this.form.regionCode
+        if (formRegionCode && formRegionCode.length > 0) {
+          data.regionCode = formRegionCode[formRegionCode.length - 1]
         }
         if (this.editId) {
           data.id = this.editId

@@ -32,7 +32,7 @@
               <el-date-picker v-model="form.birthday" value-format="yyyy-MM-dd" type="date" placeholder="请选择出生年月"></el-date-picker>
             </el-form-item>
             <el-form-item label="手机号码" prop="phone">
-              <el-input v-model="form.phone" placeholder="请输入手机号码" />
+              <el-input v-model="form.phone" :maxlength="11" placeholder="请输入手机号码" />
             </el-form-item>
             <el-form-item label="个人照片" prop="personalUrl">
               <el-input v-model="form.personalUrl" placeholder="请输入个人照片" />
@@ -41,45 +41,73 @@
           <div class="gyl-form-view">
             <h3 class="gyl-title"><i class="el-icon-s-order" />职业信息</h3>
             <el-form-item label="医院" prop="hospitalCode">
-              <el-select v-model="form.hospitalCode" placeholder="请选择医院">
-                <!--                <el-option v-for="(item, idx) in enums.employeeNatureOptions" :key="idx" :label="item.label" :value="item.value" />-->
-              </el-select>
+              <HospitalSelect v-model="form.hospitalCode" placeholder="请选择医院"></HospitalSelect>
             </el-form-item>
             <el-form-item label="科室" prop="department">
               <el-input v-model="form.department" placeholder="请输入科室" />
             </el-form-item>
             <el-form-item label="医生等级" prop="doctorLevel">
               <el-select v-model="form.doctorLevel" placeholder="请选择医生等级">
-                <!--                <el-option v-for="(item, idx) in enums.employeeNatureOptions" :key="idx" :label="item.label" :value="item.value" />-->
+                <el-option
+                  v-for="item in [{label: 'V1', value: 1}, {label: 'V2', value: 2}, {label: 'V3', value: 3}, {label: 'V4', value: 4}]"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="职称" prop="jobTitle">
               <el-input v-model="form.jobTitle" placeholder="请输入职称" />
             </el-form-item>
             <el-form-item label="所在区域(省市县)" prop="regionCode">
-              <el-input v-model="form.regionCode" placeholder="请输入所在区域(省市县)" />
+              <RegionSelect v-model="form.regionCode" placeholder="请输入所在区域(省市县)"></RegionSelect>
             </el-form-item>
             <el-form-item label="执业地点(详细地址)" prop="address">
               <el-input v-model="form.address" placeholder="请输入执业地点(详细地址)" />
             </el-form-item>
             <el-form-item label="是否认证" prop="isCertified">
               <el-select v-model="form.isCertified" placeholder="请选择是否认证">
-                <!--                <el-option v-for="(item, idx) in enums.employeeStatusOptions" :key="idx" :label="item.label" :value="item.value" />-->
+                <el-option
+                  v-for="item in [{label: '认证', value: 1}, {label: '未认证', value: 2}]"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="是否合作项目" prop="isCooperation">
               <el-select v-model="form.isCooperation" placeholder="请选择是否合作项目">
-                <!--                <el-option v-for="(item, idx) in enums.employeeStatusOptions" :key="idx" :label="item.label" :value="item.value" />-->
+                <el-option
+                  v-for="item in [{label: '是', value: 1}, {label: '否', value: 2}]"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="是否讲师" prop="isLecturer">
               <el-select v-model="form.isLecturer" placeholder="请选择是否讲师">
-                <!--                <el-option v-for="(item, idx) in enums.employeeStatusOptions" :key="idx" :label="item.label" :value="item.value" />-->
+                <el-option
+                  v-for="item in [{label: '是', value: 1}, {label:'否', value: 2}]"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="资质认证" prop="isQualification">
               <el-select v-model="form.isQualification" placeholder="请选择资质认证">
-                <!--                <el-option v-for="(item, idx) in enums.employeeStatusOptions" :key="idx" :label="item.label" :value="item.value" />-->
+                <el-option
+                  v-for="item in [{label: '认证', value: 1},{label: '未认证', value: 2}]"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="个人介绍" prop="personalIntroduction">
@@ -99,8 +127,14 @@
 <script>
 import { addUserItem, getUserDetail, updateUserItem } from '@/api/user'
 import { mapGetters } from 'vuex'
+import HospitalSelect from '@/views/components/HospitalSelect'
+import RegionSelect from '@/views/components/RegionSelect'
 export default {
   name: 'AddOrEdit',
+  components: {
+    HospitalSelect,
+    RegionSelect
+  },
   data() {
     return {
       form: {
@@ -122,6 +156,11 @@ export default {
         personalIntroduction: undefined
       },
       rules: {
+        realName: [{ required: true, message: '请输入真实姓名' }],
+        nickname: [{ required: true, message: '请输入昵称' }],
+        birthday: [{ required: true, message: '请选择出生年月' }],
+        gender: [{ required: true, message: '请选择性别' }],
+        phone: [{ required: true, message: '请输入手机号' }, { validator: this.phoneValidate }]
       },
       drawerVisible: false,
       editId: undefined
@@ -131,6 +170,14 @@ export default {
     ...mapGetters(['enums'])
   },
   methods: {
+    phoneValidate(rule, value, callback) {
+      const regex = /^1\d{10}$/
+      if (regex.test(value)) {
+        callback()
+      } else {
+        callback(new Error('请输入正确的手机号'))
+      }
+    },
     add() {
       this.editId = undefined
       this.drawerVisible = true
@@ -158,6 +205,10 @@ export default {
         }
         const data = {
           ...this.form
+        }
+        const formRegionCode = this.form.regionCode
+        if (formRegionCode && formRegionCode.length > 0) {
+          data.regionCode = formRegionCode[formRegionCode.length - 1]
         }
         if (this.editId) {
           data.id = this.editId

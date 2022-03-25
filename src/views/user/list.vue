@@ -23,7 +23,7 @@
     <div class="gyl-table-view">
       <el-row class="table-tools">
         <div class="fl">
-          <el-button type="primary" @click="addUser">添加用户</el-button>
+          <el-button type="primary" @click="addUser">新建用户</el-button>
         </div>
       </el-row>
       <div class="gyl-form-view-box">

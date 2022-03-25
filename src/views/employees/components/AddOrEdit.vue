@@ -90,7 +90,7 @@ export default {
       if (regex.test(value)) {
         callback()
       } else {
-        callback(new Error('请输入合法的手机号'))
+        callback(new Error('请输入正确的手机号'))
       }
     },
     add() {

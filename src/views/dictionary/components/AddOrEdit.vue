@@ -1,22 +1,40 @@
 <template>
-  <el-drawer :visible.sync="drawerVisible" size="650px" custom-class="gyl-detail-drawer" :with-header="false" :wrapper-closable="false">
+  <el-drawer
+    :visible.sync="drawerVisible"
+    size="650px"
+    custom-class="gyl-detail-drawer"
+    :with-header="false"
+    :wrapper-closable="false"
+  >
     <div class="gyl-hamburger" @click="drawerVisible = false">
       <i class="el-icon-arrow-right" />
     </div>
     <div class="drawer-content">
       <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>{{ editId ? '编辑权限' : '新建权限' }}</h2>
+        <h2>{{ editId?'编辑字段':'新建字段' }}</h2>
       </el-row>
       <div class="gyl-form-view pb-[60px]">
         <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
         <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-          <el-form-item label="是否显示" prop="hide">
-            <el-select v-model="form.hide" placeholder="请选择">
+          <el-form-item label="字段名称" prop="name">
+            <el-input v-model="form.name" placeholder="请输入字段名称" />
+          </el-form-item>
+          <el-form-item label="字段图标" prop="icon">
+            <el-input v-model="form.icon" placeholder="请输入字段图标" />
+          </el-form-item>
+          <el-form-item label="字段顺序">
+            <el-input-number v-model="form.level" controls-position="right" placeholder="请输入字段顺序"></el-input-number>
+          </el-form-item>
+          <el-form-item label="上层归属">
+            <el-input-number v-model="form.parentId" controls-position="right" placeholder="请输入上层归属"></el-input-number>
+          </el-form-item>
+          <el-form-item label="字段标识" prop="sign">
+            <el-input v-model="form.sign" placeholder="请输入字段标识" />
+          </el-form-item>
+          <el-form-item label="字段状态" prop="status">
+            <el-select v-model="form.status" placeholder="请选择字段状态">
               <el-option
-                v-for="item in [
-                  { label: '显示', value: 0 },
-                  { label: '不显示', value: 1 }
-                ]"
+                v-for="item in [{label: '启用', value: 0}, {label: '停用', value: 1}]"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -24,35 +42,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="菜单名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入" />
-          </el-form-item>
-          <el-form-item label="排序" prop="orderNum">
-            <el-input-number v-model="form.orderNum" controls-position="right" :min="0" placeholder="请输入" />
-          </el-form-item>
-          <el-form-item label="父菜单ID" prop="parentId">
-            <el-input-number v-model="form.parentId" controls-position="right" placeholder="请输入"></el-input-number>
-          </el-form-item>
-          <el-form-item label="类型" prop="type">
-            <el-select v-model="form.type" placeholder="请输入">
-              <el-option
-                v-for="item in [
-                  { label: '目录', value: 1 },
-                  { label: '菜单', value: 2 },
-                  { label: '按钮', value: 3 }
-                ]"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="菜单URL" prop="url">
-            <el-input v-model="form.url" placeholder="请输入" />
-          </el-form-item>
-          <el-form-item label="授权" prop="urls">
-            <el-input v-model="form.urls" placeholder="请输入" />
+          <el-form-item label="字段选项" prop="options">
+            <EnumOption v-model="form.options"></EnumOption>
           </el-form-item>
         </el-form>
       </div>
@@ -65,28 +56,32 @@
 </template>
 
 <script>
-import { addPermissionItem, getPermissionDetail, updatePermissionItem } from '@/api/permission'
-import { mapGetters } from 'vuex'
+import { addDictionaryItem, getDictionaryDetail, updateDictionaryItem } from '@/api/dictionary'
+import EnumOption from './EnumOption'
 export default {
   name: 'AddOrEdit',
+  components: {
+    EnumOption
+  },
   data() {
     return {
       form: {
-        hide: undefined,
+        icon: '',
+        level: 0,
         name: undefined,
-        orderNum: undefined,
-        parentId: undefined,
-        type: undefined,
-        url: undefined,
-        urls: undefined
+        sign: undefined,
+        status: undefined,
+        options: []
       },
-      rules: {},
+      rules: {
+        name: [{ required: true, message: '请输入字段名称' }],
+        sign: [{ required: true, message: '请输入字段标识' }],
+        status: [{ required: true, message: '请选择字段状态' }],
+        options: [{ required: true, message: '请配置字段选项' }]
+      },
       editId: undefined,
       drawerVisible: false
     }
-  },
-  computed: {
-    ...mapGetters(['enums'])
   },
   methods: {
     add() {
@@ -101,23 +96,20 @@ export default {
     },
 
     getItemDetail() {
-      getPermissionDetail({ id: this.editId }).then((res) => {
+      getDictionaryDetail({ id: this.editId }).then(res => {
         if (res.code === 200) {
           this.form = {
-            hide: res.data.hide,
             name: res.data.name,
-            orderNum: res.data.orderNum,
-            parentId: res.data.parentId,
-            type: res.data.type,
-            url: res.data.url,
-            urls: res.data.urls
+            organizationCode: res.data.organizationCode,
+            regionCode: res.data.regionCode,
+            status: res.data.status
           }
         }
       })
     },
 
     submitForm() {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
@@ -125,9 +117,14 @@ export default {
         const data = {
           ...this.form
         }
+        if (this.form.options && this.form.options.length > 0) {
+          data.options = this.form.options.filter(item => {
+            return typeof item.label !== 'undefined' && typeof item.value !== 'undefined'
+          })
+        }
         if (this.editId) {
           data.id = this.editId
-          updatePermissionItem(data).then((res) => {
+          updateDictionaryItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')
               this.$emit('update')
@@ -137,7 +134,7 @@ export default {
             }
           })
         } else {
-          addPermissionItem(data).then((res) => {
+          addDictionaryItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')

@@ -5,8 +5,27 @@
 </template>
 
 <script>
+import { getAllDictionaryItems } from '@/api/dictionary'
 export default {
-  name: 'App'
+  name: 'App',
+  created() {
+    this.getEnums()
+  },
+  methods: {
+    getEnums() {
+      getAllDictionaryItems().then(res => {
+        if (res.code === 200) {
+          const enums = {}
+          const resData = res.data || []
+          for (let i = 0; i < resData.length; i++) {
+            const item = resData[i]
+            enums[item.sign] = item.options
+          }
+          console.log('enums', enums)
+        }
+      })
+    }
+  }
 }
 </script>
 
