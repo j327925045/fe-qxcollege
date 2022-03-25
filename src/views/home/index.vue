@@ -36,7 +36,7 @@ import ColumnPieChart from './components/ColumnPieChart.vue'
 import ColumnPieChart2 from './components/ColumnPieChart2.vue'
 
 export default {
-  name: 'KanBan',
+  name: 'home',
   components: { ColumnDataCards, ColumnCards, ColumnPieChart, ColumnMixChart, ColumnBarChart, ColumnPieChart2, ColumnBarStackChart, ColumnNotice },
   data() {
     return {

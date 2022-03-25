@@ -4,6 +4,7 @@ const getters = {
   ename: state => state.user.username,
   avatar: state => state.user.avatar,
 
+  enums: state => state.app.enums,
   menus: state => state.app.menus,
   sidebar: state => state.app.sidebar,
   themeColor: state => state.app.themeColor,

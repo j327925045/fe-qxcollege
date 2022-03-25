@@ -2,21 +2,21 @@
   <div>
     <div class="gyl-form-view">
       <h3 class="gyl-title"><i class="el-icon-s-order" />用户列表</h3>
-      <el-form ref="form" :model="form" label-width="100px">
+      <el-form ref="form" :model="filterForm" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="输入框" prop="f1">
-              <el-input v-model="form.f1" placeholder="请输入" />
+              <el-input v-model="filterForm.f1" placeholder="请输入" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="输入框" prop="f2">
-              <el-input v-model="form.f2" placeholder="请输入" />
+              <el-input v-model="filterForm.f2" placeholder="请输入" />
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="下拉框" prop="f3">
-              <el-select v-model="form.f3" placeholder="请选择">
+              <el-select v-model="filterForm.f3" placeholder="请选择">
                 <el-option label="区域一" value="shanghai" />
                 <el-option label="区域二" value="beijing" />
               </el-select>
@@ -33,12 +33,7 @@
     <div class="gyl-table-view">
       <el-row class="table-tools">
         <div class="fl">
-          <el-button type="primary">主要操作1</el-button>
-          <el-button>次要操作</el-button>
-        </div>
-        <div class="fr">
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-import" /> 导入</el-button>
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-export" /> 导出</el-button>
+          <el-button type="primary" @click="addUser">添加用户</el-button>
         </div>
       </el-row>
       <div class="gyl-form-view-box">
@@ -48,22 +43,21 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="t1" label="t1" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t2" label="t2" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t3" label="t3" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="t4" label="t4" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t5" label="t5" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t6" label="t6" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t7" label="t7" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t8" label="t8" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t9" label="t9" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t10" label="t10" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t11" label="t11" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="nickname" label="用户昵称" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="realName" label="真实姓名" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="phone" label="手机号码" show-overflow-tooltip min-width="150" />
+          <el-table-column prop="regionName" label="用户省市" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="hospitalName" label="医院" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="department" label="科室" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="jobTitle" label="职称" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="birthday" label="出生年月" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="createTime" label="注册时间" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="bindingWechat" label="绑定微信" show-overflow-tooltip min-width="120" />
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
-              <el-button type="text" size="mini" @click="handleClick(scope.row)">查看</el-button>
-              <el-button type="text" size="mini">编辑</el-button>
-              <el-button type="text" size="mini">删除</el-button>
+              <el-button type="text" size="mini" @click="showDetail(scope.row)">查看</el-button>
+              <el-button type="text" size="mini" @click="editItem(scope.row)">编辑</el-button>
+              <el-button type="text" size="mini" @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -80,16 +74,23 @@
           @current-change="handleCurrentChange"
         />
       </div>
+      <DetailDialog ref="DetailDialog"></DetailDialog>
     </div>
   </div>
 </template>
 
 <script>
+import { getUserList, deleteUserItem } from '@/api/user'
+import DetailDialog from '@/views/user/components/DetailDialog'
+
 export default {
   name: 'UserList',
+  components: {
+    DetailDialog
+  },
   data() {
     return {
-      form: {
+      filterForm: {
         f1: '',
         f2: '',
         f3: ''
@@ -101,17 +102,50 @@ export default {
       total: 0
     }
   },
-  created() {
+  activated() {
     this.getList()
   },
   methods: {
+    showDetail(record) {
+      this.$refs.DetailDialog.show(record)
+    },
+
+    editItem(record) {
+      this.$router.push({ name: 'UserUpdate', query: { id: record.id } })
+    },
+
+    deleteItem(record) {
+      this.$confirm('确定要删除该项吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          deleteUserItem({ id: record.id }).then(res => {
+            if (res.code === 200) {
+              this.$message.success('操作成功！')
+              this.getList()
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+        })
+        .catch(() => {
+        })
+    },
+    /**
+     * 添加用户
+     */
+    addUser() {
+      this.$router.push({ name: 'UserCreate' })
+    },
+
     /**
      * 搜索按钮点击事件，回到第一页
      */
     search() {
       this.pageSize = 20
       this.currentPage = 1
-      this.search()
+      this.getList()
     },
 
     /**
@@ -119,33 +153,22 @@ export default {
      */
     getList() {
       const params = {
-        current_page: this.currentPage,
-        page_size: this.pageSize,
-        ...this.form
-      }
-      console.log('params', params)
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-        const result = []
-        for (let i = 0; i < 20; i++) {
-          result.push({
-            t1: 't1',
-            t2: 't2',
-            t3: 't3',
-            t4: 't4',
-            t5: 't5',
-            t6: 't6',
-            t7: 't7',
-            t8: 't8',
-            t9: 't9',
-            t10: 't10',
-            t11: 't11'
-          })
+        page: this.currentPage,
+        limit: this.pageSize,
+        params: {
+          ...this.filterForm
         }
-        this.total = 100
-        this.tableData = result
-      }, 1000)
+      }
+      this.loading = true
+      getUserList(params).then(res => {
+        this.loading = false
+        if (res.code === 200) {
+          this.total = res.data.totalCount
+          this.tableData = res.data.list || []
+        }
+      }).catch(_ => {
+        this.loading = false
+      })
     },
 
     /**

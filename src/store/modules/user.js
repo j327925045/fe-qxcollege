@@ -1,3 +1,4 @@
+// import { getCurrentInfo } from '@/api/employees'
 
 const getDefaultState = () => {
   return {
@@ -65,7 +66,8 @@ const actions = {
 
   async getUserInfo({ commit }) {
     // 强校验
-    // const checkLoginRes = await getUserInfoRequest()
+    // const userInfo = await getCurrentInfo()
+    // console.log('userInfo', userInfo)
     // if (!checkLoginRes.code) {
     //   // 成功后写入用户信息
     const checkLoginRes = {

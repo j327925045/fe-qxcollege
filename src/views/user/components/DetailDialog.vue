@@ -1,0 +1,39 @@
+<template>
+  <el-dialog title="用户信息" width="600px" :visible.sync="detailDialogVisible">
+    <el-descriptions>
+      <el-descriptions-item label="账号（手机号）">{{ userDetail.account }}</el-descriptions-item>
+    </el-descriptions>
+
+    <div slot="footer">
+      <el-button type="primary" @click="detailDialogVisible = false">确 定</el-button>
+    </div>
+  </el-dialog>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+import utils from '@/utils/utils'
+
+export default {
+  name: 'DetailDialog',
+  data() {
+    return {
+      detailDialogVisible: false,
+      userDetail: {}
+    }
+  },
+  computed: {
+    ...mapGetters(['enums'])
+  },
+  methods: {
+    show(userDetail) {
+      this.detailDialogVisible = true
+      this.userDetail = userDetail
+    },
+    getLabelByValue(key, value) {
+      const item = utils.getOptionsItemByValue(key, value)
+      return item.label || ''
+    }
+  }
+}
+</script>

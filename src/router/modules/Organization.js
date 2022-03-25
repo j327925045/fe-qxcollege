@@ -13,6 +13,20 @@ export const Organization = [
         name: 'OrganizationList',
         component: () => import('@/views/organization/list'),
         meta: { title: '机构列表' }
+      },
+      {
+        path: '/organization/create',
+        name: 'OrganizationCreate',
+        hidden: true,
+        component: () => import('@/views/organization/create'),
+        meta: { title: '添加机构', highlightPath: '/organization/list' }
+      },
+      {
+        path: '/organization/update',
+        name: 'OrganizationUpdate',
+        hidden: true,
+        component: () => import('@/views/organization/create'),
+        meta: { title: '修改机构', highlightPath: '/organization/list' }
       }
     ]
   }

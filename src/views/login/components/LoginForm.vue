@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-import { login } from '@/api/login.js'
+import { login } from '@/api/sso.js'
 import { setToken } from '@/utils/auth.js'
 export default {
   name: 'LoginForm',

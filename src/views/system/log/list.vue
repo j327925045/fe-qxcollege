@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import { getLogList } from '@/api/log'
 export default {
   name: 'SystemLogList',
   data() {
@@ -111,7 +112,7 @@ export default {
     search() {
       this.pageSize = 20
       this.currentPage = 1
-      this.search()
+      this.getList()
     },
 
     /**
@@ -119,33 +120,25 @@ export default {
      */
     getList() {
       const params = {
-        current_page: this.currentPage,
-        page_size: this.pageSize,
-        ...this.form
+        page: this.currentPage,
+        limit: this.pageSize,
+        params: {
+          ...this.form
+        }
       }
       console.log('params', params)
       this.loading = true
-      setTimeout(() => {
+      getLogList(params).then(res => {
         this.loading = false
-        const result = []
-        for (let i = 0; i < 20; i++) {
-          result.push({
-            t1: 't1',
-            t2: 't2',
-            t3: 't3',
-            t4: 't4',
-            t5: 't5',
-            t6: 't6',
-            t7: 't7',
-            t8: 't8',
-            t9: 't9',
-            t10: 't10',
-            t11: 't11'
-          })
+        if (res.code === 200) {
+          this.total = res.data.totalCount || 0
+          this.tableData = res.data.list || []
+        } else {
+          this.$message.error(res.msg)
         }
-        this.total = 100
-        this.tableData = result
-      }, 1000)
+      }).catch(_ => {
+        this.loading = false
+      })
     },
 
     /**

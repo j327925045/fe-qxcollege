@@ -34,7 +34,47 @@ const state = {
   // 顶部导航栏当前选中态
   topMenuActiveIndex: -1,
   // 收藏菜单
-  favouriteMenu: []
+  favouriteMenu: [],
+  enums: {
+    genderOptions: [
+      {
+        label: '未知',
+        value: 0
+      },
+      {
+        label: '男',
+        value: 1
+      },
+      {
+        label: '女',
+        value: 2
+      }
+    ],
+    employeeNatureOptions: [
+      {
+        label: '未知',
+        value: 0
+      },
+      {
+        label: '正式员工',
+        value: 1
+      },
+      {
+        label: '试用期员工',
+        value: 2
+      }
+    ],
+    employeeStatusOptions: [
+      {
+        label: '正常',
+        value: 1
+      },
+      {
+        label: '禁用',
+        value: 2
+      }
+    ]
+  }
 }
 
 // 定义state的curtrent是某个值的计算属性 重新定义get
@@ -65,7 +105,6 @@ const mutations = {
   },
 
   KEEP_ALIVE(state, componentName) {
-    console.log('componentName', componentName)
     if (!state.keepAliveComponents.includes(componentName)) {
       state.keepAliveComponents.push(componentName)
     }
@@ -125,7 +164,6 @@ const mutations = {
       state.favouriteMenu.splice(index, 1)
     }
     localStorage.setItem('favourite_menu', JSON.stringify(state.favouriteMenu))
-    // TODO: 需要实现存储常用菜单到库中
   }
 }
 
@@ -141,15 +179,12 @@ const filterEditableTabs = function(tab) {
 
 const actions = {
   INIT_FAVOURITE_MENU({ commit, state }) {
-    // TODO: 需要实现从库中土读取藏用菜单
     if (localStorage.getItem('favourite_menu')) {
       state.favouriteMenu = JSON.parse(localStorage.getItem('favourite_menu'))
     }
   },
 
   async addTab({ commit, state }, target) {
-    console.log('target.name', target.name)
-    console.log('state.currentTab', state.currentTab)
     if (target) {
       commit('SET_EDITABLETABSVALUE', target.name)
     }

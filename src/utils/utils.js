@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import store from '../store'
 
 export default {
   queryUrl: (url) => {
@@ -82,5 +83,17 @@ export default {
       return queryStr.replace(reg, '')
     }
     return ''
+  },
+  getOptionsItemByValue(optionKey, value) {
+    const enums = store.getters.enums
+    let result = {}
+    const options = enums[optionKey]
+    for (let i = 0; i < options.length; i++) {
+      const item = options[i]
+      if (item.value === value) {
+        result = item
+      }
+    }
+    return result
   }
 }

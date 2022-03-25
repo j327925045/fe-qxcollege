@@ -40,11 +40,14 @@ export default {
     ContextMenu
     // RouterBreadcrumb
   },
-  provide: {
-    // 模板工程特性配置开关，可以通过此配置开关相应的特性
-    features: {
+  provide() {
+    return {
+      // 模板工程特性配置开关，可以通过此配置开关相应的特性
+      features: {
       // 是否开启常用菜单
-      favouritesNav: true
+        favouritesNav: true
+      },
+      removeTab: this.removeTab
     }
   },
   data() {

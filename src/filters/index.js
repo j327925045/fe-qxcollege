@@ -1,3 +1,4 @@
+import moment from 'moment'
 // Filter for article status
 export const articleStatusFilter = (status) => {
   const statusMap = {
@@ -6,6 +7,10 @@ export const articleStatusFilter = (status) => {
     deleted: 'danger'
   }
   return statusMap[status]
+}
+
+export const dateFormat = (time, format) => {
+  return moment(time).format(format || 'YYYY-MM-DD HH:mm:ss')
 }
 
 // 让第一个字母大写

@@ -111,7 +111,7 @@ export default {
     search() {
       this.pageSize = 20
       this.currentPage = 1
-      this.search()
+      this.getList()
     },
 
     /**

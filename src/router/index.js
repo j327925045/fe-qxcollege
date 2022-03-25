@@ -72,8 +72,6 @@ const originRoutes = [
 
 formatRoutes(originRoutes.filter(item => !item.hidden))
 
-console.log('originRoutes', originRoutes)
-
 export const routes = originRoutes
 
 const router = new Router({

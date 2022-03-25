@@ -17,10 +17,10 @@ Vue.use(ElementUI, { size: 'small' })
 //   Vue.directive(key, (directives as { [key: string ]: DirectiveOptions })[key])
 // })
 // todo 有接口以后这里要注释掉
-if (process.env.NODE_ENV === 'development') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const { mockXHR } = require('../mock')
+//   mockXHR()
+// }
 
 // 注册过滤器
 Object.keys(filters).forEach((key) => {
