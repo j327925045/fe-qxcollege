@@ -66,12 +66,6 @@ export const Search = [
         name: 'NoticeDetail',
         component: () => import('@/views/demos/notice/Detail.vue'),
         meta: { title: '公告详情' }
-      },
-      {
-        path: '/search/kanban',
-        name: 'KanBan',
-        component: () => import('@/views/demos/kanban/Index.vue'),
-        meta: { title: '数据看板' }
       }
     ]
   }

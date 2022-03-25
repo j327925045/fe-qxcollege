@@ -45,17 +45,6 @@ export function deleteEmployeesItem(data) {
 }
 
 /**
- * 导出
- */
-export function exportEmployees(params) {
-  return request({
-    url: '/qxcollege/employee/export',
-    method: 'get',
-    params
-  })
-}
-
-/**
  * 获取详情
  */
 export function getEmployeesDetail(params) {
@@ -69,7 +58,7 @@ export function getEmployeesDetail(params) {
 /**
  * 更新
  */
-export function updateEmployeeItem(data) {
+export function updateEmployeesItem(data) {
   return request({
     url: '/qxcollege/employee/edit',
     method: 'post',

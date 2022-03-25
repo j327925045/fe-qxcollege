@@ -1,8 +1,12 @@
 <template>
   <div>
     <div class="gyl-form-view">
-      <h3 class="gyl-title"><i class="el-icon-s-order" />机构列表</h3>
-      <el-form ref="form" :model="form" label-width="100px">
+      <span class="form-switch" @click="formSwitch">
+        {{ isShow ? '全部收起' : '全部展开' }}
+        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+      </span>
+      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />机构列表</h3>
+      <el-form v-show="isShow" ref="form" :model="form" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="机构名称" prop="name">
@@ -29,12 +33,12 @@
             </template>
           </el-table-column>
           <el-table-column prop="address" label="机构地址(详细地址)" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="regionFullName" label="所在区域" show-overflow-tooltip min-width="120" />
           <el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip min-width="180" />
           <el-table-column prop="name" label="机构全称" show-overflow-tooltip min-width="150" />
           <el-table-column prop="nature" label="机构性质" show-overflow-tooltip min-width="180" />
           <el-table-column prop="operateStatus" label="经营状态" show-overflow-tooltip min-width="120" />
           <el-table-column prop="paidCapital" label="实缴资本(万)" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="regionCode" label="所在区域" show-overflow-tooltip min-width="120" />
           <el-table-column prop="registeredCapital" label="注册资本(万)" show-overflow-tooltip min-width="120" />
           <el-table-column prop="scale" label="机构规模" show-overflow-tooltip min-width="120" />
           <el-table-column prop="shortName" label="机构简称" show-overflow-tooltip min-width="120" />
@@ -60,13 +64,18 @@
         />
       </div>
     </div>
+    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </div>
 </template>
 
 <script>
 import { getOrganizationList, deleteOrganizationItem } from '@/api/organization'
+import AddOrEdit from './components/AddOrEdit'
 export default {
   name: 'OrganizationList',
+  components: {
+    AddOrEdit
+  },
   data() {
     return {
       form: {
@@ -75,16 +84,25 @@ export default {
       tableData: [],
       loading: false,
       currentPage: 1,
-      pageSize: 20,
-      total: 0
+      pageSize: 10,
+      total: 0,
+      isShow: true
     }
   },
   created() {
     this.getList()
   },
   methods: {
+    formSwitch() {
+      this.isShow = !this.isShow
+    },
+
+    addItem() {
+      this.$refs.AddOrEdit.add()
+    },
+
     editItem(record) {
-      this.$router.push({ name: 'OrganizationUpdate', query: { id: record.objectCode } })
+      this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
     deleteItem(record) {
@@ -105,17 +123,12 @@ export default {
         .catch(() => {
         })
     },
-    /**
-     * 添加用户
-     */
-    addItem() {
-      this.$router.push({ name: 'OrganizationCreate' })
-    },
+
     /**
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 20
+      this.pageSize = 10
       this.currentPage = 1
       this.getList()
     },

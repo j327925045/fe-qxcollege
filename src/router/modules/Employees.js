@@ -13,20 +13,6 @@ export const Employees = [
         name: 'EmployeesList',
         component: () => import('@/views/employees/list'),
         meta: { title: '员工列表' }
-      },
-      {
-        path: '/employees/create',
-        name: 'EmployeesCreate',
-        hidden: true,
-        component: () => import('@/views/employees/create'),
-        meta: { title: '新建员工', highlightPath: '/employees/list' }
-      },
-      {
-        path: '/employees/update',
-        name: 'EmployeesUpdate',
-        hidden: true,
-        component: () => import('@/views/employees/create'),
-        meta: { title: '修改员工', highlightPath: '/employees/list' }
       }
     ]
   }

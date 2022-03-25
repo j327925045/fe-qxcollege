@@ -1,8 +1,12 @@
 <template>
   <div>
     <div class="gyl-form-view">
-      <h3 class="gyl-title"><i class="el-icon-s-order" />权限列表</h3>
-      <el-form ref="form" :model="form" label-width="100px">
+      <span class="form-switch" @click="formSwitch">
+        {{ isShow ? '全部收起' : '全部展开' }}
+        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+      </span>
+      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />权限列表</h3>
+      <el-form v-show="isShow" ref="form" :model="form" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="权限名称" prop="name">
@@ -55,14 +59,19 @@
           @current-change="handleCurrentChange"
         />
       </div>
+      <AddOrEdit ref="AddOrEdit" @add="getList" @update="getList"></AddOrEdit>
     </div>
   </div>
 </template>
 
 <script>
 import { getPermissionList, deletePermissionItem } from '@/api/permission'
+import AddOrEdit from './components/AddOrEdit'
 export default {
   name: 'SystemPermissionsList',
+  components: {
+    AddOrEdit
+  },
   data() {
     return {
       form: {
@@ -71,20 +80,25 @@ export default {
       tableData: [],
       loading: false,
       currentPage: 1,
-      pageSize: 20,
-      total: 0
+      pageSize: 10,
+      total: 0,
+      isShow: true
     }
   },
   created() {
     this.getList()
   },
   methods: {
+    formSwitch() {
+      this.isShow = !this.isShow
+    },
+
     addItem() {
-      this.$router.push({ name: 'SystemPermissionsCreate' })
+      this.$refs.AddOrEdit.add()
     },
 
     editItem(record) {
-      this.$router.push({ name: 'SystemPermissionsUpdate', query: { id: record.objectCode } })
+      this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
     deleteItem(record) {
@@ -110,7 +124,7 @@ export default {
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 20
+      this.pageSize = 10
       this.currentPage = 1
       this.getList()
     },

@@ -15,20 +15,6 @@ export const System = [
         meta: { title: '权限列表' }
       },
       {
-        path: '/system/permissions/create',
-        name: 'SystemPermissionsCreate',
-        hidden: true,
-        component: () => import('@/views/system/permissions/create'),
-        meta: { title: '添加权限', highlightPath: '/system/permissions' }
-      },
-      {
-        path: '/system/permissions/update',
-        name: 'SystemPermissionsUpdate',
-        hidden: true,
-        component: () => import('@/views/system/permissions/create'),
-        meta: { title: '修改用户', highlightPath: '/system/permissions' }
-      },
-      {
         path: '/system/role',
         name: 'SystemRoleList',
         component: () => import('@/views/system/role/list'),

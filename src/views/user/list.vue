@@ -1,8 +1,12 @@
 <template>
   <div>
     <div class="gyl-form-view">
-      <h3 class="gyl-title"><i class="el-icon-s-order" />用户列表</h3>
-      <el-form ref="form" :model="filterForm" label-width="100px">
+      <span class="form-switch" @click="formSwitch">
+        {{ isShow ? '全部收起' : '全部展开' }}
+        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+      </span>
+      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />用户列表</h3>
+      <el-form v-show="isShow" ref="form" :model="filterForm" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="用户姓名" prop="name">
@@ -37,7 +41,6 @@
           <el-table-column prop="department" label="科室" show-overflow-tooltip min-width="120" />
           <el-table-column prop="jobTitle" label="职称" show-overflow-tooltip min-width="120" />
           <el-table-column prop="birthday" label="出生年月" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="createTime" label="注册时间" show-overflow-tooltip min-width="120" />
           <el-table-column prop="bindingWechat" label="绑定微信" show-overflow-tooltip min-width="120" />
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
@@ -61,18 +64,21 @@
         />
       </div>
       <DetailDialog ref="DetailDialog"></DetailDialog>
+      <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
     </div>
   </div>
 </template>
 
 <script>
 import { getUserList, deleteUserItem } from '@/api/user'
-import DetailDialog from '@/views/user/components/DetailDialog'
+import DetailDialog from './components/DetailDialog'
+import AddOrEdit from './components/AddOrEdit'
 
 export default {
   name: 'UserList',
   components: {
-    DetailDialog
+    DetailDialog,
+    AddOrEdit
   },
   data() {
     return {
@@ -82,20 +88,29 @@ export default {
       tableData: [],
       loading: false,
       currentPage: 1,
-      pageSize: 20,
-      total: 0
+      pageSize: 10,
+      total: 0,
+      isShow: true
     }
   },
   activated() {
     this.getList()
   },
   methods: {
+    formSwitch() {
+      this.isShow = !this.isShow
+    },
+
     showDetail(record) {
       this.$refs.DetailDialog.show(record)
     },
 
+    addUser() {
+      this.$refs.AddOrEdit.add()
+    },
+
     editItem(record) {
-      this.$router.push({ name: 'UserUpdate', query: { id: record.objectCode } })
+      this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
     deleteItem(record) {
@@ -116,18 +131,12 @@ export default {
         .catch(() => {
         })
     },
-    /**
-     * 添加用户
-     */
-    addUser() {
-      this.$router.push({ name: 'UserCreate' })
-    },
 
     /**
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 20
+      this.pageSize = 10
       this.currentPage = 1
       this.getList()
     },

@@ -1,8 +1,12 @@
 <template>
   <div>
     <div class="gyl-form-view">
-      <h3 class="gyl-title"><i class="el-icon-s-order" />员工列表</h3>
-      <el-form ref="form" :model="filterForm" label-width="100px">
+      <span class="form-switch" @click="formSwitch">
+        {{ isShow ? '全部收起' : '全部展开' }}
+        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+      </span>
+      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />员工列表</h3>
+      <el-form v-show="isShow" ref="form" :model="filterForm" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="员工姓名" prop="name">
@@ -10,7 +14,7 @@
             </el-form-item>
           </el-col>
           <el-form-item class="gyl-form-btn-wrap">
-            <el-button @click="resetForm('form')">重 置</el-button>
+            <el-button @click="resetForm">重 置</el-button>
             <el-button type="primary" @click="search">查 询</el-button>
           </el-form-item>
         </el-row>
@@ -19,7 +23,7 @@
 
     <div class="gyl-table-view">
       <el-row class="table-tools">
-        <el-button type="primary" @click="createNewEmployees">新建员工</el-button>
+        <el-button type="primary" @click="addItem">新建员工</el-button>
       </el-row>
       <div class="gyl-form-view-box">
         <el-table v-loading="loading" :data="tableData" stripe border>
@@ -28,16 +32,22 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="员工姓名" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="account" label="账号" show-overflow-tooltip min-width="120" />
+          <el-table-column label="员工姓名" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.name||'-' }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="gender" label="员工性别" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="nature" label="员工性质" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="status" label="员工状态" show-overflow-tooltip min-width="120" />
+          <el-table-column label="账号（手机号）" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.account||'-' }}
+            </template>
+          </el-table-column>
           <el-table-column label="创建时间" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
               {{ scope.row.createTime|dateFormat }}
-            </template>
-          </el-table-column>
-          <el-table-column label="更新时间" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.updateTime|dateFormat }}
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
@@ -63,16 +73,19 @@
       </div>
     </div>
     <DetailDialog ref="DetailDialog"></DetailDialog>
+    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </div>
 </template>
 
 <script>
 import { getEmployeesList, deleteEmployeesItem } from '@/api/employees.js'
-import DetailDialog from '@/views/employees/components/DetailDialog'
+import DetailDialog from './components/DetailDialog'
+import AddOrEdit from './components/AddOrEdit'
 export default {
   name: 'EmployeesList',
   components: {
-    DetailDialog
+    DetailDialog,
+    AddOrEdit
   },
   data() {
     return {
@@ -82,16 +95,21 @@ export default {
       tableData: [],
       loading: false,
       currentPage: 1,
-      pageSize: 20,
+      pageSize: 10,
       total: 0,
       detailDialogVisible: false,
-      employDetail: {}
+      employDetail: {},
+      isShow: true
     }
   },
   activated() {
     this.getList()
   },
   methods: {
+    formSwitch() {
+      this.isShow = !this.isShow
+    },
+
     /**
      * 展示详情
      */
@@ -103,7 +121,11 @@ export default {
      * 编辑
      */
     editItem(record) {
-      this.$router.push({ name: 'EmployeesUpdate', query: { id: record.objectCode } })
+      this.$refs.AddOrEdit.edit(record.objectCode)
+    },
+
+    addItem() {
+      this.$refs.AddOrEdit.add()
     },
 
     /**
@@ -128,15 +150,11 @@ export default {
         })
     },
 
-    createNewEmployees() {
-      this.$router.push({ name: 'EmployeesCreate' })
-    },
-
     /**
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 20
+      this.pageSize = 10
       this.currentPage = 1
       this.getList()
     },

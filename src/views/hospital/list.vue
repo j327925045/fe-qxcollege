@@ -1,8 +1,12 @@
 <template>
   <div>
     <div class="gyl-form-view">
-      <h3 class="gyl-title"><i class="el-icon-s-order" />医院列表</h3>
-      <el-form ref="form" :model="form" label-width="100px">
+      <span class="form-switch" @click="formSwitch">
+        {{ isShow ? '全部收起' : '全部展开' }}
+        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+      </span>
+      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />医院列表</h3>
+      <el-form v-show="isShow" ref="form" :model="form" label-width="100px">
         <el-row>
           <el-col :xs="24" :sm="12" :lg="8">
             <el-form-item label="医院名称" prop="name">
@@ -19,13 +23,7 @@
 
     <div class="gyl-table-view">
       <el-row class="table-tools">
-        <div class="fl">
-          <el-button type="primary" @click="addItem">添加医院</el-button>
-        </div>
-        <div class="fr">
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-import" /> 导入</el-button>
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-export" /> 导出</el-button>
-        </div>
+        <el-button type="primary" @click="addItem">添加医院</el-button>
       </el-row>
       <div class="gyl-form-view-box">
         <el-table v-loading="loading" :data="tableData" stripe border>
@@ -34,10 +32,10 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="名称" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="organizationCode" label="所属机构code" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="name" label="名称" show-overflow-tooltip min-width="150" />
+          <el-table-column prop="organizationCode" label="所属机构code" show-overflow-tooltip min-width="150" />
           <el-table-column prop="regionCode" label="区域code" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="status" label="医院状态" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="status" label="医院状态" show-overflow-tooltip min-width="150" />
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
@@ -59,33 +57,47 @@
         />
       </div>
     </div>
+
+    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </div>
 </template>
 
 <script>
 import { getHospitalList, deleteHospitalItem } from '@/api/hospital'
+import AddOrEdit from './components/AddOrEdit'
+
 export default {
   name: 'HospitalList',
+  components: {
+    AddOrEdit
+  },
   data() {
     return {
       form: {
-        f1: '',
-        f2: '',
-        f3: ''
+        name: undefined
       },
       tableData: [],
       loading: false,
       currentPage: 1,
-      pageSize: 20,
-      total: 0
+      pageSize: 10,
+      total: 0,
+      isShow: true
     }
   },
   created() {
     this.getList()
   },
   methods: {
+    formSwitch() {
+      this.isShow = !this.isShow
+    },
+
+    addItem() {
+      this.$refs.AddOrEdit.add()
+    },
+
     editItem(record) {
-      this.$router.push({ name: 'HospitalUpdate', query: { id: record.objectCode } })
+      this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
     deleteItem(record) {
@@ -107,15 +119,11 @@ export default {
         })
     },
 
-    addItem() {
-      this.$router.push({ name: 'HospitalCreate' })
-    },
-
     /**
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 20
+      this.pageSize = 10
       this.currentPage = 1
       this.getList()
     },

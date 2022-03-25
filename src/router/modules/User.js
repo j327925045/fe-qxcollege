@@ -13,20 +13,6 @@ export const User = [
         name: 'UserList',
         component: () => import('@/views/user/list'),
         meta: { title: '用户列表' }
-      },
-      {
-        path: '/user/create',
-        name: 'UserCreate',
-        hidden: true,
-        component: () => import('@/views/user/create'),
-        meta: { title: '添加用户', highlightPath: '/user/list' }
-      },
-      {
-        path: '/user/update',
-        name: 'UserUpdate',
-        hidden: true,
-        component: () => import('@/views/user/create'),
-        meta: { title: '修改用户', highlightPath: '/user/list' }
       }
     ]
   }

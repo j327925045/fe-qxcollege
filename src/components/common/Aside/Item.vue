@@ -64,6 +64,8 @@ export default {
 .side-item-container {
   display: flex;
   align-items: center;
+  height: 50px;
+  line-height: 50px;
 
   .sidebar-icon {
     margin-right: 8px;
