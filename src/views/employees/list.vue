@@ -109,7 +109,7 @@ export default {
      * 编辑
      */
     editItem(record) {
-      this.$router.push({ name: 'EmployeesUpdate', query: { id: record.id } })
+      this.$router.push({ name: 'EmployeesUpdate', query: { id: record.objectCode } })
     },
 
     /**
@@ -121,7 +121,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteEmployeesItem({ id: record.id }).then(res => {
+          deleteEmployeesItem({ id: record.objectCode }).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

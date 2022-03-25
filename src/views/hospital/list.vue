@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     editItem(record) {
-      this.$router.push({ name: 'HospitalUpdate', query: { id: record.id } })
+      this.$router.push({ name: 'HospitalUpdate', query: { id: record.objectCode } })
     },
 
     deleteItem(record) {
@@ -107,7 +107,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteHospitalItem({ id: record.id }).then(res => {
+          deleteHospitalItem({ id: record.objectCode }).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

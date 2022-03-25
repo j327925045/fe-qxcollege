@@ -22,25 +22,29 @@ export default {
 </script>
 <style lang="scss" scoped>
 .common-sing-txt{
-  line-height: 32px;
   margin-bottom: 10px;
+  line-height: 32px;
 }
+
 .common-sing-txt_label{
   float: left;
-  font-size: 14px;
-  color: #666;
   padding: 0 10px 0 0;
+  color: #666;
+  font-size: 14px;
 }
+
 .common-sing-txt_content::before,
 .common-sing-txt_content::after{
   display: table;
   content: "";
 }
+
 .common-sing-txt_content{
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  text-overflow: ellipsis;
 }
+
 .common-sing-txt_content::after{
   clear: both;
 }

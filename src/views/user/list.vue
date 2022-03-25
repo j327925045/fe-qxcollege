@@ -111,7 +111,7 @@ export default {
     },
 
     editItem(record) {
-      this.$router.push({ name: 'UserUpdate', query: { id: record.id } })
+      this.$router.push({ name: 'UserUpdate', query: { id: record.objectCode } })
     },
 
     deleteItem(record) {
@@ -120,7 +120,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteUserItem({ id: record.id }).then(res => {
+          deleteUserItem({ id: record.objectCode }).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

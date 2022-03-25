@@ -31,16 +31,6 @@
     </div>
 
     <div class="gyl-table-view">
-      <el-row class="table-tools">
-        <div class="fl">
-          <el-button type="primary">主要操作1</el-button>
-          <el-button>次要操作</el-button>
-        </div>
-        <div class="fr">
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-import" /> 导入</el-button>
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-export" /> 导出</el-button>
-        </div>
-      </el-row>
       <div class="gyl-form-view-box">
         <el-table v-loading="loading" :data="tableData" stripe border>
           <el-table-column fixed="left" label="序号" width="60">
@@ -48,22 +38,12 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="t1" label="t1" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t2" label="t2" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t3" label="t3" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="t4" label="t4" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t5" label="t5" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t6" label="t6" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t7" label="t7" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t8" label="t8" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t9" label="t9" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t10" label="t10" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t11" label="t11" show-overflow-tooltip min-width="120" />
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column prop="operation" label="用户操作" show-overflow-tooltip max-width="180" />
+          <el-table-column prop="method" label="请求方法" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="params" label="请求参数" show-overflow-tooltip min-width="150" />
+          <el-table-column label="执行时长" width="120">
             <template slot-scope="scope">
-              <el-button type="text" size="mini" @click="handleClick(scope.row)">查看</el-button>
-              <el-button type="text" size="mini">编辑</el-button>
-              <el-button type="text" size="mini">删除</el-button>
+              <span>{{ scope.row.time }}ms</span>
             </template>
           </el-table-column>
         </el-table>

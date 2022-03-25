@@ -32,14 +32,7 @@
 
     <div class="gyl-table-view">
       <el-row class="table-tools">
-        <div class="fl">
-          <el-button type="primary">主要操作1</el-button>
-          <el-button>次要操作</el-button>
-        </div>
-        <div class="fr">
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-import" /> 导入</el-button>
-          <el-button type="primary" plain class="gyl-button-new"><i class="el-icon-export" /> 导出</el-button>
-        </div>
+        <el-button type="primary" @click="addItem">添加权限</el-button>
       </el-row>
       <div class="gyl-form-view-box">
         <el-table v-loading="loading" :data="tableData" stripe border>
@@ -48,22 +41,17 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="t1" label="t1" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t2" label="t2" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t3" label="t3" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="t4" label="t4" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="t5" label="t5" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t6" label="t6" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t7" label="t7" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t8" label="t8" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t9" label="t9" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t10" label="t10" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="t11" label="t11" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="hide" label="是否显示" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="name" label="菜单名称" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="orderNum" label="排序" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="parentId" label="父菜单ID" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="type" label="类型" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="url" label="菜单URL" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="urls" label="授权" show-overflow-tooltip min-width="120" />
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
-              <el-button type="text" size="mini" @click="handleClick(scope.row)">查看</el-button>
-              <el-button type="text" size="mini">编辑</el-button>
-              <el-button type="text" size="mini">删除</el-button>
+              <el-button type="text" size="mini" @click="editItem(scope.row)">编辑</el-button>
+              <el-button type="text" size="mini" @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -85,6 +73,7 @@
 </template>
 
 <script>
+import { getPermissionList, deletePermissionItem } from '@/api/permission'
 export default {
   name: 'SystemPermissionsList',
   data() {
@@ -105,6 +94,33 @@ export default {
     this.getList()
   },
   methods: {
+    addItem() {
+      this.$router.push({ name: 'SystemPermissionsCreate' })
+    },
+
+    editItem(record) {
+      this.$router.push({ name: 'SystemPermissionsUpdate', query: { id: record.objectCode } })
+    },
+
+    deleteItem(record) {
+      this.$confirm('确定要删除该项吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          deletePermissionItem({ id: record.objectCode }).then(res => {
+            if (res.code === 200) {
+              this.$message.success('操作成功！')
+              this.getList()
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+        })
+        .catch(() => {
+        })
+    },
+
     /**
      * 搜索按钮点击事件，回到第一页
      */
@@ -119,33 +135,22 @@ export default {
      */
     getList() {
       const params = {
-        current_page: this.currentPage,
-        page_size: this.pageSize,
-        ...this.form
-      }
-      console.log('params', params)
-      this.loading = true
-      setTimeout(() => {
-        this.loading = false
-        const result = []
-        for (let i = 0; i < 20; i++) {
-          result.push({
-            t1: 't1',
-            t2: 't2',
-            t3: 't3',
-            t4: 't4',
-            t5: 't5',
-            t6: 't6',
-            t7: 't7',
-            t8: 't8',
-            t9: 't9',
-            t10: 't10',
-            t11: 't11'
-          })
+        page: this.currentPage,
+        limit: this.pageSize,
+        params: {
+          ...this.form
         }
-        this.total = 100
-        this.tableData = result
-      }, 1000)
+      }
+      this.loading = true
+      getPermissionList(params).then(res => {
+        this.loading = false
+        if (res.code === 200) {
+          this.total = res.data.totalCount
+          this.tableData = res.data.list || []
+        }
+      }).catch(_ => {
+        this.loading = false
+      })
     },
 
     /**
