@@ -50,3 +50,11 @@ export function getAllDictionaryItems(params) {
     params
   })
 }
+
+export function setDictionaryByOnce(data) {
+  return request({
+    url: '/qxcollege/dictionary/wholeAdd',
+    method: 'post',
+    data
+  })
+}

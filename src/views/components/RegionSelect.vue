@@ -41,7 +41,7 @@ export default {
     value: {
       immediate: true,
       handler() {
-        this.getMyValue()
+        this.setMyValue()
       }
     }
   },
@@ -49,7 +49,7 @@ export default {
     this.getOptions()
   },
   methods: {
-    getMyValue() {
+    setMyValue() {
       try {
         this.myValue = JSON.parse(JSON.stringify(this.value))
       } catch (error) {

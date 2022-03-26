@@ -1,10 +1,34 @@
 <template>
   <div>
     <div v-for="(item,idx) in myValue" :key="idx" class="enum-item">
-      <el-input v-model="item.label" style="width: 150px;" placeholder="label" @change="onUpdate"></el-input>
-      <el-input v-model="item.value" style="width: 150px;" placeholder="value" @change="onUpdate"></el-input>
-      <el-button type="primary" icon="el-icon-plus" round @click="addItem"></el-button>
-      <el-button :disabled="myValue.length===1" type="danger" icon="el-icon-delete" round @click="deleteItem(idx)"></el-button>
+      <el-input
+        v-model="item.label"
+        style="width: 150px;"
+        placeholder="label(文本)"
+        @change="onChange"
+      ></el-input>
+      <el-input
+        v-model="item.value"
+        controls-position="right"
+        style="width: 150px;"
+        placeholder="value"
+        @change="onChange"
+      ></el-input>
+      <el-button
+        size="mini"
+        type="primary"
+        icon="el-icon-plus"
+        round
+        @click="addItem"
+      ></el-button>
+      <el-button
+        size="mini"
+        :disabled="myValue.length===1"
+        type="danger"
+        icon="el-icon-delete"
+        round
+        @click="deleteItem(idx)"
+      ></el-button>
     </div>
   </div>
 </template>
@@ -34,25 +58,8 @@ export default {
     }
   },
   methods: {
-    addItem() {
-      this.myValue.push({
-        label: undefined,
-        value: undefined
-      })
-      this.onUpdate()
-    },
-
-    deleteItem(idx) {
-      this.myValue.splice(idx, 1)
-      this.onUpdate()
-    },
-
-    onUpdate() {
-      this.$emit('input', this.myValue)
-      this.$emit('change', this.myValue)
-    },
-
     setMyValue() {
+      console.log('this.value', this.value)
       if (!this.value || this.value.length === 0) {
         this.myValue = [{
           label: undefined,
@@ -68,6 +75,24 @@ export default {
           value: undefined
         }]
       }
+    },
+
+    addItem() {
+      this.myValue.push({
+        label: undefined,
+        value: undefined
+      })
+      this.onChange()
+    },
+
+    deleteItem(idx) {
+      this.myValue.splice(idx, 1)
+      this.onChange()
+    },
+
+    onChange() {
+      this.$emit('input', this.myValue)
+      this.$emit('change', this.myValue)
     }
   }
 }

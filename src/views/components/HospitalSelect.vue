@@ -34,7 +34,7 @@ export default {
     value: {
       immediate: true,
       handler() {
-        this.getMyValue()
+        this.setMyValue()
       }
     }
   },
@@ -42,7 +42,7 @@ export default {
     this.getOptions()
   },
   methods: {
-    getMyValue() {
+    setMyValue() {
       console.log('this.value', this.value)
       this.myValue = this.value
     },

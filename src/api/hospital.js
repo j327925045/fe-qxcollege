@@ -10,7 +10,7 @@ export function addHospitalItem(data) {
 
 export function deleteHospitalItem(data) {
   return request({
-    url: '/qxcollege/hospital/add',
+    url: '/qxcollege/hospital/delete',
     method: 'post',
     data: data
   })

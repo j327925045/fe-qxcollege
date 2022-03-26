@@ -19,15 +19,15 @@
           <el-form-item label="字段名称" prop="name">
             <el-input v-model="form.name" placeholder="请输入字段名称" />
           </el-form-item>
-          <el-form-item label="字段图标" prop="icon">
+          <!-- <el-form-item label="字段图标" prop="icon">
             <el-input v-model="form.icon" placeholder="请输入字段图标" />
           </el-form-item>
           <el-form-item label="字段顺序">
             <el-input-number v-model="form.level" controls-position="right" placeholder="请输入字段顺序"></el-input-number>
-          </el-form-item>
-          <el-form-item label="上层归属">
+          </el-form-item> -->
+          <!-- <el-form-item label="上层归属">
             <el-input-number v-model="form.parentId" controls-position="right" placeholder="请输入上层归属"></el-input-number>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="字段标识" prop="sign">
             <el-input v-model="form.sign" placeholder="请输入字段标识" />
           </el-form-item>
@@ -47,7 +47,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="fixed bottom-0 right-0 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
+      <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
         <el-button @click="closeDrower">取 消</el-button>
         <el-button type="primary" @click="submitForm">保 存</el-button>
       </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { addDictionaryItem, getDictionaryDetail, updateDictionaryItem } from '@/api/dictionary'
+import { setDictionaryByOnce, getDictionaryDetail, updateDictionaryItem } from '@/api/dictionary'
 import EnumOption from './EnumOption'
 export default {
   name: 'AddOrEdit',
@@ -66,9 +66,10 @@ export default {
   data() {
     return {
       form: {
-        icon: '',
-        level: 0,
         name: undefined,
+        // icon: undefined,
+        // level: undefined,
+        // parentId: undefined,
         sign: undefined,
         status: undefined,
         options: []
@@ -87,6 +88,7 @@ export default {
     add() {
       this.editId = undefined
       this.drawerVisible = true
+      this.$refs.form.resetFields()
     },
 
     edit(editId) {
@@ -100,9 +102,12 @@ export default {
         if (res.code === 200) {
           this.form = {
             name: res.data.name,
-            organizationCode: res.data.organizationCode,
-            regionCode: res.data.regionCode,
-            status: res.data.status
+            // icon: res.data.icon,
+            // level: res.data.level,
+            // parentId: res.data.parentId,
+            sign: res.data.sign,
+            status: res.data.status,
+            options: res.data.options
           }
         }
       })
@@ -115,6 +120,9 @@ export default {
           return
         }
         const data = {
+          icon: '',
+          level: 0,
+          parentId: 0,
           ...this.form
         }
         if (this.form.options && this.form.options.length > 0) {
@@ -123,7 +131,7 @@ export default {
           })
         }
         if (this.editId) {
-          data.id = this.editId
+          data.objectCode = this.editId
           updateDictionaryItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')
@@ -134,7 +142,7 @@ export default {
             }
           })
         } else {
-          addDictionaryItem(data).then(res => {
+          setDictionaryByOnce(data).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')

@@ -38,7 +38,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="fixed bottom-0 right-0 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
+      <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
         <el-button @click="closeDrower">取 消</el-button>
         <el-button type="primary" @click="submitForm">保 存</el-button>
       </div>

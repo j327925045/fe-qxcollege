@@ -32,12 +32,14 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="icon" label="字段图标" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="level" label="顺序" show-overflow-tooltip min-width="150" />
           <el-table-column prop="name" label="名称" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="parentId" label="上层归属" show-overflow-tooltip min-width="150" />
           <el-table-column prop="sign" label="标识" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="status" label="启用状态" show-overflow-tooltip min-width="150" />
+          <el-table-column label="启用状态" show-overflow-tooltip min-width="150">
+            <template slot-scope="scope">
+              <el-tag v-if="scope.row.status===0" type="success">启用</el-tag>
+              <el-tag v-if="scope.row.status===1" type="danger">停用</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
