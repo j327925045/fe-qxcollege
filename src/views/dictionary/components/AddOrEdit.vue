@@ -34,7 +34,7 @@
           <el-form-item label="字段状态" prop="status">
             <el-select v-model="form.status" placeholder="请选择字段状态">
               <el-option
-                v-for="item in [{label: '启用', value: 0}, {label: '停用', value: 1}]"
+                v-for="item in [{label: '启用', value: '0'}, {label: '停用', value: '1'}]"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"

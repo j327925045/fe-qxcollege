@@ -37,19 +37,19 @@
               {{ scope.row.name || '-' }}
             </template>
           </el-table-column>
-          <el-table-column prop="gender" label="员工性别" show-overflow-tooltip min-width="120">
+          <el-table-column label="员工性别" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
-              {{ getLabelByValue('gender', scope.row.gender) }}
+              {{ scope.row.gender|getLabelByValue('gender') }}
             </template>
           </el-table-column>
-          <el-table-column prop="nature" label="员工性质" show-overflow-tooltip min-width="120">
+          <el-table-column label="员工性质" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
-              {{ getLabelByValue('employeeNature', scope.row.nature) }}
+              {{ scope.row.nature|getLabelByValue('employeeNature') }}
             </template>
           </el-table-column>
-          <el-table-column prop="status" label="员工状态" show-overflow-tooltip min-width="120">
+          <el-table-column label="员工状态" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
-              {{ getLabelByValue('employeeStatus', scope.row.status) }}
+              {{ scope.row.status|getLabelByValue('employeeStatus') }}
             </template>
           </el-table-column>
           <el-table-column label="账号（手机号）" show-overflow-tooltip min-width="120">

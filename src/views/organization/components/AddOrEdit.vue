@@ -16,14 +16,14 @@
       <div class="gyl-form-view pb-[60px]">
         <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
         <el-form ref="form" :model="form" :rules="rules" label-width="140px">
+          <el-form-item label="机构全称" prop="name">
+            <el-input v-model="form.name" placeholder="请输入" />
+          </el-form-item>
           <el-form-item label="机构地址(详细地址)" prop="address">
             <el-input v-model="form.address" placeholder="请输入" />
           </el-form-item>
           <el-form-item label="经营范围" prop="businessScope">
             <el-input v-model="form.businessScope" placeholder="请输入" />
-          </el-form-item>
-          <el-form-item label="机构全称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入" />
           </el-form-item>
           <el-form-item label="机构性质" prop="nature">
             <el-select v-model="form.nature" placeholder="请选择">
@@ -163,8 +163,11 @@ export default {
         const data = {
           ...this.form
         }
-        if (this.form.regionCode && this.form.regionCode.length > 0) {
-          data.regionCode = this.form.regionCode[this.form.regionCode.length - 1]
+        const formRegionCode = this.form.regionCode
+        if (Array.isArray(formRegionCode) && formRegionCode.length > 0) {
+          data.regionCode = formRegionCode[formRegionCode.length - 1]
+        } else if (formRegionCode) {
+          data.regionCode = formRegionCode
         }
         if (this.editId) {
           data.objectCode = this.editId

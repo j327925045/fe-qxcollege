@@ -1,4 +1,6 @@
+import utils from '@/utils/utils'
 import moment from 'moment'
+
 // Filter for article status
 export const articleStatusFilter = (status) => {
   const statusMap = {
@@ -11,6 +13,11 @@ export const articleStatusFilter = (status) => {
 
 export const dateFormat = (time, format) => {
   return moment(time).format(format || 'YYYY-MM-DD HH:mm:ss')
+}
+
+export const getLabelByValue = (value, enumKey) => {
+  const item = utils.getOptionsItemByValue(enumKey, value)
+  return item.label || '-'
 }
 
 // 让第一个字母大写

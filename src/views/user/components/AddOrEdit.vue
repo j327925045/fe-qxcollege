@@ -234,8 +234,10 @@ export default {
           ...this.form
         }
         const formRegionCode = this.form.regionCode
-        if (formRegionCode && formRegionCode.length > 0) {
+        if (Array.isArray(formRegionCode) && formRegionCode.length > 0) {
           data.regionCode = formRegionCode[formRegionCode.length - 1]
+        } else if (formRegionCode) {
+          data.regionCode = formRegionCode
         }
         if (this.editId) {
           data.objectCode = this.editId

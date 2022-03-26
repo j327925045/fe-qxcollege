@@ -32,17 +32,33 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
+          <el-table-column prop="name" label="机构全称" show-overflow-tooltip min-width="120" />
           <el-table-column prop="address" label="机构地址(详细地址)" show-overflow-tooltip min-width="180" />
           <el-table-column prop="regionFullName" label="所在区域" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="name" label="机构全称" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="nature" label="机构性质" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="operateStatus" label="经营状态" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="nature" label="机构性质" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.nature|getLabelByValue('organizationNature') }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="operateStatus" label="经营状态" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.operateStatus|getLabelByValue('organizationOperateStatus') }}
+            </template>
+          </el-table-column>
           <el-table-column prop="paidCapital" label="实缴资本(万)" show-overflow-tooltip min-width="120" />
           <el-table-column prop="registeredCapital" label="注册资本(万)" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="scale" label="机构规模" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="scale" label="机构规模" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.scale|getLabelByValue('organizationScale') }}
+            </template>
+          </el-table-column>
           <el-table-column prop="shortName" label="机构简称" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="status" label="机构状态" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="status" label="机构状态" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.status|getLabelByValue('organizationStatus') }}
+            </template>
+          </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="text" @click="editItem(scope.row)">编辑</el-button>

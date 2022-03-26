@@ -33,9 +33,17 @@
             </template>
           </el-table-column>
           <el-table-column prop="name" label="名称" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="organizationCode" label="所属机构code" show-overflow-tooltip min-width="150" />
+          <el-table-column prop="organizationName" label="所属机构" show-overflow-tooltip min-width="150">
+            <template slot-scope="scope">
+              {{ scope.row.organizationName||'-' }}
+            </template>
+          </el-table-column>
           <el-table-column prop="regionFullName" label="区域" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="status" label="医院状态" show-overflow-tooltip min-width="150" />
+          <el-table-column prop="status" label="医院状态" show-overflow-tooltip min-width="150">
+            <template slot-scope="scope">
+              {{ scope.row.status|getLabelByValue('hospitalStatus') }}
+            </template>
+          </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
@@ -106,7 +114,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteHospitalItem({ id: record.objectCode }).then(res => {
+          deleteHospitalItem({ objectCode: record.objectCode }).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

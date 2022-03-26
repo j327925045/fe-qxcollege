@@ -10,6 +10,9 @@
       <div class="gyl-form-view pb-[60px]">
         <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
         <el-form ref="form" :model="form" :rules="rules" label-width="140px">
+          <el-form-item label="菜单名称" prop="name">
+            <el-input v-model="form.name" placeholder="请输入" />
+          </el-form-item>
           <el-form-item label="是否显示" prop="hide">
             <el-select v-model="form.hide" placeholder="请选择">
               <el-option
@@ -20,9 +23,6 @@
               >
               </el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item label="菜单名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入" />
           </el-form-item>
           <el-form-item label="排序" prop="orderNum">
             <el-input-number v-model="form.orderNum" controls-position="right" :min="0" placeholder="请输入" />

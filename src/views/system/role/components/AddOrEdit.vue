@@ -37,7 +37,10 @@ export default {
         name: undefined,
         remark: undefined
       },
-      rules: {},
+      rules: {
+        name: [{ required: true, message: '请输入角色名称' }],
+        remark: [{ required: true, message: '请输入角色备注' }]
+      },
       editId: undefined,
       drawerVisible: false
     }

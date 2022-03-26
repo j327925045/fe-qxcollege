@@ -36,8 +36,8 @@
           <el-table-column prop="sign" label="标识" show-overflow-tooltip min-width="150" />
           <el-table-column label="启用状态" show-overflow-tooltip min-width="150">
             <template slot-scope="scope">
-              <el-tag v-if="scope.row.status===0" type="success">启用</el-tag>
-              <el-tag v-if="scope.row.status===1" type="danger">停用</el-tag>
+              <el-tag v-if="scope.row.status==='0'" type="success">启用</el-tag>
+              <el-tag v-if="scope.row.status==='1'" type="danger">停用</el-tag>
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">

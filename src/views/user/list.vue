@@ -33,15 +33,22 @@
               {{ scope.$index+1 }}
             </template>
           </el-table-column>
-          <el-table-column prop="nickname" label="用户昵称" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="realName" label="真实姓名" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="phone" label="手机号码" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="regionName" label="用户省市" show-overflow-tooltip min-width="180" />
+          <el-table-column prop="nickname" label="用户昵称" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="realName" label="真实姓名" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="phone" label="手机号码" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="regionFullName" label="用户省市" show-overflow-tooltip min-width="120" />
           <el-table-column prop="hospitalName" label="医院" show-overflow-tooltip min-width="120" />
           <el-table-column prop="department" label="科室" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="jobTitle" label="职称" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="birthday" label="出生年月" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="bindingWechat" label="绑定微信" show-overflow-tooltip min-width="120" />
+          <el-table-column label="职称" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.jobTitle|getLabelByValue('jobTitle') }}
+            </template>
+          </el-table-column>
+          <el-table-column label="出生年月" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ scope.row.birthday|dateFormat('YYYY-MM-DD') }}
+            </template>
+          </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">
               <el-button type="text" @click="showDetail(scope.row)">查看</el-button>
@@ -73,6 +80,7 @@
 import { getUserList, deleteUserItem } from '@/api/user'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
+import utils from '@/utils/utils'
 
 export default {
   name: 'UserList',
@@ -97,6 +105,11 @@ export default {
     this.getList()
   },
   methods: {
+    getLabelByValue(key, value) {
+      const item = utils.getOptionsItemByValue(key, value)
+      return item.label || '-'
+    },
+
     formSwitch() {
       this.isShow = !this.isShow
     },
