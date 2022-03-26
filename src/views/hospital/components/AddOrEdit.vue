@@ -28,7 +28,7 @@
           <el-form-item label="医院状态" prop="status">
             <el-select v-model="form.status" placeholder="请选择医院状态">
               <el-option
-                v-for="item in [{label: '正常', value: 1},{label: '关闭', value: 2}]"
+                v-for="item in enums.hospitalStatus"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -92,7 +92,7 @@ export default {
     },
 
     getItemDetail() {
-      getHospitalDetail({ id: this.editId }).then(res => {
+      getHospitalDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
           this.form = {
             name: res.data.name,
@@ -118,7 +118,7 @@ export default {
           data.regionCode = formRegionCode[formRegionCode.length - 1]
         }
         if (this.editId) {
-          data.id = this.editId
+          data.objectCode = this.editId
           updateHospitalItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')

@@ -19,9 +19,16 @@ export default {
           const resData = res.data || []
           for (let i = 0; i < resData.length; i++) {
             const item = resData[i]
-            enums[item.sign] = item.options
+            if (item.options) {
+              enums[item.sign] = item.options.map(item => {
+                return {
+                  label: item.name,
+                  value: item.sign
+                }
+              })
+            }
           }
-          console.log('enums', enums)
+          this.$store.commit('app/SET_ENUMS', enums)
         }
       })
     }

@@ -34,7 +34,7 @@ export function getAllHospitalItems(params) {
 
 export function getHospitalDetail(params) {
   return request({
-    url: `/qxcollege/hospital/get/${params.id}`,
+    url: `/qxcollege/hospital/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

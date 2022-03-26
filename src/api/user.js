@@ -57,7 +57,7 @@ export function updateUserItem(data) {
  */
 export function getUserDetail(params) {
   return request({
-    url: `/qxcollege/user/get/${params.id}`,
+    url: `/qxcollege/user/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

@@ -10,19 +10,11 @@
       <div class="gyl-form-view pb-[60px]">
         <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
         <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-          <el-form-item label="是否显示" prop="hide">
-            <el-select v-model="form.hide" placeholder="请选择">
-              <el-option
-                v-for="item in [
-                  { label: '显示', value: 0 },
-                  { label: '不显示', value: 1 }
-                ]"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
+          <el-form-item label="角色名称" prop="name">
+            <el-input v-model="form.name" placeholder="请输入角色名称"></el-input>
+          </el-form-item>
+          <el-form-item label="角色备注" prop="remark">
+            <el-input v-model="form.remark" placeholder="请输入角色备注"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -42,13 +34,8 @@ export default {
   data() {
     return {
       form: {
-        hide: undefined,
         name: undefined,
-        orderNum: undefined,
-        parentId: undefined,
-        type: undefined,
-        url: undefined,
-        urls: undefined
+        remark: undefined
       },
       rules: {},
       editId: undefined,
@@ -71,10 +58,11 @@ export default {
     },
 
     getItemDetail() {
-      getRoleDetail({ id: this.editId }).then((res) => {
+      getRoleDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200) {
           this.form = {
-            hide: res.data.hide
+            name: res.data.name,
+            remark: res.data.remark
           }
         }
       })
@@ -90,7 +78,7 @@ export default {
           ...this.form
         }
         if (this.editId) {
-          data.id = this.editId
+          data.objectCode = this.editId
           updateRoleItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('更新成功！')

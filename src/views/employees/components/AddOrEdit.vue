@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="员工性别" prop="gender">
             <el-select v-model="form.gender" placeholder="请选择员工性别">
-              <el-option v-for="(item, idx) in enums.genderOptions" :key="idx" :label="item.label" :value="item.value" />
+              <el-option v-for="item in enums.gender" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="员工头像" prop="avatar">
@@ -35,12 +35,12 @@
           </el-form-item>
           <el-form-item label="员工性质" prop="nature">
             <el-select v-model="form.nature" placeholder="请选择员工性质">
-              <el-option v-for="(item, idx) in enums.employeeNatureOptions" :key="idx" :label="item.label" :value="item.value" />
+              <el-option v-for="(item, idx) in enums.employeeNature" :key="idx" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="员工状态" prop="status">
             <el-select v-model="form.status" placeholder="请选择员工状态">
-              <el-option v-for="(item, idx) in enums.employeeStatusOptions" :key="idx" :label="item.label" :value="item.value" />
+              <el-option v-for="(item, idx) in enums.employeeStatus" :key="idx" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
         </el-form>
@@ -103,7 +103,7 @@ export default {
       this.getItemDetail()
     },
     getItemDetail() {
-      getEmployeesDetail({ id: this.editId }).then(res => {
+      getEmployeesDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200 && res.data) {
           this.form = {
             name: res.data.name,
@@ -127,7 +127,7 @@ export default {
           ...this.form
         }
         if (this.editId) {
-          data.id = this.editId
+          data.objectCode = this.editId
           updateEmployeesItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')

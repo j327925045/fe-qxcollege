@@ -110,7 +110,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteDictionaryItem({ id: record.objectCode }).then(res => {
+          deleteDictionaryItem({ objectCode: record.objectCode }).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

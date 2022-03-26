@@ -104,7 +104,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteRoleItem({ id: record.objectCode }).then(res => {
+          deleteRoleItem({ objectCode: record.objectCode }).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

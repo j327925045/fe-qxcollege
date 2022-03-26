@@ -28,10 +28,7 @@
           <el-form-item label="机构性质" prop="nature">
             <el-select v-model="form.nature" placeholder="请选择">
               <el-option
-                v-for="item in [
-                  { label: '公立', value: 1 },
-                  { label: '私立', value: 2 }
-                ]"
+                v-for="item in enums.organizationNature"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -42,16 +39,7 @@
           <el-form-item label="经营状态" prop="operateStatus">
             <el-select v-model="form.operateStatus" placeholder="请选择">
               <el-option
-                v-for="item in [
-                  { label: '存续', value: 1 },
-                  { label: '在业', value: 2 },
-                  { label: '吊销', value: 3 },
-                  { label: '注销', value: 4 },
-                  { label: '迁入', value: 5 },
-                  { label: '迁出', value: 6 },
-                  { label: '停业', value: 7 },
-                  { label: '清算', value: 8 }
-                ]"
+                v-for="item in enums.organizationOperateStatus"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -71,10 +59,7 @@
           <el-form-item label="机构规模" prop="scale">
             <el-select v-model="form.scale" placeholder="请选择">
               <el-option
-                v-for="item in [
-                  { label: '大型连锁', value: 1 },
-                  { label: '菩通机枸', value: 2 }
-                ]"
+                v-for="item in enums.organizationScale"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -88,10 +73,7 @@
           <el-form-item label="机构状态" prop="status">
             <el-select v-model="form.status" placeholder="请选择">
               <el-option
-                v-for="item in [
-                  { label: '有效', value: 1 },
-                  { label: '失效', value: 2 }
-                ]"
+                v-for="item in enums.organizationStatus"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -153,7 +135,7 @@ export default {
       this.getItemDetail()
     },
     getItemDetail() {
-      getOrganizationDetail({ id: this.editId }).then((res) => {
+      getOrganizationDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200) {
           this.form = {
             address: res.data.address,
@@ -185,7 +167,7 @@ export default {
           data.regionCode = this.form.regionCode[this.form.regionCode.length - 1]
         }
         if (this.editId) {
-          data.id = this.editId
+          data.objectCode = this.editId
           updateOrganizationItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('更新成功！')

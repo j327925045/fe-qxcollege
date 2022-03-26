@@ -34,7 +34,7 @@ export function getAllRoleList(params) {
 
 export function getRoleDetail(params) {
   return request({
-    url: `/qxcollege/role/get/${params.id}`,
+    url: `/qxcollege/role/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

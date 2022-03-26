@@ -88,7 +88,9 @@ export default {
     add() {
       this.editId = undefined
       this.drawerVisible = true
-      this.$refs.form.resetFields()
+      if (this.$refs.form) {
+        this.$refs.form.resetFields()
+      }
     },
 
     edit(editId) {
@@ -98,7 +100,7 @@ export default {
     },
 
     getItemDetail() {
-      getDictionaryDetail({ id: this.editId }).then(res => {
+      getDictionaryDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
           this.form = {
             name: res.data.name,

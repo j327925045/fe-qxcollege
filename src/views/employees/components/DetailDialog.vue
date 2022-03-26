@@ -2,13 +2,13 @@
   <el-dialog title="员工信息" width="600px" :visible.sync="detailDialogVisible">
     <el-descriptions>
       <el-descriptions-item label="员工姓名">{{ employDetail.name }}</el-descriptions-item>
-      <el-descriptions-item label="员工性别">{{ getLabelByValue('genderOptions',employDetail.gender) }}</el-descriptions-item>
+      <el-descriptions-item label="员工性别">{{ getLabelByValue('gender',employDetail.gender) }}</el-descriptions-item>
       <el-descriptions-item label="员工头像">
         <el-avatar style="transform: translate(0, -10px)" size="medium" :src="employDetail.avatar"></el-avatar>
       </el-descriptions-item>
       <el-descriptions-item label="账号（手机号）">{{ employDetail.account }}</el-descriptions-item>
-      <el-descriptions-item label="员工性质">{{ getLabelByValue('employeeNatureOptions', employDetail.nature) }}</el-descriptions-item>
-      <el-descriptions-item label="员工状态">{{ getLabelByValue('employeeStatusOptions', employDetail.status) }}</el-descriptions-item>
+      <el-descriptions-item label="员工性质">{{ getLabelByValue('employeeNature', employDetail.nature) }}</el-descriptions-item>
+      <el-descriptions-item label="员工状态">{{ getLabelByValue('employeeStatus', employDetail.status) }}</el-descriptions-item>
     </el-descriptions>
 
     <div slot="footer">

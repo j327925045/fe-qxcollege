@@ -49,7 +49,7 @@ export function deleteEmployeesItem(data) {
  */
 export function getEmployeesDetail(params) {
   return request({
-    url: `/qxcollege/employee/get/${params.id}`,
+    url: `/qxcollege/employee/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

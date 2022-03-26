@@ -35,45 +35,23 @@ const state = {
   topMenuActiveIndex: -1,
   // 收藏菜单
   favouriteMenu: [],
+  // 用到的枚举值在这里列一下，防止系统字典里没配置会报错
   enums: {
-    genderOptions: [
-      {
-        label: '未知',
-        value: 0
-      },
-      {
-        label: '男',
-        value: 1
-      },
-      {
-        label: '女',
-        value: 2
-      }
-    ],
-    employeeNatureOptions: [
-      {
-        label: '未知',
-        value: 0
-      },
-      {
-        label: '正式员工',
-        value: 1
-      },
-      {
-        label: '试用期员工',
-        value: 2
-      }
-    ],
-    employeeStatusOptions: [
-      {
-        label: '正常',
-        value: 1
-      },
-      {
-        label: '禁用',
-        value: 2
-      }
-    ]
+    gender: [], // 性别
+    employeeNature: [], // 员工性质
+    employeeStatus: [], // 员工状态
+    doctorLevel: [], // 医生等级
+    isCertified: [], // 是否认证
+    isCooperation: [], // 是否合作项目
+    isLecturer: [], // 是否讲师
+    isQualification: [], // 资质认证
+    organizationNature: [], // organizationNature
+    organizationOperateStatus: [], // 机构经营状态
+    organizationScale: [], // 机构规模
+    organizationStatus: [], // 机构状态
+    hospitalStatus: [], // 医院状态
+    permissionHide: [], // 权限是否显示
+    permissionType: []// 权限类型
   }
 }
 
@@ -84,7 +62,7 @@ Object.defineProperty(state, 'currentTab', {
 
 const mutations = {
   SET_ENUMS(state, enums) {
-    state.enums = [...state.enums, ...enums]
+    state.enums = { ...state.enums, ...enums }
   },
 
   SET_TOP_MENU_ACTIVE_INDEX(state, index) {

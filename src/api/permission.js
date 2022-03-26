@@ -26,7 +26,7 @@ export function updatePermissionItem(data) {
 
 export function getPermissionDetail(params) {
   return request({
-    url: `/qxcollege/permission/get/${params.id}`,
+    url: `/qxcollege/permission/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

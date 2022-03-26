@@ -1,4 +1,4 @@
-// import { getCurrentInfo } from '@/api/employees'
+import { getCurrentInfo } from '@/api/employees'
 
 const getDefaultState = () => {
   return {
@@ -66,30 +66,12 @@ const actions = {
 
   async getUserInfo({ commit }) {
     // 强校验
-    // const userInfo = await getCurrentInfo()
-    // console.log('userInfo', userInfo)
-    // if (!checkLoginRes.code) {
-    //   // 成功后写入用户信息
-    const checkLoginRes = {
-      data: {
-        fullname: 'mockFullname',
-        username: 'mockUserName',
-        email: 'mockEmail',
-        avatar: 'https://notion-avatar.vercel.app/api' +
-        '/img/eyJmYWNlIjo3LCJub3NlIjo3LCJtb3V0aCI6OCwiZXllcyI6MCwi' +
-        'ZXllYnJvd3MiOjAsImdsYXNzZXMiOjEsImhhaXIiOjUsImFjY2Vzc29yaWVzIjowLCJkZXRhaWxzIjowLCJiZWFyZCI6MCwiZmxpcCI6MCwiY29sb3I' +
-        'iOiJyZ2JhKDI1NSwgMCwgMCwgMCkiLCJzaGFwZSI6Im5vbmUifQ==',
-        userId: '001'
-      }
-    }
-    const { fullname, username, email, avatar, userId } = checkLoginRes.data
-    commit('SET_NAME', fullname)
-    commit('SET_USER_NAME', username)
-    commit('SET_EMAIL', email)
+    const userInfo = await getCurrentInfo()
+    const { account, name, avatar, userId } = userInfo.data
+    commit('SET_NAME', name || 'unknown')
+    commit('SET_USER_NAME', account || 'unknown')
     commit('SET_AVATAR', avatar)
     commit('SET_USER_ID', userId)
-    //   return true
-    // }
   },
 
   setAccountType({ commit }, no) {

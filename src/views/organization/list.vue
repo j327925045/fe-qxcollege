@@ -111,7 +111,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteOrganizationItem({ id: record.objectCode }).then(res => {
+          deleteOrganizationItem({ objectCode: record.objectCode }).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

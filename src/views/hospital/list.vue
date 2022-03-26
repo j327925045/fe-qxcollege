@@ -34,7 +34,7 @@
           </el-table-column>
           <el-table-column prop="name" label="名称" show-overflow-tooltip min-width="150" />
           <el-table-column prop="organizationCode" label="所属机构code" show-overflow-tooltip min-width="150" />
-          <el-table-column prop="regionCode" label="区域code" show-overflow-tooltip min-width="150" />
+          <el-table-column prop="regionFullName" label="区域" show-overflow-tooltip min-width="150" />
           <el-table-column prop="status" label="医院状态" show-overflow-tooltip min-width="150" />
           <el-table-column fixed="right" label="操作" width="120">
             <template slot-scope="scope">

@@ -37,7 +37,7 @@ export function updateDictionaryItem(data) {
 
 export function getDictionaryDetail(params) {
   return request({
-    url: `/qxcollege/dictionary/get/${params.id}`,
+    url: `/qxcollege/dictionary/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

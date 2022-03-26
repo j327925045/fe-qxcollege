@@ -12,7 +12,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import utils from '@/utils/utils'
 
 export default {
   name: 'DetailDialog',
@@ -29,10 +28,6 @@ export default {
     show(userDetail) {
       this.detailDialogVisible = true
       this.userDetail = userDetail
-    },
-    getLabelByValue(key, value) {
-      const item = utils.getOptionsItemByValue(key, value)
-      return item.label || ''
     }
   }
 }

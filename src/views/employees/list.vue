@@ -29,25 +29,37 @@
         <el-table v-loading="loading" :data="tableData" stripe border>
           <el-table-column fixed="left" label="序号" width="60">
             <template slot-scope="scope">
-              {{ scope.$index+1 }}
+              {{ scope.$index + 1 }}
             </template>
           </el-table-column>
           <el-table-column label="员工姓名" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
-              {{ scope.row.name||'-' }}
+              {{ scope.row.name || '-' }}
             </template>
           </el-table-column>
-          <el-table-column prop="gender" label="员工性别" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="nature" label="员工性质" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="status" label="员工状态" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="gender" label="员工性别" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ getLabelByValue('gender', scope.row.gender) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="nature" label="员工性质" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ getLabelByValue('employeeNature', scope.row.nature) }}
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" label="员工状态" show-overflow-tooltip min-width="120">
+            <template slot-scope="scope">
+              {{ getLabelByValue('employeeStatus', scope.row.status) }}
+            </template>
+          </el-table-column>
           <el-table-column label="账号（手机号）" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
-              {{ scope.row.account||'-' }}
+              {{ scope.row.account || '-' }}
             </template>
           </el-table-column>
           <el-table-column label="创建时间" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
-              {{ scope.row.createTime|dateFormat }}
+              {{ scope.row.createTime | dateFormat }}
             </template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="120">
@@ -81,6 +93,7 @@
 import { getEmployeesList, deleteEmployeesItem } from '@/api/employees.js'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
+import utils from '@/utils/utils'
 export default {
   name: 'EmployeesList',
   components: {
@@ -106,6 +119,11 @@ export default {
     this.getList()
   },
   methods: {
+    getLabelByValue(key, value) {
+      const item = utils.getOptionsItemByValue(key, value)
+      return item.label || '-'
+    },
+
     formSwitch() {
       this.isShow = !this.isShow
     },
@@ -137,7 +155,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteEmployeesItem({ id: record.objectCode }).then(res => {
+          deleteEmployeesItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -146,8 +164,7 @@ export default {
             }
           })
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
 
     /**
@@ -169,17 +186,19 @@ export default {
         ...this.filterForm
       }
       this.loading = true
-      getEmployeesList(params).then(res => {
-        this.loading = false
-        if (res.code === 200) {
-          this.total = res.data.totalCount
-          this.tableData = res.data.list || []
-        } else {
-          this.$message.error(res.message)
-        }
-      }).catch(_ => {
-        this.loading = false
-      })
+      getEmployeesList(params)
+        .then((res) => {
+          this.loading = false
+          if (res.code === 200) {
+            this.total = res.data.totalCount
+            this.tableData = res.data.list || []
+          } else {
+            this.$message.error(res.message)
+          }
+        })
+        .catch((_) => {
+          this.loading = false
+        })
     },
 
     /**

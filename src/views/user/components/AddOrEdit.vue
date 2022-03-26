@@ -25,7 +25,7 @@
             </el-form-item>
             <el-form-item label="性别" prop="gender">
               <el-select v-model="form.gender" placeholder="请选择性别">
-                <el-option v-for="(item, idx) in enums.genderOptions" :key="idx" :label="item.label" :value="item.value" />
+                <el-option v-for="(item, idx) in enums.gender" :key="idx" :label="item.label" :value="item.value" />
               </el-select>
             </el-form-item>
             <el-form-item label="出生年月" prop="birthday">
@@ -49,7 +49,7 @@
             <el-form-item label="医生等级" prop="doctorLevel">
               <el-select v-model="form.doctorLevel" placeholder="请选择医生等级">
                 <el-option
-                  v-for="item in [{label: 'V1', value: 1}, {label: 'V2', value: 2}, {label: 'V3', value: 3}, {label: 'V4', value: 4}]"
+                  v-for="item in enums.doctorLevel"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -58,7 +58,15 @@
               </el-select>
             </el-form-item>
             <el-form-item label="职称" prop="jobTitle">
-              <el-input v-model="form.jobTitle" placeholder="请输入职称" />
+              <el-select v-model="form.jobTitle" placeholder="请选择职称">
+                <el-option
+                  v-for="item in enums.jobTitle"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="所在区域(省市县)" prop="regionCode">
               <RegionSelect v-model="form.regionCode" placeholder="请输入所在区域(省市县)"></RegionSelect>
@@ -69,7 +77,7 @@
             <el-form-item label="是否认证" prop="isCertified">
               <el-select v-model="form.isCertified" placeholder="请选择是否认证">
                 <el-option
-                  v-for="item in [{label: '认证', value: 1}, {label: '未认证', value: 2}]"
+                  v-for="item in enums.isCertified"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -80,7 +88,7 @@
             <el-form-item label="是否合作项目" prop="isCooperation">
               <el-select v-model="form.isCooperation" placeholder="请选择是否合作项目">
                 <el-option
-                  v-for="item in [{label: '是', value: 1}, {label: '否', value: 2}]"
+                  v-for="item in enums.isCooperation"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -91,7 +99,7 @@
             <el-form-item label="是否讲师" prop="isLecturer">
               <el-select v-model="form.isLecturer" placeholder="请选择是否讲师">
                 <el-option
-                  v-for="item in [{label: '是', value: 1}, {label:'否', value: 2}]"
+                  v-for="item in enums.isLecturer"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -102,7 +110,7 @@
             <el-form-item label="资质认证" prop="isQualification">
               <el-select v-model="form.isQualification" placeholder="请选择资质认证">
                 <el-option
-                  v-for="item in [{label: '认证', value: 1},{label: '未认证', value: 2}]"
+                  v-for="item in enums.isQualification"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -138,6 +146,7 @@ export default {
   data() {
     return {
       form: {
+        realName: undefined,
         nickname: undefined,
         gender: undefined,
         birthday: undefined,
@@ -190,9 +199,27 @@ export default {
     },
 
     getItemDetail() {
-      getUserDetail({ id: this.editId }).then(res => {
+      getUserDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
-          this.form = {}
+          this.form = {
+            realName: res.data.realName,
+            nickname: res.data.nickname,
+            gender: res.data.gender,
+            birthday: res.data.birthday,
+            phone: res.data.phone,
+            personalUrl: res.data.personalUrl,
+            hospitalCode: res.data.hospitalCode,
+            department: res.data.department,
+            doctorLevel: res.data.doctorLevel,
+            jobTitle: res.data.jobTitle,
+            regionCode: res.data.regionCode,
+            address: res.data.address,
+            isCertified: res.data.isCertified,
+            isCooperation: res.data.isCooperation,
+            isLecturer: res.data.isLecturer,
+            isQualification: res.data.isQualification,
+            personalIntroduction: res.data.personalIntroduction
+          }
         }
       })
     },
@@ -211,7 +238,7 @@ export default {
           data.regionCode = formRegionCode[formRegionCode.length - 1]
         }
         if (this.editId) {
-          data.id = this.editId
+          data.objectCode = this.editId
           updateUserItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')

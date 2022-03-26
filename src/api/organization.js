@@ -46,7 +46,7 @@ export function updateOrganizationItem(data) {
  */
 export function getOrganizationDetail(params) {
   return request({
-    url: `/qxcollege/organization/get/${params.id}`,
+    url: `/qxcollege/organization/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

@@ -13,10 +13,7 @@
           <el-form-item label="是否显示" prop="hide">
             <el-select v-model="form.hide" placeholder="请选择">
               <el-option
-                v-for="item in [
-                  { label: '显示', value: 0 },
-                  { label: '不显示', value: 1 }
-                ]"
+                v-for="item in enums.permissionHide"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -36,11 +33,7 @@
           <el-form-item label="类型" prop="type">
             <el-select v-model="form.type" placeholder="请输入">
               <el-option
-                v-for="item in [
-                  { label: '目录', value: 1 },
-                  { label: '菜单', value: 2 },
-                  { label: '按钮', value: 3 }
-                ]"
+                v-for="item in enums.permissionType"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -101,7 +94,7 @@ export default {
     },
 
     getItemDetail() {
-      getPermissionDetail({ id: this.editId }).then((res) => {
+      getPermissionDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200) {
           this.form = {
             hide: res.data.hide,
@@ -126,7 +119,7 @@ export default {
           ...this.form
         }
         if (this.editId) {
-          data.id = this.editId
+          data.objectCode = this.editId
           updatePermissionItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('更新成功！')

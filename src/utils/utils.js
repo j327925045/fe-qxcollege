@@ -88,6 +88,9 @@ export default {
     const enums = store.getters.enums
     let result = {}
     const options = enums[optionKey]
+    if (!options || options.length === 0) {
+      return result
+    }
     for (let i = 0; i < options.length; i++) {
       const item = options[i]
       if (item.value === value) {
