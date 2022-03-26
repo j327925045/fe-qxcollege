@@ -27,8 +27,8 @@
           <el-form-item label="排序" prop="orderNum">
             <el-input-number v-model="form.orderNum" controls-position="right" :min="0" placeholder="请输入" />
           </el-form-item>
-          <el-form-item label="父菜单ID" prop="parentId">
-            <el-input-number v-model="form.parentId" controls-position="right" placeholder="请输入"></el-input-number>
+          <el-form-item label="父菜单" prop="parentId">
+            <PermissionCascader v-model="form.parentId" :disabled="!!editId"></PermissionCascader>
           </el-form-item>
           <el-form-item label="类型" prop="type">
             <el-select v-model="form.type" placeholder="请输入">
@@ -60,8 +60,10 @@
 <script>
 import { addPermissionItem, getPermissionDetail, updatePermissionItem } from '@/api/permission'
 import { mapGetters } from 'vuex'
+import PermissionCascader from '@/views/components/PermissionCascader'
 export default {
   name: 'AddOrEdit',
+  components: { PermissionCascader },
   data() {
     return {
       form: {

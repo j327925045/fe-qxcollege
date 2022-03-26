@@ -51,7 +51,7 @@
             <el-input-number v-model="form.paidCapital" :min="0" controls-position="right" placeholder="请输入"></el-input-number>
           </el-form-item>
           <el-form-item label="所在区域(省市县)" prop="regionCode">
-            <RegionSelect v-model="form.regionCode"></RegionSelect>
+            <RegionCascader v-model="form.regionCode"></RegionCascader>
           </el-form-item>
           <el-form-item label="注册资本(万)" prop="registeredCapital">
             <el-input-number v-model="form.registeredCapital" :min="0" controls-position="right" placeholder="请输入"></el-input-number>
@@ -94,12 +94,12 @@
 <script>
 import { addOrganizationItem, getOrganizationDetail, updateOrganizationItem } from '@/api/organization'
 import { mapGetters } from 'vuex'
-import RegionSelect from '@/views/components/RegionSelect'
+import RegionCascader from '@/views/components/RegionCascader'
 
 export default {
   name: 'OrganizationCreate',
   components: {
-    RegionSelect
+    RegionCascader
   },
   data() {
     return {
@@ -162,12 +162,6 @@ export default {
         }
         const data = {
           ...this.form
-        }
-        const formRegionCode = this.form.regionCode
-        if (Array.isArray(formRegionCode) && formRegionCode.length > 0) {
-          data.regionCode = formRegionCode[formRegionCode.length - 1]
-        } else if (formRegionCode) {
-          data.regionCode = formRegionCode
         }
         if (this.editId) {
           data.objectCode = this.editId

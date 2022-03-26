@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     setMyValue() {
-      console.log('this.value', this.value)
       this.myValue = this.value
     },
 

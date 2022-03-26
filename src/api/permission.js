@@ -36,6 +36,14 @@ export function getPermissionList(params) {
   return request({
     url: '/qxcollege/permission/list',
     method: 'get',
-    params: params
+    params
+  })
+}
+
+export function getPermissionTree(params) {
+  return request({
+    url: '/qxcollege/permission/tree',
+    method: 'get',
+    params
   })
 }

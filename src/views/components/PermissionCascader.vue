@@ -5,15 +5,16 @@
     :options="options"
     :placeholder="placeholder"
     filterable
+    :disabled="disabled"
     @change="handleChange"
   ></el-cascader>
 </template>
 
 <script>
-import { getRegionData } from '@/api/city.js'
+import { getPermissionTree } from '@/api/permission.js'
 
 export default {
-  name: 'RegionSelect',
+  name: 'PermissionCascader',
   props: {
     value: {
       type: [Array, String],
@@ -24,6 +25,10 @@ export default {
     placeholder: {
       type: String,
       default: '请选择'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -32,8 +37,10 @@ export default {
       options: [],
       props: {
         label: 'name',
-        value: 'numberCode',
-        children: 'subRegin'
+        value: 'objectCode',
+        children: 'options',
+        emitPath: false,
+        checkStrictly: true
       }
     }
   },
@@ -58,7 +65,8 @@ export default {
     },
 
     getOptions() {
-      getRegionData({}).then(res => {
+      getPermissionTree({}).then(res => {
+        console.log('res', res)
         if (res.code === 200) {
           this.options = res.data || []
           this.formatData(this.options)
@@ -68,11 +76,11 @@ export default {
     formatData(regionData) {
       for (let i = 0; i < regionData.length; i++) {
         const item = regionData[i]
-        if (item.subRegin && item.subRegin.length === 0) {
-          delete item.subRegin
+        if (item.options && item.options.length === 0) {
+          delete item.options
         }
-        if (item.subRegin && item.subRegin.length > 0) {
-          this.formatData(item.subRegin)
+        if (item.options && item.options.length > 0) {
+          this.formatData(item.options)
         }
       }
     },

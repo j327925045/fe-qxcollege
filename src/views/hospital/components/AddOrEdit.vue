@@ -23,7 +23,7 @@
             <OrganizationSelect v-model="form.organizationCode" placeholder="请选择所属机构"></OrganizationSelect>
           </el-form-item>
           <el-form-item label="区域" prop="regionCode">
-            <RegionSelect v-model="form.regionCode" placeholder="请选择区域"></RegionSelect>
+            <RegionCascader v-model="form.regionCode" placeholder="请选择区域"></RegionCascader>
           </el-form-item>
           <el-form-item label="医院状态" prop="status">
             <el-select v-model="form.status" placeholder="请选择医院状态">
@@ -50,13 +50,13 @@
 import { addHospitalItem, getHospitalDetail, updateHospitalItem } from '@/api/hospital'
 import { mapGetters } from 'vuex'
 import OrganizationSelect from '@/views/components/OrganizationSelect'
-import RegionSelect from '@/views/components/RegionSelect'
+import RegionCascader from '@/views/components/RegionCascader'
 
 export default {
   name: 'AddOrEdit',
   components: {
     OrganizationSelect,
-    RegionSelect
+    RegionCascader
   },
   data() {
     return {
@@ -112,12 +112,6 @@ export default {
         }
         const data = {
           ...this.form
-        }
-        const formRegionCode = this.form.regionCode
-        if (Array.isArray(formRegionCode) && formRegionCode.length > 0) {
-          data.regionCode = formRegionCode[formRegionCode.length - 1]
-        } else if (formRegionCode) {
-          data.regionCode = formRegionCode
         }
         if (this.editId) {
           data.objectCode = this.editId

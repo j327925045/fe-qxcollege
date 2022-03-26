@@ -177,8 +177,7 @@ export default {
   }
 }
 
-.content-tabs,
-.jdwl-admin-red .content-tabs {
+.content-tabs {
   user-select: none;
 
   /deep/ .el-tabs {
@@ -212,8 +211,7 @@ export default {
         visibility: hidden;
       }
 
-      &:hover,
-      &.is-active {
+      &:hover, &.is-active {
         .el-icon-close {
           visibility: visible;
         }

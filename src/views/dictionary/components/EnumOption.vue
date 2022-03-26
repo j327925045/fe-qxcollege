@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     setMyValue() {
-      console.log('this.value', this.value)
       if (!this.value || this.value.length === 0) {
         this.myValue = [{
           label: undefined,

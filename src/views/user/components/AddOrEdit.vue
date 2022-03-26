@@ -69,7 +69,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="所在区域(省市县)" prop="regionCode">
-              <RegionSelect v-model="form.regionCode" placeholder="请输入所在区域(省市县)"></RegionSelect>
+              <RegionCascader v-model="form.regionCode" placeholder="请输入所在区域(省市县)"></RegionCascader>
             </el-form-item>
             <el-form-item label="执业地点(详细地址)" prop="address">
               <el-input v-model="form.address" placeholder="请输入执业地点(详细地址)" />
@@ -136,12 +136,12 @@
 import { addUserItem, getUserDetail, updateUserItem } from '@/api/user'
 import { mapGetters } from 'vuex'
 import HospitalSelect from '@/views/components/HospitalSelect'
-import RegionSelect from '@/views/components/RegionSelect'
+import RegionCascader from '@/views/components/RegionCascader'
 export default {
   name: 'AddOrEdit',
   components: {
     HospitalSelect,
-    RegionSelect
+    RegionCascader
   },
   data() {
     return {
@@ -232,12 +232,6 @@ export default {
         }
         const data = {
           ...this.form
-        }
-        const formRegionCode = this.form.regionCode
-        if (Array.isArray(formRegionCode) && formRegionCode.length > 0) {
-          data.regionCode = formRegionCode[formRegionCode.length - 1]
-        } else if (formRegionCode) {
-          data.regionCode = formRegionCode
         }
         if (this.editId) {
           data.objectCode = this.editId

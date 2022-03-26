@@ -39,7 +39,7 @@
           </el-table-column>
           <el-table-column prop="name" label="菜单名称" show-overflow-tooltip min-width="120" />
           <el-table-column prop="orderNum" label="排序" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="parentId" label="父菜单ID" show-overflow-tooltip min-width="120" />
+          <el-table-column prop="parentId" label="父菜单" show-overflow-tooltip min-width="120" />
           <el-table-column prop="type" label="权限类型" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
               {{ scope.row.type|getLabelByValue('permissionType') }}
