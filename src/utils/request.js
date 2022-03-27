@@ -24,10 +24,13 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data
+    const noMessageCode = [300]
     // 业务接口统一处理response异常
     if (res.code !== 200) {
-      Message(res.message)
-      return Promise.reject(new Error(res.message || 'Error'))
+      if (!noMessageCode.includes(res.code)) {
+        Message(res.message)
+      }
+      return Promise.reject(res)
     }
     return res
   },
