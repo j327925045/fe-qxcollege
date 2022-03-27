@@ -1,4 +1,3 @@
-import Utils from '@/utils/utils.js'
 import { Message } from 'element-ui'
 
 const HomePage = {
@@ -19,7 +18,7 @@ const state = {
   // 缓存页面的最大数，超过则把缓存最久切没有被访问的销毁
   maxPageNumber: 10,
   // 显隐顶导及菜单
-  showCommonView: false,
+  showCommonView: true,
   // 主题色
   themeColor: 'blue',
   menus: [],
@@ -80,11 +79,6 @@ const mutations = {
 
   TOGGLE_ROUTER_ALIVE(state) {
     state.isRouterAlive = !state.isRouterAlive
-  },
-
-  INIT_FRAMEWORK(state) {
-    state.showCommonView = !!Utils.queryUrl(window.location.href).showCommonView || true
-    state.sidebar.showSidebar = state.showCommonView
   },
 
   KEEP_ALIVE(state, componentName) {

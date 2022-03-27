@@ -56,22 +56,21 @@ const mutations = {
   }
 }
 
-const login = function() {
-  // window.location.href = `//${process.env.VUE_APP_PASSPORT}/uc/login?ReturnUrl=${encodeURIComponent(window.location.href)}` || '' // passport 登录开启
-  window.location.href = `//${process.env.VUE_APP_ERP}/sso/login?ReturnUrl=${encodeURIComponent(window.location.href)}` || '' // erp内网 登录开启
-}
-
 const actions = {
-  login,
-
-  async getUserInfo({ commit }) {
-    // 强校验
-    const userInfo = await getCurrentInfo()
-    const { account, name, avatar, userId } = userInfo.data
-    commit('SET_NAME', name || 'unknown')
-    commit('SET_USER_NAME', account || 'unknown')
-    commit('SET_AVATAR', avatar)
-    commit('SET_USER_ID', userId)
+  getInfo({ commit }) {
+    return new Promise((resolve, reject) => {
+      // 强校验
+      getCurrentInfo().then(userInfo => {
+        const { account, name, avatar, userId } = userInfo.data
+        commit('SET_NAME', name || 'unknown')
+        commit('SET_USER_NAME', account || 'unknown')
+        commit('SET_AVATAR', avatar)
+        commit('SET_USER_ID', userId)
+        resolve(userInfo)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   },
 
   setAccountType({ commit }, no) {
