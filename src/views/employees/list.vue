@@ -62,9 +62,10 @@
               {{ scope.row.createTime | dateFormat }}
             </template>
           </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="180">
             <template slot-scope="scope">
               <el-button type="text" @click="showDetail(scope.row)">查看</el-button>
+              <el-button type="text" @click="setRole(scope.row)">设置角色</el-button>
               <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
               <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
             </template>
@@ -86,6 +87,7 @@
     </div>
     <DetailDialog ref="DetailDialog"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
+    <SetRoleDrower ref="SetRoleDrower" @update="getList"></SetRoleDrower>
   </div>
 </template>
 
@@ -93,12 +95,14 @@
 import { getEmployeesList, deleteEmployeesItem } from '@/api/employees.js'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
+import SetRoleDrower from './components/SetRoleDrower'
 import utils from '@/utils/utils'
 export default {
   name: 'EmployeesList',
   components: {
     DetailDialog,
-    AddOrEdit
+    AddOrEdit,
+    SetRoleDrower
   },
   data() {
     return {
@@ -133,6 +137,10 @@ export default {
      */
     showDetail(record) {
       this.$refs.DetailDialog.show(record)
+    },
+
+    setRole(record) {
+      this.$refs.SetRoleDrower.edit(record.objectCode)
     },
 
     /**

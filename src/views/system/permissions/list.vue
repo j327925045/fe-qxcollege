@@ -26,20 +26,22 @@
         <el-button type="primary" @click="addItem">新建权限</el-button>
       </el-row>
       <div class="gyl-form-view-box">
-        <el-table v-loading="loading" :data="tableData" stripe border>
-          <el-table-column fixed="left" label="序号" width="60">
-            <template slot-scope="scope">
-              {{ scope.$index+1 }}
-            </template>
-          </el-table-column>
+        <el-table
+          v-loading="loading"
+          :data="tableData"
+          row-key="objectCode"
+          stripe
+          border
+          default-expand-all
+          :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        >
+          <el-table-column prop="name" label="菜单名称" show-overflow-tooltip min-width="120" />
           <el-table-column prop="hide" label="是否显示" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
               {{ scope.row.hide|getLabelByValue('permissionHide') }}
             </template>
           </el-table-column>
-          <el-table-column prop="name" label="菜单名称" show-overflow-tooltip min-width="120" />
           <el-table-column prop="orderNum" label="排序" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="parentId" label="父菜单" show-overflow-tooltip min-width="120" />
           <el-table-column prop="type" label="权限类型" show-overflow-tooltip min-width="120">
             <template slot-scope="scope">
               {{ scope.row.type|getLabelByValue('permissionType') }}
@@ -150,8 +152,10 @@ export default {
       getPermissionList(params).then(res => {
         this.loading = false
         if (res.code === 200) {
-          this.total = res.data.totalCount
-          this.tableData = res.data.list || []
+          const resData = res.data || []
+          this.total = resData.totalCount
+          this.tableData = resData.list || []
+          console.log('this.tableData', this.tableData)
         }
       }).catch(_ => {
         this.loading = false

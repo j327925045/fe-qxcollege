@@ -70,6 +70,11 @@ export default {
         if (res.code === 200) {
           this.options = res.data || []
           this.formatData(this.options)
+          console.log('this.options', this.options)
+          this.options.unshift({
+            objectCode: '0',
+            name: '无父节点'
+          })
         }
       })
     },

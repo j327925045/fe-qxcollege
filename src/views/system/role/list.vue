@@ -28,7 +28,12 @@
         </div>
       </el-row>
       <div class="gyl-form-view-box">
-        <el-table v-loading="loading" :data="tableData" stripe border>
+        <el-table
+          v-loading="loading"
+          :data="tableData"
+          stripe
+          border
+        >
           <el-table-column fixed="left" label="序号" width="60">
             <template slot-scope="scope">
               {{ scope.$index+1 }}
@@ -36,8 +41,9 @@
           </el-table-column>
           <el-table-column prop="name" label="名字" show-overflow-tooltip min-width="180" />
           <el-table-column prop="remark" label="备注" show-overflow-tooltip min-width="180" />
-          <el-table-column fixed="right" label="操作" width="120">
+          <el-table-column fixed="right" label="操作" width="160">
             <template slot-scope="scope">
+              <el-button type="text" @click="setPermission(scope.row)">配置权限</el-button>
               <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
               <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
             </template>
@@ -57,6 +63,7 @@
         />
       </div>
       <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
+      <SetPermissionDrawer ref="SetPermissionDrawer" @update="getList"></SetPermissionDrawer>
     </div>
   </div>
 </template>
@@ -64,10 +71,12 @@
 <script>
 import { getRoleList, deleteRoleItem } from '@/api/role'
 import AddOrEdit from './components/AddOrEdit'
+import SetPermissionDrawer from './components/SetPermissionDrawer'
 export default {
   name: 'SystemRoleList',
   components: {
-    AddOrEdit
+    AddOrEdit,
+    SetPermissionDrawer
   },
   data() {
     return {
@@ -96,6 +105,10 @@ export default {
 
     editItem(record) {
       this.$refs.AddOrEdit.edit(record.objectCode)
+    },
+
+    setPermission(record) {
+      this.$refs.SetPermissionDrawer.edit(record.objectCode)
     },
 
     deleteItem(record) {

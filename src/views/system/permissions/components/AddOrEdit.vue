@@ -11,10 +11,10 @@
         <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
         <el-form ref="form" :model="form" :rules="rules" label-width="140px">
           <el-form-item label="菜单名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入" />
+            <el-input v-model="form.name" placeholder="请输入菜单名称" />
           </el-form-item>
           <el-form-item label="是否显示" prop="hide">
-            <el-select v-model="form.hide" placeholder="请选择">
+            <el-select v-model="form.hide" placeholder="请选择是否显示">
               <el-option
                 v-for="item in enums.permissionHide"
                 :key="item.value"
@@ -25,13 +25,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="排序" prop="orderNum">
-            <el-input-number v-model="form.orderNum" controls-position="right" :min="0" placeholder="请输入" />
+            <el-input-number v-model="form.orderNum" controls-position="right" :min="0" placeholder="请输入排序" />
           </el-form-item>
           <el-form-item label="父菜单" prop="parentId">
-            <PermissionCascader v-model="form.parentId" :disabled="!!editId"></PermissionCascader>
+            <PermissionCascader ref="PermissionCascader" v-model="form.parentId"></PermissionCascader>
           </el-form-item>
           <el-form-item label="类型" prop="type">
-            <el-select v-model="form.type" placeholder="请输入">
+            <el-select v-model="form.type" placeholder="请选择类型">
               <el-option
                 v-for="item in enums.permissionType"
                 :key="item.value"
@@ -42,10 +42,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="菜单URL" prop="url">
-            <el-input v-model="form.url" placeholder="请输入" />
+            <el-input v-model="form.url" placeholder="请输入菜单URL" />
           </el-form-item>
           <el-form-item label="授权" prop="urls">
-            <el-input v-model="form.urls" placeholder="请输入" />
+            <el-input v-model="form.urls" placeholder="请输入授权地址" />
           </el-form-item>
         </el-form>
       </div>
@@ -67,15 +67,23 @@ export default {
   data() {
     return {
       form: {
-        hide: undefined,
+        hide: '0',
         name: undefined,
-        orderNum: undefined,
-        parentId: undefined,
+        orderNum: 0,
+        parentId: '0',
         type: undefined,
         url: undefined,
-        urls: undefined
+        urls: '/'
       },
-      rules: {},
+      rules: {
+        hide: [{ required: true, message: '请输入菜单名称' }],
+        name: [{ required: true, message: '请选择是否显示' }],
+        orderNum: [{ required: true, message: '请输入排序' }],
+        parentId: [{ required: true, message: '请选择父菜单' }],
+        type: [{ required: true, message: '请选择类型' }],
+        url: [{ required: true, message: '请输入菜单URL' }],
+        urls: [{ required: true, message: '请输入授权地址' }]
+      },
       editId: undefined,
       drawerVisible: false
     }
@@ -84,15 +92,26 @@ export default {
     ...mapGetters(['enums'])
   },
   methods: {
+    getPermissionOptions() {
+      if (this.$refs.PermissionCascader) {
+        this.$refs.PermissionCascader.getOptions()
+      }
+    },
+
     add() {
       this.editId = undefined
       this.drawerVisible = true
+      this.getPermissionOptions()
+      if (this.$refs.form) {
+        this.$refs.form.resetFields()
+      }
     },
 
     edit(editId) {
       this.editId = editId
       this.drawerVisible = true
       this.getItemDetail()
+      this.getPermissionOptions()
     },
 
     getItemDetail() {
@@ -101,8 +120,8 @@ export default {
           this.form = {
             hide: res.data.hide,
             name: res.data.name,
-            orderNum: res.data.orderNum,
-            parentId: res.data.parentId,
+            orderNum: res.data.orderNum || 0,
+            parentId: res.data.parentId || '0',
             type: res.data.type,
             url: res.data.url,
             urls: res.data.urls

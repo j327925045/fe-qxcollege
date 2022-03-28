@@ -4,7 +4,7 @@ import { Message } from 'element-ui'
 import router from './router'
 import store from './store'
 
-const whiteList = ['/login'] // no redirect whitelist
+const whiteList = ['/login']
 
 router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle(to.meta.title)
@@ -22,7 +22,6 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           await store.dispatch('user/getInfo')
-
           next()
         } catch (error) {
           await store.dispatch('user/resetToken')
@@ -32,7 +31,7 @@ router.beforeEach(async(to, from, next) => {
       }
     }
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
+    if (whiteList.includes(to.path)) {
       next()
     } else {
       next(`/login?redirect=${to.path}`)
