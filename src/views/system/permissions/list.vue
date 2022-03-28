@@ -26,7 +26,7 @@
         <el-button type="primary" @click="addItem">新建权限</el-button>
       </el-row>
       <div class="gyl-form-view-box">
-        <el-table
+        <AffixedTable
           v-loading="loading"
           :data="tableData"
           row-key="objectCode"
@@ -55,7 +55,7 @@
               <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
-        </el-table>
+        </AffixedTable>
       </div>
       <div class="gyl-pagination">
         <el-pagination
@@ -77,10 +77,12 @@
 <script>
 import { getPermissionList, deletePermissionItem } from '@/api/permission'
 import AddOrEdit from './components/AddOrEdit'
+import AffixedTable from '@/views/components/AffixedTable'
 export default {
   name: 'SystemPermissionsList',
   components: {
-    AddOrEdit
+    AddOrEdit,
+    AffixedTable
   },
   data() {
     return {

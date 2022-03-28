@@ -23,7 +23,7 @@
 
     <div class="gyl-table-view">
       <div class="gyl-form-view-box">
-        <el-table v-loading="loading" :data="tableData" stripe border>
+        <AffixedTable v-loading="loading" :data="tableData" stripe border>
           <el-table-column fixed="left" label="序号" width="60">
             <template slot-scope="scope">
               {{ scope.$index+1 }}
@@ -37,7 +37,7 @@
               <span>{{ scope.row.time }}ms</span>
             </template>
           </el-table-column>
-        </el-table>
+        </AffixedTable>
       </div>
       <div class="gyl-pagination">
         <el-pagination
@@ -57,8 +57,12 @@
 
 <script>
 import { getLogList } from '@/api/log'
+import AffixedTable from '@/views/components/AffixedTable'
 export default {
   name: 'SystemLogList',
+  components: {
+    AffixedTable
+  },
   data() {
     return {
       form: {

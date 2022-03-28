@@ -28,7 +28,7 @@
         </div>
       </el-row>
       <div class="gyl-form-view-box">
-        <el-table
+        <AffixedTable
           v-loading="loading"
           :data="tableData"
           stripe
@@ -48,7 +48,7 @@
               <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
-        </el-table>
+        </AffixedTable>
       </div>
       <div class="gyl-pagination">
         <el-pagination
@@ -72,11 +72,13 @@
 import { getRoleList, deleteRoleItem } from '@/api/role'
 import AddOrEdit from './components/AddOrEdit'
 import SetPermissionDrawer from './components/SetPermissionDrawer'
+import AffixedTable from '@/views/components/AffixedTable'
 export default {
   name: 'SystemRoleList',
   components: {
     AddOrEdit,
-    SetPermissionDrawer
+    SetPermissionDrawer,
+    AffixedTable
   },
   data() {
     return {

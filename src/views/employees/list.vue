@@ -26,7 +26,7 @@
         <el-button type="primary" @click="addItem">新建员工</el-button>
       </el-row>
       <div class="gyl-form-view-box">
-        <el-table v-loading="loading" :data="tableData" stripe border>
+        <AffixedTable v-loading="loading" :data="tableData" stripe border>
           <el-table-column fixed="left" label="序号" width="60">
             <template slot-scope="scope">
               {{ scope.$index + 1 }}
@@ -70,7 +70,7 @@
               <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
-        </el-table>
+        </AffixedTable>
       </div>
       <div class="gyl-pagination">
         <el-pagination
@@ -97,12 +97,14 @@ import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import SetRoleDrower from './components/SetRoleDrower'
 import utils from '@/utils/utils'
+import AffixedTable from '@/views/components/AffixedTable'
 export default {
   name: 'EmployeesList',
   components: {
     DetailDialog,
     AddOrEdit,
-    SetRoleDrower
+    SetRoleDrower,
+    AffixedTable
   },
   data() {
     return {

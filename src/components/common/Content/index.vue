@@ -1,7 +1,7 @@
 <template>
   <section class="app-main">
     <el-scrollbar wrap-class="app-scrollbar-wrapper" class="app-main-scrollbar" style="height: 100%">
-      <div class="app-container">
+      <div id="scrollContainer" class="app-container">
         <keep-alive :max="maxPageNumber" :include="keepAliveComponents">
           <router-view v-if="isRouterAlive" :key="key" />
         </keep-alive>

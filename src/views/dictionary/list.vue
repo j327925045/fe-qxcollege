@@ -26,7 +26,7 @@
         <el-button type="primary" @click="addItem">新建字段</el-button>
       </el-row>
       <div class="gyl-form-view-box">
-        <el-table v-loading="loading" :data="tableData" stripe border>
+        <AffixedTable v-loading="loading" :data="tableData" stripe border>
           <el-table-column fixed="left" label="序号" width="60">
             <template slot-scope="scope">
               {{ scope.$index+1 }}
@@ -46,7 +46,7 @@
               <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
             </template>
           </el-table-column>
-        </el-table>
+        </AffixedTable>
       </div>
       <div class="gyl-pagination">
         <el-pagination
@@ -69,11 +69,13 @@
 <script>
 import { getDictionaryList, deleteDictionaryItem } from '@/api/dictionary'
 import AddOrEdit from './components/AddOrEdit'
+import AffixedTable from '@/views/components/AffixedTable'
 
 export default {
   name: 'DictionaryList',
   components: {
-    AddOrEdit
+    AddOrEdit,
+    AffixedTable
   },
   data() {
     return {
