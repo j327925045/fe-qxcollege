@@ -1,13 +1,13 @@
 <template>
   <div>
     <div v-if="!isCollapse" class="side-menu-search">
-      <el-input v-model="searchKey" type="text" placeholder="请输入菜单名称">
+      <el-input v-model="searchKey" type="text" clearable placeholder="请输入菜单名称">
         <i slot="prefix" class="el-input__icon el-icon-search" />
       </el-input>
     </div>
     <el-scrollbar class="el-menu-vertical">
       <div v-if="favouritesNav && !isCollapse">
-        <favourites />
+        <favourites v-show="!searchKey" />
       </div>
       <el-menu ref="sideMenu" :collapse="isCollapse" mode="vertical" router :default-active="defaultActive">
         <el-menu-item-group title="导航菜单">
@@ -79,7 +79,7 @@ export default {
     color: #333;
     background: rgba(243, 243, 243, 1);
     border: 0;
-    border-radius: 20px;
+    // border-radius: 20px;
   }
 }
 </style>

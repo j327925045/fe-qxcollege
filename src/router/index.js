@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { Dictionary } from './modules/Dictionary'
 import { Employees } from './modules/Employees'
+import { FormAndTable } from './modules/FormAndTable'
 import { Hospital } from './modules/Hospital'
 import { Organization } from './modules/Organization'
 import { System } from './modules/System'
@@ -61,6 +62,7 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
+  ...FormAndTable,
   ...Employees,
   ...User,
   ...Organization,

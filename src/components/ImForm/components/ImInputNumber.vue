@@ -1,0 +1,54 @@
+<!-- 我们把ele组件常用属性放在这里，如果会用到更多其他属性可以进行扩展 -->
+<template>
+  <el-input-number
+    v-model="myValue"
+    v-bind="attrs"
+    v-on="listeners"
+    @change="onUpdate"
+  />
+</template>
+
+<script>
+export default {
+  name: 'ImInputNumber',
+  props: {
+    value: {
+      type: Number,
+      default: undefined
+    },
+    attrs: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    listeners: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
+  },
+  data() {
+    return {
+      myValue: undefined
+    }
+  },
+  watch: {
+    value: {
+      immediate: true,
+      handler() {
+        this.setMyValue()
+      }
+    }
+  },
+  methods: {
+    setMyValue() {
+      this.myValue = this.value
+    },
+    onUpdate() {
+      this.$emit('input', this.myValue)
+    }
+  }
+}
+</script>

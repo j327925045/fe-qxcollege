@@ -13,7 +13,7 @@
               <el-input v-model="filterForm.name" placeholder="请输入" />
             </el-form-item>
           </el-col>
-          <el-form-item class="gyl-form-btn-wrap">
+          <el-form-item class="float-right">
             <el-button @click="resetForm">重 置</el-button>
             <el-button type="primary" @click="search">查 询</el-button>
           </el-form-item>
@@ -21,58 +21,56 @@
       </el-form>
     </div>
 
-    <div class="gyl-table-view">
-      <el-row class="table-tools">
+    <div class="bg-white p-4">
+      <el-row class="mb-4">
         <el-button type="primary" @click="addItem">新建员工</el-button>
       </el-row>
-      <div class="gyl-form-view-box">
-        <AffixedTable v-loading="loading" :data="tableData" stripe border>
-          <el-table-column fixed="left" label="序号" width="60">
-            <template slot-scope="scope">
-              {{ scope.$index + 1 }}
-            </template>
-          </el-table-column>
-          <el-table-column label="员工姓名" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.name || '-' }}
-            </template>
-          </el-table-column>
-          <el-table-column label="员工性别" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.gender|getLabelByValue('gender') }}
-            </template>
-          </el-table-column>
-          <el-table-column label="员工性质" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.nature|getLabelByValue('employeeNature') }}
-            </template>
-          </el-table-column>
-          <el-table-column label="员工状态" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.status|getLabelByValue('employeeStatus') }}
-            </template>
-          </el-table-column>
-          <el-table-column label="账号（手机号）" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.account || '-' }}
-            </template>
-          </el-table-column>
-          <el-table-column label="创建时间" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.createTime | dateFormat }}
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="180">
-            <template slot-scope="scope">
-              <el-button type="text" @click="showDetail(scope.row)">查看</el-button>
-              <el-button type="text" @click="setRole(scope.row)">设置角色</el-button>
-              <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
-              <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </AffixedTable>
-      </div>
-      <div class="gyl-pagination">
+      <AffixedTable v-loading="loading" :data="tableData" border stripe>
+        <el-table-column fixed="left" label="序号" width="60">
+          <template slot-scope="scope">
+            {{ scope.$index + 1 }}
+          </template>
+        </el-table-column>
+        <el-table-column label="员工姓名" show-overflow-tooltip min-width="120">
+          <template slot-scope="scope">
+            {{ scope.row.name || '-' }}
+          </template>
+        </el-table-column>
+        <el-table-column label="员工性别" show-overflow-tooltip min-width="120">
+          <template slot-scope="scope">
+            {{ scope.row.gender|getLabelByValue('gender') }}
+          </template>
+        </el-table-column>
+        <el-table-column label="员工性质" show-overflow-tooltip min-width="120">
+          <template slot-scope="scope">
+            {{ scope.row.nature|getLabelByValue('employeeNature') }}
+          </template>
+        </el-table-column>
+        <el-table-column label="员工状态" show-overflow-tooltip min-width="120">
+          <template slot-scope="scope">
+            {{ scope.row.status|getLabelByValue('employeeStatus') }}
+          </template>
+        </el-table-column>
+        <el-table-column label="账号（手机号）" show-overflow-tooltip min-width="120">
+          <template slot-scope="scope">
+            {{ scope.row.account || '-' }}
+          </template>
+        </el-table-column>
+        <el-table-column label="创建时间" show-overflow-tooltip min-width="120">
+          <template slot-scope="scope">
+            {{ scope.row.createTime | dateFormat }}
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="180">
+          <template slot-scope="scope">
+            <el-button type="text" @click="showDetail(scope.row)">查看</el-button>
+            <el-button type="text" @click="setRole(scope.row)">设置角色</el-button>
+            <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
+            <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </AffixedTable>
+      <div class="text-right mt-2">
         <el-pagination
           background
           layout="total, sizes, prev, pager, next, jumper"
