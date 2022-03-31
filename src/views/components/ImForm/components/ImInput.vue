@@ -47,9 +47,6 @@ export default {
       }
     }
   },
-  created() {
-    console.log('this.slots', this.slots)
-  },
   methods: {
     setMyValue() {
       this.myValue = this.value

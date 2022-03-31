@@ -1,6 +1,5 @@
-import { getToken } from '@/utils/auth'
+import { getToken, removeToken } from '@/utils/auth'
 import getPageTitle from '@/utils/get-page-title'
-import { Message } from 'element-ui'
 import router from './router'
 import store from './store'
 
@@ -12,6 +11,8 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
   store.commit('app/KEEP_ALIVE', to.name)
 
+  console.log('to', to)
+
   if (hasToken) {
     if (to.path === '/login') {
       next({ path: '/' })
@@ -22,10 +23,10 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           await store.dispatch('user/getInfo')
+          await store.dispatch('app/getEnums')
           next()
         } catch (error) {
-          await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
+          removeToken()
           next(`/login?redirect=${to.path}`)
         }
       }

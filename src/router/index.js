@@ -3,7 +3,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { Dictionary } from './modules/Dictionary'
 import { Employees } from './modules/Employees'
-import { FormAndTable } from './modules/FormAndTable'
+import { Examples } from './modules/Examples'
 import { Hospital } from './modules/Hospital'
 import { Organization } from './modules/Organization'
 import { System } from './modules/System'
@@ -42,6 +42,7 @@ const originRoutes = [
       }
     ]
   },
+  ...Examples,
   {
     path: '/',
     component: Layout,
@@ -62,7 +63,6 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
-  ...FormAndTable,
   ...Employees,
   ...User,
   ...Organization,
@@ -78,7 +78,7 @@ formatRoutes(originRoutes.filter(item => !item.hidden))
 export const routes = originRoutes
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

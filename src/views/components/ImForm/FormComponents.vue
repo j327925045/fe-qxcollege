@@ -11,6 +11,9 @@
     <template v-for="(value) in item.slots" :slot="value">
       <slot :name="value" />
     </template>
+    <template v-for="(value, key) in item.slots" :slot="key">
+      <slot :name="value" />
+    </template>
   </component>
 </template>
 <script>

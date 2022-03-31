@@ -80,7 +80,6 @@
 import { getUserList, deleteUserItem } from '@/api/user'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
-import utils from '@/utils/utils'
 import AffixedTable from '@/views/components/AffixedTable'
 
 export default {
@@ -107,11 +106,6 @@ export default {
     this.getList()
   },
   methods: {
-    getLabelByValue(key, value) {
-      const item = utils.getOptionsItemByValue(key, value)
-      return item.label || '-'
-    },
-
     formSwitch() {
       this.isShow = !this.isShow
     },

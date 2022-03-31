@@ -3,7 +3,7 @@ export default {
   props: {
     stickyTop: {
       type: Number,
-      default: 115
+      default: 114
     },
     selector: {
       type: String,

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <Imform ref="demoForm" :form="form">
+    <Imform ref="demoForm" class="bg-white mb-4 pt-4 pr-4" :form="form">
       <i slot="nameSuffix" class="el-input__icon el-icon-date"></i>
       <template slot="namePrepend">name</template>
       <i slot="nicknameSuffix" class="el-input__icon el-icon-view"></i>
       <template slot="nicknamePrepend">nickname</template>
       <el-input slot="slotComp" v-model="form.props.testSlot" placeholder="slot"></el-input>
     </Imform>
-    <pre class="codeList">{{ JSON.stringify(form.props, true, '    ') }}
-    </pre>
+    <!-- <pre class="codeList">{{ JSON.stringify(form.props, true, '    ') }}
+    </pre> -->
     <ImTable ref="demoTable" :table="table">
       <template slot="genderHeadSlot">
         性别
@@ -21,9 +21,10 @@
 </template>
 
 <script>
-import { cities, cityMaps } from '@/utils/cities.js'
-import Imform from '@/components/ImForm/index.vue'
-import ImTable from '@/components/ImTable/index.vue'
+// import { cities, cityMaps } from '@/utils/cities.js'
+import { cityMaps } from '@/utils/cities.js'
+import Imform from '@/views/components/ImForm/index.vue'
+import ImTable from '@/views/components/ImTable/index.vue'
 import { mapListOptions, cascaderOptions, checkboxGroupOptions, defaultTime, genderOptions, cityOptions, tableData } from './dataConfig'
 export default {
   components: {
@@ -124,7 +125,7 @@ export default {
             }
           },
           {
-            type: 'ElInput',
+            type: 'ImInput',
             prop: 'name',
             label: '姓名',
             rules: ['required'],
@@ -288,7 +289,6 @@ export default {
           },
           {
             type: 'ImButton',
-            noColumn: true,
             attrs: {
               style: 'float:right;',
               options: [

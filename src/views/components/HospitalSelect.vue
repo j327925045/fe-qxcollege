@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" @change="onChange">
+  <el-select v-model="myValue" :placeholder="placeholder" clearable @change="onChange">
     <el-option
       v-for="item in options"
       :key="item.value"

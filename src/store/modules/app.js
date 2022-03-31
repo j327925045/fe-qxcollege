@@ -1,4 +1,5 @@
 import { Message } from 'element-ui'
+import { getAllDictionaryItems } from '@/api/dictionary'
 
 const HomePage = {
   title: '首页',
@@ -169,6 +170,32 @@ const actions = {
     if (!targetRes) {
       commit('SET_EDITABLETABS', target)
     }
+  },
+
+  getEnums({ commit }) {
+    return new Promise((resolve, reject) => {
+      getAllDictionaryItems().then(res => {
+        if (res.code === 200) {
+          const enums = {}
+          const resData = res.data || []
+          for (let i = 0; i < resData.length; i++) {
+            const item = resData[i]
+            if (item.options) {
+              enums[item.sign] = item.options.map(item => {
+                return {
+                  label: item.name,
+                  value: item.sign
+                }
+              })
+            }
+          }
+          commit('SET_ENUMS', enums)
+          resolve(true)
+        } else {
+          reject(res)
+        }
+      })
+    })
   },
 
   removeTab({ commit, state }, targetName) {

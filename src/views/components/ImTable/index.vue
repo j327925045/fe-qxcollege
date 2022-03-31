@@ -1,5 +1,5 @@
 <template>
-  <el-table v-loading="loading" :data="table.data" v-bind="table.attrs" v-on="table.listeners">
+  <AffixedTable v-loading="loading" :data="table.data" v-bind="table.attrs" stripe border v-on="table.listeners">
     <template v-for="item in tableList">
       <el-table-column v-if="item.type === 'selection'" :key="item.label" type="selection" :prop="item.prop" :label="item.label" v-bind="item.attrs"></el-table-column>
       <el-table-column v-else :key="item.label" :prop="item.prop" :label="item.label" v-bind="item.attrs">
@@ -32,13 +32,9 @@
             <el-tooltip v-for="(opt, idx) in item.options" :key="idx" :disabled="!opt.tipTitle" :open-delay="300" :content="opt.tipTitle" placement="top">
               <el-button
                 :key="opt.title"
-                :style="opt.style || ''"
                 :disabled="opt.disabled || (opt.disabledFunc && opt.disabledFunc(scope.row))"
                 :type="opt.type || 'default'"
-                :plain="opt.plain"
-                :icon="opt.icon"
-                :circle="opt.circle"
-                :size="opt.size || 'small'"
+                v-bind="opt.attrs"
                 @click="opt.onClick(scope.$index, scope.row)"
               >
                 {{ opt.title }}
@@ -85,12 +81,13 @@
         </template>
       </el-table-column>
     </template>
-  </el-table>
+  </AffixedTable>
 </template>
 
 <script>
 import ImPopover from './components/ImPopover'
 import ImToolTip from './components/ImTooltip'
+import AffixedTable from '../AffixedTable'
 
 export default {
   name: 'ImTable',
@@ -139,7 +136,8 @@ export default {
 
   components: {
     ImPopover,
-    ImToolTip
+    ImToolTip,
+    AffixedTable
   },
 
   props: {
