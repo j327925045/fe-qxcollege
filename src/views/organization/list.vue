@@ -1,85 +1,23 @@
 <template>
   <div>
-    <div class="gyl-form-view">
-      <span class="form-switch" @click="formSwitch">
-        {{ isShow ? '全部收起' : '全部展开' }}
-        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
-      </span>
-      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />机构列表</h3>
-      <el-form v-show="isShow" ref="form" :model="form" label-width="100px">
-        <el-row>
-          <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="机构名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-form-item class="gyl-form-btn-wrap">
-            <el-button @click="resetForm('form')">重 置</el-button>
-            <el-button type="primary" @click="search">查 询</el-button>
-          </el-form-item>
-        </el-row>
-      </el-form>
-    </div>
-
-    <div class="gyl-table-view">
-      <el-row class="table-tools">
+    <ImSearchArea>
+      <ImForm ref="ImForm" :form="formConfig"></ImForm>
+    </ImSearchArea>
+    <ImTableArea>
+      <div class="mb-4">
         <el-button type="primary" @click="addItem">新建机构</el-button>
-      </el-row>
-      <div class="gyl-form-view-box">
-        <AffixedTable v-loading="loading" :data="tableData" stripe border>
-          <el-table-column fixed="left" label="序号" width="60">
-            <template slot-scope="scope">
-              {{ scope.$index+1 }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="name" label="机构全称" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="address" label="机构地址(详细地址)" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="regionFullName" label="所在区域" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="businessScope" label="经营范围" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="nature" label="机构性质" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.nature|getLabelByValue('organizationNature') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="operateStatus" label="经营状态" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.operateStatus|getLabelByValue('organizationOperateStatus') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="paidCapital" label="实缴资本(万)" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="registeredCapital" label="注册资本(万)" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="scale" label="机构规模" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.scale|getLabelByValue('organizationScale') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="shortName" label="机构简称" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="status" label="机构状态" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.status|getLabelByValue('organizationStatus') }}
-            </template>
-          </el-table-column>
-          <el-table-column fixed="right" label="操作" width="120">
-            <template slot-scope="scope">
-              <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
-              <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </AffixedTable>
       </div>
-      <div class="gyl-pagination">
-        <el-pagination
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :page-size="pageSize"
-          :page-sizes="[10, 20, 30, 40]"
-          :current-page="currentPage"
+      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <div class="mt-4 text-right">
+        <ImPagination
+          ref="ImPagination"
+          :page-size.sync="pageSize"
+          :current-page.sync="currentPage"
           :total="total"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+          @change="getList"
+        ></ImPagination>
       </div>
-    </div>
+    </ImTableArea>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </div>
 </template>
@@ -87,17 +25,70 @@
 <script>
 import { getOrganizationList, deleteOrganizationItem } from '@/api/organization'
 import AddOrEdit from './components/AddOrEdit'
-import AffixedTable from '@/views/components/AffixedTable'
+import ImSearchArea from '@/views/components/ImSearchArea'
+import ImForm from '@/views/components/ImForm'
+import ImTableArea from '@/views/components/ImTableArea'
+import ImTable from '@/views/components/ImTable'
+import ImPagination from '@/views/components/ImPagination'
+import { mapGetters } from 'vuex'
 export default {
   name: 'OrganizationList',
   components: {
+    ImSearchArea,
+    ImForm,
     AddOrEdit,
-    AffixedTable
+    ImTableArea,
+    ImTable,
+    ImPagination
   },
   data() {
     return {
-      form: {
-        name: undefined
+      formConfig: {
+        column: 3,
+        attrs: {
+          labelWidth: '100px'
+        },
+        props: {
+          name: ''
+        },
+        formItems: [
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '医生姓名',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImButton',
+            attrs: {
+              style: 'flex: 1; text-align: right;',
+              options: [
+                {
+                  label: '重 置',
+                  attrs: {
+                    type: 'default'
+                  },
+                  listeners: {
+                    click: this.resetForm
+                  }
+                },
+                {
+                  label: '查 询',
+                  attrs: {
+                    type: 'primary'
+                  },
+                  listeners: {
+                    click: this.search
+                  }
+                }
+              ]
+            }
+          }
+        ]
       },
       tableData: [],
       loading: false,
@@ -107,23 +98,155 @@ export default {
       isShow: true
     }
   },
+  computed: {
+    ...mapGetters(['enums']),
+    tableConfig() {
+      return {
+        data: [],
+        tableItems: [
+          {
+            prop: '',
+            label: '序号',
+            type: 'index',
+            attrs: {
+              fixed: 'left',
+              width: 60
+            }
+          },
+          {
+            prop: 'name',
+            label: '机构全称',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'shortName',
+            label: '机构简称',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'address',
+            label: '机构地址(详细地址)',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            }
+          },
+          {
+            prop: 'regionFullName',
+            label: '所在区域',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            }
+          },
+          {
+            prop: 'businessScope',
+            label: '经营范围',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            }
+          },
+          {
+            prop: 'nature',
+            label: '机构性质',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '100'
+            },
+            options: this?.enums?.organizationNature ?? []
+          },
+          {
+            prop: 'operateStatus',
+            label: '经营状态',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '100'
+            },
+            options: this?.enums?.organizationOperateStatus ?? []
+          },
+          {
+            prop: 'paidCapital',
+            label: '实缴资本(万)',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'registeredCapital',
+            label: '注册资本(万)',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'scale',
+            label: '机构规模',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.organizationScale ?? []
+          },
+          {
+            prop: 'status',
+            label: '机构状态',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.organizationStatus ?? []
+          },
+          {
+            prop: '',
+            label: '操作',
+            type: 'buttons',
+            attrs: {
+              fixed: 'right',
+              width: '120'
+            },
+            options: [
+              {
+                title: '编辑',
+                type: 'text',
+                onClick: this.editItem
+              },
+              {
+                title: '删除',
+                type: 'text',
+                onClick: this.deleteItem
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
   created() {
     this.getList()
   },
   methods: {
-    formSwitch() {
-      this.isShow = !this.isShow
-    },
-
     addItem() {
       this.$refs.AddOrEdit.add()
     },
 
-    editItem(record) {
+    editItem($index, record) {
       this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
-    deleteItem(record) {
+    deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -143,11 +266,19 @@ export default {
     },
 
     /**
+     * 重置表单
+     */
+    resetForm() {
+      this.$refs.ImForm.reset()
+      this.$refs.ImPagination.reset()
+      this.getList()
+    },
+
+    /**
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 10
-      this.currentPage = 1
+      this.$refs.ImPagination.reset()
       this.getList()
     },
 
@@ -158,7 +289,7 @@ export default {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        ...this.form
+        ...this.formConfig.attrs
       }
       console.log('params', params)
       this.loading = true
@@ -166,35 +297,11 @@ export default {
         this.loading = false
         if (res.code === 200) {
           this.total = res.data.totalCount
-          this.tableData = res.data.list || []
+          this.tableConfig.data = res.data.list || []
         }
       }).catch(_ => {
         this.loading = false
       })
-    },
-
-    /**
-     * 重置表单
-     */
-    resetForm() {
-      this.$refs.form.resetFields()
-      this.search()
-    },
-
-    /**
-     * 每页个数发生变化事件
-     */
-    handleSizeChange(val) {
-      this.pageSize = val
-      this.getList()
-    },
-
-    /**
-     * 当前页码发生变化事件
-     */
-    handleCurrentChange(val) {
-      this.currentPage = val
-      this.getList()
     }
   }
 }

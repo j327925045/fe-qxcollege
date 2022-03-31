@@ -18,9 +18,9 @@ export const Examples = [
         meta: { title: '表单表格' }
       },
       {
-        path: '/examples/commonpage/list',
-        name: 'ExamplesCommonpageList',
-        component: () => import('@/views/components/QueryTable/index.vue'),
+        path: '/examples/querytable',
+        name: 'ExamplesQueryTable',
+        component: () => import('@/views/examples/querytable/index.vue'),
         meta: { title: '列表页' }
       }
     ]

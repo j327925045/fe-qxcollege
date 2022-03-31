@@ -1,135 +1,17 @@
 <template>
-  <el-drawer
+  <ImDrawer
     :visible.sync="drawerVisible"
-    size="650px"
-    custom-class="gyl-detail-drawer"
-    :with-header="false"
-    :wrapper-closable="false"
+    :title="editId ? '编辑医生' : '新建医生'"
+    @closeDrower="closeDrower"
+    @submit="submitForm"
   >
-    <div class="gyl-hamburger" @click="drawerVisible = false">
-      <i class="el-icon-arrow-right" />
-    </div>
-    <div class="drawer-content">
-      <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>{{ editId?'编辑用户':'新建用户' }}</h2>
-      </el-row>
-      <div class="gyl-form-view pb-[60px]">
-        <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-          <div class="gyl-form-view">
-            <h3 class="gyl-title"><i class="el-icon-s-order" />个人信息</h3>
-            <el-form-item label="真实姓名" prop="realName">
-              <el-input v-model="form.realName" placeholder="请输入真实姓名" />
-            </el-form-item>
-            <el-form-item label="昵称" prop="nickname">
-              <el-input v-model="form.nickname" placeholder="请输入昵称" />
-            </el-form-item>
-            <el-form-item label="性别" prop="gender">
-              <el-select v-model="form.gender" placeholder="请选择性别">
-                <el-option v-for="(item, idx) in enums.gender" :key="idx" :label="item.label" :value="item.value" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="出生年月" prop="birthday">
-              <el-date-picker v-model="form.birthday" value-format="yyyy-MM-dd" type="date" placeholder="请选择出生年月"></el-date-picker>
-            </el-form-item>
-            <el-form-item label="手机号码" prop="phone">
-              <el-input v-model="form.phone" :maxlength="11" placeholder="请输入手机号码" />
-            </el-form-item>
-            <el-form-item label="个人照片" prop="personalUrl">
-              <el-input v-model="form.personalUrl" placeholder="请输入个人照片" />
-            </el-form-item>
-          </div>
-          <div class="gyl-form-view">
-            <h3 class="gyl-title"><i class="el-icon-s-order" />职业信息</h3>
-            <el-form-item label="医院" prop="hospitalCode">
-              <HospitalSelect v-model="form.hospitalCode" placeholder="请选择医院"></HospitalSelect>
-            </el-form-item>
-            <el-form-item label="科室" prop="department">
-              <el-input v-model="form.department" placeholder="请输入科室" />
-            </el-form-item>
-            <el-form-item label="医生等级" prop="doctorLevel">
-              <el-select v-model="form.doctorLevel" placeholder="请选择医生等级">
-                <el-option
-                  v-for="item in enums.doctorLevel"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="职称" prop="jobTitle">
-              <el-select v-model="form.jobTitle" placeholder="请选择职称">
-                <el-option
-                  v-for="item in enums.jobTitle"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="所在区域(省市县)" prop="regionCode">
-              <RegionCascader v-model="form.regionCode" placeholder="请输入所在区域(省市县)"></RegionCascader>
-            </el-form-item>
-            <el-form-item label="执业地点(详细地址)" prop="address">
-              <el-input v-model="form.address" placeholder="请输入执业地点(详细地址)" />
-            </el-form-item>
-            <el-form-item label="是否认证" prop="isCertified">
-              <el-select v-model="form.isCertified" placeholder="请选择是否认证">
-                <el-option
-                  v-for="item in enums.isCertified"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="是否合作项目" prop="isCooperation">
-              <el-select v-model="form.isCooperation" placeholder="请选择是否合作项目">
-                <el-option
-                  v-for="item in enums.isCooperation"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="是否讲师" prop="isLecturer">
-              <el-select v-model="form.isLecturer" placeholder="请选择是否讲师">
-                <el-option
-                  v-for="item in enums.isLecturer"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="资质认证" prop="isQualification">
-              <el-select v-model="form.isQualification" placeholder="请选择资质认证">
-                <el-option
-                  v-for="item in enums.isQualification"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="个人介绍" prop="personalIntroduction">
-              <el-input v-model="form.personalIntroduction" placeholder="请输入个人介绍" />
-            </el-form-item>
-          </div>
-        </el-form>
-        <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
-          <el-button @click="closeDrower">取 消</el-button>
-          <el-button type="primary" @click="submitForm">保 存</el-button>
-        </div>
-      </div>
-    </div>
-  </el-drawer>
+    <ImForm ref="ImForm" :form="formConfig">
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />个人信息</h3>
+      <h3 slot="professionalSlot" class="gyl-title"><i class="el-icon-s-order" />职业信息</h3>
+      <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.hospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
+      <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
+    </ImForm>
+  </ImDrawer>
 </template>
 
 <script>
@@ -137,101 +19,309 @@ import { addUserItem, getUserDetail, updateUserItem } from '@/api/user'
 import { mapGetters } from 'vuex'
 import HospitalSelect from '@/views/components/HospitalSelect'
 import RegionCascader from '@/views/components/RegionCascader'
+import ImDrawer from '@/views/components/ImDrawer'
+import ImForm from '@/views/components/ImForm/index'
 export default {
   name: 'AddOrEdit',
   components: {
+    ImDrawer,
+    ImForm,
     HospitalSelect,
     RegionCascader
   },
   data() {
     return {
-      form: {
-        realName: undefined,
-        nickname: undefined,
-        gender: undefined,
-        birthday: undefined,
-        phone: undefined,
-        personalUrl: undefined,
-        hospitalCode: undefined,
-        department: undefined,
-        doctorLevel: undefined,
-        jobTitle: undefined,
-        regionCode: undefined,
-        address: undefined,
-        isCertified: undefined,
-        isCooperation: undefined,
-        isLecturer: undefined,
-        isQualification: undefined,
-        personalIntroduction: undefined
-      },
-      rules: {
-        realName: [{ required: true, message: '请输入真实姓名' }],
-        nickname: [{ required: true, message: '请输入昵称' }],
-        birthday: [{ required: true, message: '请选择出生年月' }],
-        gender: [{ required: true, message: '请选择性别' }],
-        phone: [{ required: true, message: '请输入手机号' }, { validator: this.phoneValidate }]
-      },
       drawerVisible: false,
-      editId: undefined
+      editId: undefined,
+      formConfig: {
+        attrs: {
+          labelWidth: '140px',
+          labelPosition: 'right'
+        },
+        props: {
+          realName: '',
+          nickname: '',
+          gender: '',
+          birthday: '',
+          phone: undefined,
+          personalUrl: undefined,
+          hospitalCode: undefined,
+          department: undefined,
+          doctorLevel: undefined,
+          jobTitle: undefined,
+          regionCode: undefined,
+          address: undefined,
+          isCertified: undefined,
+          isCooperation: undefined,
+          isLecturer: undefined,
+          isQualification: undefined,
+          personalIntroduction: undefined
+        },
+        formItems: [
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              firstSlot: 'infoSlot'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realName',
+            label: '真实姓名',
+            rules: [{ required: true, message: '请输入真实姓名' }],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入真实姓名'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'nickname',
+            label: '昵称',
+            rules: [{ required: true, message: '请输入昵称' }],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入昵称'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'gender',
+            label: '性别',
+            rules: [{ required: true, message: '请选择性别' }],
+            attrs: {
+              placeholder: '请选择性别',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImDatePicker',
+            prop: 'birthday',
+            label: '出生日期',
+            attrs: {
+              type: 'date',
+              style: 'width: 100%',
+              valueFormat: 'yyyy-MM-dd',
+              placeholder: '请选择出生日期'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'phone',
+            label: '手机号码',
+            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入手机号码',
+              maxLength: 11
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'personalUrl',
+            label: '个人照片',
+            rules: ['url'],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入个人照片URL'
+            }
+          },
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              secondSlot: 'professionalSlot'
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'hospitalCode',
+            label: '医院',
+            rules: [{ required: true, message: '请选择医院' }],
+            slots: {
+              hospitalSlot: 'hospitalSelect'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'department',
+            label: '科室',
+            attrs: {
+              placeholder: '请输入科室名称'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'doctorLevel',
+            label: '医生等级',
+            attrs: {
+              placeholder: '请选择医生等级',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'jobTitle',
+            label: '职称',
+            attrs: {
+              placeholder: '请选择职称',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'regionCode',
+            label: '所在区域(省市县)',
+            slots: {
+              regionSlot: 'RegionCascader'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'address',
+            label: '执业地点(详细地址)',
+            attrs: {
+              placeholder: '请输入执业地点(详细地址)'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'isCertified',
+            label: '是否认证',
+            attrs: {
+              placeholder: '请选择是否认证',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'isCooperation',
+            label: '是否合作项目',
+            attrs: {
+              placeholder: '请选择是否合作项目',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'isLecturer',
+            label: '是否讲师',
+            attrs: {
+              placeholder: '请选择是否讲师',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'isQualification',
+            label: '资质认证',
+            attrs: {
+              placeholder: '请选择资质认证',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'personalIntroduction',
+            label: '个人介绍',
+            attrs: {
+              placeholder: '请输入个人介绍'
+            }
+          }
+        ]
+      }
     }
   },
   computed: {
     ...mapGetters(['enums'])
   },
+  created() {
+    this.setOptions()
+  },
   methods: {
-    phoneValidate(rule, value, callback) {
-      const regex = /^1\d{10}$/
-      if (regex.test(value)) {
-        callback()
-      } else {
-        callback(new Error('请输入正确的手机号'))
-      }
+    /**
+     * 统一处理options
+     */
+    setOptions() {
+      this.setFormPropOptions('gender', this.enums.gender)
+      this.setFormPropOptions('doctorLevel', this.enums.doctorLevel)
+      this.setFormPropOptions('jobTitle', this.enums.jobTitle)
+      this.setFormPropOptions('isCertified', this.enums.isCertified)
+      this.setFormPropOptions('isCooperation', this.enums.isCooperation)
+      this.setFormPropOptions('isLecturer', this.enums.isLecturer)
+      this.setFormPropOptions('isQualification', this.enums.isQualification)
     },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
+    /**
+     * 暴露添加方法
+     */
     add() {
       this.editId = undefined
       this.drawerVisible = true
     },
 
+    /**
+     * 暴露编辑方法
+     */
     edit(editId) {
       this.editId = editId
       this.drawerVisible = true
       this.getItemDetail()
     },
 
+    /**
+     * 获取详情
+     */
     getItemDetail() {
       getUserDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
-          this.form = {
-            realName: res.data.realName,
-            nickname: res.data.nickname,
-            gender: res.data.gender,
-            birthday: res.data.birthday,
-            phone: res.data.phone,
-            personalUrl: res.data.personalUrl,
-            hospitalCode: res.data.hospitalCode,
-            department: res.data.department,
-            doctorLevel: res.data.doctorLevel,
-            jobTitle: res.data.jobTitle,
-            regionCode: res.data.regionCode,
-            address: res.data.address,
-            isCertified: res.data.isCertified,
-            isCooperation: res.data.isCooperation,
-            isLecturer: res.data.isLecturer,
-            isQualification: res.data.isQualification,
-            personalIntroduction: res.data.personalIntroduction
+          const props = this.formConfig.props
+          const keys = Object.keys(props)
+          // 直接遍历进行赋值，特殊属性需要单独拿出来处理
+          for (let i = 0; i < keys.length; i++) {
+            const key = keys[i]
+            props[key] = res.data[key] || undefined
           }
         }
       })
     },
 
+    /**
+     * 提交表单
+     */
     submitForm() {
-      this.$refs.form.validate(valid => {
+      this.$refs.ImForm.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
         }
         const data = {
-          ...this.form
+          ...this.formConfig.props
         }
         if (this.editId) {
           data.objectCode = this.editId
@@ -258,8 +348,11 @@ export default {
       })
     },
 
+    /**
+     * 关闭弹层
+     */
     closeDrower() {
-      this.$refs.form.resetFields()
+      this.$refs.ImForm.reset()
       this.drawerVisible = false
     }
   }

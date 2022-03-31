@@ -10,7 +10,7 @@
       <div class="avatar-container">
         <div class="avatar-wrapper">
           <img v-if="avatar" :src="avatar" class="user-avatar" />
-          <img v-else src="~@/assets/img/framework/avatar.png" class="user-avatar" />
+          <img v-else src="~@/assets/img/framework/avatar.svg" class="user-avatar" />
           <span class="user-name">{{ name || '用户名' }}</span>
           <i class="el-icon-arrow-down" />
         </div>

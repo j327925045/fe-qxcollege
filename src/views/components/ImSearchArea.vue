@@ -4,7 +4,7 @@
       {{ isShow ? '全部收起' : '全部展开' }}
       <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
     </span>
-    <h3 class="common-form-title"><i class="el-icon-s-order" />{{ $route.meta.title }}</h3>
+    <h3 class="common-form-title"><i class="el-icon-s-order" />{{ title||$route.meta.title }}</h3>
     <slot v-if="isShow"></slot>
   </div>
 </template>
@@ -12,6 +12,12 @@
 <script>
 export default {
   name: 'ImSearhArea',
+  props: {
+    title: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       isShow: true

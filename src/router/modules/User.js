@@ -6,13 +6,13 @@ export const User = [
     name: 'User',
     component: Layout,
     redirect: '/user/list',
-    meta: { title: '用户管理', icon: 'menu-icon-user' },
+    meta: { title: '医生管理', icon: 'menu-icon-user' },
     children: [
       {
         path: '/user/list',
         name: 'UserList',
         component: () => import('@/views/user/list'),
-        meta: { title: '用户列表' }
+        meta: { title: '医生列表' }
       }
     ]
   }

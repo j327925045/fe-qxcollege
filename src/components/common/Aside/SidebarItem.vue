@@ -74,8 +74,13 @@ export default {
       })
 
       // When there is only one child router, the child router is displayed by default
+      // 如果想只有一个菜单的时候就展示这一个的话，返回true
       if (showingChildren.length === 1) {
-        return true
+        if (showingChildren[0].meta.onlyShow) {
+          return true
+        } else {
+          return false
+        }
       }
 
       // Show parent if there are no child router to display

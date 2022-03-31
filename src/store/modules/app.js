@@ -2,7 +2,7 @@ import { Message } from 'element-ui'
 import { getAllDictionaryItems } from '@/api/dictionary'
 
 const HomePage = {
-  title: '首页',
+  title: '工作台',
   name: 'home',
   content: '/'
 }

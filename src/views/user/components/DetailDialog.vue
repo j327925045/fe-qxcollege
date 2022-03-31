@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="用户信息" width="600px" :visible.sync="detailDialogVisible">
+  <el-dialog title="医生信息" width="600px" :visible.sync="detailDialogVisible">
     <el-descriptions>
       <el-descriptions-item label="账号（手机号）">{{ userDetail.account }}</el-descriptions-item>
     </el-descriptions>

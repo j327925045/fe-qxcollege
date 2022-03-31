@@ -3,7 +3,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { Dictionary } from './modules/Dictionary'
 import { Employees } from './modules/Employees'
-import { Examples } from './modules/Examples'
 import { Hospital } from './modules/Hospital'
 import { Organization } from './modules/Organization'
 import { System } from './modules/System'
@@ -42,17 +41,16 @@ const originRoutes = [
       }
     ]
   },
-  ...Examples,
   {
     path: '/',
     component: Layout,
-    meta: { title: '首页', icon: 'menu-icon-home' },
+    meta: { title: '工作台', icon: 'menu-icon-home' },
     children: [
       {
         path: '/',
         name: 'home',
         component: () => import('@/views/home/index'),
-        meta: { title: '首页' }
+        meta: { title: '工作台', onlyShow: true }
       }
     ]
   },
@@ -63,9 +61,9 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
-  ...Employees,
   ...User,
   ...Organization,
+  ...Employees,
   ...Hospital,
   ...Dictionary,
   ...System,
@@ -78,7 +76,7 @@ formatRoutes(originRoutes.filter(item => !item.hidden))
 export const routes = originRoutes
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
