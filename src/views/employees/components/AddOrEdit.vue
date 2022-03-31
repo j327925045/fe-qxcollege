@@ -1,81 +1,128 @@
 <template>
-  <el-drawer
+  <ImDrawer
     :visible.sync="drawerVisible"
-    size="650px"
-    custom-class="gyl-detail-drawer"
-    :with-header="false"
-    :wrapper-closable="false"
+    :title="editId ? '编辑员工' : '新建员工'"
+    @closeDrower="closeDrower"
+    @submit="submitForm"
   >
-    <div class="gyl-hamburger" @click="drawerVisible = false">
-      <i class="el-icon-arrow-right" />
-    </div>
-    <div class="drawer-content">
-      <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>{{ editId?'编辑员工':'新建员工' }}</h2>
-      </el-row>
-      <div class="gyl-form-view pb-[60px]">
-        <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
-        <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-          <el-form-item label="员工姓名" prop="name">
-            <el-input v-model.trim="form.name" placeholder="请输入员工姓名" />
-          </el-form-item>
-          <el-form-item label="员工性别" prop="gender">
-            <el-select v-model="form.gender" placeholder="请选择员工性别">
-              <el-option v-for="item in enums.gender" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="员工头像" prop="avatar">
-            <el-input v-model.trim="form.avatar" placeholder="请输入员工头像地址" />
-          </el-form-item>
-          <el-form-item label="账号（手机号）" prop="account">
-            <el-input v-model.trim="form.account" :maxlength="11" placeholder="请输入手机号" />
-          </el-form-item>
-          <el-form-item v-if="!editId" label="密码" prop="password">
-            <el-input v-model.trim="form.password" placeholder="请输入密码" />
-          </el-form-item>
-          <el-form-item label="员工性质" prop="nature">
-            <el-select v-model="form.nature" placeholder="请选择员工性质">
-              <el-option v-for="(item, idx) in enums.employeeNature" :key="idx" :label="item.label" :value="item.value" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="员工状态" prop="status">
-            <el-select v-model="form.status" placeholder="请选择员工状态">
-              <el-option v-for="(item, idx) in enums.employeeStatus" :key="idx" :label="item.label" :value="item.value" />
-            </el-select>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
-        <el-button @click="closeDrower">取 消</el-button>
-        <el-button type="primary" @click="submitForm">保 存</el-button>
-      </div>
-    </div>
-  </el-drawer>
+    <ImForm ref="ImForm" :form="formConfig">
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
+    </ImForm>
+  </ImDrawer>
 </template>
 
 <script>
 import { addEmployeesItem, getEmployeesDetail, updateEmployeesItem } from '@/api/employees'
 import { mapGetters } from 'vuex'
+import ImDrawer from '@/views/components/ImDrawer'
+import ImForm from '@/views/components/ImForm'
+
 export default {
   name: 'AddOrEdit',
+  components: {
+    ImDrawer,
+    ImForm
+  },
   data() {
     return {
-      form: {
-        name: undefined,
-        gender: undefined,
-        avatar: undefined,
-        account: undefined,
-        password: undefined,
-        nature: undefined,
-        status: undefined
-      },
-      rules: {
-        name: [{ required: true, message: '请输入员工姓名' }],
-        gender: [{ required: true, message: '请选择员工性别' }],
-        account: [{ required: true, message: '请输入账号（手机号）' }, { validator: this.phoneValidate }],
-        password: [{ required: true, message: '请输入密码' }],
-        nature: [{ required: true, message: '请选择员工性质' }],
-        status: [{ required: true, message: '请选择员工状态' }]
+      formConfig: {
+        attrs: {
+          labelWidth: '140px',
+          labelPosition: 'right'
+        },
+        props: {
+          name: undefined,
+          gender: undefined,
+          avatar: undefined,
+          account: undefined,
+          password: undefined,
+          nature: undefined,
+          status: undefined
+        },
+        formItems: [
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              firstSlot: 'infoSlot'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '员工姓名',
+            rules: [{ required: true, message: '请输入员工姓名' }],
+            attrs: {
+              placeholder: '请输入员工姓名'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'gender',
+            label: '员工性别',
+            rules: [{ required: true, message: '请选择员工性别' }],
+            attrs: {
+              placeholder: '请选择员工性别',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'avatar',
+            label: '员工头像',
+            rules: [{ required: true, message: '请输入员工头像地址' }],
+            attrs: {
+              placeholder: '请输入员工头像地址'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'account',
+            label: '账号（手机号）',
+            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入手机号',
+              maxLength: 11
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'password',
+            label: '密码',
+            hidden: false,
+            rules: [{ required: true, message: '请输入密码' }],
+            attrs: {
+              placeholder: '请输入密码'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'nature',
+            label: '员工性质',
+            rules: [{ required: true, message: '请选择员工性质' }],
+            attrs: {
+              placeholder: '请选择员工性质',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'status',
+            label: '员工状态',
+            rules: [{ required: true, message: '请选择员工状态' }],
+            attrs: {
+              placeholder: '请选择员工状态',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          }
+        ]
       },
       editId: undefined,
       drawerVisible: false
@@ -84,51 +131,74 @@ export default {
   computed: {
     ...mapGetters(['enums'])
   },
+  created() {
+    this.setOptions()
+  },
   methods: {
-    phoneValidate(rule, value, callback) {
-      const regex = /^1\d{10}$/
-      if (regex.test(value)) {
-        callback()
-      } else {
-        callback(new Error('请输入正确的手机号'))
-      }
+    /**
+     * 统一处理options
+     */
+    setOptions() {
+      this.setFormPropOptions('gender', this.enums.gender)
+      this.setFormPropOptions('nature', this.enums.employeeNature)
+      this.setFormPropOptions('status', this.enums.employeeStatus)
     },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
     add() {
       this.editId = undefined
       this.drawerVisible = true
+      this.setPasswordVisible(true)
     },
+
     edit(editId) {
       this.editId = editId
       this.drawerVisible = true
       this.getItemDetail()
+      this.setPasswordVisible(false)
     },
+
+    setPasswordVisible(visible) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === 'password')
+      item.hidden = !visible
+    },
+
     getItemDetail() {
-      getEmployeesDetail({ objectCode: this.editId }).then(res => {
+      getEmployeesDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200 && res.data) {
-          this.form = {
-            name: res.data.name,
-            gender: res.data.gender,
-            avatar: res.data.avatar,
-            account: res.data.account,
-            nature: res.data.nature,
-            status: res.data.status
+          const props = this.formConfig.props
+          const keys = Object.keys(props)
+          // 直接遍历进行赋值，特殊属性需要单独拿出来处理
+          for (let i = 0; i < keys.length; i++) {
+            const key = keys[i]
+            props[key] = res.data[key] || undefined
           }
         }
       })
     },
 
     submitForm() {
-      this.$refs.form.validate(valid => {
+      this.$refs.ImForm.validate((valid) => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
         }
         const data = {
-          ...this.form
+          ...this.formConfig.props
         }
         if (this.editId) {
           data.objectCode = this.editId
-          updateEmployeesItem(data).then(res => {
+          updateEmployeesItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('更新成功！')
               this.$emit('update')
@@ -138,7 +208,7 @@ export default {
             }
           })
         } else {
-          addEmployeesItem(data).then(res => {
+          addEmployeesItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')
@@ -151,7 +221,7 @@ export default {
       })
     },
     closeDrower() {
-      this.$refs.form.resetFields()
+      this.$refs.ImForm.reset()
       this.drawerVisible = false
     }
   }

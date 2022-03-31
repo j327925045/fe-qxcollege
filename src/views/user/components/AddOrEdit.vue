@@ -8,7 +8,7 @@
     <ImForm ref="ImForm" :form="formConfig">
       <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />个人信息</h3>
       <h3 slot="professionalSlot" class="gyl-title"><i class="el-icon-s-order" />职业信息</h3>
-      <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.hospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
+      <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
       <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
     </ImForm>
   </ImDrawer>
@@ -45,12 +45,12 @@ export default {
           birthday: '',
           phone: undefined,
           personalUrl: undefined,
-          hospitalCode: undefined,
-          department: undefined,
+          realHospitalCode: undefined,
+          realDepartment: undefined,
           doctorLevel: undefined,
-          jobTitle: undefined,
+          realJobTitle: undefined,
           regionCode: undefined,
-          address: undefined,
+          realAddress: undefined,
           isCertified: undefined,
           isCooperation: undefined,
           isLecturer: undefined,
@@ -138,7 +138,7 @@ export default {
           },
           {
             type: 'ImSlot',
-            prop: 'hospitalCode',
+            prop: 'realHospitalCode',
             label: '医院',
             rules: [{ required: true, message: '请选择医院' }],
             slots: {
@@ -147,7 +147,7 @@ export default {
           },
           {
             type: 'ImInput',
-            prop: 'department',
+            prop: 'realDepartment',
             label: '科室',
             attrs: {
               placeholder: '请输入科室名称'
@@ -166,7 +166,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'jobTitle',
+            prop: 'realJobTitle',
             label: '职称',
             attrs: {
               placeholder: '请选择职称',
@@ -185,7 +185,7 @@ export default {
           },
           {
             type: 'ImInput',
-            prop: 'address',
+            prop: 'realAddress',
             label: '执业地点(详细地址)',
             attrs: {
               placeholder: '请输入执业地点(详细地址)'
@@ -260,7 +260,7 @@ export default {
     setOptions() {
       this.setFormPropOptions('gender', this.enums.gender)
       this.setFormPropOptions('doctorLevel', this.enums.doctorLevel)
-      this.setFormPropOptions('jobTitle', this.enums.jobTitle)
+      this.setFormPropOptions('realJobTitle', this.enums.jobTitle)
       this.setFormPropOptions('isCertified', this.enums.isCertified)
       this.setFormPropOptions('isCooperation', this.enums.isCooperation)
       this.setFormPropOptions('isLecturer', this.enums.isLecturer)

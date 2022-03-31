@@ -164,10 +164,6 @@ export default {
           }
         ]
       },
-      form: {
-
-      },
-      rules: {},
       editId: undefined,
       drawerVisible: false
     }

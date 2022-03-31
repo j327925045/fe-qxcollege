@@ -87,8 +87,7 @@ export default {
           removeToken()
           this.$router.push(`/login?redirect=${this.$route.fullPath}`)
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
     changeTheme(e) {
       const themeColor = e.target.dataset.theme
@@ -195,7 +194,9 @@ export default {
       .user-avatar {
         width: 40px;
         height: 40px;
+        padding: 4px;
         vertical-align: middle;
+        background: white;
         border-radius: 100px;
         cursor: pointer;
       }

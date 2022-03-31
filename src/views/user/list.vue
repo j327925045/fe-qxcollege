@@ -119,19 +119,19 @@ export default {
             }
           },
           {
-            prop: 'nickname',
-            label: '医生昵称',
+            prop: 'realName',
+            label: '真实姓名',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'realName',
-            label: '真实姓名',
+            prop: 'nickname',
+            label: '昵称',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             }
           },
           {
@@ -147,11 +147,11 @@ export default {
             label: '医生省市',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             }
           },
           {
-            prop: 'hospitalName',
+            prop: 'realHospitalName',
             label: '医院',
             attrs: {
               'show-overflow-tooltip': true,
@@ -159,7 +159,7 @@ export default {
             }
           },
           {
-            prop: 'department',
+            prop: 'realDepartment',
             label: '科室',
             attrs: {
               'show-overflow-tooltip': true,
@@ -167,7 +167,7 @@ export default {
             }
           },
           {
-            prop: 'jobTitle',
+            prop: 'realJobTitle',
             label: '职称',
             type: 'mapList',
             attrs: {
