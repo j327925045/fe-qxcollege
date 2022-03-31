@@ -1,51 +1,59 @@
 <template>
-  <el-drawer
+  <ImDrawer
     :visible.sync="drawerVisible"
-    size="650px"
-    custom-class="gyl-detail-drawer"
-    :with-header="false"
-    :wrapper-closable="false"
+    title="编辑角色"
+    @closeDrower="closeDrower"
+    @submit="submitForm"
   >
-    <div class="gyl-hamburger" @click="drawerVisible = false">
-      <i class="el-icon-arrow-right" />
-    </div>
-    <div class="drawer-content">
-      <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>编辑角色</h2>
-      </el-row>
-      <div class="gyl-form-view pb-[60px]">
-        <h3 class="gyl-title"><i class="el-icon-s-order" />角色选择</h3>
-        <el-form ref="form" :model="form" :rules="rules" label-position="top">
-          <el-form-item label="" prop="name">
-            <RoleSelect ref="RoleSelect" v-model="form.roleCodeList"></RoleSelect>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
-        <el-button @click="closeDrower">取 消</el-button>
-        <el-button type="primary" @click="submitForm">保 存</el-button>
-      </div>
-    </div>
-  </el-drawer>
+    <ImForm ref="ImForm" :form="formConfig">
+      <h3 slot="baseInfo" class="gyl-title"><i class="el-icon-s-order" />角色选择</h3>
+      <RoleSelect slot="RoleSelectSlot" v-model="formConfig.props.roleCodeList" placeholder="请选择角色" style="width: 100%;"></RoleSelect>
+    </ImForm>
+  </ImDrawer>
 </template>
 
 <script>
 import RoleSelect from '@/views/components/RoleSelect'
+import ImDrawer from '@/views/components/ImDrawer'
+import ImForm from '@/views/components/ImForm'
 import { setEmployeesRole, getEmployeesRoleDetail } from '@/api/employeesRole'
+
 export default {
   name: 'SetRoleDrawer',
   components: {
+    ImDrawer,
+    ImForm,
     RoleSelect
   },
   data() {
     return {
-      drawerVisible: false,
-      form: {
-        roleCodeList: []
+      formConfig: {
+        attrs: {
+          labelWidth: '100px'
+        },
+        props: {
+          roleCodeList: []
+        },
+        formItems: [
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              info: 'baseInfo'
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'roleCodeList',
+            label: '员工角色',
+            rules: [{ required: true, message: '请选择角色' }],
+            slots: {
+              roleCodeList: 'RoleSelectSlot'
+            }
+          }
+        ]
       },
-      rules: {
-        roleCodeList: [{ required: true, message: '请选择权限' }]
-      }
+      drawerVisible: false
     }
   },
   methods: {
@@ -59,21 +67,20 @@ export default {
       getEmployeesRoleDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
           const objectCodeArr = res.data.map(item => item.objectCode)
-          this.form.roleCodeList = objectCodeArr
+          this.formConfig.props.roleCodeList = objectCodeArr
         }
       })
     },
 
     submitForm() {
-      console.log('this.form', this.form)
-      this.$refs.form.validate(valid => {
+      this.$refs.ImForm.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
         }
         const data = {
           employeeCode: this.editId,
-          ...this.form
+          ...this.formConfig.props
         }
         setEmployeesRole(data).then(res => {
           if (res.code === 200) {
@@ -84,12 +91,11 @@ export default {
             this.$message.error(res.message)
           }
         })
-        console.log('data', data)
       })
     },
 
     closeDrower() {
-      this.$refs.form.resetFields()
+      this.$refs.ImForm.reset()
       this.drawerVisible = false
     }
   }

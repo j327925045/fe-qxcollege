@@ -43,7 +43,11 @@ export default {
   },
   methods: {
     setMyValue() {
-      this.myValue = this.value
+      try {
+        this.myValue = JSON.parse(JSON.stringify(this.value))
+      } catch (error) {
+        this.myValue = undefined
+      }
     },
 
     getOptions() {
@@ -51,13 +55,12 @@ export default {
         if (res.code === 200) {
           this.options = res.data
         }
-        console.log('res', res)
       })
     },
 
     onChange() {
+      console.log('this.myValue', this.myValue)
       this.$emit('input', this.myValue)
-      this.$emit('change', this.myValue)
     }
   }
 }

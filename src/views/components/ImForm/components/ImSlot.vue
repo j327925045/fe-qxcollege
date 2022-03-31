@@ -10,22 +10,6 @@
 export default {
   name: 'ImSlot',
   props: {
-    value: {
-      type: String,
-      default: undefined
-    },
-    attrs: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    listeners: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
     slots: {
       type: Object,
       default() {

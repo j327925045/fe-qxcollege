@@ -15,6 +15,6 @@ export function getEmployeesRoleDetail(params) {
   return request({
     url: `/qxcollege/employeerole/get/${params.objectCode}`,
     method: 'get',
-    params
+    params: {}
   })
 }
