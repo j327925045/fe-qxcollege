@@ -59,7 +59,7 @@
 import { getLogList } from '@/api/log'
 import AffixedTable from '@/views/components/AffixedTable'
 export default {
-  name: 'SystemLogList',
+  name: 'LogList',
   components: {
     AffixedTable
   },

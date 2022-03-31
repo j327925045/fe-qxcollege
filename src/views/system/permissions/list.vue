@@ -79,7 +79,7 @@ import { getPermissionList, deletePermissionItem } from '@/api/permission'
 import AddOrEdit from './components/AddOrEdit'
 import AffixedTable from '@/views/components/AffixedTable'
 export default {
-  name: 'SystemPermissionsList',
+  name: 'PermissionsList',
   components: {
     AddOrEdit,
     AffixedTable

@@ -9,20 +9,26 @@ export const System = [
     meta: { title: '系统设置', icon: 'menu-icon-system' },
     children: [
       {
+        path: '/system/dictionary',
+        name: 'DictionaryList',
+        component: () => import('@/views/dictionary/list'),
+        meta: { title: '字段列表' }
+      },
+      {
         path: '/system/permissions',
-        name: 'SystemPermissionsList',
+        name: 'PermissionsList',
         component: () => import('@/views/system/permissions/list'),
         meta: { title: '权限列表' }
       },
       {
         path: '/system/role',
-        name: 'SystemRoleList',
+        name: 'RoleList',
         component: () => import('@/views/system/role/list'),
         meta: { title: '角色列表' }
       },
       {
         path: '/system/log',
-        name: 'SystemLogList',
+        name: 'LogList',
         component: () => import('@/views/system/log/list'),
         meta: { title: '操作日志' }
       }

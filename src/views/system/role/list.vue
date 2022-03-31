@@ -74,7 +74,7 @@ import AddOrEdit from './components/AddOrEdit'
 import SetPermissionDrawer from './components/SetPermissionDrawer'
 import AffixedTable from '@/views/components/AffixedTable'
 export default {
-  name: 'SystemRoleList',
+  name: 'RoleList',
   components: {
     AddOrEdit,
     SetPermissionDrawer,

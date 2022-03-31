@@ -63,8 +63,8 @@ const originRoutes = [
   },
   ...User,
   ...Organization,
-  ...Employees,
   ...Hospital,
+  ...Employees,
   ...Dictionary,
   ...System,
   // 404 page must be placed at the end !!!
