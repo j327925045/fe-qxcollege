@@ -57,7 +57,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '用户姓名',
+            label: '医院名称',
             attrs: {
               type: 'text',
               placeholder: '请输入',

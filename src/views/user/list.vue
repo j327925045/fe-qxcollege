@@ -5,7 +5,7 @@
     </ImSearchArea>
     <ImTableArea>
       <div class="mb-4">
-        <el-button type="primary" @click="addUser">新建医生</el-button>
+        <el-button type="primary" @click="addItem">新建医生</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
@@ -225,7 +225,7 @@ export default {
       this.$refs.DetailDialog.show(record)
     },
 
-    addUser() {
+    addItem() {
       this.$refs.AddOrEdit.add()
     },
 
