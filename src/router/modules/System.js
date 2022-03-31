@@ -17,19 +17,19 @@ export const System = [
       {
         path: '/system/permissions',
         name: 'PermissionsList',
-        component: () => import('@/views/system/permissions/list'),
+        component: () => import('@/views/permissions/list'),
         meta: { title: '权限列表' }
       },
       {
         path: '/system/role',
         name: 'RoleList',
-        component: () => import('@/views/system/role/list'),
+        component: () => import('@/views/role/list'),
         meta: { title: '角色列表' }
       },
       {
         path: '/system/log',
         name: 'LogList',
-        component: () => import('@/views/system/log/list'),
+        component: () => import('@/views/log/list'),
         meta: { title: '操作日志' }
       }
     ]
