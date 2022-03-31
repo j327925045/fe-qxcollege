@@ -42,22 +42,12 @@
             </el-tooltip>
           </template>
           <template v-else-if="item.type === 'val2btn'">
-            <el-button
-              v-for="(opt, idx) in btnList(item.options, scope)"
-              :key="idx"
-              v-bind="opt.attrs"
-              @click="opt.onClick(scope.$index, scope.row)"
-            >
+            <el-button v-for="(opt, idx) in btnList(item.options, scope)" :key="idx" v-bind="opt.attrs" @click="opt.onClick(scope.$index, scope.row)">
               {{ opt.label }}
             </el-button>
           </template>
           <template v-else-if="item.type === 'val2tag'">
-            <el-tag
-              v-for="(opt, idx) in btnList(item.options, scope)"
-              :key="idx"
-              v-bind="opt.attrs"
-              @click="opt.onClick(scope.$index, scope.row)"
-            >
+            <el-tag v-for="(opt, idx) in btnList(item.options, scope)" :key="idx" v-bind="opt.attrs" @click="opt.onClick(scope.$index, scope.row)">
               {{ opt.label }}
             </el-tag>
           </template>
@@ -215,3 +205,43 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/deep/.el-table--border {
+  &:not(.el-table--group) {
+    border: 0;
+
+    &::after {
+      width: 0;
+    }
+
+    th,
+    td {
+      border-right: 0;
+    }
+
+    th > .cell {
+      padding: 0 15px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      &::before {
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        left: -1px;
+        width: 1px;
+        border-right: 2px #ccc dotted;
+        content: '';
+      }
+    }
+
+    th:first-child > .cell {
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+</style>
