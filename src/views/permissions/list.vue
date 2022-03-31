@@ -1,119 +1,200 @@
 <template>
   <div>
-    <div class="gyl-form-view">
-      <span class="form-switch" @click="formSwitch">
-        {{ isShow ? '全部收起' : '全部展开' }}
-        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
-      </span>
-      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />权限列表</h3>
-      <el-form v-show="isShow" ref="form" :model="form" label-width="100px">
-        <el-row>
-          <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="权限名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-form-item class="gyl-form-btn-wrap">
-            <el-button @click="resetForm('form')">重 置</el-button>
-            <el-button type="primary" @click="search">查 询</el-button>
-          </el-form-item>
-        </el-row>
-      </el-form>
-    </div>
-
-    <div class="gyl-table-view">
-      <el-row class="table-tools">
+    <ImSearchArea>
+      <ImForm ref="ImForm" :form="formConfig"></ImForm>
+    </ImSearchArea>
+    <ImTableArea>
+      <div class="mb-4">
         <el-button type="primary" @click="addItem">新建权限</el-button>
-      </el-row>
-      <div class="gyl-form-view-box">
-        <AffixedTable
-          v-loading="loading"
-          :data="tableData"
-          row-key="objectCode"
-          stripe
-          border
-          default-expand-all
-          :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-        >
-          <el-table-column prop="name" label="菜单名称" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="hide" label="是否显示" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.hide|getLabelByValue('permissionHide') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="orderNum" label="排序" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="type" label="权限类型" show-overflow-tooltip min-width="120">
-            <template slot-scope="scope">
-              {{ scope.row.type|getLabelByValue('permissionType') }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="url" label="菜单URL" show-overflow-tooltip min-width="120" />
-          <el-table-column prop="urls" label="授权" show-overflow-tooltip min-width="120" />
-          <el-table-column fixed="right" label="操作" width="120">
-            <template slot-scope="scope">
-              <el-button type="text" @click="editItem(scope.row)">编辑</el-button>
-              <el-button type="text" @click="deleteItem(scope.row)">删除</el-button>
-            </template>
-          </el-table-column>
-        </AffixedTable>
       </div>
-      <div class="gyl-pagination">
-        <el-pagination
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :page-size="pageSize"
-          :page-sizes="[10, 20, 30, 40]"
-          :current-page="currentPage"
+      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <div class="mt-4 text-right">
+        <ImPagination
+          ref="ImPagination"
+          :page-size.sync="pageSize"
+          :current-page.sync="currentPage"
           :total="total"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+          @change="getList"
+        ></ImPagination>
       </div>
-      <AddOrEdit ref="AddOrEdit" @add="getList" @update="getList"></AddOrEdit>
-    </div>
+    </ImTableArea>
+    <AddOrEdit ref="AddOrEdit" @add="getList" @update="getList"></AddOrEdit>
   </div>
 </template>
 
 <script>
 import { getPermissionList, deletePermissionItem } from '@/api/permission'
 import AddOrEdit from './components/AddOrEdit'
-import AffixedTable from '@/views/components/AffixedTable'
+import ImSearchArea from '@/views/components/ImSearchArea'
+import ImForm from '@/views/components/ImForm'
+import ImTableArea from '@/views/components/ImTableArea'
+import ImTable from '@/views/components/ImTable'
+import ImPagination from '@/views/components/ImPagination'
+import { mapGetters } from 'vuex'
 export default {
   name: 'PermissionsList',
   components: {
-    AddOrEdit,
-    AffixedTable
+    ImSearchArea,
+    ImForm,
+    ImTableArea,
+    ImTable,
+    ImPagination,
+    AddOrEdit
   },
   data() {
     return {
-      form: {
-        name: ''
+      formConfig: {
+        column: 3,
+        attrs: {
+          labelWidth: '100px'
+        },
+        props: {
+          name: ''
+        },
+        formItems: [
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '权限名称',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImButton',
+            attrs: {
+              style: 'flex: 1; text-align: right;',
+              options: [
+                {
+                  label: '重 置',
+                  attrs: {
+                    type: 'default'
+                  },
+                  listeners: {
+                    click: this.resetForm
+                  }
+                },
+                {
+                  label: '查 询',
+                  attrs: {
+                    type: 'primary'
+                  },
+                  listeners: {
+                    click: this.search
+                  }
+                }
+              ]
+            }
+          }
+        ]
       },
-      tableData: [],
       loading: false,
       currentPage: 1,
       pageSize: 10,
-      total: 0,
-      isShow: true
+      total: 0
+    }
+  },
+  computed: {
+    ...mapGetters(['enums']),
+    tableConfig() {
+      return {
+        data: [],
+        attrs: {
+          rowKey: 'objectCode',
+          'default-expand-all': true
+        },
+        tableItems: [
+          {
+            prop: 'name',
+            label: '菜单名称',
+            attrs: {
+              'min-width': '180'
+            }
+          },
+          {
+            prop: 'hide',
+            label: '是否显示',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.permissionHide ?? []
+          },
+          {
+            prop: 'orderNum',
+            label: '排序',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'type',
+            label: '权限类型',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.permissionType ?? []
+          },
+          {
+            prop: 'url',
+            label: '菜单URL',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'urls',
+            label: '授权',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: '',
+            label: '操作',
+            type: 'buttons',
+            attrs: {
+              fixed: 'right',
+              width: '120'
+            },
+            options: [
+              {
+                title: '编辑',
+                type: 'text',
+                onClick: this.editItem
+              },
+              {
+                title: '删除',
+                type: 'text',
+                onClick: this.deleteItem
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   created() {
     this.getList()
   },
   methods: {
-    formSwitch() {
-      this.isShow = !this.isShow
-    },
-
     addItem() {
       this.$refs.AddOrEdit.add()
     },
 
-    editItem(record) {
+    editItem($index, record) {
       this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
-    deleteItem(record) {
+    deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
@@ -136,8 +217,7 @@ export default {
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 10
-      this.currentPage = 1
+      this.$refs.ImPagination.reset()
       this.getList()
     },
 
@@ -148,16 +228,14 @@ export default {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        ...this.form
+        ...this.formConfig.props
       }
       this.loading = true
       getPermissionList(params).then(res => {
         this.loading = false
         if (res.code === 200) {
-          const resData = res.data || []
-          this.total = resData.totalCount
-          this.tableData = resData.list || []
-          console.log('this.tableData', this.tableData)
+          this.total = res.data.totalCount
+          this.tableConfig.data = res.data.list || []
         }
       }).catch(_ => {
         this.loading = false
@@ -168,23 +246,8 @@ export default {
      * 重置表单
      */
     resetForm() {
-      this.$refs.form.resetFields()
-      this.search()
-    },
-
-    /**
-     * 每页个数发生变化事件
-     */
-    handleSizeChange(val) {
-      this.pageSize = val
-      this.getList()
-    },
-
-    /**
-     * 当前页码发生变化事件
-     */
-    handleCurrentChange(val) {
-      this.currentPage = val
+      this.$refs.ImForm.reset()
+      this.$refs.ImPagination.reset()
       this.getList()
     }
   }

@@ -80,9 +80,9 @@
             <el-progress :percentage="getCurrentProp(scope.row, item.prop)" />
           </template>
           <template v-else>
-            <div :style="item.style">
+            <span :style="item.style">
               {{ getCurrentProp(scope.row, item.prop) }}
-            </div>
+            </span>
           </template>
         </template>
       </el-table-column>

@@ -1,88 +1,125 @@
 <template>
-  <el-drawer :visible.sync="drawerVisible" size="650px" custom-class="gyl-detail-drawer" :with-header="false" :wrapper-closable="false">
-    <div class="gyl-hamburger" @click="drawerVisible = false">
-      <i class="el-icon-arrow-right" />
-    </div>
-    <div class="drawer-content">
-      <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>{{ editId ? '编辑权限' : '新建权限' }}</h2>
-      </el-row>
-      <div class="gyl-form-view pb-[60px]">
-        <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
-        <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-          <el-form-item label="菜单名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入菜单名称" />
-          </el-form-item>
-          <el-form-item label="是否显示" prop="hide">
-            <el-select v-model="form.hide" placeholder="请选择是否显示">
-              <el-option
-                v-for="item in enums.permissionHide"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="排序" prop="orderNum">
-            <el-input-number v-model="form.orderNum" controls-position="right" :min="0" placeholder="请输入排序" />
-          </el-form-item>
-          <el-form-item label="父菜单" prop="parentId">
-            <PermissionCascader ref="PermissionCascader" v-model="form.parentId"></PermissionCascader>
-          </el-form-item>
-          <el-form-item label="类型" prop="type">
-            <el-select v-model="form.type" placeholder="请选择类型">
-              <el-option
-                v-for="item in enums.permissionType"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="菜单URL" prop="url">
-            <el-input v-model="form.url" placeholder="请输入菜单URL" />
-          </el-form-item>
-          <el-form-item label="授权" prop="urls">
-            <el-input v-model="form.urls" placeholder="请输入授权地址" />
-          </el-form-item>
-        </el-form>
-      </div>
-      <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
-        <el-button @click="closeDrower">取 消</el-button>
-        <el-button type="primary" @click="submitForm">保 存</el-button>
-      </div>
-    </div>
-  </el-drawer>
+  <ImDrawer
+    :visible.sync="drawerVisible"
+    :title="editId ? '编辑权限' : '新建权限'"
+    @closeDrower="closeDrower"
+    @submit="submitForm"
+  >
+    <ImForm ref="ImForm" :form="formConfig">
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />个人信息</h3>
+      <PermissionCascader slot="PermissionCascader" ref="PermissionCascader" v-model="formConfig.props.parentId" style="width: 100%;"></PermissionCascader>
+    </ImForm>
+  </ImDrawer>
 </template>
 
 <script>
 import { addPermissionItem, getPermissionDetail, updatePermissionItem } from '@/api/permission'
 import { mapGetters } from 'vuex'
 import PermissionCascader from '@/views/components/PermissionCascader'
+import ImDrawer from '@/views/components/ImDrawer'
+import ImForm from '@/views/components/ImForm'
 export default {
   name: 'AddOrEdit',
-  components: { PermissionCascader },
+  components: {
+    ImDrawer,
+    ImForm,
+    PermissionCascader
+  },
   data() {
     return {
-      form: {
-        hide: '0',
-        name: undefined,
-        orderNum: 0,
-        parentId: '0',
-        type: undefined,
-        url: undefined,
-        urls: '/'
-      },
-      rules: {
-        hide: [{ required: true, message: '请输入菜单名称' }],
-        name: [{ required: true, message: '请选择是否显示' }],
-        orderNum: [{ required: true, message: '请输入排序' }],
-        parentId: [{ required: true, message: '请选择父菜单' }],
-        type: [{ required: true, message: '请选择类型' }],
-        url: [{ required: true, message: '请输入菜单URL' }],
-        urls: [{ required: true, message: '请输入授权地址' }]
+      formConfig: {
+        attrs: {
+          labelWidth: '140px',
+          labelPosition: 'right'
+        },
+        props: {
+          hide: '0',
+          name: undefined,
+          orderNum: 0,
+          parentId: '0',
+          type: undefined,
+          url: undefined,
+          urls: '/'
+        },
+        formItems: [
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              firstSlot: 'infoSlot'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '菜单名称',
+            rules: [{ required: true, message: '请输入菜单名称' }],
+            attrs: {
+              placeholder: '请输入菜单名称'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'hide',
+            label: '是否显示',
+            rules: [{ required: true, message: '请选择是否显示' }],
+            attrs: {
+              placeholder: '请选择是否显示',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInputNumber',
+            prop: 'orderNum',
+            label: '排序',
+            rules: [{ required: true, message: '请输入排序' }],
+            attrs: {
+              placeholder: '请输入菜单名称',
+              controlsPosition: 'right',
+              min: 0
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'parentId',
+            label: '父菜单',
+            slots: {
+              parentId: 'PermissionCascader'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'type',
+            label: '类型',
+            rules: [{ required: true, message: '请选择类型' }],
+            attrs: {
+              placeholder: '请选择类型',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'url',
+            label: '菜单URL',
+            rules: [{ required: true, message: '请输入菜单URL' }],
+            attrs: {
+              placeholder: '请输入菜单URL'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'urls',
+            label: '授权',
+            rules: [{ required: true, message: '请输入授权地址' }],
+            attrs: {
+              placeholder: '请输入授权地址'
+            }
+          }
+        ]
       },
       editId: undefined,
       drawerVisible: false
@@ -91,7 +128,28 @@ export default {
   computed: {
     ...mapGetters(['enums'])
   },
+  created() {
+    this.setOptions()
+  },
   methods: {
+    /**
+     * 统一处理options
+     */
+    setOptions() {
+      this.setFormPropOptions('hide', this.enums.permissionHide)
+      this.setFormPropOptions('type', this.enums.permissionType)
+    },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
     getPermissionOptions() {
       if (this.$refs.PermissionCascader) {
         this.$refs.PermissionCascader.getOptions()
@@ -117,27 +175,25 @@ export default {
     getItemDetail() {
       getPermissionDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200) {
-          this.form = {
-            hide: res.data.hide,
-            name: res.data.name,
-            orderNum: res.data.orderNum || 0,
-            parentId: res.data.parentId || '0',
-            type: res.data.type,
-            url: res.data.url,
-            urls: res.data.urls
+          const props = this.formConfig.props
+          const keys = Object.keys(props)
+          // 直接遍历进行赋值，特殊属性需要单独拿出来处理
+          for (let i = 0; i < keys.length; i++) {
+            const key = keys[i]
+            props[key] = res.data[key] || undefined
           }
         }
       })
     },
 
     submitForm() {
-      this.$refs.form.validate((valid) => {
+      this.$refs.ImForm.validate((valid) => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
         }
         const data = {
-          ...this.form
+          ...this.formConfig.props
         }
         if (this.editId) {
           data.objectCode = this.editId
@@ -164,7 +220,7 @@ export default {
       })
     },
     closeDrower() {
-      this.$refs.form.resetFields()
+      this.$refs.ImForm.reset()
       this.drawerVisible = false
     }
   }
