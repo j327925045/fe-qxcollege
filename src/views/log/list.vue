@@ -1,94 +1,154 @@
 <template>
   <div>
-    <div class="gyl-form-view">
-      <span class="form-switch" @click="formSwitch">
-        {{ isShow ? '全部收起' : '全部展开' }}
-        <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
-      </span>
-      <h3 class="gyl-title pb-4"><i class="el-icon-s-order" />操作日志</h3>
-      <el-form v-show="isShow" ref="form" :model="form" label-width="100px">
-        <el-row>
-          <el-col :xs="24" :sm="12" :lg="8">
-            <el-form-item label="操作名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入" />
-            </el-form-item>
-          </el-col>
-          <el-form-item class="gyl-form-btn-wrap">
-            <el-button @click="resetForm">重 置</el-button>
-            <el-button type="primary" @click="search">查 询</el-button>
-          </el-form-item>
-        </el-row>
-      </el-form>
-    </div>
+    <ImSearchArea>
+      <ImForm ref="ImForm" :form="formConfig"></ImForm>
+    </ImSearchArea>
 
-    <div class="gyl-table-view">
-      <div class="gyl-form-view-box">
-        <AffixedTable v-loading="loading" :data="tableData" stripe border>
-          <el-table-column fixed="left" label="序号" width="60">
-            <template slot-scope="scope">
-              {{ scope.$index+1 }}
-            </template>
-          </el-table-column>
-          <el-table-column prop="operation" label="用户操作" show-overflow-tooltip max-width="180" />
-          <el-table-column prop="method" label="请求方法" show-overflow-tooltip min-width="180" />
-          <el-table-column prop="params" label="请求参数" show-overflow-tooltip min-width="150" />
-          <el-table-column label="执行时长" width="120">
-            <template slot-scope="scope">
-              <span>{{ scope.row.time }}ms</span>
-            </template>
-          </el-table-column>
-        </AffixedTable>
-      </div>
-      <div class="gyl-pagination">
-        <el-pagination
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :page-size="pageSize"
-          :page-sizes="[10, 20, 30, 40]"
-          :current-page="currentPage"
+    <ImTableArea>
+      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <div class="mt-4 text-right">
+        <ImPagination
+          ref="ImPagination"
+          :page-size.sync="pageSize"
+          :current-page.sync="currentPage"
           :total="total"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
+          @change="getList"
+        ></ImPagination>
       </div>
-    </div>
+    </ImTableArea>
   </div>
 </template>
 
 <script>
 import { getLogList } from '@/api/log'
-import AffixedTable from '@/views/components/AffixedTable'
+import ImSearchArea from '@/views/components/ImSearchArea'
+import ImForm from '@/views/components/ImForm'
+import ImTableArea from '@/views/components/ImTableArea'
+import ImTable from '@/views/components/ImTable'
+import ImPagination from '@/views/components/ImPagination'
 export default {
   name: 'LogList',
   components: {
-    AffixedTable
+    ImTableArea,
+    ImTable,
+    ImPagination,
+    ImSearchArea,
+    ImForm
   },
   data() {
     return {
-      form: {
-        name: ''
+      formConfig: {
+        column: 3,
+        attrs: {
+          labelWidth: '100px'
+        },
+        props: {
+          name: ''
+        },
+        formItems: [
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '医院名称',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImButton',
+            attrs: {
+              style: 'flex: 1; text-align: right;',
+              options: [
+                {
+                  label: '重 置',
+                  attrs: {
+                    type: 'default'
+                  },
+                  listeners: {
+                    click: this.resetForm
+                  }
+                },
+                {
+                  label: '查 询',
+                  attrs: {
+                    type: 'primary'
+                  },
+                  listeners: {
+                    click: this.search
+                  }
+                }
+              ]
+            }
+          }
+        ]
       },
-      tableData: [],
+      tableConfig: {
+        data: [],
+        tableItems: [
+          {
+            prop: '',
+            label: '序号',
+            type: 'index',
+            attrs: {
+              fixed: 'left',
+              width: 60
+            }
+          },
+          {
+            prop: 'operation',
+            label: '用户操作',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            }
+          },
+          {
+            prop: 'method',
+            label: '请求方法',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            }
+          },
+          {
+            prop: 'params',
+            label: '请求参数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '150'
+            }
+          },
+          {
+            prop: 'time',
+            label: '执行时长',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            customFilter(val, row) {
+              return `${val}ms`
+            }
+          }
+        ]
+      },
       loading: false,
       currentPage: 1,
       pageSize: 10,
-      total: 0,
-      isShow: true
+      total: 0
     }
   },
-  created() {
+  activated() {
     this.getList()
   },
   methods: {
-    formSwitch() {
-      this.isShow = !this.isShow
-    },
     /**
      * 搜索按钮点击事件，回到第一页
      */
     search() {
-      this.pageSize = 10
-      this.currentPage = 1
+      this.$refs.ImPagination.reset()
       this.getList()
     },
 
@@ -99,16 +159,14 @@ export default {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        ...this.form
+        ...this.formConfig.props
       }
       this.loading = true
       getLogList(params).then(res => {
         this.loading = false
         if (res.code === 200) {
           this.total = res.data.totalCount || 0
-          this.tableData = res.data.list || []
-        } else {
-          this.$message.error(res.msg)
+          this.tableConfig.data = res.data.list || []
         }
       }).catch(_ => {
         this.loading = false
@@ -119,23 +177,8 @@ export default {
      * 重置表单
      */
     resetForm() {
-      this.$refs.form.resetFields()
-      this.search()
-    },
-
-    /**
-     * 每页个数发生变化事件
-     */
-    handleSizeChange(val) {
-      this.pageSize = val
-      this.getList()
-    },
-
-    /**
-     * 当前页码发生变化事件
-     */
-    handleCurrentChange(val) {
-      this.currentPage = val
+      this.$refs.ImForm.reset()
+      this.$refs.ImPagination.reset()
       this.getList()
     }
   }

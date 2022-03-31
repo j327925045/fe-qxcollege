@@ -586,7 +586,7 @@ export default {
             attrs: {
               width: '110'
             },
-            filter: function(val, row) {
+            filter(val, row) {
               return `<h3 style="text-align: center;">${val}%</h3>`
             }
           },
