@@ -9,7 +9,7 @@
       <div v-if="favouritesNav && !isCollapse">
         <favourites v-show="!searchKey" />
       </div>
-      <el-menu ref="sideMenu" :collapse="isCollapse" mode="vertical" router :default-active="defaultActive">
+      <el-menu ref="sideMenu" unique-opened :collapse="isCollapse" mode="vertical" router :default-active="defaultActive">
         <el-menu-item-group title="导航菜单">
           <sidebar-item v-for="route in menus" :key="route.path" :item="route" :base-path="route.path" :search-key="searchKey" />
         </el-menu-item-group>
