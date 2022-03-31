@@ -45,15 +45,21 @@
             <el-button
               v-for="(opt, idx) in btnList(item.options, scope)"
               :key="idx"
-              :disabled="opt.disabled"
-              :plain="opt.plain"
-              :style="opt.style"
-              :type="opt.type || 'default'"
-              size="small"
+              v-bind="opt.attrs"
               @click="opt.onClick(scope.$index, scope.row)"
             >
-              {{ opt.title }}
+              {{ opt.label }}
             </el-button>
+          </template>
+          <template v-else-if="item.type === 'val2tag'">
+            <el-tag
+              v-for="(opt, idx) in btnList(item.options, scope)"
+              :key="idx"
+              v-bind="opt.attrs"
+              @click="opt.onClick(scope.$index, scope.row)"
+            >
+              {{ opt.label }}
+            </el-tag>
           </template>
           <div v-else-if="item.type === 'photo'" style="text-align: center">
             <img :width="item.photoWidth || 50" :height="item.photoHeight || 50" :src="scope.row[item.prop]" style="margin: 5px auto; vertical-align: middle; border: 1px solid gray" />

@@ -463,6 +463,34 @@ export default {
           },
           {
             prop: '',
+            label: 'val2tag',
+            type: 'val2tag',
+            attrs: {
+              width: '250'
+            },
+            options: [
+              {
+                prop: 'status',
+                value: ['1'],
+                label: '已买',
+                attrs: {
+                  type: 'info'
+                },
+                onClick: this.onClick
+              },
+              {
+                prop: 'status',
+                value: ['2'],
+                label: '再次购买',
+                attrs: {
+                  type: 'primary'
+                },
+                onClick: this.buyAgain
+              }
+            ]
+          },
+          {
+            prop: '',
             label: 'val2btn',
             type: 'val2btn',
             attrs: {
@@ -472,28 +500,37 @@ export default {
               {
                 prop: 'status',
                 value: ['1'],
-                title: '已买',
+                label: '已买',
+                attrs: {
+                  type: 'info'
+                },
                 onClick: this.onClick
               },
               {
                 prop: 'status',
                 value: ['1'],
-                title: '再次购买',
-                type: 'primary',
+                label: '再次购买',
+                attrs: {
+                  type: 'primary'
+                },
                 onClick: this.buyAgain
               },
               {
                 prop: 'status',
                 value: ['1'],
-                title: '评价',
-                type: 'warn',
+                label: '评价',
+                attrs: {
+                  type: 'warning'
+                },
                 onClick: this.discuss
               },
               {
                 prop: 'status',
                 value: ['2'],
-                title: '未购买,点击购买',
-                type: 'primary',
+                label: '未购买,点击购买',
+                attrs: {
+                  type: 'danger'
+                },
                 onClick: this.onClick
               }
             ]

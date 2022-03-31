@@ -91,7 +91,6 @@ export default {
 
     onChange() {
       this.$emit('input', this.myValue)
-      this.$emit('change', this.myValue)
     }
   }
 }

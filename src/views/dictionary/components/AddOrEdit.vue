@@ -1,84 +1,91 @@
 <template>
-  <el-drawer
+  <ImDrawer
     :visible.sync="drawerVisible"
-    size="650px"
-    custom-class="gyl-detail-drawer"
-    :with-header="false"
-    :wrapper-closable="false"
+    :title="editId ? '编辑字段' : '新建字段'"
+    @closeDrower="closeDrower"
+    @submit="submitForm"
   >
-    <div class="gyl-hamburger" @click="drawerVisible = false">
-      <i class="el-icon-arrow-right" />
-    </div>
-    <div class="drawer-content">
-      <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>{{ editId?'编辑字段':'新建字段' }}</h2>
-      </el-row>
-      <div class="gyl-form-view pb-[60px]">
-        <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
-        <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-          <el-form-item label="字段名称" prop="name">
-            <el-input v-model="form.name" placeholder="请输入字段名称" />
-          </el-form-item>
-          <!-- <el-form-item label="字段图标" prop="icon">
-            <el-input v-model="form.icon" placeholder="请输入字段图标" />
-          </el-form-item>
-          <el-form-item label="字段顺序">
-            <el-input-number v-model="form.level" controls-position="right" placeholder="请输入字段顺序"></el-input-number>
-          </el-form-item> -->
-          <!-- <el-form-item label="上层归属">
-            <el-input-number v-model="form.parentId" controls-position="right" placeholder="请输入上层归属"></el-input-number>
-          </el-form-item> -->
-          <el-form-item label="字段标识" prop="sign">
-            <el-input v-model="form.sign" placeholder="请输入字段标识" />
-          </el-form-item>
-          <el-form-item label="字段状态" prop="status">
-            <el-select v-model="form.status" placeholder="请选择字段状态">
-              <el-option
-                v-for="item in [{label: '启用', value: '0'}, {label: '停用', value: '1'}]"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="字段选项" prop="options">
-            <EnumOption v-model="form.options"></EnumOption>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
-        <el-button @click="closeDrower">取 消</el-button>
-        <el-button type="primary" @click="submitForm">保 存</el-button>
-      </div>
-    </div>
-  </el-drawer>
+    <ImForm ref="ImForm" :form="formConfig">
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
+      <EnumOption slot="EnumOption" v-model="formConfig.props.options"></EnumOption>
+    </ImForm>
+  </ImDrawer>
 </template>
 
 <script>
 import { setDictionaryByOnce, getDictionaryDetail, updateDictionaryItem } from '@/api/dictionary'
 import EnumOption from './EnumOption'
+import ImDrawer from '@/views/components/ImDrawer'
+import ImForm from '@/views/components/ImForm'
+
 export default {
   name: 'AddOrEdit',
   components: {
+    ImDrawer,
+    ImForm,
     EnumOption
   },
   data() {
     return {
-      form: {
-        name: undefined,
-        // icon: undefined,
-        // level: undefined,
-        // parentId: undefined,
-        sign: undefined,
-        status: undefined,
-        options: []
-      },
-      rules: {
-        name: [{ required: true, message: '请输入字段名称' }],
-        sign: [{ required: true, message: '请输入字段标识' }],
-        status: [{ required: true, message: '请选择字段状态' }],
-        options: [{ required: true, message: '请配置字段选项' }]
+      formConfig: {
+        attrs: {
+          labelWidth: '140px',
+          labelPosition: 'right'
+        },
+        props: {
+          name: undefined,
+          sign: undefined,
+          status: undefined,
+          options: []
+        },
+        formItems: [
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              firstSlot: 'infoSlot'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '字段名称',
+            rules: [{ required: true, message: '请输入字段名称' }],
+            attrs: {
+              placeholder: '请输入字段名称'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'sign',
+            label: '字段标识',
+            rules: [{ required: true, message: '请输入字段标识' }],
+            attrs: {
+              placeholder: '请输入字段标识'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'status',
+            label: '字段状态',
+            rules: [{ required: true, message: '请选择字段状态' }],
+            attrs: {
+              placeholder: '请选择字段状态',
+              clearable: true,
+              class: 'w-full',
+              options: [{ label: '启用', value: '0' }, { label: '停用', value: '1' }]
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'options',
+            label: '所在区域(省市县)',
+            rules: [{ required: true, message: '请配置字段选项' }],
+            slots: {
+              options: 'EnumOption'
+            }
+          }
+        ]
       },
       editId: undefined,
       drawerVisible: false
@@ -88,9 +95,6 @@ export default {
     add() {
       this.editId = undefined
       this.drawerVisible = true
-      if (this.$refs.form) {
-        this.$refs.form.resetFields()
-      }
     },
 
     edit(editId) {
@@ -102,21 +106,19 @@ export default {
     getItemDetail() {
       getDictionaryDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
-          this.form = {
-            name: res.data.name,
-            // icon: res.data.icon,
-            // level: res.data.level,
-            // parentId: res.data.parentId,
-            sign: res.data.sign,
-            status: res.data.status,
-            options: res.data.options
+          const props = this.formConfig.props
+          const keys = Object.keys(props)
+          // 直接遍历进行赋值，特殊属性需要单独拿出来处理
+          for (let i = 0; i < keys.length; i++) {
+            const key = keys[i]
+            props[key] = res.data[key] || undefined
           }
         }
       })
     },
 
     submitForm() {
-      this.$refs.form.validate(valid => {
+      this.$refs.ImForm.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
@@ -125,10 +127,10 @@ export default {
           icon: '',
           level: 0,
           parentId: 0,
-          ...this.form
+          ...this.formConfig.props
         }
-        if (this.form.options && this.form.options.length > 0) {
-          data.options = this.form.options.filter(item => {
+        if (this.formConfig.props.options && this.formConfig.props.options.length > 0) {
+          data.options = this.formConfig.props.options.filter(item => {
             return typeof item.label !== 'undefined' && typeof item.value !== 'undefined'
           })
         }
@@ -156,8 +158,12 @@ export default {
         }
       })
     },
+
+    /**
+     * 关闭弹层
+     */
     closeDrower() {
-      this.$refs.form.resetFields()
+      this.$refs.ImForm.reset()
       this.drawerVisible = false
     }
   }
