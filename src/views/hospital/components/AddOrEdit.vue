@@ -1,49 +1,16 @@
 <template>
-  <el-drawer
+  <ImDrawer
     :visible.sync="drawerVisible"
-    size="650px"
-    custom-class="gyl-detail-drawer"
-    :with-header="false"
-    :wrapper-closable="false"
+    :title="editId ? '编辑医院' : '新建医院'"
+    @closeDrower="closeDrower"
+    @submit="submitForm"
   >
-    <div class="gyl-hamburger" @click="drawerVisible = false">
-      <i class="el-icon-arrow-right" />
-    </div>
-    <div class="drawer-content">
-      <el-row type="flex" align="middle" justify="start" class="drawer-tit">
-        <h2>{{ editId?'编辑医院':'新建医院' }}</h2>
-      </el-row>
-      <div class="gyl-form-view pb-[60px]">
-        <h3 class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
-        <el-form ref="form" :model="form" :rules="rules" label-width="140px">
-          <el-form-item label="医院名称" prop="name">
-            <el-input v-model.trim="form.name" placeholder="请输入医院名称" />
-          </el-form-item>
-          <el-form-item label="所属机构" prop="organizationCode">
-            <OrganizationSelect v-model="form.organizationCode" placeholder="请选择所属机构"></OrganizationSelect>
-          </el-form-item>
-          <el-form-item label="区域" prop="regionCode">
-            <RegionCascader v-model="form.regionCode" placeholder="请选择区域"></RegionCascader>
-          </el-form-item>
-          <el-form-item label="医院状态" prop="status">
-            <el-select v-model="form.status" placeholder="请选择医院状态">
-              <el-option
-                v-for="item in enums.hospitalStatus"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-      </div>
-      <div class="fixed bottom-0 right-0 z-10 text-right w-[650px] p-4 bg-white shadow-dark-50 shadow-2xl">
-        <el-button @click="closeDrower">取 消</el-button>
-        <el-button type="primary" @click="submitForm">保 存</el-button>
-      </div>
-    </div>
-  </el-drawer>
+    <ImForm ref="ImForm" :form="formConfig">
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
+      <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" placeholder="请选择所属机构"></OrganizationSelect>
+      <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
+    </ImForm>
+  </ImDrawer>
 </template>
 
 <script>
@@ -51,23 +18,80 @@ import { addHospitalItem, getHospitalDetail, updateHospitalItem } from '@/api/ho
 import { mapGetters } from 'vuex'
 import OrganizationSelect from '@/views/components/OrganizationSelect'
 import RegionCascader from '@/views/components/RegionCascader'
+import ImDrawer from '@/views/components/ImDrawer'
+import ImForm from '@/views/components/ImForm'
 
 export default {
   name: 'AddOrEdit',
   components: {
+    ImDrawer,
+    ImForm,
     OrganizationSelect,
     RegionCascader
   },
   data() {
     return {
-      form: {
-        name: undefined,
-        organizationCode: undefined,
-        regionCode: undefined,
-        status: undefined
+      formConfig: {
+        attrs: {
+          labelWidth: '140px',
+          labelPosition: 'right'
+        },
+        props: {
+          name: undefined,
+          organizationCode: undefined,
+          regionCode: undefined,
+          status: undefined
+        },
+        formItems: [
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              firstSlot: 'infoSlot'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '医院名称',
+            rules: [{ required: true, message: '请输入医院名称' }],
+            attrs: {
+              placeholder: '请输入医院名称'
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'organizationCode',
+            label: '所属机构',
+            rules: [{ required: true, message: '请选择所属机构' }],
+            slots: {
+              organizationCode: 'OrganizationSelect'
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'regionCode',
+            label: '区域',
+            rules: [{ required: true, message: '请选择区域' }],
+            slots: {
+              regionCode: 'RegionCascader'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'status',
+            label: '医院状态',
+            rules: [{ required: true, message: '请选择医院状态' }],
+            attrs: {
+              placeholder: '请选择医院状态',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          }
+        ]
       },
       rules: {
-        name: [{ required: true, message: '请输入医院名称' }],
         organizationCode: [{ required: true, message: '请选择所属机构' }],
         regionCode: [{ required: true, message: '请选择区域' }],
         status: [{ required: true, message: '请选择医院状态' }]
@@ -79,7 +103,27 @@ export default {
   computed: {
     ...mapGetters(['enums'])
   },
+  created() {
+    this.setOptions()
+  },
   methods: {
+    /**
+     * 统一处理options
+     */
+    setOptions() {
+      this.setFormPropOptions('status', this.enums.hospitalStatus)
+    },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
     add() {
       this.editId = undefined
       this.drawerVisible = true
@@ -94,24 +138,25 @@ export default {
     getItemDetail() {
       getHospitalDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
-          this.form = {
-            name: res.data.name,
-            organizationCode: res.data.organizationCode,
-            regionCode: res.data.regionCode,
-            status: res.data.status
+          const props = this.formConfig.props
+          const keys = Object.keys(props)
+          // 直接遍历进行赋值，特殊属性需要单独拿出来处理
+          for (let i = 0; i < keys.length; i++) {
+            const key = keys[i]
+            props[key] = res.data[key] || undefined
           }
         }
       })
     },
 
     submitForm() {
-      this.$refs.form.validate(valid => {
+      this.$refs.ImForm.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
         }
         const data = {
-          ...this.form
+          ...this.formConfig.props
         }
         if (this.editId) {
           data.objectCode = this.editId
@@ -137,8 +182,9 @@ export default {
         }
       })
     },
+
     closeDrower() {
-      this.$refs.form.resetFields()
+      this.$refs.ImForm.reset()
       this.drawerVisible = false
     }
   }
