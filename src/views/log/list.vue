@@ -128,8 +128,8 @@ export default {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            customFilter(val, row) {
-              return `${val}ms`
+            filter(val, row) {
+              return `${row.time}ms`
             }
           }
         ]
