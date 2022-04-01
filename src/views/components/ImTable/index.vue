@@ -220,20 +220,29 @@ export default {
       border-right: 0;
     }
 
-    th > .cell {
-      padding: 0 15px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    .cell {
+      color: #000000d9;
+    }
 
-      &::before {
-        position: absolute;
-        top: 4px;
-        bottom: 4px;
-        left: -1px;
-        width: 1px;
-        border-right: 2px #ccc dotted;
-        content: '';
+    th {
+      font-weight: bold;
+      background: #f0f0f0;
+
+      .cell {
+        padding: 0 15px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        &::before {
+          position: absolute;
+          top: 4px;
+          bottom: 4px;
+          left: -1px;
+          width: 1px;
+          border-right: 2px #ccc dotted;
+          content: '';
+        }
       }
     }
 
