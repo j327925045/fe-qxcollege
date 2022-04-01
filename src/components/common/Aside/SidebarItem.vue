@@ -3,7 +3,14 @@
     <!--如果只有一个子菜单，就展示该菜单项即可-->
     <template v-if="hasOneShowingChild(item.children, item)">
       <div v-if="onlyOneChild.meta">
-        <el-menu-item v-if="onlyOneChild.meta.title.includes(searchKey)" :class="{ 'submenu-title-noDropdown': !isNest }" :index="resolvePath(onlyOneChild.path)">
+        <el-menu-item
+          v-if="onlyOneChild.meta.title.includes(searchKey)"
+          :class="{
+            'submenu-title-noDropdown': !isNest,
+            searchResult: searchKey
+          }"
+          :index="resolvePath(onlyOneChild.path)"
+        >
           <item :item="onlyOneChild" :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)" :title="onlyOneChild.meta.title" :search-key="searchKey" />
         </el-menu-item>
       </div>
@@ -104,6 +111,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/assets/styles/variables.scss';
+
 ::v-deep .el-menu-item {
   height: 50px;
   line-height: 50px;
@@ -112,6 +121,24 @@ export default {
     .action-icon {
       opacity: 1;
     }
+  }
+}
+
+.searchResult {
+  color: $mainColor;
+}
+
+.theme-blue .sidebar-container .el-menu-item.is-active {
+  background-color: rgba($mainColor, 0.1) !important;
+
+  &::before {
+    position: absolute;
+    left: 0;
+    display: block;
+    width: 4px;
+    height: 50px;
+    background-color: $mainColor;
+    content: '';
   }
 }
 </style>

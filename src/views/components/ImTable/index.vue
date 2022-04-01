@@ -226,6 +226,7 @@ export default {
 
     th {
       font-weight: bold;
+      text-align: center;
       background: #f0f0f0;
 
       .cell {
