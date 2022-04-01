@@ -339,7 +339,7 @@ export const tableData = [
     id: '000001',
     status: '1',
     name: '张三',
-    gender: 1,
+    gender: undefined,
     bought: '1',
     photo: '//i2.letvimg.com/lc07_img/201701/05/20/58/avatar5.png',
     datetime: 1487695862000,

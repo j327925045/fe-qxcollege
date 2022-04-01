@@ -5,10 +5,10 @@
       <template slot="namePrepend">name</template>
       <i slot="nicknameSuffix" class="el-input__icon el-icon-view"></i>
       <template slot="nicknamePrepend">nickname</template>
-      <el-input slot="slotComp" v-model="form.props.testSlot" placeholder="slot"></el-input>
+      <el-input slot="slotComp" v-model="form.props.testSlot" placeholder="slot7777"></el-input>
     </Imform>
-    <!-- <pre class="codeList">{{ JSON.stringify(form.props, true, '    ') }}
-    </pre> -->
+    <pre class="codeList">{{ JSON.stringify(form.props, true, '    ') }}
+    </pre>
     <ImTable ref="demoTable" :table="table">
       <template slot="genderHeadSlot">
         性别
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       form: {
-        column: 2,
+        column: 3,
         attrs: {
           labelWidth: '120px',
           labelPosition: 'right'
@@ -318,9 +318,7 @@ export default {
       table: {
         data: tableData,
         attrs: {
-          size: 'small',
-          border: false,
-          stripe: true
+          size: 'small'
         },
         listeners: {
           'sort-change'() {
@@ -332,8 +330,6 @@ export default {
         },
         tableItems: [
           {
-            prop: '',
-            label: '复选框',
             type: 'selection',
             attrs: {
               fixed: 'left',
@@ -344,7 +340,6 @@ export default {
             }
           },
           {
-            prop: '',
             type: 'index',
             label: 'index',
             attrs: {
@@ -363,7 +358,7 @@ export default {
               width: '200'
             },
             componentAttrs: {
-              placeholder: '123'
+              placeholder: '12312312'
             },
             onChage($index, row, propKey, prop) {
               console.log('$index', $index)
@@ -399,7 +394,6 @@ export default {
           },
           {
             prop: 'id',
-            type: 'default',
             label: 'default || ""',
             attrs: {
               sortable: true,
@@ -447,17 +441,22 @@ export default {
               {
                 title: 'btn1',
                 type: 'primary',
-                onClick: this.onClick
+                attrs: {
+                  round: true
+                },
+                onClick($index, row) {}
               },
               {
                 title: 'btn2',
                 type: 'text',
-                onClick: this.onClick
+                attrs: {},
+                onClick($index, row) {}
               },
               {
                 title: 'btn3',
                 type: 'danger',
-                onClick: this.onClick
+                attrs: {},
+                onClick($index, row) {}
               }
             ]
           },
@@ -476,7 +475,7 @@ export default {
                 attrs: {
                   type: 'info'
                 },
-                onClick: this.onClick
+                onClick($index, row) {}
               },
               {
                 prop: 'status',
@@ -485,7 +484,7 @@ export default {
                 attrs: {
                   type: 'primary'
                 },
-                onClick: this.buyAgain
+                onClick($index, row) {}
               }
             ]
           },
@@ -504,7 +503,7 @@ export default {
                 attrs: {
                   type: 'info'
                 },
-                onClick: this.onClick
+                onClick($index, row) {}
               },
               {
                 prop: 'status',
@@ -513,7 +512,7 @@ export default {
                 attrs: {
                   type: 'primary'
                 },
-                onClick: this.buyAgain
+                onClick($index, row) {}
               },
               {
                 prop: 'status',
@@ -522,7 +521,7 @@ export default {
                 attrs: {
                   type: 'warning'
                 },
-                onClick: this.discuss
+                onClick($index, row) {}
               },
               {
                 prop: 'status',
@@ -531,7 +530,7 @@ export default {
                 attrs: {
                   type: 'danger'
                 },
-                onClick: this.onClick
+                onClick($index, row) {}
               }
             ]
           },

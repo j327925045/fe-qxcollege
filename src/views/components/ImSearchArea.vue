@@ -38,13 +38,13 @@ export default {
   position: relative;
   margin-bottom: 10px;
   padding: 16px 20px 0;
+  padding-bottom: 16px;
   background: #fff;
   border-radius: 4px;
 
   .common-form-title {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
     padding-bottom: 16px;
     color: #000;
     font-weight: 600;

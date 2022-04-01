@@ -217,7 +217,7 @@ export default {
       }
     }
   },
-  created() {
+  activated() {
     this.getList()
   },
   methods: {
