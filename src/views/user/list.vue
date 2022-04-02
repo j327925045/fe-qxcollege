@@ -222,7 +222,9 @@ export default {
   },
   methods: {
     showDetail($index, record) {
-      this.$refs.DetailDialog.show(record)
+      console.log(record)
+      this.$router.push(`/user/detail?objectCode=${record.objectCode}`)
+      // this.$refs.DetailDialog.show(record)
     },
 
     addItem() {

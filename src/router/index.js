@@ -6,6 +6,9 @@ import { Hospital } from './modules/Hospital'
 import { Organization } from './modules/Organization'
 import { System } from './modules/System'
 import { User } from './modules/User'
+import {
+  Examples
+} from './modules/Examples'
 
 Vue.use(Router)
 
@@ -60,6 +63,7 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
+  ...Examples,
   ...User,
   ...Organization,
   ...Hospital,
