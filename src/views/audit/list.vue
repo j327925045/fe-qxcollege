@@ -4,9 +4,6 @@
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
     <ImTableArea>
-      <div class="mb-4">
-        <el-button type="primary" @click="addItem">新建医生</el-button>
-      </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
         <ImPagination
@@ -18,13 +15,13 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <DetailDialog ref="DetailDialog"></DetailDialog>
+    <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </div>
 </template>
 
 <script>
-import { getUserList, deleteUserItem } from '@/api/user'
+import { getDataList, deleteAudit } from '@/api/audit'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import ImSearchArea from '@/views/components/ImSearchArea'
@@ -36,7 +33,7 @@ import { mapGetters } from 'vuex'
 import moment from 'moment'
 
 export default {
-  name: 'UserList',
+  name: 'AuditList',
   components: {
     ImSearchArea,
     ImForm,
@@ -61,7 +58,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '医生姓名',
+            label: '审核编号',
             attrs: {
               type: 'text',
               placeholder: '请输入',
@@ -119,66 +116,16 @@ export default {
             }
           },
           {
-            prop: 'realName',
-            label: '真实姓名',
+            prop: 'createName',
+            label: '创建人',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'nickname',
-            label: '昵称',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '100'
-            }
-          },
-          {
-            prop: 'phone',
-            label: '手机号码',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'regionFullName',
-            label: '医生省市',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
-          },
-          {
-            prop: 'realHospitalName',
-            label: '医院',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'realDepartment',
-            label: '科室',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'realJobTitle',
-            label: '职称',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            },
-            options: this?.enums?.jobTitle ?? []
-          },
-          {
-            prop: 'birthday',
-            label: '出生日期',
+            prop: 'createTime',
+            label: '创建时间',
             type: 'customFilter',
             attrs: {
               width: '110'
@@ -187,6 +134,36 @@ export default {
               return moment(val).format('YYYY-MM-DD')
             }
           },
+          {
+            prop: 'objectCode',
+            label: '审核编号',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '100'
+            }
+          },
+          {
+            prop: 'realAuditStatus',
+            label: '审核状态',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: [
+              {
+                value: '1',
+                label: '通过'
+                // style: 'color:red;'
+              },
+              {
+                value: '2',
+                label: '拒绝'
+                // style: 'color:brown;'
+              }
+            ]
+          },
+
           {
             prop: '',
             label: '操作',
@@ -201,11 +178,11 @@ export default {
                 type: 'text',
                 onClick: this.showDetail
               },
-              {
-                title: '编辑',
-                type: 'text',
-                onClick: this.editItem
-              },
+              // {
+              //   title: '编辑',
+              //   type: 'text',
+              //   onClick: this.editItem
+              // },
               {
                 title: '删除',
                 type: 'text',
@@ -223,12 +200,8 @@ export default {
   methods: {
     showDetail($index, record) {
       console.log(record)
-      this.$router.push(`/user/detail?objectCode=${record.objectCode}`)
-      // this.$refs.DetailDialog.show(record)
-    },
-
-    addItem() {
-      this.$refs.AddOrEdit.add()
+      // this.$router.push(`/user/detail?objectCode=${record.objectCode}`)
+      this.$refs.DetailDialog.show(record)
     },
 
     editItem($index, record) {
@@ -241,7 +214,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteUserItem({ objectCode: record.objectCode }).then((res) => {
+          deleteAudit({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -280,7 +253,7 @@ export default {
         ...this.formConfig.props
       }
       this.loading = true
-      getUserList(params)
+      getDataList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {

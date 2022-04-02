@@ -4,8 +4,9 @@
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
     <ImTableArea>
+
       <div class="mb-4">
-        <el-button type="primary" @click="addItem">新建医生</el-button>
+        <el-button type="primary" @click="addItem">新建素材</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
@@ -18,13 +19,13 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <DetailDialog ref="DetailDialog"></DetailDialog>
+    <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </div>
 </template>
 
 <script>
-import { getUserList, deleteUserItem } from '@/api/user'
+import { getDataList, deleteResources } from '@/api/resources'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import ImSearchArea from '@/views/components/ImSearchArea'
@@ -36,7 +37,7 @@ import { mapGetters } from 'vuex'
 import moment from 'moment'
 
 export default {
-  name: 'UserList',
+  name: 'Resources',
   components: {
     ImSearchArea,
     ImForm,
@@ -61,7 +62,17 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '医生姓名',
+            label: '名称',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'author',
+            label: '作者',
             attrs: {
               type: 'text',
               placeholder: '请输入',
@@ -119,74 +130,67 @@ export default {
             }
           },
           {
-            prop: 'realName',
-            label: '真实姓名',
+            prop: 'name',
+            label: '名称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'nickname',
-            label: '昵称',
+            prop: 'author',
+            label: '作者',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'coverUrl',
+            label: '视频封面',
+            type: 'customFilter',
+            attrs: {
+              width: '110'
+            }
+          },
+          {
+            prop: 'introduction',
+            label: '简介',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '100'
             }
           },
           {
-            prop: 'phone',
-            label: '手机号码',
+            prop: 'objectCode',
+            label: '主键',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             }
           },
           {
-            prop: 'regionFullName',
-            label: '医生省市',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
-          },
-          {
-            prop: 'realHospitalName',
-            label: '医院',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'realDepartment',
-            label: '科室',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'realJobTitle',
-            label: '职称',
+            prop: 'type',
+            label: '审核状态',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.jobTitle ?? []
+            options: [
+              {
+                value: '1',
+                label: '视频'
+                // style: 'color:red;'
+              },
+              {
+                value: '2',
+                label: '音频'
+                // style: 'color:brown;'
+              }
+            ]
           },
-          {
-            prop: 'birthday',
-            label: '出生日期',
-            type: 'customFilter',
-            attrs: {
-              width: '110'
-            },
-            filter(val, row) {
-              return moment(val).format('YYYY-MM-DD')
-            }
-          },
+
           {
             prop: '',
             label: '操作',
@@ -220,15 +224,16 @@ export default {
   activated() {
     this.getList()
   },
+  created() {
+    this.getList()
+  },
   methods: {
-    showDetail($index, record) {
-      console.log(record)
-      this.$router.push(`/user/detail?objectCode=${record.objectCode}`)
-      // this.$refs.DetailDialog.show(record)
-    },
-
     addItem() {
       this.$refs.AddOrEdit.add()
+    },
+    showDetail($index, record) {
+      console.log(record)
+      this.$refs.DetailDialog.show(record)
     },
 
     editItem($index, record) {
@@ -241,7 +246,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteUserItem({ objectCode: record.objectCode }).then((res) => {
+          deleteResources({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -280,7 +285,7 @@ export default {
         ...this.formConfig.props
       }
       this.loading = true
-      getUserList(params)
+      getDataList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {
