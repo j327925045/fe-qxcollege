@@ -2,12 +2,15 @@
   <ImDrawer
     :visible.sync="drawerVisible"
     :title="editId ? '编辑医生' : '新建医生'"
+
     @closeDrower="closeDrower"
     @submit="submitForm"
   >
     <ImForm ref="ImForm" :form="formConfig">
       <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />个人信息</h3>
-      <h3 slot="professionalSlot" class="gyl-title"><i class="el-icon-s-order" />职业信息</h3>
+      <h3 slot="professionalSlot" class="gyl-title"><i class="el-icon-s-order" />医生信息</h3>
+      <h3 slot="expertSlot" class="gyl-title"><i class="el-icon-s-order" />专家信息</h3>
+      <input slot="realOppositePersonSlot" v-model="formConfig.props.realOppositePerson" type="text">
       <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
       <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
     </ImForm>
@@ -34,6 +37,7 @@ export default {
       drawerVisible: false,
       editId: undefined,
       formConfig: {
+        // column: 3,
         attrs: {
           labelWidth: '140px',
           labelPosition: 'right'
@@ -45,17 +49,45 @@ export default {
           birthday: '',
           phone: undefined,
           personalUrl: undefined,
-          realHospitalCode: undefined,
-          realDepartment: undefined,
-          doctorLevel: undefined,
-          realJobTitle: undefined,
-          regionCode: undefined,
-          realAddress: undefined,
-          isCertified: undefined,
-          isCooperation: undefined,
-          isLecturer: undefined,
-          isQualification: undefined,
-          personalIntroduction: undefined
+          realAccountManager: undefined, // WYF客户经理
+          realOppositePerson: undefined, // WYF对接人名字
+          doctorProfile: undefined, // WYF医生简介
+          doctorLabel: undefined, // WYF医生标签
+          doctorIntroduction: undefined, // WYF医生介绍
+          realHospitalCode: undefined, // 医院
+          realDepartment: undefined, // 科室
+          realJobTitle: undefined, // 职称
+          realPracticeCertificateCode: undefined, // 医师执业证书编号
+          realAddress: undefined, // 执业地点
+          realCategory: undefined, // 类别
+          realPracticeArea: undefined, // 职业范围
+          // realQualificationCode: undefined, // 医生资格证书
+          realIdNumber: undefined, // 身份证号
+          realQualificationCode: undefined, // 医师资格证书编号
+          realEducation: undefined, // 学历
+          realGraduationSchool: undefined, // 毕业学校
+          // realCategory:undefined,//类别
+          realMajor: undefined, // 专业
+          doctorLevel: undefined, // 医师级别
+          expertSpecificationsHandWashingClothes: undefined, // 吸收衣规格
+          expertGloveSpecification: undefined, // 手套规格
+          expertDisinfectantPreference: undefined, // 消毒剂偏好
+          expertNeedleHabit: undefined, // 枕头习惯
+          expertStandardAccommodation: undefined, // 舱位标准
+          expertAirlinePreference: undefined, // 航司偏好
+          expertHotelPreference: undefined, // 酒店偏好
+          expertEatingHabits: undefined, // 饮食偏好
+          expertDrinkingPreference: undefined, // 饮酒偏好
+          expertHobby: undefined, // 兴趣爱好
+
+          regionCode: undefined
+          // realAddress: undefined
+          // isCertified: undefined,
+          // isCooperation: undefined,
+          // isLecturer: undefined,
+          // isQualification: undefined,
+          // personalIntroduction: undefined,
+          // testSlot: ''
         },
         formItems: [
           {
@@ -68,7 +100,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'realName',
-            label: '真实姓名',
+            label: '姓名',
             rules: [{ required: true, message: '请输入真实姓名' }],
             attrs: {
               type: 'text',
@@ -77,9 +109,20 @@ export default {
           },
           {
             type: 'ImInput',
+            prop: 'phone',
+            label: '手机号',
+            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入手机号码',
+              maxLength: 11
+            }
+          },
+          {
+            type: 'ImInput',
             prop: 'nickname',
             label: '昵称',
-            rules: [{ required: true, message: '请输入昵称' }],
+            // rules: [{ required: true, message: '请输入昵称' }],
             attrs: {
               type: 'text',
               placeholder: '请输入昵称'
@@ -89,7 +132,7 @@ export default {
             type: 'ImSelect',
             prop: 'gender',
             label: '性别',
-            rules: [{ required: true, message: '请选择性别' }],
+            // rules: [{ required: true, message: '请选择性别' }],
             attrs: {
               placeholder: '请选择性别',
               clearable: true,
@@ -109,14 +152,15 @@ export default {
             }
           },
           {
-            type: 'ImInput',
-            prop: 'phone',
-            label: '手机号码',
-            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            type: 'ImSelect',
+            prop: 'doctorLevel',
+            label: '医生等级',
+            rules: [{ required: true, message: '请选择医生等级' }],
             attrs: {
-              type: 'text',
-              placeholder: '请输入手机号码',
-              maxLength: 11
+              placeholder: '请选择医生等级',
+              clearable: true,
+              class: 'w-full',
+              options: []
             }
           },
           {
@@ -136,34 +180,85 @@ export default {
               secondSlot: 'professionalSlot'
             }
           },
-          {
-            type: 'ImSlot',
-            prop: 'realHospitalCode',
-            label: '医院',
-            rules: [{ required: true, message: '请选择医院' }],
-            slots: {
-              hospitalSlot: 'hospitalSelect'
-            }
-          },
-          {
-            type: 'ImInput',
-            prop: 'realDepartment',
-            label: '科室',
-            attrs: {
-              placeholder: '请输入科室名称'
-            }
-          },
+          // {
+          //   type: 'ImSelect',
+          //   prop: 'realJobTitle',
+          //   label: '职称',
+          //   attrs: {
+          //     placeholder: '请选择职称',
+          //     clearable: true,
+          //     class: 'w-full',
+          //     options: []
+          //   }
+          // },
           {
             type: 'ImSelect',
-            prop: 'doctorLevel',
-            label: '医生等级',
+            prop: 'realAccountManager',
+            label: '客户经理',
             attrs: {
-              placeholder: '请选择医生等级',
+              placeholder: '请选择客户经理',
               clearable: true,
               class: 'w-full',
               options: []
             }
           },
+          {
+            type: 'ImSlot',
+            prop: 'realOppositePerson',
+            label: '对接人',
+            // rules: [{ required: true, message: '请选择对接人' }],
+            slots: {
+              slot: 'realOppositePersonSlot'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'doctorProfile',
+            label: '医生简介',
+            attrs: {
+              placeholder: '请输入医生简介'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'doctorLabel',
+            label: '医生标签',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'doctorIntroduction',
+            label: '医生介绍',
+            attrs: {
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'realHospitalCode',
+            label: '医院',
+            // rules: [{ required: true, message: '请选择医院' }],
+            slots: {
+              hospitalSlot: 'hospitalSelect'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'realDepartment',
+            label: '科室',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+
           {
             type: 'ImSelect',
             prop: 'realJobTitle',
@@ -173,6 +268,14 @@ export default {
               clearable: true,
               class: 'w-full',
               options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realPracticeCertificateCode',
+            label: '医师执业证书编号',
+            attrs: {
+              placeholder: '请输入医师执业证书编号'
             }
           },
           {
@@ -192,44 +295,51 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'isCertified',
-            label: '是否认证',
+            type: 'ImInput',
+            prop: 'realPracticeCategory',
+            label: '执业类别',
             attrs: {
-              placeholder: '请选择是否认证',
-              clearable: true,
-              class: 'w-full',
-              options: []
+              placeholder: '请输入执业类别'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realPracticeArea',
+            label: '执业范围',
+            attrs: {
+              placeholder: '请输入执业范围'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realQualificationCode',
+            label: '医师资格证书',
+            attrs: {
+              placeholder: '请输入医师资格证书'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realIdNumber',
+            label: '身份证号',
+            attrs: {
+              placeholder: '请输入身份证号'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realQualificationCode',
+            label: '医师资格证书编号',
+            attrs: {
+              placeholder: '请输入医师资格证书编号'
             }
           },
           {
             type: 'ImSelect',
-            prop: 'isCooperation',
-            label: '是否合作项目',
+            prop: 'realEducation',
+            label: '学历',
             attrs: {
-              placeholder: '请选择是否合作项目',
-              clearable: true,
-              class: 'w-full',
-              options: []
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'isLecturer',
-            label: '是否讲师',
-            attrs: {
-              placeholder: '请选择是否讲师',
-              clearable: true,
-              class: 'w-full',
-              options: []
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'isQualification',
-            label: '资质认证',
-            attrs: {
-              placeholder: '请选择资质认证',
+              placeholder: '请选择学历',
               clearable: true,
               class: 'w-full',
               options: []
@@ -237,12 +347,208 @@ export default {
           },
           {
             type: 'ImInput',
-            prop: 'personalIntroduction',
-            label: '个人介绍',
+            prop: 'realGraduationSchool',
+            label: '毕业学校',
             attrs: {
-              placeholder: '请输入个人介绍'
+              placeholder: '请输入毕业学校'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'realCategory',
+            label: '类别',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'realMajor',
+            label: '专业',
+            attrs: {
+              placeholder: '请选择专业',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realGraduationSchool',
+            label: '医师执业证书',
+            attrs: {
+              placeholder: '请输入医师执业证书'
+            }
+          },
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              shot: 'expertSlot'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertSpecificationsHandWashingClothes',
+            label: '洗手衣规格',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertSpecificationsHandWashingClothes',
+            label: '洗手衣规格',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertGloveSpecification',
+            label: '手套规格',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertDisinfectantPreference',
+            label: '消毒剂偏好',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertNeedleHabit',
+            label: '针头习惯',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertStandardAccommodation',
+            label: '舱位标准',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertAirlinePreference',
+            label: '航司偏好',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertHotelPreference',
+            label: '酒店偏好',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertEatingHabits',
+            label: '饮食偏好',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'expertDrinkingPreference',
+            label: '饮酒偏好',
+            attrs: {
+              placeholder: '请选择',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'expertHobby',
+            label: '兴趣爱好',
+            attrs: {
+              placeholder: '请输入兴趣爱好'
             }
           }
+          // {
+          //   type: 'ImSelect',
+          //   prop: 'isCooperation',
+          //   label: '是否合作项目',
+          //   attrs: {
+          //     placeholder: '请选择是否合作项目',
+          //     clearable: true,
+          //     class: 'w-full',
+          //     options: []
+          //   }
+          // },
+          // {
+          //   type: 'ImSelect',
+          //   prop: 'isLecturer',
+          //   label: '是否讲师',
+          //   attrs: {
+          //     placeholder: '请选择是否讲师',
+          //     clearable: true,
+          //     class: 'w-full',
+          //     options: []
+          //   }
+          // },
+          // {
+          //   type: 'ImSelect',
+          //   prop: 'isQualification',
+          //   label: '资质认证',
+          //   attrs: {
+          //     placeholder: '请选择资质认证',
+          //     clearable: true,
+          //     class: 'w-full',
+          //     options: []
+          //   }
+          // },
+          // {
+          //   type: 'ImInput',
+          //   prop: 'personalIntroduction',
+          //   label: '个人介绍',
+          //   attrs: {
+          //     placeholder: '请输入个人介绍'
+          //   }
+          // }
         ]
       }
     }
@@ -258,13 +564,28 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      this.setFormPropOptions('gender', this.enums.gender)
-      this.setFormPropOptions('doctorLevel', this.enums.doctorLevel)
-      this.setFormPropOptions('realJobTitle', this.enums.jobTitle)
-      this.setFormPropOptions('isCertified', this.enums.isCertified)
-      this.setFormPropOptions('isCooperation', this.enums.isCooperation)
-      this.setFormPropOptions('isLecturer', this.enums.isLecturer)
-      this.setFormPropOptions('isQualification', this.enums.isQualification)
+      this.setFormPropOptions('gender', this.enums.gender) // 男女
+      this.setFormPropOptions('doctorLevel', this.enums.doctorLevel)// 医生等级
+      this.setFormPropOptions('realJobTitle', this.enums.jobTitle) //
+      // this.setFormPropOptions('isCertified', this.enums.isCertified)
+      this.setFormPropOptions('realAccountManager', this.enums.realAccountManager)// 客户经理
+      // this.setFormPropOptions('realOppositePerson', this.enums.realOppositePerson)//对接人
+      this.setFormPropOptions('realDepartment', this.enums.realDepartment)// 科室
+      this.setFormPropOptions('realEducation', this.enums.realEducation)// 学历
+      this.setFormPropOptions('realCategory', this.enums.realCategory)// 类别
+      this.setFormPropOptions('realMajor', this.enums.realMajor)// 专业
+      this.setFormPropOptions('expertSpecificationsHandWashingClothes', this.enums.expertSpecificationsHandWashingClothes)// 洗手衣规格
+      this.setFormPropOptions('expertGloveSpecification', this.enums.expertGloveSpecification)// 手套规格
+      this.setFormPropOptions('expertDisinfectantPreference', this.enums.expertDisinfectantPreference)// 消毒剂偏好
+      this.setFormPropOptions('expertStandardAccommodation', this.enums.expertStandardAccommodation)// 舱位标准
+      this.setFormPropOptions('expertAirlinePreference', this.enums.expertAirlinePreference)// 航司偏好
+      this.setFormPropOptions('expertHotelPreference', this.enums.expertHotelPreference)// 酒店偏好
+      this.setFormPropOptions('expertEatingHabits', this.enums.expertEatingHabits)// 饮食偏好
+      this.setFormPropOptions('expertDrinkingPreference', this.enums.expertDrinkingPreference)// 饮食偏好
+      this.setFormPropOptions('expertHobby', this.enums.expertHobby)// 饮食偏好
+      // this.setFormPropOptions('isCooperation', this.enums.isCooperation)
+      // this.setFormPropOptions('isLecturer', this.enums.isLecturer)
+      // this.setFormPropOptions('isQualification', this.enums.isQualification)
     },
 
     /**
@@ -272,6 +593,7 @@ export default {
      * 放到计算属性会有prop绑定失效的问题
      */
     setFormPropOptions(prop, options) {
+      console.log(options)
       const formItems = this.formConfig.formItems
       const item = formItems.find(item => item.prop === prop)
       item.attrs.options = options

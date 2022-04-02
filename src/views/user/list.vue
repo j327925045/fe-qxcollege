@@ -34,7 +34,8 @@ import ImTable from '@/views/components/ImTable/index'
 import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-
+// import {  genderOptions } from './dataConfig'
+import { genderOptions, cityOptions } from './dataConfig'
 export default {
   name: 'UserList',
   components: {
@@ -55,17 +56,155 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+
+          search: '',
+          gender: null,
+          doctorLevel: null, // 医生等级
+          realAuditStatus: null, // 审核状态
+          regionCode: null, // 地区
+          realHospitalName: '', // 医院
+          realDepartment: null, // 科室
+          realJobTitle: null, // 职称
+          realAccountManager: '', // 客户经理名字
+          bindWechat: null// 是否绑定微信
+
         },
         formItems: [
           {
             type: 'ImInput',
             prop: 'name',
-            label: '医生姓名',
+            label: '搜索',
             attrs: {
               type: 'text',
-              placeholder: '请输入',
+              placeholder: '请输入医生编号、昵称、姓名、手机号',
               style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'gender',
+            label: '性别',
+
+            hidden: false,
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%',
+              options: genderOptions
+            },
+            listeners: {
+              change(change) {
+                console.log('change', change)
+              }
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'doctorLevel',
+            label: '医生等级',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%',
+              options: genderOptions
+            },
+            listeners: {
+              change(change) {
+                console.log('change', change)
+              }
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'realAuditSatus',
+            label: '审核状态',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%',
+              options: genderOptions
+            },
+            listeners: {
+              change(change) {
+                console.log('change', change)
+              }
+            }
+          },
+          {
+            type: 'ImGroupSelect',
+            prop: 'regionCode',
+            label: '城市',
+            attrs: {
+              style: 'width: 100%',
+              options: cityOptions
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realHospitalName',
+            label: '医院',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入医院名称',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'realDepartment',
+            label: '科室',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%',
+              options: genderOptions
+            },
+            listeners: {
+              change(change) {
+                console.log('change', change)
+              }
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'realJobTitle',
+            label: '职称',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%',
+              options: genderOptions
+            },
+            listeners: {
+              change(change) {
+                console.log('change', change)
+              }
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realHospitalName',
+            label: '客户经理',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入客户经理姓名',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'bindWechat',
+            label: '是否绑定微信',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%',
+              options: genderOptions
+            },
+            listeners: {
+              change(change) {
+                console.log('change', change)
+              }
             }
           },
           {
