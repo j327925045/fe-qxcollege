@@ -21,7 +21,6 @@
   width: $sideBarWidth !important;
   height: 100%;
   padding-top: $navHeight;
-  padding-bottom: 24px;
   font-size: 0;
   background: #fff;
   box-shadow: 2px 0 8px 0 rgba(0, 0, 0, 0.08);
@@ -113,6 +112,8 @@
 
   .is-active > .el-submenu__title {
     @include font_color('menu-active-color');
+
+    font-weight: 600;
 
     .sidebar-icon {
       @include font_color('menu-active-color');
