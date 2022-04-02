@@ -9,6 +9,13 @@ import { User } from './modules/User'
 import {
   Examples
 } from './modules/Examples'
+import {
+  audit
+} from './modules/audit'
+
+import {
+  resources
+} from './modules/resources'
 
 Vue.use(Router)
 
@@ -69,6 +76,8 @@ const originRoutes = [
   ...Hospital,
   ...Employees,
   ...System,
+  ...audit,
+  ...resources,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

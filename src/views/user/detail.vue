@@ -200,6 +200,9 @@
       </el-tab-pane>
       <el-tab-pane label="沟通记录" name="communication">
         <div>
+          <ImSearchArea>
+            <ImForm ref="ImForm" :form="formConfig"></ImForm>
+          </ImSearchArea>
           <ImTableArea>
             <ImTable :loading="loading" :table="tableConfig"></ImTable>
             <div class="mt-4 text-right">
@@ -227,17 +230,93 @@ import { getList } from '@/api/doctorDetail'
 import { getUserList } from '@/api/user'
 import ImPagination from '@/views/components/ImPagination'
 import ImTable from '@/views/components/ImTable/index'
+import ImForm from '@/views/components/ImForm/index'
+import ImSearchArea from '@/views/components/ImSearchArea'
+import ImTableArea from '@/views/components/ImTableArea'
 export default {
   components: {
+    ImPagination,
     ImTable,
-    ImPagination
+    ImForm,
+    ImSearchArea,
+    ImTableArea
+
   },
   data() {
     return {
+      // 表格数据
+      formConfig: {
+        column: 3,
+        attrs: {
+          labelWidth: '100px'
+        },
+        props: {
+          name: ''
+        },
+        formItems: [
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '沟通编号',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入沟通编号',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '沟通结果',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入沟通结果',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'name',
+            label: '沟通人',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入沟通人',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImButton',
+            attrs: {
+              style: 'flex: 1; text-align: right;',
+              options: [
+                {
+                  label: '重 置',
+                  attrs: {
+                    type: 'default'
+                  },
+                  listeners: {
+                    click: this.resetForm
+                  }
+                },
+                {
+                  label: '查 询',
+                  attrs: {
+                    type: 'primary'
+                  },
+                  listeners: {
+                    click: this.search
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
       pageSize: 10,
       currentPage: 1,
       total: 0,
       loading: false,
+      // 表格数据结束
       objectCode: this.$route.query.objectCode,
       list: [{ name: 1 }, { name: 2 }],
       dataList: '',
@@ -340,6 +419,7 @@ export default {
             ]
           }
         ]
+
       }
     }
   },
@@ -347,7 +427,24 @@ export default {
     this.getdata()
   },
 
-  methods: { /**
+  methods: {
+    /**
+     * 重置表单
+     */
+    resetForm() {
+      this.$refs.ImForm.reset()
+      this.$refs.ImPagination.reset()
+      this.getList()
+    },
+
+    /**
+     * 搜索按钮点击事件，回到第一页
+     */
+    search() {
+      this.$refs.ImPagination.reset()
+      this.getList()
+    },
+    /**
      * 获取列表
      */
     getList() {
