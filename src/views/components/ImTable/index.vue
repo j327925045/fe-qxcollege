@@ -34,6 +34,7 @@
                 :key="opt.title"
                 :disabled="opt.disabled || (opt.disabledFunc && opt.disabledFunc(scope.row))"
                 :type="opt.type || 'default'"
+                size="medium"
                 v-bind="opt.attrs"
                 @click="opt.onClick(scope.$index, scope.row)"
               >
