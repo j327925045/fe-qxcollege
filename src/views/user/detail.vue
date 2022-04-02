@@ -6,7 +6,7 @@
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
         <el-descriptions-item label="生日">{{ dataList.birthday }} </el-descriptions-item>
-        <el-descriptions-item label="性别">{{ dataList.gender==0? "未知": dataList.gender==1 ?" 男":"女" }} </el-descriptions-item>
+        <el-descriptions-item label="性别">{{ getLabelByValue('gender',dataList.gender) }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ dataList.phone }}  </el-descriptions-item>
       </el-descriptions>
       <div class="headerIcon"><img src="" alt=""></div>
@@ -16,19 +16,15 @@
       <el-tab-pane label="医生信息" name="doctor">
         <div>
           <div class="pb-4" style="font-size:16px;font-weight: bold;">
-            <span>审核状态</span><span class="fr" style="color:blue">查看审核信息></span><span class="fr pr-4">{{ dataList.realAuditStatus==1?"同意":"拒绝" }}  </span>
+            <span>审核状态</span><span class="fr" style="color:blue">查看审核信息></span><span class="fr pr-4">{{ getLabelByValue('realAuditStatus',auditStatus.status) }}  </span>
           </div>
           <el-timeline>
-            <el-timeline-item
-              v-for="(activity, index) in activities"
-              :key="index"
-              :icon="activity.icon"
-              :type="activity.type"
-              :color="activity.color"
-              :size="activity.size"
-              :timestamp="activity.timestamp"
-            >
-              {{ activity.content }}
+            <el-timeline-item v-for="item,index in dataList.userRealApprovalRecordList" :key="index" :type="item.type" :color="item.status!=3?'#0bbd87':''" timestamp="2018/4/12" placement="top">
+              <h4>{{ item.status==1?"同意":item.status==2?"拒绝":item.status==3?"提交审核":"" }}</h4>
+              <p v-if="item.status==3">{{ item.createBy }}</p>
+              <p else>{{ item.employeeCode }}</p>
+              <p v-if="item.status==3">{{ item.createTime }}</p>
+              <p v-else>{{ moment(item.updateTime).format('YYYY-MM-DD hh:mm:ss') }}</p>
             </el-timeline-item>
           </el-timeline>
 
@@ -61,9 +57,9 @@
           </div>
           <el-descriptions border class="mt-4" :column="2" :size="size">
             <el-descriptions-item label="医院名称">{{ dataList.realHospitalName }}</el-descriptions-item>
-            <el-descriptions-item label="医院性质">{{ dataList.realOrganizationOperation }}</el-descriptions-item>
-            <el-descriptions-item label="科室">{{ dataList.realDepartment }}</el-descriptions-item>
-            <el-descriptions-item label="职称">{{ dataList.realJobTitle }}</el-descriptions-item>
+            <el-descriptions-item label="医院性质">{{ getLabelByValue('registrationSource',dataList.realOrganizationOperation) }}</el-descriptions-item>
+            <el-descriptions-item label="科室">{{ getLabelByValue('realDepartment',dataList.realDepartment) }}</el-descriptions-item>
+            <el-descriptions-item label="职称">{{ getLabelByValue('realJobTitle',dataList.realJobTitle) }}</el-descriptions-item>
           </el-descriptions>
           <div class="descriptionsBox">
             <el-descriptions title="执业信息" class="mt-4" :column="2" :size="size">
@@ -94,11 +90,11 @@
         </div>
         <div>
           <el-descriptions title="账号信息" class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="注册时间">{{ dataList.registrationTime }}</el-descriptions-item>
-            <el-descriptions-item label="注册来源">{{ dataList.registrationSource==1?"小程序":"-" }}</el-descriptions-item>
+            <el-descriptions-item label="注册时间">{{ moment(dataList.registrationTime).format('YYYY-MM-DD') }}</el-descriptions-item>
+            <el-descriptions-item label="注册来源">{{ getLabelByValue('registrationSource',dataList.registrationSource) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions title="微信绑定" class="mt-4" :column="1" :size="size">
-            <el-descriptions-item label="是否绑定微信">{{ dataList.bindWechat=="1"?"是":"否" }}</el-descriptions-item>
+            <el-descriptions-item label="是否绑定微信">{{ getLabelByValue('bindWechat',dataList.bindWechat) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions :column="3" :size="size">
             <el-descriptions-item label="OpenID">{{ dataList.OpenID }}</el-descriptions-item>
@@ -106,11 +102,11 @@
           </el-descriptions>
 
           <el-descriptions :column="1" :size="size">
-            <el-descriptions-item label="是否关注公众号">{{ dataList.officialAccount==1?"关注":"未关注" }}</el-descriptions-item>
+            <el-descriptions-item label="是否关注公众号">{{ getLabelByValue('officialAccount',dataList.officialAccount) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions :column="3" :size="size">
-            <el-descriptions-item label="关注时间">{{ dataList.officialAccountTime }}</el-descriptions-item>
-            <el-descriptions-item label="关注来源">{{ dataList.concernSource==1?"公众号":"官网" }}</el-descriptions-item>
+            <el-descriptions-item label="关注时间"> {{ moment(dataList.officialAccountTime).format('YYYY-MM-DD') }}</el-descriptions-item>
+            <el-descriptions-item label="关注来源">{{ getLabelByValue('concernSource',dataList.concernSource) }}</el-descriptions-item>
           </el-descriptions>
 
         </div>
@@ -122,9 +118,9 @@
             <span>专家偏好</span>
           </div>
           <el-descriptions title="临床相关" class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="洗手衣规格">{{ dataList.expertSpecificationsHandWashingClothes }}</el-descriptions-item>
-            <el-descriptions-item label="手套规格">{{ dataList.expertGloveSpecification }}</el-descriptions-item>
-            <el-descriptions-item label="消毒剂偏好">{{ dataList.expertDisinfectantPreference }}</el-descriptions-item>
+            <el-descriptions-item label="洗手衣规格">{{ getLabelByValue('expertSpecificationsHandWashingClothes',dataList.expertSpecificationsHandWashingClothes+"") }}</el-descriptions-item>
+            <el-descriptions-item label="手套规格">{{ getLabelByValue('expertGloveSpecification',dataList.expertGloveSpecification+"") }}</el-descriptions-item>
+            <el-descriptions-item label="消毒剂偏好">{{ getLabelByValue('expertDisinfectantPreference',dataList.expertDisinfectantPreference+"") }}</el-descriptions-item>
           </el-descriptions>
           <div class="descriptionsBox">
             <div style="color:#606266;font-size:12px">针头习惯：</div>
@@ -135,11 +131,11 @@
             </el-descriptions>
           </div>
           <el-descriptions title="出行相关" class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="舱位标准">{{ dataList.expertStandardAccommodation }}</el-descriptions-item>
-            <el-descriptions-item label="航司偏好">{{ dataList.expertAirlinePreference }}</el-descriptions-item>
-            <el-descriptions-item label="酒店偏好">{{ dataList.expertHotelPreference }}</el-descriptions-item>
-            <el-descriptions-item label="饮食偏好">{{ dataList.expertEatingHabits }}</el-descriptions-item>
-            <el-descriptions-item label="饮酒偏好">{{ dataList.expertDrinkingPreference }}</el-descriptions-item>
+            <el-descriptions-item label="舱位标准">{{ getLabelByValue('expertStandardAccommodation',dataList.expertStandardAccommodation) }}</el-descriptions-item>
+            <el-descriptions-item label="航司偏好">{{ getLabelByValue('expertAirlinePreference',dataList.expertAirlinePreference) }}</el-descriptions-item>
+            <el-descriptions-item label="酒店偏好">{{ getLabelByValue('expertHotelPreference',dataList.expertHotelPreference) }}</el-descriptions-item>
+            <el-descriptions-item label="饮食偏好">{{ getLabelByValue('expertEatingHabits',dataList.expertEatingHabits) }}</el-descriptions-item>
+            <el-descriptions-item label="饮酒偏好">{{ getLabelByValue('expertDrinkingPreference',dataList.expertDrinkingPreference) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions title="休闲相关" class="mt-4" :column="2" :size="size">
             <el-descriptions-item label="兴趣爱好">{{ dataList.expertHobby }}</el-descriptions-item>
@@ -225,6 +221,8 @@
 </template>
 <script>
 
+import moment from 'moment'
+import utils from '@/utils/utils'
 import { getList } from '@/api/doctorDetail'
 
 import { getUserList } from '@/api/user'
@@ -245,6 +243,8 @@ export default {
   data() {
     return {
       // 表格数据
+      moment,
+      auditStatus: '',
       formConfig: {
         column: 3,
         attrs: {
@@ -421,6 +421,11 @@ export default {
   },
 
   methods: {
+    // 获取select默认值
+    getLabelByValue(key, value) {
+      const item = utils.getOptionsItemByValue(key, value)
+      return item.label || ''
+    },
     /**
      * 重置表单
      */
@@ -472,6 +477,7 @@ export default {
           this.loading = false
           if (res.code === 200) {
             this.dataList = res.data || {}
+            this.auditStatus = this.dataList.userRealApprovalRecordList[this.dataList.userRealApprovalRecordList.length - 1]
           }
         })
         .catch((_) => {
