@@ -41,7 +41,7 @@ export default {
 
 /* fix css style bug in open el-dialog */
 /deep/ .app-main-scrollbar {
-  background: #f5f5f5;
+  background: $mainbgColor;
 
   .app-scrollbar-wrapper {
     padding-right: 20px;
