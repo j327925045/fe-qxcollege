@@ -180,8 +180,8 @@
                 <div class="contentTxet">
                   <el-timeline>
                     <el-timeline-item
-                      v-for="(activity, index) in activitiesA"
-                      :key="index"
+                      v-for="(activity, inx) in activitiesA"
+                      :key="inx"
                       :icon="activity.icon"
                       :type="activity.type"
                       :color="activity.color"
