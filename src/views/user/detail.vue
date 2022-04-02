@@ -1,12 +1,12 @@
 <template>
   <div class="content pt-4 pl-4 pr-4">
     <div class="information">
-      <div class="doctorNumber pb-4">{{ dataList.doctorNumber }} <span>V1</span></div>
+      <div class="doctorNumber pb-4">{{ dataList.doctorNumber }} <span>V{{ dataList.doctorLevel }}</span></div>
       <el-descriptions class="doctorMsg" :column="2">
-        <el-descriptions-item label="昵称"></el-descriptions-item>
+        <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
         <el-descriptions-item label="生日">{{ dataList.birthday }} </el-descriptions-item>
-        <el-descriptions-item label="性别">{{ dataList.gender }} </el-descriptions-item>
+        <el-descriptions-item label="性别">{{ dataList.gender==0? "未知": dataList.gender==1 ?" 男":"女" }} </el-descriptions-item>
         <el-descriptions-item label="手机号">{{ dataList.phone }}  </el-descriptions-item>
       </el-descriptions>
       <div class="headerIcon"><img src="" alt=""></div>
@@ -330,18 +330,11 @@ export default {
         timestamp: '2018-04-12 20:46',
         size: 'large',
         type: 'primary',
-        icon: 'el-icon-more'
+        color: '#0bbd87'
       }, {
         content: '支持自定义颜色',
         timestamp: '2018-04-03 20:46',
         color: '#0bbd87'
-      }, {
-        content: '支持自定义尺寸',
-        timestamp: '2018-04-03 20:46',
-        size: 'large'
-      }, {
-        content: '默认样式的节点',
-        timestamp: '2018-04-03 20:46'
       }],
       activitiesA: [{
         content: '支持使用图标',

@@ -7,9 +7,6 @@ import { Organization } from './modules/Organization'
 import { System } from './modules/System'
 import { User } from './modules/User'
 import {
-  Examples
-} from './modules/Examples'
-import {
   audit
 } from './modules/audit'
 
@@ -70,7 +67,6 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
-  ...Examples,
   ...User,
   ...Organization,
   ...Hospital,
