@@ -180,7 +180,7 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '180'
+              width: '200'
             },
             options: [
               {
