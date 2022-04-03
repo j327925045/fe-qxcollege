@@ -37,8 +37,7 @@ import ImTable from '@/views/components/ImTable/index'
 import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-// import {  genderOptions } from './dataConfig'
-// import { genderOptions, cityOptions } from './dataConfig'
+
 import HospitalSelect from '@/views/components/HospitalSelect'
 import RegionCascader from '@/views/components/RegionCascader'
 export default {
