@@ -3,9 +3,10 @@
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
+
     <ImTableArea>
       <div class="mb-4">
-        <el-button type="primary" @click="addUser">新建用户</el-button>
+        <el-button type="primary" @click="addItem">新建员工</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
@@ -20,23 +21,24 @@
     </ImTableArea>
     <DetailDialog ref="DetailDialog"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
+    <SetRoleDrower ref="SetRoleDrower" @update="getList"></SetRoleDrower>
   </div>
 </template>
 
 <script>
-import { getUserList, deleteUserItem } from '@/api/user'
+import { getEmployeesList, deleteEmployeesItem } from '@/api/employees.js'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
+import SetRoleDrower from './components/SetRoleDrower'
+import ImForm from '@/views/components/ImForm'
 import ImSearchArea from '@/views/components/ImSearchArea'
 import ImTableArea from '@/views/components/ImTableArea'
-import ImForm from '@/views/components/ImForm/index'
-import ImTable from '@/views/components/ImTable/index'
+import ImTable from '@/views/components/ImTable'
 import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 
 export default {
-  name: 'QueryTable',
+  name: 'ExamplesQueryTable',
   components: {
     ImSearchArea,
     ImForm,
@@ -44,11 +46,11 @@ export default {
     ImTable,
     ImPagination,
     DetailDialog,
-    AddOrEdit
+    AddOrEdit,
+    SetRoleDrower
   },
   data() {
     return {
-      moment,
       formConfig: {
         column: 3,
         attrs: {
@@ -61,7 +63,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '用户姓名',
+            label: '员工名称',
             attrs: {
               type: 'text',
               placeholder: '请输入',
@@ -97,14 +99,13 @@ export default {
         ]
       },
       loading: false,
-      pageSize: 10,
       currentPage: 1,
+      pageSize: 10,
       total: 0
     }
   },
   computed: {
     ...mapGetters(['enums']),
-    // 之所以把tableConfig放在计算属性里边，是因为里边用到了enums计算属性，enums是异步获取
     tableConfig() {
       return {
         data: [],
@@ -119,87 +120,78 @@ export default {
             }
           },
           {
-            prop: 'nickname',
-            label: '用户昵称',
+            prop: 'name',
+            label: '员工姓名',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'realName',
-            label: '真实姓名',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'phone',
-            label: '手机号码',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'regionFullName',
-            label: '用户省市',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'hospitalName',
-            label: '医院',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'department',
-            label: '科室',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'jobTitle',
-            label: '职称',
+            prop: 'gender',
+            label: '员工性别',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.jobTitle ?? []
+            options: this?.enums?.gender ?? []
           },
           {
-            prop: 'birthday',
-            label: '出生日期',
-            type: 'customFilter',
+            prop: 'nature',
+            label: '员工性质',
+            type: 'mapList',
             attrs: {
-              width: '110'
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             },
-            filter(val, row) {
-              return moment(val).format('YYYY-MM-DD')
+            options: this?.enums?.employeeNature ?? []
+          },
+          {
+            prop: 'status',
+            label: '员工状态',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.employeeStatus ?? []
+          },
+          {
+            prop: 'account',
+            label: '账号（手机号）',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
+          // {
+          //   prop: 'createTime',
+          //   label: '创建时间',
+          //   type: 'datetime',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
           {
             prop: '',
             label: '操作',
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '160'
+              width: '200'
             },
             options: [
               {
                 title: '查看',
                 type: 'text',
                 onClick: this.showDetail
+              },
+              {
+                title: '设置角色',
+                type: 'text',
+                onClick: this.setRole
               },
               {
                 title: '编辑',
@@ -217,29 +209,45 @@ export default {
       }
     }
   },
-  created() {
+  activated() {
     this.getList()
   },
   methods: {
+    /**
+     * 展示详情
+     */
     showDetail($index, record) {
       this.$refs.DetailDialog.show(record)
     },
 
-    addUser() {
-      this.$refs.AddOrEdit.add()
+    setRole($index, record) {
+      this.$refs.SetRoleDrower.edit(record.objectCode)
     },
 
+    /**
+     * 编辑
+     */
     editItem($index, record) {
       this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
+    /**
+     * 添加
+     */
+    addItem() {
+      this.$refs.AddOrEdit.add()
+    },
+
+    /**
+     * 删除
+     */
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteUserItem({ objectCode: record.objectCode }).then((res) => {
+          deleteEmployeesItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -249,15 +257,6 @@ export default {
           })
         })
         .catch(() => {})
-    },
-
-    /**
-     * 重置表单
-     */
-    resetForm() {
-      this.$refs.ImForm.reset()
-      this.$refs.ImPagination.reset()
-      this.getList()
     },
 
     /**
@@ -278,17 +277,27 @@ export default {
         ...this.formConfig.props
       }
       this.loading = true
-      getUserList(params)
-        .then((res) => {
-          this.loading = false
-          if (res.code === 200) {
-            this.total = res.data.totalCount
-            this.tableConfig.data = res.data.list || []
-          }
-        })
+      getEmployeesList(params).then((res) => {
+        this.loading = false
+        if (res.code === 200) {
+          this.total = res.data.totalCount
+          this.tableConfig.data = res.data.list || []
+        } else {
+          this.$message.error(res.message)
+        }
+      })
         .catch((_) => {
           this.loading = false
         })
+    },
+
+    /**
+     * 重置表单
+     */
+    resetForm() {
+      this.$refs.ImForm.reset()
+      this.$refs.ImPagination.reset()
+      this.getList()
     }
   }
 }
