@@ -6,7 +6,8 @@ import { Hospital } from './modules/Hospital'
 import { Organization } from './modules/Organization'
 import { System } from './modules/System'
 import { User } from './modules/User'
-import { Examples } from './modules/Examples'
+
+import { Product } from './modules/Product'
 
 Vue.use(Router)
 
@@ -61,12 +62,13 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
+  ...Product,
   ...User,
   ...Organization,
   ...Hospital,
   ...Employees,
   ...System,
-  ...Examples,
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

@@ -1,7 +1,10 @@
 <template>
   <div>
     <ImSearchArea>
-      <ImForm ref="ImForm" :form="formConfig"></ImForm>
+      <ImForm ref="ImForm" :form="formConfig">
+        <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
+        <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
+      </ImForm>
     </ImSearchArea>
     <ImTableArea>
       <div class="mb-4">
@@ -35,7 +38,9 @@ import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 // import {  genderOptions } from './dataConfig'
-import { genderOptions, cityOptions } from './dataConfig'
+// import { genderOptions, cityOptions } from './dataConfig'
+import HospitalSelect from '@/views/components/HospitalSelect'
+import RegionCascader from '@/views/components/RegionCascader'
 export default {
   name: 'UserList',
   components: {
@@ -45,7 +50,9 @@ export default {
     ImTable,
     ImPagination,
     DetailDialog,
-    AddOrEdit
+    AddOrEdit,
+    HospitalSelect,
+    RegionCascader
   },
   data() {
     return {
@@ -66,7 +73,7 @@ export default {
           realDepartment: null, // 科室
           realJobTitle: null, // 职称
           realAccountManager: '', // 客户经理名字
-          bindWechat: null// 是否绑定微信
+          bindingWechat: null// 是否绑定微信
 
         },
         formItems: [
@@ -90,13 +97,9 @@ export default {
               clearable: true,
               placeholder: '请选择',
               style: 'width: 100%',
-              options: genderOptions
-            },
-            listeners: {
-              change(change) {
-                console.log('change', change)
-              }
+              options: []
             }
+
           },
           {
             type: 'ImSelect',
@@ -106,49 +109,58 @@ export default {
               clearable: true,
               placeholder: '请选择',
               style: 'width: 100%',
-              options: genderOptions
-            },
-            listeners: {
-              change(change) {
-                console.log('change', change)
-              }
+              options: []
             }
+
           },
           {
             type: 'ImSelect',
-            prop: 'realAuditSatus',
+            prop: 'realAuditStatus',
             label: '审核状态',
             attrs: {
               clearable: true,
               placeholder: '请选择',
               style: 'width: 100%',
-              options: genderOptions
-            },
-            listeners: {
-              change(change) {
-                console.log('change', change)
-              }
+              options: []
             }
+
           },
           {
-            type: 'ImGroupSelect',
+            type: 'ImSlot',
             prop: 'regionCode',
-            label: '城市',
-            attrs: {
-              style: 'width: 100%',
-              options: cityOptions
+            label: '地区',
+            slots: {
+              regionSlot: 'RegionCascader'
             }
           },
+          // {
+          //   type: 'ImGroupSelect',
+          //   prop: 'regionCode',
+          //   label: '城市',
+          //   attrs: {
+          //     style: 'width: 100%',
+          //     options: cityOptions
+          //   }
+          // },
           {
-            type: 'ImInput',
-            prop: 'realHospitalName',
+            type: 'ImSlot',
+            prop: 'realHospitalCode',
             label: '医院',
-            attrs: {
-              type: 'text',
-              placeholder: '请输入医院名称',
-              style: 'width: 100%;'
+            // rules: [{ required: true, message: '请选择医院' }],
+            slots: {
+              hospitalSlot: 'hospitalSelect'
             }
           },
+          // {
+          //   type: 'ImInput',
+          //   prop: 'realHospitalName',
+          //   label: '医院',
+          //   attrs: {
+          //     type: 'text',
+          //     placeholder: '请输入医院名称',
+          //     style: 'width: 100%;'
+          //   }
+          // },
           {
             type: 'ImSelect',
             prop: 'realDepartment',
@@ -157,13 +169,9 @@ export default {
               clearable: true,
               placeholder: '请选择',
               style: 'width: 100%',
-              options: genderOptions
-            },
-            listeners: {
-              change(change) {
-                console.log('change', change)
-              }
+              options: []
             }
+
           },
           {
             type: 'ImSelect',
@@ -173,13 +181,9 @@ export default {
               clearable: true,
               placeholder: '请选择',
               style: 'width: 100%',
-              options: genderOptions
-            },
-            listeners: {
-              change(change) {
-                console.log('change', change)
-              }
+              options: []
             }
+
           },
           {
             type: 'ImInput',
@@ -193,19 +197,15 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'bindWechat',
+            prop: 'bindingWechat',
             label: '是否绑定微信',
             attrs: {
               clearable: true,
               placeholder: '请选择',
               style: 'width: 100%',
-              options: genderOptions
-            },
-            listeners: {
-              change(change) {
-                console.log('change', change)
-              }
+              options: []
             }
+
           },
           {
             type: 'ImButton',
@@ -248,18 +248,18 @@ export default {
       return {
         data: [],
         tableItems: [
+          // {
+          //   prop: '',
+          //   label: '序号',
+          //   type: 'index',
+          //   attrs: {
+          //     fixed: 'left',
+          //     width: 60
+          //   }
+          // },
           {
-            prop: '',
-            label: '序号',
-            type: 'index',
-            attrs: {
-              fixed: 'left',
-              width: 60
-            }
-          },
-          {
-            prop: 'realName',
-            label: '真实姓名',
+            prop: 'doctorNumber',
+            label: '医生编号',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -273,17 +273,76 @@ export default {
               'min-width': '100'
             }
           },
+          // {
+          //   prop: 'realJobTitle',
+          //   label: '职称',
+          //   type: 'mapList',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   },
+          //   options: this?.enums?.jobTitle ?? []
+          // },
           {
-            prop: 'phone',
-            label: '手机号码',
+            prop: 'realName',
+            label: '姓名',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
+            prop: 'gender',
+            label: '性别',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.gender ?? []
+          },
+          {
+            prop: 'birthday',
+            label: '生日',
+            type: 'customFilter',
+            attrs: {
+              width: '110'
+            },
+            filter(val, row) {
+              return moment(val).format('YYYY-MM-DD')
+            }
+          },
+          {
+            prop: 'phone',
+            label: '手机号',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'doctorLevel',
+            label: '医生等级',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.doctorLevel ?? []
+          },
+          {
+            prop: 'realAuditStatus',
+            label: '审核状态',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.realAuditStatus ?? []
+          },
+          {
             prop: 'regionFullName',
-            label: '医生省市',
+            label: '地区',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '180'
@@ -300,10 +359,12 @@ export default {
           {
             prop: 'realDepartment',
             label: '科室',
+            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            options: this?.enums?.realDepartment ?? []
           },
           {
             prop: 'realJobTitle',
@@ -316,16 +377,26 @@ export default {
             options: this?.enums?.jobTitle ?? []
           },
           {
-            prop: 'birthday',
-            label: '出生日期',
-            type: 'customFilter',
+            prop: 'realAccountManager',
+            label: '客户经理',
+            type: 'mapList',
             attrs: {
-              width: '110'
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             },
-            filter(val, row) {
-              return moment(val).format('YYYY-MM-DD')
-            }
+            options: this?.enums?.realAccountManager ?? []
           },
+          {
+            prop: 'bindingWechat',
+            label: '是否绑定微信',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this?.enums?.jobTitle ?? []
+          },
+
           {
             prop: '',
             label: '操作',
@@ -359,7 +430,34 @@ export default {
   activated() {
     this.getList()
   },
+  created() {
+    this.setOptions()
+  },
   methods: {
+    /**
+     * 统一处理options
+     */
+    setOptions() {
+      // doctorLabel expertNeedleHabit
+
+      this.setFormPropOptions('gender', this.enums.gender) // 男女
+      this.setFormPropOptions('doctorLevel', this.enums.doctorLevel)// 医生等级
+
+      this.setFormPropOptions('realJobTitle', this.enums.jobTitle) // 职称
+      this.setFormPropOptions('bindingWechat', this.enums.bindingWechat) // 是否绑定微信
+      this.setFormPropOptions('realAuditStatus', this.enums.realAuditStatus) // 审核状态
+      this.setFormPropOptions('realDepartment', this.enums.realDepartment)// 科室
+    },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
     showDetail($index, record) {
       this.$refs.DetailDialog.show(record)
     },
