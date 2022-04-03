@@ -9,7 +9,8 @@
     "build:pre": "vue-cli-service build --mode pre",
     "serve:dev": "vue-cli-service serve --mode dev",
     "serve:pre": "vue-cli-service serve --mode pre",
-    "serve:prod": "vue-cli-service serve --mode prod"
+    "serve:prod": "vue-cli-service serve --mode prod",
+    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -63,6 +64,7 @@
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^22.0.0",
+    "svgo": "1.2.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue-cli-plugin-windicss": "~1.1.3",
     "vue-template-compiler": "^2.6.14"
