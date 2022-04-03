@@ -14,6 +14,8 @@ import {
   resources
 } from './modules/resources'
 
+import { Product } from './modules/Product'
+
 Vue.use(Router)
 
 function formatRoutes(routes, parentItem) {
@@ -67,13 +69,16 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
+  ...Product,
   ...User,
   ...Organization,
   ...Hospital,
   ...Employees,
   ...System,
+
   ...audit,
   ...resources,
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
