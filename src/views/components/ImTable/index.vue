@@ -10,6 +10,9 @@
           <template v-if="item.type === 'index'">
             {{ scope.$index + 1 }}
           </template>
+          <template v-else-if="item.type === 'slot'">
+            <slot :name="item.slot" :row="scope.row" :$index="scope.$index" />
+          </template>
           <template v-else-if="item.type === 'select'">
             <el-select v-model="scope.row[item.prop]" v-bind="item.componentAttrs" @change="item.onChage(scope.$index, scope.row, item.prop, scope.row[item.prop])">
               <el-option v-for="opt in item.options" :key="opt.label" :label="opt.label" :value="opt.value" />
