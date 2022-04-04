@@ -1,5 +1,5 @@
 <template>
-  <div class="common-form-view">
+  <div class="common-form-view mb-5 rounded">
     <span class="form-switch" @click="formSwitch">
       {{ isShow ? '全部收起' : '全部展开' }}
       <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
@@ -36,10 +36,8 @@ export default {
 
 .common-form-view {
   position: relative;
-  margin-bottom: 10px;
   padding: 32px 20px 16px 20px;
   background: #fff;
-  border-radius: 4px;
 
   .common-form-title {
     display: flex;

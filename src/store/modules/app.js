@@ -1,5 +1,5 @@
-import { Message } from 'element-ui'
 import { getAllDictionaryItems } from '@/api/dictionary'
+import { Message } from 'element-ui'
 
 const HomePage = {
   title: '工作台',
