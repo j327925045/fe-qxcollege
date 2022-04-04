@@ -3,11 +3,11 @@ export default {
   props: {
     stickyTop: {
       type: Number,
-      default: 114
+      default: 100
     },
     selector: {
       type: String,
-      default: '#scrollContainer'
+      default: '.app-scrollbar-wrapper'
     }
   },
   data() {

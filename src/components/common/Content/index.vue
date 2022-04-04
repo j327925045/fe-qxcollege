@@ -1,11 +1,11 @@
 <template>
   <section class="app-main">
     <el-scrollbar wrap-class="app-scrollbar-wrapper" class="app-main-scrollbar" style="height: 100%">
-      <div id="scrollContainer" class="app-container">
+      <div class="app-container">
         <keep-alive :max="maxPageNumber" :include="keepAliveComponents">
-          <router-view v-if="isRouterAlive" :key="key" />
+          <router-view v-if="isRouterAlive" :key="key" class="m-5" />
         </keep-alive>
-        <router-view v-if="!isRouterAlive" />
+        <router-view v-if="!isRouterAlive" class="m-5" />
       </div>
     </el-scrollbar>
   </section>
@@ -33,8 +33,8 @@ export default {
 @import '~@/assets/styles/variables.scss';
 
 .app-container {
-  position: absolute;
-  width: calc(100% - 16px);
+  // position: absolute;
+  // width: calc(100% - 16px);
   height: 100%;
   overflow: auto;
 }
@@ -44,7 +44,7 @@ export default {
   background: $mainbgColor;
 
   .app-scrollbar-wrapper {
-    padding-right: 20px;
+    // padding-right: 20px;
     overflow-x: hidden;
 
     .el-scrollbar__view {

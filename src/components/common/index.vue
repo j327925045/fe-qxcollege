@@ -182,10 +182,11 @@ export default {
 
   /deep/ .el-tabs {
     &__header {
-      margin: 0 0 16px -20px;
+      margin: 0 0 0 0;
     }
 
     &__nav-wrap {
+      margin-bottom: 0;
       padding: 0 20px;
       background: #fff;
       box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
