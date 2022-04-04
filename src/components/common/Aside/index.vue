@@ -5,7 +5,7 @@
         <i slot="prefix" class="el-input__icon el-icon-search" />
       </el-input>
     </div>
-    <el-scrollbar :style="`height: ${sidebar.opened?'calc(100% - 109px)':'calc(100% - 45px)'}`" class="el-menu-vertical">
+    <el-scrollbar :style="`height: ${sidebar.opened?'calc(100% - 104px)':'calc(100% - 40px)'}`" class="el-menu-vertical">
       <div v-if="favouritesNav && !isCollapse">
         <favourites v-show="!searchKey" />
       </div>
