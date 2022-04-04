@@ -194,7 +194,8 @@
   text-align: center;
   // 换成自己的logo
   // background: #f5f5f5 url('./assets/img/framework/logo-footer.png') no-repeat center;
-  background: #f5f5f5;
+  // background: #f5f5f5;
+  background-color: $mainbgColor;
   background-size: auto 15px;
 }
 
