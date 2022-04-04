@@ -1,5 +1,5 @@
 <template>
-  <div class="common-form-view mb-5 rounded" :class="currentClass">
+  <div class="common-form-view mb-4 rounded" :class="currentClass">
     <span class="form-switch" @click="formSwitch">
       {{ isShow ? '全部收起' : '全部展开' }}
       <i class="el-icon-arrow-up" :class="currentClass" />
