@@ -46,7 +46,7 @@ const originRoutes = [
   {
     path: '/',
     component: Layout,
-    meta: { title: '工作台', icon: 'menu-icon-home' },
+    meta: { title: '工作台', icon: 'menu-icon-dashboard' },
     children: [
       {
         path: '/',
