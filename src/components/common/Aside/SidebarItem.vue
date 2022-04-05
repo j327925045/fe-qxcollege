@@ -141,4 +141,8 @@ export default {
     content: '';
   }
 }
+
+/deep/.nest-menu span.menu-text {
+  padding-left: 6px;
+}
 </style>

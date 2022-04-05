@@ -1,7 +1,7 @@
 .main-container {
   position: relative;
   margin-left: $sideBarWidth;
-  padding: 60px 0 0 20px;
+  padding: 60px 0 0 0;
   background-color: $mainbgColor;
   transition: margin-left 0.28s;;
 }
@@ -9,7 +9,7 @@
 .app-main {
   position: relative;
   width: 100%;
-  height: calc(100vh - #{$navHeight} - 85px);
+  height: calc(100vh - #{$navHeight} - 70px);
 }
 
 .sidebar-container {
@@ -21,7 +21,6 @@
   width: $sideBarWidth !important;
   height: 100%;
   padding-top: $navHeight;
-  padding-bottom: 24px;
   font-size: 0;
   background: #fff;
   box-shadow: 2px 0 8px 0 rgba(0, 0, 0, 0.08);
@@ -114,6 +113,8 @@
   .is-active > .el-submenu__title {
     @include font_color('menu-active-color');
 
+    font-weight: 600;
+
     .sidebar-icon {
       @include font_color('menu-active-color');
     }
@@ -193,7 +194,8 @@
   text-align: center;
   // 换成自己的logo
   // background: #f5f5f5 url('./assets/img/framework/logo-footer.png') no-repeat center;
-  background: #f5f5f5;
+  // background: #f5f5f5;
+  background-color: $mainbgColor;
   background-size: auto 15px;
 }
 

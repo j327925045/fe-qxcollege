@@ -1,11 +1,13 @@
 <template>
-  <div class="common-form-view">
+  <div class="common-form-view mb-4 rounded" :class="currentClass">
     <span class="form-switch" @click="formSwitch">
       {{ isShow ? '全部收起' : '全部展开' }}
-      <i :class="isShow ? 'el-icon-arrow-up' : 'el-icon-arrow-down'" />
+      <i class="el-icon-arrow-up" :class="currentClass" />
     </span>
-    <h3 class="common-form-title"><i class="el-icon-s-order" />{{ title || $route.meta.title }}</h3>
-    <slot v-if="isShow"></slot>
+    <!-- <h3 class="common-form-title"><i class="el-icon-s-order" />{{ title || $route.meta.title }}</h3> -->
+    <transition name="fade">
+      <slot v-if="isShow"></slot>
+    </transition>
   </div>
 </template>
 
@@ -23,6 +25,11 @@ export default {
       isShow: true
     }
   },
+  computed: {
+    currentClass() {
+      return this.isShow ? 'show' : 'hide'
+    }
+  },
   methods: {
     formSwitch() {
       this.isShow = !this.isShow
@@ -34,13 +41,33 @@ export default {
 <style lang="scss" scoped>
 @import '~@/assets/styles/mixins.scss';
 
+.fade-enter-active {
+  transition: opacity 0.3s;
+}
+
+.fade-leave-active {
+  transition: opacity 0s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .common-form-view {
   position: relative;
-  margin-bottom: 10px;
-  padding: 16px 20px 0;
-  padding-bottom: 16px;
+  padding: 32px 20px 16px 20px;
+  overflow: hidden;
   background: #fff;
-  border-radius: 4px;
+  transition: max-height 0.5s;
+
+  &.show {
+    max-height: 500px;
+  }
+
+  &.hide {
+    max-height: 0;
+  }
 
   .common-form-title {
     display: flex;
@@ -70,6 +97,18 @@ export default {
     transform: translateX(-50%);
     cursor: pointer;
     clip-path: polygon(10px 0%, 96px 0, 100% 100%, 0% 100%);
+
+    i {
+      transition: transform 0.3s;
+
+      &.show {
+        transform: rotate(0deg);
+      }
+
+      &.hide {
+        transform: rotate(180deg);
+      }
+    }
 
     &:hover {
       @include background_color('menu-hover-color');

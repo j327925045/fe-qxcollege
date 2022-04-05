@@ -1,5 +1,5 @@
 <template>
-  <AffixedTable v-loading="loading" :data="table.data" v-bind="table.attrs" stripe border v-on="table.listeners">
+  <AffixedTable v-loading="loading" size="medium" :data="table.data" v-bind="table.attrs" stripe border v-on="table.listeners">
     <template v-for="item in tableList">
       <el-table-column v-if="item.type === 'selection'" :key="item.label" type="selection" :prop="item.prop" :label="item.label" v-bind="item.attrs"></el-table-column>
       <el-table-column v-else :key="item.label" :prop="item.prop" :label="item.label" v-bind="item.attrs">
@@ -9,6 +9,9 @@
         <template slot-scope="scope">
           <template v-if="item.type === 'index'">
             {{ scope.$index + 1 }}
+          </template>
+          <template v-else-if="item.type === 'slot'">
+            <slot :name="item.slot" :row="scope.row" :$index="scope.$index" />
           </template>
           <template v-else-if="item.type === 'select'">
             <el-select v-model="scope.row[item.prop]" v-bind="item.componentAttrs" @change="item.onChage(scope.$index, scope.row, item.prop, scope.row[item.prop])">
@@ -34,6 +37,7 @@
                 :key="opt.title"
                 :disabled="opt.disabled || (opt.disabledFunc && opt.disabledFunc(scope.row))"
                 :type="opt.type || 'default'"
+                size="medium"
                 v-bind="opt.attrs"
                 @click="opt.onClick(scope.$index, scope.row)"
               >
@@ -221,13 +225,13 @@ export default {
     }
 
     .cell {
-      color: #000000d9;
+      color: #000;
     }
 
     th {
+      height: 51px;
       font-weight: bold;
-      text-align: center;
-      background: #f0f0f0;
+      background: #fafafa;
 
       .cell {
         padding: 0 15px;

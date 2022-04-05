@@ -5,7 +5,7 @@
         <i slot="prefix" class="el-input__icon el-icon-search" />
       </el-input>
     </div>
-    <el-scrollbar class="el-menu-vertical">
+    <el-scrollbar :style="`height: ${sidebar.opened?'calc(100% - 104px)':'calc(100% - 40px)'}`" class="el-menu-vertical">
       <div v-if="favouritesNav && !isCollapse">
         <favourites v-show="!searchKey" />
       </div>
@@ -15,7 +15,12 @@
         </el-menu-item-group>
       </el-menu>
     </el-scrollbar>
-    <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" />
+    <div class="sidebar-icon-area">
+      <div class="icon-container" @click="toggleSideBar">
+        <svg-icon :icon-class="sidebar.opened ? 'side-unfold' : 'side-fold'"></svg-icon>
+      </div>
+    </div>
+    <!-- <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" /> -->
   </div>
 </template>
 
@@ -63,8 +68,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/styles/variables.scss';
+
 .el-menu-vertical {
-  height: calc(100% - 49px);
+  height: calc(100% - 109px);
 }
 
 .side-menu-search {
@@ -80,6 +87,26 @@ export default {
     background: rgba(243, 243, 243, 1);
     border: 0;
     // border-radius: 20px;
+  }
+}
+
+.sidebar-icon-area {
+  width: 100%;
+  height: 40px;
+  border-top: 1px #f5f5f5 solid;
+
+  .icon-container {
+    width: 56px;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      svg {
+        color: $mainColor;
+      }
+    }
   }
 }
 </style>
