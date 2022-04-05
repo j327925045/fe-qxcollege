@@ -6,7 +6,7 @@ export const Product = [
     name: 'Product',
     component: Layout,
     redirect: '/product/list',
-    meta: { title: '产品管理', icon: 'menu-icon-user' },
+    meta: { title: '商品管理', icon: 'menu-icon-product' },
     children: [
       {
         path: '/product/list',

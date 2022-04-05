@@ -10,7 +10,7 @@ import './assets/styles/theme/index.css'
 import './permission.js'
 import router from './router'
 
-Vue.use(ElementUI, { size: 'small' })
+Vue.use(ElementUI)
 
 // 注册自定义标签 [如按钮权限控制]
 // Object.keys(directives).forEach((key) => {

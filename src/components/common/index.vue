@@ -99,7 +99,7 @@ export default {
         // }
         // 支持首次加载首页
         // const matchedArr = newValue.matched.map(item => item.path).filter(item => item !== '/' && item !== '')
-        if (this.editableTabsValue !== newValue.path) {
+        if (this.editableTabsValue !== newValue.path && !newValue.meta.noTab) {
           // 支持首次加载首页  // 添加页面
           this.$store.dispatch('app/addTab', {
             title: newValue.meta.title,

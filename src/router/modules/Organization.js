@@ -13,6 +13,12 @@ export const Organization = [
         name: 'OrganizationList',
         component: () => import('@/views/organization/list'),
         meta: { title: '机构列表' }
+      },
+      {
+        path: '/hospital/list',
+        name: 'HospitalList',
+        component: () => import('@/views/hospital/list'),
+        meta: { title: '医院列表' }
       }
     ]
   }
