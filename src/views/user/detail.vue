@@ -15,7 +15,7 @@
     <el-tabs v-model="activeName" class="mt-4" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="医生信息" name="doctor">
         <div>
-          <div class="pb-4" style="font-size:16px;font-weight: bold;">
+          <div class="pb-4" style="font-weight: bold;font-size:16px;">
             <span>审核状态</span><span class="fr" style="color:blue">查看审核信息></span><span class="fr pr-4">{{ getLabelByValue('realAuditStatus',auditStatus.status) }}  </span>
           </div>
           <el-timeline>
@@ -52,7 +52,7 @@
               <el-descriptions-item label="对接人">{{ dataList.realOppositePerson }}</el-descriptions-item>
             </el-descriptions>
           </div>
-          <div class="pb-4" style="font-size:16px;font-weight: bold;">
+          <div class="pb-4" style="font-weight: bold;font-size:16px;">
             <span>坐诊医院</span>
           </div>
           <el-descriptions border class="mt-4" :column="2" :size="size">
@@ -114,7 +114,7 @@
       <el-tab-pane label="专家信息" name="experts">
         <div>
 
-          <div class="pb-4" style="font-size:16px;font-weight: bold;">
+          <div class="pb-4" style="font-weight: bold;font-size:16px;">
             <span>专家偏好</span>
           </div>
           <el-descriptions title="临床相关" class="mt-4" :column="2" :size="size">
@@ -494,19 +494,21 @@ export default {
 <style lang="scss" scoped>
 
 .information{
-
-  background: white;
   padding:30px;
   overflow: hidden;
+  background: white;
+
   .doctorNumber{
-    font-size: 20px;
     font-weight: bold;
+    font-size: 20px;
   }
+
   .doctorMsg{
+    float: left;
     width: 70%;
     font-size: 14px;
-    float: left;
   }
+
   .headerIcon{
     float: left;
     margin-top: -40px;
@@ -518,41 +520,50 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
 .el-col {
   width: 50%;
 }
+
 .el-card{
+  display: inline-block;
   width: 450px;
   height: 240px;
   margin: 10px;
-  display: inline-block;
 }
+
 .productPane{
   display: inline-block;
   text-align: center;
 }
+
 .imgBox{
   width: 270px;
   height: auto;
   padding:  20px;
 }
+
 .descriptionsBox{
   display: flex;
 }
+
 .contentTxet {
   padding-top: 14px;
+
   div{
    padding-top: 20px;
+
    .button{
      float: right;
    }
   }
 }
+
 .productTitle{
-  font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-    padding-left: 79px;
     padding-top: 30px;
+    padding-left: 79px;
+    font-weight: bold;
+  font-size: 16px;
+    text-align: left;
 }
 </style>
