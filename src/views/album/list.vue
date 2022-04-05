@@ -1,3 +1,3 @@
 <template>
-  <h1>专辑列表</h1>
+  <h1>专栏列表</h1>
 </template>

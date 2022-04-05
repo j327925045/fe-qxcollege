@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <column-data-cards />
     <el-row :gutter="12">
       <el-col :span="18">
@@ -22,7 +22,7 @@
         <column-notice />
       </el-col>
     </el-row>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>

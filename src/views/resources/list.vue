@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
     <ImTableArea>
-
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建素材</el-button>
       </div>
@@ -21,29 +20,19 @@
     </ImTableArea>
     <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
 import { getDataList, deleteResources } from '@/api/resources'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImForm from '@/views/components/ImForm/index'
-import ImTable from '@/views/components/ImTable/index'
-import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 
 export default {
   name: 'Resources',
   components: {
-    ImSearchArea,
-    ImForm,
-    ImTableArea,
-    ImTable,
-    ImPagination,
     DetailDialog,
     AddOrEdit
   },

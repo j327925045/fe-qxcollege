@@ -18,14 +18,10 @@ import { addHospitalItem, getHospitalDetail, updateHospitalItem } from '@/api/ho
 import { mapGetters } from 'vuex'
 import OrganizationSelect from '@/views/components/OrganizationSelect'
 import RegionCascader from '@/views/components/RegionCascader'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm'
 
 export default {
   name: 'AddOrEdit',
   components: {
-    ImDrawer,
-    ImForm,
     OrganizationSelect,
     RegionCascader
   },

@@ -14,15 +14,11 @@
 
 <script>
 import PermissionTreeSelect from '@/views/components/PermissionTreeSelect'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm'
 import { setRolePermission, getRolePermissionDetail } from '@/api/rolePermission'
 
 export default {
   name: 'SetPermissionDrawer',
   components: {
-    ImDrawer,
-    ImForm,
     PermissionTreeSelect
   },
   data() {

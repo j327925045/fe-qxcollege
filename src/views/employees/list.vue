@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
@@ -22,7 +22,7 @@
     <DetailDialog ref="DetailDialog"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
     <SetRoleDrower ref="SetRoleDrower" @update="getList"></SetRoleDrower>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
@@ -30,21 +30,11 @@ import { getEmployeesList, deleteEmployeesItem } from '@/api/employees.js'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import SetRoleDrower from './components/SetRoleDrower'
-import ImForm from '@/views/components/ImForm'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImTable from '@/views/components/ImTable'
-import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'EmployeesList',
   components: {
-    ImSearchArea,
-    ImForm,
-    ImTableArea,
-    ImTable,
-    ImPagination,
     DetailDialog,
     AddOrEdit,
     SetRoleDrower

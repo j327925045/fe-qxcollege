@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
@@ -20,30 +20,18 @@
     </ImTableArea>
     <DetailDialog ref="DetailDialog"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
 import { getProductList, deleteProductItem } from '@/api/product'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImForm from '@/views/components/ImForm/index'
-import ImTable from '@/views/components/ImTable/index'
-import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-// import {  genderOptions } from './dataConfig'
-// import { genderOptions, cityOptions } from './dataConfig'
 export default {
   name: 'ProductList',
   components: {
-    ImSearchArea,
-    ImForm,
-    ImTableArea,
-    ImTable,
-    ImPagination,
     DetailDialog,
     AddOrEdit
   },
@@ -56,9 +44,7 @@ export default {
           labelWidth: '100px'
         },
         props: {
-
           name: ''// 产品名称
-
         },
         formItems: [
           {
@@ -191,13 +177,9 @@ export default {
           {
             prop: 'remark',
             label: 'remark',
-            // type: 'customFilter',
             attrs: {
               width: '110'
             }
-            // filter(val, row) {
-            //   return moment(val).format('YYYY-MM-DD')
-            // }
           },
           {
             prop: '',

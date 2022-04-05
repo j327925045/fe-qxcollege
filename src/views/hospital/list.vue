@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
@@ -20,28 +20,18 @@
       </div>
     </ImTableArea>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
 import { getHospitalList, deleteHospitalItem } from '@/api/hospital'
 import AddOrEdit from './components/AddOrEdit'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImForm from '@/views/components/ImForm'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImTable from '@/views/components/ImTable'
-import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'HospitalList',
   components: {
-    ImSearchArea,
-    ImForm,
-    AddOrEdit,
-    ImTableArea,
-    ImTable,
-    ImPagination
+    AddOrEdit
   },
   data() {
     return {
