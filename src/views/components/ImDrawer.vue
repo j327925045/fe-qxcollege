@@ -27,6 +27,7 @@ export default {
       type: String,
       default: '添加'
     },
+
     visible: {
       type: Boolean,
       default: false

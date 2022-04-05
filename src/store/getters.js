@@ -18,5 +18,7 @@ const getters = {
   maxPageNumber: state => state.app.maxPageNumber,
   isRouterAlive: state => state.app.isRouterAlive,
   keepAliveComponents: state => state.app.keepAliveComponents
+
+  // realAccountManager:state=>state.app.realAccountManager
 }
 export default getters

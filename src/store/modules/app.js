@@ -52,7 +52,8 @@ const state = {
     hospitalStatus: [], // 医院状态
     permissionHide: [], // 权限是否显示
     permissionType: [], // 权限类型
-    jobTitle: [] // 职称
+    jobTitle: [], // 职称
+    realAccountManager: []
   }
 }
 

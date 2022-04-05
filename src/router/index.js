@@ -1,18 +1,14 @@
 import Layout from '@/components/common/index.vue'
 import Vue from 'vue'
 import Router from 'vue-router'
+import { audit } from './modules/audit'
 import { Employees } from './modules/Employees'
 import { Hospital } from './modules/Hospital'
 import { Organization } from './modules/Organization'
+import { Product } from './modules/Product'
+import { resources } from './modules/resources'
 import { System } from './modules/System'
 import { User } from './modules/User'
-import {
-  audit
-} from './modules/audit'
-
-import {
-  resources
-} from './modules/resources'
 
 Vue.use(Router)
 
@@ -67,6 +63,7 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
+  ...Product,
   ...User,
   ...Organization,
   ...Hospital,
