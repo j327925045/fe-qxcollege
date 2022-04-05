@@ -1,12 +1,10 @@
 <template>
   <section class="app-main">
     <el-scrollbar wrap-class="app-scrollbar-wrapper" class="app-main-scrollbar" style="height: 100%">
-      <div class="app-container">
-        <keep-alive :max="maxPageNumber" :include="keepAliveComponents">
-          <router-view v-if="isRouterAlive" :key="key" class="m-4" />
-        </keep-alive>
-        <router-view v-if="!isRouterAlive" class="m-4" />
-      </div>
+      <keep-alive :max="maxPageNumber" :include="keepAliveComponents">
+        <router-view v-if="isRouterAlive" :key="key" class="m-4" />
+      </keep-alive>
+      <router-view v-if="!isRouterAlive" class="m-4" />
     </el-scrollbar>
   </section>
 </template>

@@ -13,14 +13,13 @@ export const User = [
         name: 'UserList',
         component: () => import('@/views/user/list'),
         meta: { title: '医生列表' }
-      }, {
+      },
+      {
         path: '/user/detail',
         name: 'UserDetail',
         hidden: true,
         component: () => import('@/views/user/detail'),
-        meta: {
-          title: '医生详情'
-        }
+        meta: { title: '医生详情', noTab: true, highlightPath: '/user/list' }
       }
     ]
     // detail

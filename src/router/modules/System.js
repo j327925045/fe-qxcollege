@@ -5,29 +5,35 @@ export const System = [
     path: '/system',
     name: 'System',
     component: Layout,
-    redirect: '/system/permissions',
+    redirect: '/dictionary/list',
     meta: { title: '系统设置', icon: 'menu-icon-system' },
     children: [
       {
-        path: '/system/dictionary',
+        path: '/dictionary/list',
         name: 'DictionaryList',
         component: () => import('@/views/dictionary/list'),
         meta: { title: '字段列表' }
       },
       {
-        path: '/system/role',
+        path: '/audit/list',
+        name: 'AuditList',
+        component: () => import('@/views/audit/list'),
+        meta: { title: '审批列表' }
+      },
+      {
+        path: '/role/list',
         name: 'RoleList',
         component: () => import('@/views/role/list'),
         meta: { title: '角色列表' }
       },
       {
-        path: '/system/permissions',
+        path: '/permissions/list',
         name: 'PermissionsList',
         component: () => import('@/views/permissions/list'),
         meta: { title: '权限列表' }
       },
       {
-        path: '/system/log',
+        path: '/log/list',
         name: 'LogList',
         component: () => import('@/views/log/list'),
         meta: { title: '操作日志' }
