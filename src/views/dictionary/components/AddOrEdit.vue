@@ -15,14 +15,10 @@
 <script>
 import { setDictionaryByOnce, getDictionaryDetail, updateDictionaryItem } from '@/api/dictionary'
 import EnumOption from './EnumOption'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm'
 
 export default {
   name: 'AddOrEdit',
   components: {
-    ImDrawer,
-    ImForm,
     EnumOption
   },
   data() {

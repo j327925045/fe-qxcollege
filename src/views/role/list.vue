@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
@@ -20,26 +20,16 @@
     </ImTableArea>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
     <SetPermissionDrawer ref="SetPermissionDrawer" @update="getList"></SetPermissionDrawer>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
 import { getRoleList, deleteRoleItem } from '@/api/role'
 import AddOrEdit from './components/AddOrEdit'
 import SetPermissionDrawer from './components/SetPermissionDrawer'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImForm from '@/views/components/ImForm'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImTable from '@/views/components/ImTable'
-import ImPagination from '@/views/components/ImPagination'
 export default {
   name: 'RoleList',
   components: {
-    ImSearchArea,
-    ImForm,
-    ImTableArea,
-    ImTable,
-    ImPagination,
     AddOrEdit,
     SetPermissionDrawer
   },

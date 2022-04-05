@@ -14,15 +14,9 @@
 <script>
 import { addEmployeesItem, getEmployeesDetail, updateEmployeesItem } from '@/api/employees'
 import { mapGetters } from 'vuex'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm'
 
 export default {
   name: 'AddOrEdit',
-  components: {
-    ImDrawer,
-    ImForm
-  },
   data() {
     return {
       formConfig: {

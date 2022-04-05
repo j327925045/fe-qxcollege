@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
@@ -16,25 +16,13 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
 import { getLogList } from '@/api/log'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImForm from '@/views/components/ImForm'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImTable from '@/views/components/ImTable'
-import ImPagination from '@/views/components/ImPagination'
 export default {
   name: 'LogList',
-  components: {
-    ImTableArea,
-    ImTable,
-    ImPagination,
-    ImSearchArea,
-    ImForm
-  },
   data() {
     return {
       formConfig: {

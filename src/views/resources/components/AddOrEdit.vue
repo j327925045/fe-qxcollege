@@ -15,14 +15,8 @@
 
 import { getDetail, editResources, resourcesCommit } from '@/api/resources'
 import { mapGetters } from 'vuex'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm/index'
 export default {
   name: 'AddOrEdit',
-  components: {
-    ImDrawer,
-    ImForm
-  },
   data() {
     return {
       drawerVisible: false,

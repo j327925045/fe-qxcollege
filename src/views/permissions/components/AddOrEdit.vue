@@ -16,13 +16,9 @@
 import { addPermissionItem, getPermissionDetail, updatePermissionItem } from '@/api/permission'
 import { mapGetters } from 'vuex'
 import PermissionCascader from '@/views/components/PermissionCascader'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm'
 export default {
   name: 'AddOrEdit',
   components: {
-    ImDrawer,
-    ImForm,
     PermissionCascader
   },
   data() {

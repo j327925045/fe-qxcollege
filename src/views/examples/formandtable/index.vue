@@ -27,14 +27,8 @@
 <script>
 // import { cities, cityMaps } from '@/utils/cities.js'
 import { cityMaps } from '@/utils/cities.js'
-import Imform from '@/views/components/ImForm/index.vue'
-import ImTable from '@/views/components/ImTable/index.vue'
 import { mapListOptions, cascaderOptions, checkboxGroupOptions, defaultTime, genderOptions, cityOptions, tableData } from './dataConfig'
 export default {
-  components: {
-    Imform,
-    ImTable
-  },
   data() {
     return {
       form: {

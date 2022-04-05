@@ -20,13 +20,9 @@ import { getDetail, auditCommit } from '@/api/audit'
 import { mapGetters } from 'vuex'
 import HospitalSelect from '@/views/components/HospitalSelect'
 import RegionCascader from '@/views/components/RegionCascader'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm/index'
 export default {
   name: 'AddOrEdit',
   components: {
-    ImDrawer,
-    ImForm,
     HospitalSelect,
     RegionCascader
   },

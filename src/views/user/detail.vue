@@ -1,10 +1,10 @@
 <template>
-  <div class="content">
-    <div class="information">
+  <ImWrapper>
+    <div slot="header" class="information">
       <div class="doctorNumber pb-4">
         {{ dataList.doctorNumber }} <span>V{{ dataList.doctorLevel }}</span>
       </div>
-      <el-descriptions class="doctorMsg" :column="2">
+      <el-descriptions class="doctorMsg" :column="2" :size="size">
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
         <el-descriptions-item label="生日">{{ dataList.birthday }} </el-descriptions-item>
@@ -217,7 +217,7 @@
       <el-tab-pane label="课程记录" name="course">课程记录</el-tab-pane>
       <el-tab-pane label="操作日志" name="operation">操作日志</el-tab-pane>
     </el-tabs>
-  </div>
+  </ImWrapper>
 </template>
 <script>
 import moment from 'moment'
@@ -225,19 +225,7 @@ import utils from '@/utils/utils'
 import { getList } from '@/api/doctorDetail'
 
 import { getUserList } from '@/api/user'
-import ImPagination from '@/views/components/ImPagination'
-import ImTable from '@/views/components/ImTable/index'
-import ImForm from '@/views/components/ImForm/index'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImTableArea from '@/views/components/ImTableArea'
 export default {
-  components: {
-    ImPagination,
-    ImTable,
-    ImForm,
-    ImSearchArea,
-    ImTableArea
-  },
   data() {
     return {
       // 表格数据
@@ -321,7 +309,7 @@ export default {
       // tab切换属性名
       activeName: 'doctor',
       // 信息样式
-      size: '',
+      size: 'medium',
       // 审核内容
       activities: [
         {

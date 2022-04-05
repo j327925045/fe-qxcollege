@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
@@ -17,29 +17,19 @@
     </ImTableArea>
     <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
 import { getDataList, deleteAudit } from '@/api/audit'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImForm from '@/views/components/ImForm/index'
-import ImTable from '@/views/components/ImTable/index'
-import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 
 export default {
   name: 'AuditList',
   components: {
-    ImSearchArea,
-    ImForm,
-    ImTableArea,
-    ImTable,
-    ImPagination,
     DetailDialog,
     AddOrEdit
   },

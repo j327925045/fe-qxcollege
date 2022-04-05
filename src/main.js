@@ -2,6 +2,7 @@ import App from '@/App.vue'
 import * as filters from '@/filters'
 import '@/icons/index'
 import store from '@/store'
+import Modules from '@/views/modules/index'
 import 'babel-polyfill'
 import ElementUI from 'element-ui'
 import Vue from 'vue'
@@ -11,6 +12,7 @@ import './permission.js'
 import router from './router'
 
 Vue.use(ElementUI, { size: 'small' })
+Vue.use(Modules)
 
 // 注册自定义标签 [如按钮权限控制]
 // Object.keys(directives).forEach((key) => {

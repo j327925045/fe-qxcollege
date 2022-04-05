@@ -16,15 +16,11 @@
 import { addOrganizationItem, getOrganizationDetail, updateOrganizationItem } from '@/api/organization'
 import { mapGetters } from 'vuex'
 import RegionCascader from '@/views/components/RegionCascader'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm'
 
 export default {
   name: 'OrganizationCreate',
   components: {
-    RegionCascader,
-    ImDrawer,
-    ImForm
+    RegionCascader
   },
   data() {
     return {

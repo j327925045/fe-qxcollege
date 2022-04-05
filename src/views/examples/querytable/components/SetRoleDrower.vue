@@ -14,15 +14,11 @@
 
 <script>
 import RoleSelect from '@/views/components/RoleSelect'
-import ImDrawer from '@/views/components/ImDrawer'
-import ImForm from '@/views/components/ImForm'
 import { setEmployeesRole, getEmployeesRoleDetail } from '@/api/employeesRole'
 
 export default {
   name: 'SetRoleDrawer',
   components: {
-    ImDrawer,
-    ImForm,
     RoleSelect
   },
   data() {

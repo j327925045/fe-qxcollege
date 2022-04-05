@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig">
         <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
@@ -23,18 +23,13 @@
     </ImTableArea>
     <DetailDialog ref="DetailDialog"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>
 import { getUserList, deleteUserItem } from '@/api/user'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
-import ImSearchArea from '@/views/components/ImSearchArea'
-import ImTableArea from '@/views/components/ImTableArea'
-import ImForm from '@/views/components/ImForm/index'
-import ImTable from '@/views/components/ImTable/index'
-import ImPagination from '@/views/components/ImPagination'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 
@@ -43,11 +38,6 @@ import RegionCascader from '@/views/components/RegionCascader'
 export default {
   name: 'UserList',
   components: {
-    ImSearchArea,
-    ImForm,
-    ImTableArea,
-    ImTable,
-    ImPagination,
     DetailDialog,
     AddOrEdit,
     HospitalSelect,
