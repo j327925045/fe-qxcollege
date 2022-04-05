@@ -16,6 +16,10 @@
           <i style="cursor: pointer" class="el-icon-info" />
         </el-tooltip>
       </template>
+      <template slot="someSlot" slot-scope="scope">
+        <span>{{ scope.$index }} - {{ scope.row.gender }}</span>
+        <el-button type="text" @click="onslotClick(scope)">click</el-button>
+      </template>
     </ImTable>
   </div>
 </template>
@@ -348,6 +352,15 @@ export default {
             }
           },
           {
+            type: 'slot',
+            label: 'slot',
+            attrs: {
+              fixed: 'left',
+              width: '100'
+            },
+            slot: 'someSlot'
+          },
+          {
             prop: 'gender',
             type: 'select',
             label: 'select',
@@ -435,7 +448,7 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '200'
+              width: '220'
             },
             options: [
               {
@@ -602,6 +615,10 @@ export default {
     }
   },
   methods: {
+    onslotClick(scope) {
+      console.log('scope.$index', scope.$index)
+      console.log('scope.row', scope.row)
+    },
     onSubmit() {
       console.log('234', 234)
       this.$refs.demoForm.validate(valid => {

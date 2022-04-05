@@ -69,13 +69,12 @@ $text-color-secondary: $menuText;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 52%;
     height: 100%;
-    margin-left: -48%;
     background-image: url(../../assets/img/pages/login-bg.png);
     background-repeat: no-repeat;
     background-position: 100%;
-    background-size: auto 100%;
+    background-size: cover;
     content: '';
     @media (max-width: $screen-xl) {
       display: none;
