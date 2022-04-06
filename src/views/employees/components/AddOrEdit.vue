@@ -63,13 +63,10 @@ export default {
             }
           },
           {
-            type: 'ImInput',
+            type: 'ImImgUpload',
             prop: 'avatar',
             label: '员工头像',
-            rules: [{ required: true, message: '请输入员工头像地址' }],
-            attrs: {
-              placeholder: '请输入员工头像地址'
-            }
+            rules: [{ required: true, message: '请上传员工头像' }]
           },
           {
             type: 'ImInput',

@@ -7,7 +7,11 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建素材</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="coverUrl" slot-scope="scope">
+          <img :src="scope.row.coverUrl" alt="">
+        </template>
+      </ImTable>
       <div class="mt-4 text-right">
         <ImPagination
           ref="ImPagination"
@@ -137,9 +141,10 @@ export default {
           {
             prop: 'coverUrl',
             label: '视频封面',
-            type: 'customFilter',
+            type: 'slot',
+            slot: 'coverUrl',
             attrs: {
-              width: '110'
+              width: '180'
             }
           },
           {

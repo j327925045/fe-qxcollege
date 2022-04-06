@@ -60,7 +60,7 @@ export default {
     addWaterMark(txt) {
       WaterMark.load({
         watermark_fontsize: '14px',
-        watermark_alpha: '0.05',
+        watermark_alpha: '0.03',
         watermark_angle: 30,
         watermark_txt: txt
       })

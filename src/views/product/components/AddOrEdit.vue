@@ -86,14 +86,10 @@ export default {
             }
           },
           {
-            type: 'ImInput',
+            type: 'ImImgUpload',
             prop: 'imageUrl',
             label: '产品图',
-            rules: [{ required: true, message: '请上传' }],
-            attrs: {
-              type: 'text',
-              placeholder: '请上传产品图'
-            }
+            rules: [{ required: true, message: '请上传产品图' }]
           },
           {
             type: 'ImInput',
