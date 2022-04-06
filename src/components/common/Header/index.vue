@@ -3,22 +3,15 @@
     <logo class="hidden-xs-only" />
     <!-- <top-menu /> -->
     <div class="right-menu">
-      <!--      <search-box />-->
-      <!-- <a href="javascript:;" class="navbar-ico">
-        <i class="el-icon-message" />
-      </a> -->
-      <div class="avatar-container">
-        <div class="avatar-wrapper">
-          <img v-if="avatar" :src="avatar" class="user-avatar" />
-          <img v-else src="~@/assets/img/framework/avatar.svg" class="user-avatar" />
-          <span class="user-name">{{ name || '用户名' }}</span>
-          <i class="el-icon-arrow-down" />
-        </div>
-        <div class="avatar-container-dropdown">
-          <div class="dropdown-item" @click="goUserCenter">个人中心</div>
-          <div class="dropdown-item" @click="logout">退出登录</div>
-        </div>
-      </div>
+      <!-- <search-box /> -->
+      <a href="javascript:;" class="navbar-ico">
+        <svg-icon icon-class="icon-notify"></svg-icon>
+      </a>
+      <a href="javascript:;" class="navbar-ico">
+        <svg-icon v-if="isFullScreen" title="进入全屏" icon-class="icon-fullscreenExit" @click="toggleFullScreen"></svg-icon>
+        <svg-icon v-else title="退出全屏" icon-class="icon-fullscreen" @click="toggleFullScreen"></svg-icon>
+      </a>
+      <Avatar></Avatar>
     </div>
   </div>
 </template>
@@ -26,28 +19,28 @@
 <script>
 import WaterMark from 'watermark-dom'
 import Logo from './Logo.vue'
-// import TopMenu from './TopMenu.vue'
 import { mapGetters } from 'vuex'
-// import { doLogout } from '@/api/login.js'
-import { removeToken } from '@/utils/auth.js'
+import utils from '@/utils/utils'
+import Avatar from './components/Avatar'
 
 // 主题存储的key
 const THEME_KEY = 'admin-theme'
 export default {
   components: {
-    Logo
+    Logo,
+    Avatar
     // TopMenu
     // SearchBox
   },
   data() {
     return {
       showChangeTheme: false,
-      activeIndex: '2'
+      isFullScreen: false
     }
   },
 
   computed: {
-    ...mapGetters(['name', 'ename', 'theme', 'avatar'])
+    ...mapGetters(['ename', 'theme'])
   },
   watch: {
     ename(newVal, oldVal) {
@@ -75,20 +68,6 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath)
     },
-    goUserCenter() {
-      this.$router.push('/').catch((err) => err)
-    },
-    logout() {
-      this.$confirm('确定要退出登录吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '点错了'
-      })
-        .then(() => {
-          removeToken()
-          this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-        })
-        .catch(() => {})
-    },
     changeTheme(e) {
       const themeColor = e.target.dataset.theme
 
@@ -115,6 +94,15 @@ export default {
         document.body.classList.remove('jdwl-admin-red')
       }
       this.$store.commit('app/SET_THRME_COLOR', themeColor)
+    },
+    toggleFullScreen() {
+      if (utils.getFullscreenElement()) {
+        utils.exitFullscreen()
+        this.isFullScreen = false
+      } else {
+        utils.launchIntoFullscreen()
+        this.isFullScreen = true
+      }
     }
   }
 }
@@ -176,68 +164,10 @@ export default {
   .navbar-ico {
     height: 100%;
     padding: 0 12px;
-    font-size: 16px;
+    font-size: 20px;
 
-    i {
+    i,svg {
       color: #fff;
-    }
-  }
-
-  .avatar-container {
-    padding: 0 32px 0 12px;
-
-    .avatar-wrapper {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        padding: 4px;
-        vertical-align: middle;
-        background: white;
-        border-radius: 100px;
-        cursor: pointer;
-      }
-
-      .user-name {
-        display: inline-block;
-        padding: 0 8px;
-        color: #fff;
-      }
-
-      .el-icon-arrow-down {
-        color: #fff;
-        font-size: 12px;
-      }
-    }
-
-    &-dropdown {
-      position: absolute;
-      top: 100%;
-      right: 32px;
-      display: none;
-      background: #fff;
-      border-radius: 0 0 4px 4px;
-      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.12);
-
-      .dropdown-item {
-        min-width: 140px;
-        padding: 12px 22px;
-        line-height: 100%;
-        cursor: pointer;
-
-        &:hover {
-          @include background_color('menu-hover-color');
-        }
-      }
-    }
-
-    &:hover {
-      .avatar-container-dropdown {
-        display: block;
-      }
     }
   }
 }
