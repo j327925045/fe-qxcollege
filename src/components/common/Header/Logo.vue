@@ -2,7 +2,7 @@
   <div class="navbar-logo-container">
     <router-link class="navbar-logo-link" to="/">
       <!-- 图片logo  样式一-->
-      <img src="@/assets/img/pages/logo_stock.svg" class="sidebar-logo" />
+      <img src="@/assets/img/pages/logo.svg" class="sidebar-logo" />
       <!--<span v-show="title" class="dep" />-->
 
       <!-- 文字 logo  样式二 -->
@@ -40,7 +40,7 @@ export default {
   .sidebar-logo {
     display: inline;
     height: auto;
-    max-height: $logoHeight - 5;
+    max-height: $navHeight - 5;
     vertical-align: middle;
     border-style: solid;
   }

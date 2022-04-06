@@ -1,5 +1,5 @@
 <template>
-  <AffixedTable v-loading="loading" size="medium" :data="table.data" v-bind="table.attrs" stripe border v-on="table.listeners">
+  <AffixedTable v-loading="loading" :sticky-top="88" selector=".app-scrollbar-wrapper" size="medium" :data="table.data" v-bind="table.attrs" stripe border v-on="table.listeners">
     <template v-for="item in tableList">
       <el-table-column v-if="item.type === 'selection'" :key="item.label" type="selection" :prop="item.prop" :label="item.label" v-bind="item.attrs"></el-table-column>
       <el-table-column v-else :key="item.label" :prop="item.prop" :label="item.label" v-bind="item.attrs">
@@ -211,6 +211,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/styles/variables.scss';
+
 /deep/.el-table--border {
   &:not(.el-table--group) {
     border: 0;
@@ -225,7 +227,7 @@ export default {
     }
 
     .cell {
-      color: #000;
+      color: $textColor;
     }
 
     th {

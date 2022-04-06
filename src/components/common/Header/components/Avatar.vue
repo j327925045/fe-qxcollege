@@ -52,9 +52,8 @@ export default {
     cursor: pointer;
 
     .user-avatar {
-      width: $navHeight - 15;
-      height: $navHeight - 15;
-      padding: 4px;
+      width: $navHeight - 24;
+      height: $navHeight - 24;
       vertical-align: middle;
       background: white;
       border-radius: 100px;
