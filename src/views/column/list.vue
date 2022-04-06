@@ -6,17 +6,11 @@
 
     <ImTableArea>
       <div class="mb-4">
-        <el-button type="primary" @click="addItem">新建课程</el-button>
+        <el-button type="primary" @click="addItem">新建专栏</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
-        <ImPagination
-          ref="ImPagination"
-          :page-size.sync="pageSize"
-          :current-page.sync="currentPage"
-          :total="total"
-          @change="getList"
-        ></ImPagination>
+        <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
       </div>
     </ImTableArea>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
@@ -24,12 +18,12 @@
 </template>
 
 <script>
-import { getCourseList, deleteCourseItem } from '@/api/course.js'
+import { getColumnList, deleteColumnItem } from '@/api/column.js'
 import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'CourseList',
+  name: 'ColumnList',
   components: {
     AddOrEdit
   },
@@ -47,7 +41,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'title',
-            label: '课程标题',
+            label: '专栏标题',
             attrs: {
               type: 'text',
               placeholder: '请输入',
@@ -112,16 +106,8 @@ export default {
             }
           },
           {
-            prop: 'author',
-            label: '作者',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'collectCount',
-            label: '收藏总次数',
+            prop: 'coverUrl',
+            label: '封面图片url',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -129,48 +115,6 @@ export default {
           },
           {
             prop: 'introduction',
-            label: '介绍',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
-          },
-          {
-            prop: 'level',
-            label: '分级',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            },
-            options: this.enums.courseLevel
-          },
-          {
-            prop: 'price',
-            label: '积分价格',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'starCount',
-            label: '点赞总次数',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'status',
-            label: '申请结果',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'summary',
             label: '简介',
             attrs: {
               'show-overflow-tooltip': true,
@@ -178,21 +122,31 @@ export default {
             }
           },
           {
-            prop: 'type',
-            label: '类型',
+            prop: 'isRecommend',
+            label: '首页是否推荐',
+            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             },
-            options: this.enums.courseType
+            options: this?.enums?.columnIsRecommend ?? []
           },
           {
-            prop: 'viewCount',
-            label: '观看总次数',
+            prop: 'sort',
+            label: '首页排序',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             }
+          },
+          {
+            prop: 'status',
+            label: '状态',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            },
+            options: this?.enums?.columnStatus ?? []
           },
           {
             prop: '',
@@ -257,7 +211,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteCourseItem({ objectCode: record.objectCode }).then((res) => {
+          deleteColumnItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -287,7 +241,7 @@ export default {
         ...this.formConfig.props
       }
       this.loading = true
-      getCourseList(params).then((res) => {
+      getColumnList(params).then((res) => {
         this.loading = false
         if (res.code === 200) {
           this.total = res.data.totalCount
