@@ -2,11 +2,13 @@
   <el-form ref="form" :model="form.props" v-bind="form.attrs">
     <el-row>
       <template v-for="(item, idx) in formList">
-        <FormComponents v-if="item.type==='ImButton'||item.notInForm" :key="idx" :form="form" :item="item">
-          <template v-for="(value) in item.slots" :slot="value">
-            <slot :name="value" />
-          </template>
-        </FormComponents>
+        <el-col v-if="item.type==='ImButton'||item.notInForm" :key="idx" :span="24">
+          <FormComponents :form="form" :item="item">
+            <template v-for="(value) in item.slots" :slot="value">
+              <slot :name="value" />
+            </template>
+          </FormComponents>
+        </el-col>
         <el-col
           v-else
           :key="idx"
