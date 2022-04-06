@@ -2,25 +2,25 @@
   <el-upload
     action
     v-bind="attrs"
-    drag
+    accept=".png,.jpg,.jpeg,.gif,.svg"
+    list-type="picture-card"
     :http-request="fnUploadRequest"
     :on-success="handleSuccess"
     :on-remove="handleRemove"
     :before-upload="beforeUpload"
     v-on="listeners"
   >
-    <i class="el-icon-upload"></i>
-    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-    <div slot="tip" class="el-upload__tip">请上传不超过2M的文件</div>
+    <i class="el-icon-plus avatar-uploader-icon"></i>
+    <div slot="tip" class="el-upload__tip">请上传.png,.jpg,.jpeg,.gif,.svg格式文件，且不超过2M</div>
   </el-upload>
 </template>
 <script>
 import { beforeUpload, fnUploadRequest } from './upload'
 export default {
-  name: 'ImDragUpload',
+  name: 'ImMultipleImgUpload',
   props: {
     value: {
-      type: [Array],
+      type: Array,
       default() {
         return []
       }
@@ -89,3 +89,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.imageholder {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+}
+</style>

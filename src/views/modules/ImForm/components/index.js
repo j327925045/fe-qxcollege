@@ -15,6 +15,7 @@ import ImWeekTimeSelect from './ImWeekTimeSelect.vue'
 import ImImgUpload from './upload/ImImgUpload.vue'
 import ImFileUpload from './upload/ImFileUpload.vue'
 import ImDragUpload from './upload/ImDragUpload.vue'
+import ImMultiImgUpload from './upload/ImMultiImgUpload.vue'
 
 export default {
   ImInput,
@@ -33,5 +34,6 @@ export default {
   ImSlot,
   ImImgUpload,
   ImFileUpload,
-  ImDragUpload
+  ImDragUpload,
+  ImMultiImgUpload
 }

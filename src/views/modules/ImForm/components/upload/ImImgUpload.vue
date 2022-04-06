@@ -6,7 +6,7 @@
     accept=".png,.jpg,.jpeg,.gif,.svg"
     list-type="picture-card"
     :http-request="fnUploadRequest"
-    :on-success="handleAvatarSuccess"
+    :on-success="handleSuccess"
     :on-remove="handleRemove"
     :before-upload="beforeUpload"
     v-on="listeners"
@@ -68,7 +68,7 @@ export default {
     },
 
     // 图片上传成功回调
-    handleAvatarSuccess(res) {
+    handleSuccess(res) {
       if (res) {
         this.myValue = res.url
         this.onUpdate()
