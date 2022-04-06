@@ -186,11 +186,16 @@ export default {
   },
   activated() {
     this.getList()
+    if (this.$route.query.objectCode) {
+      this.showDetail()
+    }
   },
   methods: {
     showDetail($index, record) {
-      console.log(record)
-      // this.$router.push(`/user/detail?objectCode=${record.objectCode}`)
+      if (this.$route.query.objectCode) {
+        record = { objectCode: this.$route.query.objectCode }
+      }
+      // this.$router.push(`/audit/detail?objectCode=${record.objectCode}`)
       this.$refs.DetailDialog.show(record)
     },
 
