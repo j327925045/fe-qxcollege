@@ -75,7 +75,7 @@ export default {
           {
             type: 'ImSlot',
             prop: 'options',
-            label: '所在区域(省市县)',
+            label: '字段选项',
             rules: [{ required: true, message: '请配置字段选项' }],
             slots: {
               options: 'EnumOption'

@@ -5,18 +5,18 @@ export const Content = [
     path: '/content',
     name: 'Content',
     component: Layout,
-    redirect: '/album/list',
+    redirect: '/column/list',
     meta: { title: '内容管理', icon: 'menu-icon-content' },
     children: [
       {
-        path: '/album/list',
-        name: 'AlbumList',
-        component: () => import('@/views/album/list'),
+        path: '/column/list',
+        name: 'ColumnList',
+        component: () => import('@/views/column/list'),
         meta: { title: '专栏列表' }
       },
       {
         path: '/course/list',
-        name: 'AlbumList',
+        name: 'CourseList',
         component: () => import('@/views/course/list'),
         meta: { title: '课程列表' }
       },
