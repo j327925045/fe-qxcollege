@@ -6,7 +6,7 @@ export const Organization = [
     name: 'Organization',
     component: Layout,
     redirect: '/organization/list',
-    meta: { title: '集团管理', icon: 'menu-icon-organization' },
+    meta: { title: '机构管理', icon: 'menu-icon-organization' },
     children: [
       {
         path: '/hospital/list',
