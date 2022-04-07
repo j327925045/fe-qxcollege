@@ -290,11 +290,13 @@ export default {
     },
 
     addItem() {
-      this.$refs.AddOrEdit.add()
+      // this.$refs.AddOrEdit.add()
+      this.$router.push({ name: 'HospitalAddOrEdit' })
     },
 
     editItem($index, record) {
-      this.$refs.AddOrEdit.edit(record.objectCode)
+      this.$router.push({ name: 'HospitalAddOrEdit', query: { objectCode: record.objectCode } })
+      // this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
     deleteItem($index, record) {

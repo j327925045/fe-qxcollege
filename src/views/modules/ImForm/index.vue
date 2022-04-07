@@ -1,6 +1,6 @@
 <template>
   <el-form ref="form" :model="form.props" v-bind="form.attrs">
-    <el-row>
+    <el-row :gutter="form.gutter">
       <template v-for="(item, idx) in formList">
         <el-col v-if="item.type==='ImButton'||item.notInForm" :key="idx" :span="24">
           <FormComponents :form="form" :item="item">
@@ -12,7 +12,11 @@
         <el-col
           v-else
           :key="idx"
-          v-bind="columnConfig"
+          :xl="item.span||columnConfig.xl"
+          :lg="item.span||columnConfig.lg"
+          :md="item.span||columnConfig.md"
+          :sm="item.span||columnConfig.sm"
+          :xs="item.span||columnConfig.xs"
         >
           <el-form-item
             :label="item.label"
