@@ -6,8 +6,8 @@
     @submit="submitForm"
   >
     <ImForm ref="ImForm" :form="formConfig">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
-      <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />集团信息</h3>
+      <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpart" class="w-full"></EmployeeSelect>
     </ImForm>
   </ImDrawer>
 </template>
@@ -15,12 +15,12 @@
 <script>
 import { addOrganizationItem, getOrganizationDetail, updateOrganizationItem } from '@/api/organization'
 import { mapGetters } from 'vuex'
-import RegionCascader from '@/views/components/RegionCascader'
+import EmployeeSelect from '@/views/components/EmployeeSelect'
 
 export default {
   name: 'OrganizationCreate',
   components: {
-    RegionCascader
+    EmployeeSelect
   },
   data() {
     return {
@@ -30,17 +30,14 @@ export default {
           labelPosition: 'right'
         },
         props: {
-          address: undefined,
-          businessScope: undefined,
           name: undefined,
-          nature: undefined,
-          operateStatus: undefined,
-          paidCapital: undefined,
-          regionCode: undefined,
-          registeredCapital: undefined,
-          scale: undefined,
-          shortName: undefined,
-          status: undefined
+          groupSize: undefined,
+          socialCreditCode: undefined,
+          salesCounterpart: undefined,
+          dealer: undefined,
+          cooperationMode: undefined,
+          contactName: undefined,
+          contactPhone: undefined
         },
         formItems: [
           {
@@ -53,45 +50,29 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '集团全称',
-            rules: [{ required: true, message: '请输入集团全称' }],
+            label: '集团名称',
+            rules: [{ required: true, message: '请输入集团名称' }],
             attrs: {
-              placeholder: '请输入集团全称'
+              placeholder: '请输入'
             }
           },
           {
-            type: 'ImInput',
-            prop: 'shortName',
-            label: '集团简称',
-            rules: [{ required: true, message: '请输入集团简称' }],
+            type: 'ImInputNumber',
+            prop: 'socialCreditCode',
+            label: '统一社会信用代码',
             attrs: {
-              placeholder: '请输入集团简称'
-            }
-          },
-          {
-            type: 'ImInput',
-            prop: 'address',
-            label: '集团地址(详细地址)',
-            rules: [{ required: true, message: '请输入集团地址' }],
-            attrs: {
-              placeholder: '请输入集团地址'
-            }
-          },
-          {
-            type: 'ImInput',
-            prop: 'businessScope',
-            label: '经营范围',
-            attrs: {
-              placeholder: '请输入经营范围'
+              controls: false,
+              style: 'width: 100%',
+              placeholder: '请输入'
             }
           },
           {
             type: 'ImSelect',
-            prop: 'nature',
-            label: '集团性质',
-            rules: [{ required: true, message: '请选择集团性质' }],
+            prop: 'groupSize',
+            label: '集团规模',
+            rules: [{ required: true, message: '请选择集团规模' }],
             attrs: {
-              placeholder: '请选择集团性质',
+              placeholder: '请选择',
               clearable: true,
               class: 'w-full',
               options: []
@@ -99,63 +80,59 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'operateStatus',
-            label: '经营状态',
+            prop: 'cooperationMode',
+            label: '合作方式',
+            rules: [{ required: true, message: '请选择合作方式' }],
             attrs: {
-              placeholder: '请选择经营状态',
+              placeholder: '请选择合作方式',
               clearable: true,
               class: 'w-full',
               options: []
             }
           },
           {
-            type: 'ImInputNumber',
-            prop: 'registeredCapital',
-            label: '注册资本(万)',
+            type: 'ImInput',
+            prop: 'dealer',
+            label: '所属经销商',
+            rules: [{ required: true, message: '请输入所属经销商' }],
             attrs: {
-              min: 0,
-              'controls-position': 'right',
-              placeholder: '请输入注册资本(万)'
+              placeholder: '请输入'
             }
           },
           {
-            type: 'ImInputNumber',
-            prop: 'paidCapital',
-            label: '实缴资本(万)',
+            type: 'ImSelect',
+            prop: 'whetherAccounts',
+            label: '是否建账',
+            rules: [{ required: true, message: '请选择是否建账' }],
             attrs: {
-              min: 0,
-              'controls-position': 'right',
-              placeholder: '请输入实缴资本(万)'
+              placeholder: '请选择是否建账',
+              clearable: true,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'contactName',
+            label: '联系人姓名',
+            attrs: {
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'contactPhone',
+            label: '联系电话',
+            attrs: {
+              placeholder: '请输入'
             }
           },
           {
             type: 'ImSlot',
-            prop: 'regionCode',
-            label: '所在区域(省市县)',
+            prop: 'salesCounterpart',
+            label: '销售对接人',
             slots: {
-              regionSlot: 'RegionCascader'
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'scale',
-            label: '集团规模',
-            attrs: {
-              placeholder: '请选择集团规模',
-              clearable: true,
-              class: 'w-full',
-              options: []
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'status',
-            label: '集团状态',
-            attrs: {
-              placeholder: '请选择集团状态',
-              clearable: true,
-              class: 'w-full',
-              options: []
+              salesCounterpart: 'employeeSelect'
             }
           }
         ]
@@ -175,10 +152,9 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      this.setFormPropOptions('nature', this.enums.organizationNature)
-      this.setFormPropOptions('operateStatus', this.enums.organizationOperateStatus)
-      this.setFormPropOptions('scale', this.enums.organizationScale)
-      this.setFormPropOptions('status', this.enums.organizationStatus)
+      this.setFormPropOptions('groupSize', this.enums.organizationScale)
+      this.setFormPropOptions('cooperationMode', this.enums.organizationCooperatType)
+      this.setFormPropOptions('whetherAccounts', this.enums.organizationIsPrepareAccount)
     },
 
     /**

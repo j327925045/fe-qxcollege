@@ -39,15 +39,72 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+          cooperationMode: undefined,
+          groupCode: undefined,
+          groupSize: undefined,
+          groupName: undefined,
+          salesName: undefined,
+          whetherAccounts: undefined
         },
         formItems: [
           {
             type: 'ImInput',
-            prop: 'name',
+            prop: 'groupName',
             label: '集团名称',
             attrs: {
-              type: 'text',
+              clearable: true,
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'groupSize',
+            label: '集团规模',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%;',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'groupCode',
+            label: '集团编号',
+            attrs: {
+              clearable: true,
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'cooperationMode',
+            label: '合作方式',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%;',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'salesName',
+            label: '销售对接人',
+            attrs: {
+              clearable: true,
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'whetherAccounts',
+            label: '是否建账',
+            attrs: {
+              clearable: true,
               placeholder: '请输入',
               style: 'width: 100%;'
             }
@@ -95,109 +152,86 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: '',
-            label: '序号',
-            type: 'index',
+            prop: 'groupCode',
+            label: '集团编号',
             attrs: {
               fixed: 'left',
-              width: 60
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
           {
             prop: 'name',
-            label: '集团全称',
+            label: '集团名称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'shortName',
-            label: '集团简称',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'address',
-            label: '集团地址(详细地址)',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
-          },
-          {
-            prop: 'regionFullName',
-            label: '所在区域',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
-          },
-          {
-            prop: 'businessScope',
-            label: '经营范围',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
-          },
-          {
-            prop: 'nature',
-            label: '集团性质',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '100'
-            },
-            options: this?.enums?.organizationNature ?? []
-          },
-          {
-            prop: 'operateStatus',
-            label: '经营状态',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '100'
-            },
-            options: this?.enums?.organizationOperateStatus ?? []
-          },
-          {
-            prop: 'paidCapital',
-            label: '实缴资本(万)',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'registeredCapital',
-            label: '注册资本(万)',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'scale',
+            prop: 'groupSize',
             label: '集团规模',
-            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.organizationScale ?? []
+            options: this.enums.organizationScale
           },
           {
-            prop: 'status',
-            label: '集团状态',
+            prop: 'cooperationMode',
+            label: '合作方式',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.organizationStatus ?? []
+            options: this.enums.organizationCooperatType
+          },
+          {
+            prop: 'whetherAccounts',
+            label: '是否建账',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.organizationIsPrepareAccount
+          },
+          {
+            prop: 'contactName',
+            label: '联系人姓名',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'contactPhone',
+            label: '联系人电话',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'salesCounterpart',
+            label: '销售对接人',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'mechanismCount',
+            label: '机构数量',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return val || 0
+            }
           },
           {
             prop: '',
@@ -226,8 +260,25 @@ export default {
   },
   created() {
     this.getList()
+    this.setOptions()
   },
   methods: {
+    setOptions() {
+      this.setFormPropOptions('cooperationMode', this.enums.organizationCooperatType)
+      this.setFormPropOptions('whetherAccounts', this.enums.organizationIsPrepareAccount)
+      this.setFormPropOptions('groupSize', this.enums.organizationScale)
+    },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
     addItem() {
       this.$refs.AddOrEdit.add()
     },
@@ -279,7 +330,7 @@ export default {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        ...this.formConfig.attrs
+        ...this.formConfig.props
       }
       console.log('params', params)
       this.loading = true
