@@ -79,7 +79,7 @@ formatRoutes(originRoutes.filter(item => !item.hidden))
 export const routes = originRoutes
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
