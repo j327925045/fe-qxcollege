@@ -289,11 +289,13 @@ export default {
     },
 
     addItem() {
-      this.$refs.AddOrEdit.add()
+      // this.$refs.AddOrEdit.add()
+      this.$router.push({ name: 'OrganizationAddOrEdit' })
     },
 
     editItem($index, record) {
-      this.$refs.AddOrEdit.edit(record.objectCode)
+      this.$router.push({ name: 'OrganizationAddOrEdit', query: { objectCode: record.objectCode } })
+      // this.$refs.AddOrEdit.edit(record.objectCode)
     },
 
     deleteItem($index, record) {
@@ -341,7 +343,6 @@ export default {
         limit: this.pageSize,
         ...this.formConfig.props
       }
-      console.log('params', params)
       this.loading = true
       getOrganizationList(params).then(res => {
         this.loading = false
