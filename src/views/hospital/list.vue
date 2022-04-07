@@ -251,9 +251,14 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '100'
+              width: '150'
             },
             options: [
+              {
+                title: '查看',
+                type: 'text',
+                onClick: this.detailItem
+              },
               {
                 title: '编辑',
                 type: 'text',
@@ -297,6 +302,10 @@ export default {
     editItem($index, record) {
       this.$router.push({ name: 'HospitalAddOrEdit', query: { objectCode: record.objectCode } })
       // this.$refs.AddOrEdit.edit(record.objectCode)
+    },
+
+    detailItem($index, record) {
+      this.$router.push({ name: 'HospitalDetail', query: { objectCode: record.objectCode } })
     },
 
     deleteItem($index, record) {

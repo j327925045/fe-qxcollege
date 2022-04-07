@@ -276,6 +276,7 @@ export default {
     },
 
     showItemDetail($index, record) {
+      this.$router.push({ name: 'OrganizationDetail', query: { objectCode: record.objectCode } })
     },
 
     /**
