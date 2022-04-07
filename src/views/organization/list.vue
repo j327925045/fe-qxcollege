@@ -5,7 +5,7 @@
     </ImSearchArea>
     <ImTableArea>
       <div class="mb-4">
-        <el-button type="primary" @click="addItem">新建机构</el-button>
+        <el-button type="primary" @click="addItem">新建集团</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
@@ -45,7 +45,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '机构名称',
+            label: '集团名称',
             attrs: {
               type: 'text',
               placeholder: '请输入',
@@ -105,7 +105,7 @@ export default {
           },
           {
             prop: 'name',
-            label: '机构全称',
+            label: '集团全称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -113,7 +113,7 @@ export default {
           },
           {
             prop: 'shortName',
-            label: '机构简称',
+            label: '集团简称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -121,7 +121,7 @@ export default {
           },
           {
             prop: 'address',
-            label: '机构地址(详细地址)',
+            label: '集团地址(详细地址)',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '180'
@@ -145,7 +145,7 @@ export default {
           },
           {
             prop: 'nature',
-            label: '机构性质',
+            label: '集团性质',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
@@ -181,7 +181,7 @@ export default {
           },
           {
             prop: 'scale',
-            label: '机构规模',
+            label: '集团规模',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
@@ -191,7 +191,7 @@ export default {
           },
           {
             prop: 'status',
-            label: '机构状态',
+            label: '集团状态',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,

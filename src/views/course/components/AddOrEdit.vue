@@ -1,7 +1,7 @@
 <template>
   <ImDrawer
     :visible.sync="drawerVisible"
-    :title="editId ? '编辑员工' : '新建员工'"
+    :title="editId ? '编辑课程' : '新建课程'"
     @closeDrower="closeDrower"
     @submit="submitForm"
   >
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { addEmployeesItem, getEmployeesDetail, updateEmployeesItem } from '@/api/employees'
+import { addCourseItem, getCourseDetail, updateCourseItem } from '@/api/course'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -25,13 +25,12 @@ export default {
           labelPosition: 'right'
         },
         props: {
-          name: undefined,
-          gender: undefined,
-          avatar: undefined,
-          account: undefined,
-          password: undefined,
-          nature: undefined,
-          status: undefined
+          title: undefined,
+          introduction: undefined,
+          level: undefined,
+          price: undefined,
+          summary: undefined,
+          type: undefined
         },
         formItems: [
           {
@@ -43,72 +42,61 @@ export default {
           },
           {
             type: 'ImInput',
-            prop: 'name',
-            label: '员工姓名',
-            rules: [{ required: true, message: '请输入员工姓名' }],
+            prop: 'title',
+            label: '标题',
+            rules: [{ required: false, message: '请输入标题' }],
             attrs: {
-              placeholder: '请输入员工姓名'
+              placeholder: '请输入标题'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'summary',
+            label: '简介',
+            rules: [{ required: false, message: '请输入简介' }],
+            attrs: {
+              placeholder: '请输入简介'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'introduction',
+            label: '介绍',
+            rules: [{ required: false, message: '请输入简介' }],
+            attrs: {
+              type: 'textarea',
+              placeholder: '请输入简介'
             }
           },
           {
             type: 'ImSelect',
-            prop: 'gender',
-            label: '员工性别',
-            rules: [{ required: true, message: '请选择员工性别' }],
+            prop: 'level',
+            label: '分级',
+            rules: [{ required: false, message: '请选择分级' }],
             attrs: {
-              placeholder: '请选择员工性别',
-              clearable: true,
+              placeholder: '请选择分级',
               class: 'w-full',
               options: []
             }
           },
           {
-            type: 'ImImgUpload',
-            prop: 'avatar',
-            label: '员工头像',
-            rules: [{ required: true, message: '请上传员工头像' }]
-          },
-          {
-            type: 'ImInput',
-            prop: 'account',
-            label: '账号（手机号）',
-            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            type: 'ImInputNumber',
+            prop: 'price',
+            label: '积分价格',
+            rules: [{ required: false, message: '请输入积分价格' }],
             attrs: {
-              type: 'text',
-              placeholder: '请输入手机号',
-              maxLength: 11
-            }
-          },
-          {
-            type: 'ImInput',
-            prop: 'password',
-            label: '密码',
-            hidden: false,
-            rules: [{ required: true, message: '请输入密码' }],
-            attrs: {
-              placeholder: '请输入密码'
+              style: 'width:100%;',
+              'controls-position': 'right',
+              placeholder: '请输入积分价格'
             }
           },
           {
             type: 'ImSelect',
-            prop: 'nature',
-            label: '员工性质',
-            rules: [{ required: true, message: '请选择员工性质' }],
+            prop: 'type',
+            label: '类型',
+            rules: [{ required: false, message: '请选择类型' }],
             attrs: {
-              placeholder: '请选择员工性质',
-              clearable: true,
-              class: 'w-full',
-              options: []
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'status',
-            label: '员工状态',
-            rules: [{ required: true, message: '请选择员工状态' }],
-            attrs: {
-              placeholder: '请选择员工状态',
-              clearable: true,
+              placeholder: '请选择类型',
               class: 'w-full',
               options: []
             }
@@ -130,9 +118,8 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      this.setFormPropOptions('gender', this.enums.gender)
-      this.setFormPropOptions('nature', this.enums.employeeNature)
-      this.setFormPropOptions('status', this.enums.employeeStatus)
+      this.setFormPropOptions('level', this.enums.courseLevel)
+      this.setFormPropOptions('type', this.enums.courseType)
     },
 
     /**
@@ -148,24 +135,16 @@ export default {
     add() {
       this.editId = undefined
       this.drawerVisible = true
-      this.setPasswordVisible(true)
     },
 
     edit(editId) {
       this.editId = editId
       this.drawerVisible = true
       this.getItemDetail()
-      this.setPasswordVisible(false)
-    },
-
-    setPasswordVisible(visible) {
-      const formItems = this.formConfig.formItems
-      const item = formItems.find(item => item.prop === 'password')
-      item.hidden = !visible
     },
 
     getItemDetail() {
-      getEmployeesDetail({ objectCode: this.editId }).then((res) => {
+      getCourseDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200 && res.data) {
           const props = this.formConfig.props
           const keys = Object.keys(props)
@@ -189,7 +168,7 @@ export default {
         }
         if (this.editId) {
           data.objectCode = this.editId
-          updateEmployeesItem(data).then((res) => {
+          updateCourseItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('更新成功！')
               this.$emit('update')
@@ -199,7 +178,7 @@ export default {
             }
           })
         } else {
-          addEmployeesItem(data).then((res) => {
+          addCourseItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')

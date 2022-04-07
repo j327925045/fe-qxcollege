@@ -7,7 +7,11 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建产品</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="imageUrl" slot-scope="scope">
+          <img :src="scope.row.imageUrl" alt="">
+        </template>
+      </ImTable>
       <div class="mt-4 text-right">
         <ImPagination
           ref="ImPagination"
@@ -110,7 +114,7 @@ export default {
           },
           {
             prop: 'brandCode',
-            label: '品牌code',
+            label: '品牌',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
@@ -140,10 +144,11 @@ export default {
           },
           {
             prop: 'imageUrl',
-            label: '产品图URL',
+            label: '产品图',
+            type: 'slot',
+            slot: 'imageUrl',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
+              width: '180'
             }
           },
           {

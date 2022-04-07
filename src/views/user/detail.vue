@@ -68,11 +68,11 @@
 
             </el-descriptions>
           </div>
-          <div class="pt-4" style="font-weight: bold; font-size: 16px">
-            <span>所在机构</span>
+          <div class="pb-4" style="font-weight: bold; font-size: 16px">
+            <span>坐诊机构</span>
           </div>
-          <el-descriptions class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="机构名称" style="color:#005DBE">{{ dataList.realHospitalName }}</el-descriptions-item>
+          <el-descriptions border class="mt-4" :column="2" :size="size">
+            <el-descriptions-item label="机构名称">{{ dataList.realHospitalName }}</el-descriptions-item>
             <el-descriptions-item label="机构性质">{{ getLabelByValue('registrationSource', dataList.realOrganizationOperation) }}</el-descriptions-item>
             <el-descriptions-item label="科室">{{ getLabelByValue('realDepartment', dataList.realDepartment) }}</el-descriptions-item>
             <el-descriptions-item label="机构关系">{{ "接口没给" }}</el-descriptions-item>

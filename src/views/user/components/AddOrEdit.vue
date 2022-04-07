@@ -11,7 +11,7 @@
       <h3 slot="professionalSlot" class="gyl-title"><i class="el-icon-s-order" />医生信息</h3>
       <h3 slot="expertSlot" class="gyl-title"><i class="el-icon-s-order" />专家信息</h3>
       <!-- <input slot="realOppositePersonSlot" v-model="formConfig.props.realOppositePerson" type="text"> -->
-      <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
+      <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择机构"></HospitalSelect>
       <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
     </ImForm>
   </ImDrawer>
@@ -50,7 +50,7 @@ export default {
           doctorProfile: undefined, // WYF医生简介
           doctorLabel: undefined, // WYF医生标签
           doctorIntroduction: undefined, // WYF医生介绍
-          realHospitalCode: undefined, // 医院
+          realHospitalCode: undefined, // 机构
           realDepartment: undefined, // 科室
           realJobTitle: undefined, // 职称
           realPracticeCertificateCode: undefined, // 医师执业证书编号
@@ -248,8 +248,8 @@ export default {
           {
             type: 'ImSlot',
             prop: 'realHospitalCode',
-            label: '医院',
-            // rules: [{ required: true, message: '请选择医院' }],
+            label: '机构',
+            // rules: [{ required: true, message: '请选择机构' }],
             slots: {
               hospitalSlot: 'hospitalSelect'
             }

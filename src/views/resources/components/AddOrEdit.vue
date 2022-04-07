@@ -84,14 +84,10 @@ export default {
               options: []
             }
           }, {
-            type: 'ImInput',
+            type: 'ImImgUpload',
             prop: 'coverUrl',
             label: '视频封面',
-            rules: [{ required: true, message: '请输入视频封面' }],
-            attrs: {
-              type: 'text',
-              placeholder: '请输入视频封面'
-            }
+            rules: [{ required: true, message: '请上传视频封面' }]
           }, {
             type: 'ImInput',
             prop: 'fileUrl',

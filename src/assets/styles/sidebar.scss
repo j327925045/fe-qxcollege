@@ -1,7 +1,7 @@
 .main-container {
   position: relative;
   margin-left: $sideBarWidth;
-  padding: 60px 0 0 0;
+  padding: $navHeight 0 0 0;
   background-color: $mainbgColor;
   transition: margin-left 0.28s;;
 }
