@@ -9,7 +9,7 @@
     v-on="listeners"
   >
     <el-button size="small" type="primary">点击上传</el-button>
-    <div slot="tip" class="el-upload__tip">请上传不超过2M的文件</div>
+    <div slot="tip" class="el-upload__tip">请上传不超过5M的文件</div>
   </el-upload>
 </template>
 <script>

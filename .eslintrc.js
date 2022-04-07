@@ -10,6 +10,8 @@ module.exports = {
   globals: {
     // 全局变量的写法，防止eslint对出现在页面中未定义全局变量无脑报错，比如在代码中有一个全局变量API
     // API: true
+    AliyunUpload: true,
+    Aliplayer: true
   },
   extends: ['plugin:vue/recommended', 'standard'],
   parserOptions: {

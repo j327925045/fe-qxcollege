@@ -72,30 +72,31 @@ export default {
               placeholder: '请输入简介'
             }
           },
+          // {
+          //   type: 'ImSelect',
+          //   prop: 'type',
+          //   label: '素材类型',
+          //   rules: [{ required: true, message: '请选择素材类型' }],
+          //   attrs: {
+          //     placeholder: '请选择素材类型',
+          //     clearable: true,
+          //     class: 'w-full',
+          //     options: []
+          //   }
+          // },
           {
-            type: 'ImSelect',
-            prop: 'type',
-            label: '素材类型',
-            rules: [{ required: true, message: '请选择素材类型' }],
-            attrs: {
-              placeholder: '请选择素材类型',
-              clearable: true,
-              class: 'w-full',
-              options: []
-            }
-          }, {
             type: 'ImImgUpload',
             prop: 'coverUrl',
             label: '视频封面',
             rules: [{ required: true, message: '请上传视频封面' }]
-          }, {
-            type: 'ImInput',
+          },
+          {
+            type: 'ImVideoUpload',
             prop: 'fileUrl',
-            label: '文件存储',
-            rules: [{ required: true, message: '请输入文件存储' }],
+            label: '视频文件',
+            rules: [{ required: true, message: '请选择视频文件' }],
             attrs: {
-              type: 'text',
-              placeholder: '请输入文件存储'
+              placeholder: '请选择视频文件'
             }
           }
         ]
@@ -106,7 +107,7 @@ export default {
     ...mapGetters(['enums'])
   },
   created() {
-    this.setOptions()
+    // this.setOptions()
   },
   methods: {
     /**
@@ -165,28 +166,37 @@ export default {
      * 提交表单
      */
     submitForm() {
-      if (this.editId) {
-        this.formConfig.props.objectCode = this.editId
-        editResources(this.formConfig.props).then(res => {
-          if (res.code === 200) {
-            this.$message.success(res.message)
-            this.$emit('update')
-            this.closeDrower()
-          } else {
-            this.$message.error(res.message)
-          }
-        })
-      } else {
-        resourcesCommit(this.formConfig.props).then(res => {
-          if (res.code === 200) {
-            this.$message.success(res.message)
-            this.$emit('update')
-            this.closeDrower()
-          } else {
-            this.$message.error(res.message)
-          }
-        })
-      }
+      this.$refs.ImForm.validate((valid) => {
+        if (!valid) {
+          this.$message('请检查表单项！')
+          return
+        }
+        const data = {
+          ...this.formConfig.props
+        }
+        if (this.editId) {
+          data.objectCode = this.editId
+          editResources(data).then(res => {
+            if (res.code === 200) {
+              this.$message.success('操作成功!')
+              this.$emit('update')
+              this.closeDrower()
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+        } else {
+          resourcesCommit(data).then(res => {
+            if (res.code === 200) {
+              this.$message.success('操作成功!')
+              this.$emit('update')
+              this.closeDrower()
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+        }
+      })
     },
 
     /**

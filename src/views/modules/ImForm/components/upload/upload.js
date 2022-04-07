@@ -1,7 +1,7 @@
 import { findAliToken } from '@/api/fileupload'
 const OSS = require('ali-oss')
 
-export function beforeUpload(file, maxSize) {
+export function beforeUpload(file, maxSize = 5) {
   if (file.size > maxSize * 1024 * 1024) {
     this.$message.error(`上传文件大小不能超过 ${maxSize}MB!`)
     return false
@@ -17,7 +17,7 @@ export async function fnUploadRequest(options) {
       accessKeyId: resData.accessKeyId, // 查看你自己的阿里云KEY
       accessKeySecret: resData.accessKeySecret, // 查看自己的阿里云KEYSECRET
       stsToken: resData.securityToken,
-      bucket: 'imeiktest', // 你的 OSS bucket 名称
+      bucket: resData.bucket, // 你的 OSS bucket 名称
       region: 'oss-cn-beijing', // bucket 所在地址，我的是 华北2 北京
       endpoint: 'oss-cn-beijing.aliyuncs.com' // 自己的域名
     })
