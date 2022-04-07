@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import { getAllHospitalItems } from '@/api/hospital'
+import { getProjectProduct } from '@/api/project'
 export default {
-  name: 'HospitalSelect',
+  name: 'ProjectProductList',
   props: {
     value: {
       type: [Number, String],
@@ -53,7 +53,7 @@ export default {
     },
 
     getOptions() {
-      getAllHospitalItems({}).then(res => {
+      getProjectProduct({ limit: 20000, page: 1 }).then(res => {
         if (res.code === 200) {
           this.options = res.data
         }

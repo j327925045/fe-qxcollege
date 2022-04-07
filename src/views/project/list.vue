@@ -4,6 +4,9 @@
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
     <ImTableArea>
+      <div class="mb-4">
+        <el-button type="primary" @click="addItem">新建项目</el-button>
+      </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
         <ImPagination
@@ -15,20 +18,19 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
+    <DetailDialog ref="DetailDialog"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
-import { getDataList, deleteAudit } from '@/api/audit'
+import { getProjectList, deleteProjectItem } from '@/api/project'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
-
 export default {
-  name: 'AuditList',
+  name: 'ProjectList',
   components: {
     DetailDialog,
     AddOrEdit
@@ -42,19 +44,20 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+          name: ''// 项目名称
         },
         formItems: [
           {
             type: 'ImInput',
             prop: 'name',
-            label: '审核编号',
+            label: '项目名称',
             attrs: {
               type: 'text',
-              placeholder: '请输入',
+              placeholder: '请输入项目名称',
               style: 'width: 100%;'
             }
           },
+
           {
             type: 'ImButton',
             attrs: {
@@ -106,54 +109,21 @@ export default {
             }
           },
           {
-            prop: 'createName',
-            label: '创建人',
+            prop: 'name',
+            label: '项目名称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'createTime',
-            label: '创建时间',
-            type: 'customFilter',
-            attrs: {
-              width: '110'
-            },
-            filter(val, row) {
-              return moment(val).format('YYYY-MM-DD')
-            }
-          },
-          {
-            prop: 'objectCode',
-            label: '审核编号',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '100'
-            }
-          },
-          {
-            prop: 'realAuditStatus',
-            label: '审核状态',
-            type: 'mapList',
+            prop: 'projectProductList',
+            label: '产品集合',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            },
-            options: [
-              {
-                value: '1',
-                label: '通过'
-                // style: 'color:red;'
-              },
-              {
-                value: '2',
-                label: '拒绝'
-                // style: 'color:brown;'
-              }
-            ]
+            }
           },
-
           {
             prop: '',
             label: '操作',
@@ -168,11 +138,11 @@ export default {
                 type: 'text',
                 onClick: this.showDetail
               },
-              // {
-              //   title: '编辑',
-              //   type: 'text',
-              //   onClick: this.editItem
-              // },
+              {
+                title: '编辑',
+                type: 'text',
+                onClick: this.editItem
+              },
               {
                 title: '删除',
                 type: 'text',
@@ -186,17 +156,14 @@ export default {
   },
   activated() {
     this.getList()
-    if (this.$route.query.objectCode) {
-      this.showDetail()
-    }
   },
   methods: {
     showDetail($index, record) {
-      if (this.$route.query.objectCode) {
-        record = { objectCode: this.$route.query.objectCode }
-      }
-      // this.$router.push(`/audit/detail?objectCode=${record.objectCode}`)
       this.$refs.DetailDialog.show(record)
+    },
+
+    addItem() {
+      this.$refs.AddOrEdit.add()
     },
 
     editItem($index, record) {
@@ -209,7 +176,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteAudit({ objectCode: record.objectCode }).then((res) => {
+          deleteProjectItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -248,11 +215,13 @@ export default {
         ...this.formConfig.props
       }
       this.loading = true
-      getDataList(params)
+      getProjectList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {
             this.total = res.data.totalCount
+            console.log(this.tableConfig.data)
+            console.log(res.data.list)
             this.tableConfig.data = res.data.list || []
           }
         })
