@@ -6,9 +6,11 @@
     @submit="submitForm"
   >
     <ImForm ref="ImForm" :form="formConfig">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />基本信息</h3>
-      <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" placeholder="请选择所属集团"></OrganizationSelect>
-      <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />机构信息</h3>
+      <h3 slot="qualification" class="gyl-title"><i class="el-icon-s-order" />资质信息</h3>
+      <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" placeholder="请选择"></OrganizationSelect>
+      <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择"></RegionCascader>
+      <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" class="w-full"></EmployeeSelect>
     </ImForm>
   </ImDrawer>
 </template>
@@ -18,10 +20,12 @@ import { addHospitalItem, getHospitalDetail, updateHospitalItem } from '@/api/ho
 import { mapGetters } from 'vuex'
 import OrganizationSelect from '@/views/components/OrganizationSelect'
 import RegionCascader from '@/views/components/RegionCascader'
+import EmployeeSelect from '@/views/components/EmployeeSelect'
 
 export default {
   name: 'AddOrEdit',
   components: {
+    EmployeeSelect,
     OrganizationSelect,
     RegionCascader
   },
@@ -34,9 +38,17 @@ export default {
         },
         props: {
           name: undefined,
-          organizationCode: undefined,
+          nature: undefined,
+          establishedTime: undefined,
           regionCode: undefined,
-          status: undefined
+          location: undefined,
+          organizationCode: undefined,
+          contactName: undefined,
+          contactPhone: undefined,
+          salesCounterpartCode: undefined,
+          licencePictureUrl: undefined,
+          orgPictureUrl: undefined,
+          registrationNo: undefined
         },
         formItems: [
           {
@@ -52,7 +64,44 @@ export default {
             label: '机构名称',
             rules: [{ required: true, message: '请输入机构名称' }],
             attrs: {
-              placeholder: '请输入机构名称'
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'nature',
+            label: '机构性质',
+            rules: [{ required: true, message: '请选择机构性质' }],
+            attrs: {
+              placeholder: '请选择',
+              options: []
+            }
+          },
+          {
+            type: 'ImDatePicker',
+            prop: 'establishedTime',
+            label: '成立时间',
+            attrs: {
+              style: 'width: 100%',
+              type: 'date',
+              placeholder: '请选择'
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'regionCode',
+            label: '所在城市',
+            rules: [{ required: true, message: '请选择' }],
+            slots: {
+              regionCode: 'RegionCascader'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'location',
+            label: '机构地址',
+            attrs: {
+              placeholder: '请输入'
             }
           },
           {
@@ -65,32 +114,56 @@ export default {
             }
           },
           {
-            type: 'ImSlot',
-            prop: 'regionCode',
-            label: '区域',
-            rules: [{ required: true, message: '请选择区域' }],
-            slots: {
-              regionCode: 'RegionCascader'
+            type: 'ImInput',
+            prop: 'contactName',
+            label: '联系人姓名',
+            attrs: {
+              placeholder: '请输入'
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'status',
-            label: '机构状态',
-            rules: [{ required: true, message: '请选择机构状态' }],
+            type: 'ImInput',
+            prop: 'contactPhone',
+            label: '联系电话',
+            rules: ['phone'],
             attrs: {
-              placeholder: '请选择机构状态',
-              clearable: true,
-              class: 'w-full',
-              options: []
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'salesCounterpartCode',
+            label: '销售对接人',
+            slots: {
+              salesCounterpartCode: 'employeeSelect'
+            }
+          },
+          {
+            type: 'ImImgUpload',
+            prop: 'orgPictureUrl',
+            label: '机构图片'
+          },
+          {
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              secondSlot: 'qualification'
+            }
+          },
+          {
+            type: 'ImImgUpload',
+            prop: 'licencePictureUrl',
+            label: '医疗机构执业许可证'
+          },
+          {
+            type: 'ImInput',
+            prop: 'registrationNo',
+            label: '登记号',
+            attrs: {
+              placeholder: '请输入'
             }
           }
         ]
-      },
-      rules: {
-        organizationCode: [{ required: true, message: '请选择所属集团' }],
-        regionCode: [{ required: true, message: '请选择区域' }],
-        status: [{ required: true, message: '请选择机构状态' }]
       },
       editId: undefined,
       drawerVisible: false
@@ -107,7 +180,7 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      this.setFormPropOptions('status', this.enums.hospitalStatus)
+      this.setFormPropOptions('nature', this.enums.hospitalNature)
     },
 
     /**

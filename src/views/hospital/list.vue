@@ -1,7 +1,9 @@
 <template>
   <ImWrapper>
     <ImSearchArea>
-      <ImForm ref="ImForm" :form="formConfig"></ImForm>
+      <ImForm ref="ImForm" :form="formConfig">
+        <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择所在城市"></RegionCascader>
+      </ImForm>
     </ImSearchArea>
 
     <ImTableArea>
@@ -27,10 +29,13 @@
 import { getHospitalList, deleteHospitalItem } from '@/api/hospital'
 import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
+import RegionCascader from '@/views/components/RegionCascader'
+import moment from 'moment'
 
 export default {
   name: 'HospitalList',
   components: {
+    RegionCascader,
     AddOrEdit
   },
   data() {
@@ -41,13 +46,62 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+          name: undefined,
+          mechanismCode: undefined,
+          nature: undefined,
+          regionCode: undefined,
+          salesName: undefined
         },
         formItems: [
           {
             type: 'ImInput',
             prop: 'name',
             label: '机构名称',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'mechanismCode',
+            label: '机构编号',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'nature',
+            label: '机构性质',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%;',
+              options: []
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'regionCode',
+            label: '所在城市',
+            attrs: {
+              clearable: true,
+              placeholder: '请选择',
+              style: 'width: 100%;',
+              options: []
+            },
+            slots: {
+              regionCode: 'RegionCascader'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'salesName',
+            label: '销售对接人',
             attrs: {
               type: 'text',
               placeholder: '请输入',
@@ -96,12 +150,12 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: '',
-            label: '序号',
-            type: 'index',
+            prop: 'orgCode',
+            label: '机构编号',
             attrs: {
               fixed: 'left',
-              width: 60
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
           {
@@ -113,6 +167,45 @@ export default {
             }
           },
           {
+            prop: 'nature',
+            label: '机构性质',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.hospitalNature
+          },
+          {
+            prop: 'establishedTime',
+            label: '成立时间',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val) {
+              const date = new Date(val)
+              return moment(date.getTime()).format('YYYY-MM-DD')
+            }
+          },
+          {
+            prop: 'regionFullName',
+            label: '所在城市',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'location',
+            label: '机构地址',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            }
+          },
+          {
             prop: 'organizationName',
             label: '所属集团',
             attrs: {
@@ -121,22 +214,36 @@ export default {
             }
           },
           {
-            prop: 'regionFullName',
-            label: '区域',
+            prop: 'contactName',
+            label: '联系人姓名',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'status',
-            label: '机构状态',
-            type: 'mapList',
+            prop: 'contactPhone',
+            label: '联系人电话',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            },
-            options: this?.enums?.hospitalStatus ?? []
+            }
+          },
+          {
+            prop: 'salesCounterpartName',
+            label: '销售对接人',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'doctorCount',
+            label: '医生数量',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
           },
           {
             prop: '',
@@ -165,8 +272,23 @@ export default {
   },
   activated() {
     this.getList()
+    this.setOptions()
   },
   methods: {
+    setOptions() {
+      this.setFormPropOptions('nature', this.enums.hospitalNature)
+    },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
     addItem() {
       this.$refs.AddOrEdit.add()
     },
