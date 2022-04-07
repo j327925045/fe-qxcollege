@@ -62,3 +62,17 @@ export function getProjectDetail(params) {
     params: {}
   })
 }
+
+// /qxcollege/product/list
+/**
+ * 获取用户详情
+ * @param data
+ * @returns {*}
+ */
+export function getProjectProduct(data) {
+  return request({
+    url: '/qxcollege/product/list',
+    method: 'post',
+    data: data
+  })
+}

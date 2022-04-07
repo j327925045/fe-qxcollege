@@ -7,8 +7,8 @@
     @submit="submitForm"
   >
     <ImForm ref="ImForm" :form="formConfig">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />项目信息</h3>
-
+      <!-- <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />项目信息</h3> -->
+      <ProjectProductList slot="projectProductList" v-model="formConfig.props.projectProductList" class="w-full" placeholder="请选择机构"></ProjectProductList>
     </ImForm>
   </ImDrawer>
 </template>
@@ -17,8 +17,13 @@
 import { addProjectItem, getProjectDetail, updateProjectItem } from '@/api/project'
 import { mapGetters } from 'vuex'
 
+import ProjectProductList from '../components/ProjectProductList'
 export default {
   name: 'AddOrEdit',
+
+  components: {
+    ProjectProductList
+  },
   data() {
     return {
       drawerVisible: false,
@@ -30,6 +35,7 @@ export default {
           labelPosition: 'right'
         },
         props: {
+          projectProductList: '',
           brandCode: null, // 品牌code
           businessType: null, // 业务类型
           category: null, // 材料类别
@@ -46,7 +52,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'deteils',
-            label: '适应症',
+            label: '详情',
 
             attrs: {
               type: 'text',
@@ -63,24 +69,14 @@ export default {
               type: 'text',
               placeholder: '请输入'
             }
-          },
-          {
+          }, {
             type: 'ImSlot',
-            notInForm: true,
+            prop: 'projectProductList',
+            label: '产品列表',
+            // rules: [{ required: true, message: '请选择机构' }],
             slots: {
-              firstSlot: 'infoSlot'
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'projectProjectList',
-            label: '产品',
-            rules: [{ required: true, message: '请选择产品' }],
-            attrs: {
-              placeholder: '请选择产品',
-              clearable: true,
-              class: 'w-full',
-              options: []
+              multiple: true,
+              projectProductListSlot: 'projectProductList'
             }
           }
 
@@ -95,30 +91,6 @@ export default {
     this.setOptions()
   },
   methods: {
-    /**
-     * 统一处理options
-     */
-    setOptions() {
-      // this.setFormPropOptions('brandCode', this.enums.brandCode) // 男女
-      // this.setFormPropOptions('businessType', this.enums.businessType)// 医生等级
-      // this.setFormPropOptions('category', this.enums.category) //
-      // // this.setFormPropOptions('isCertified', this.enums.isCertified)
-      // this.setFormPropOptions('level', this.enums.level)// 客户经理
-      // // this.setFormPropOptions('realOppositePerson', this.enums.realOppositePerson)//对接人
-      // this.setFormPropOptions('type', this.enums.type)// 科室
-    },
-
-    /**
-     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
-     * 放到计算属性会有prop绑定失效的问题
-     */
-    setFormPropOptions(prop, options) {
-      console.log(options)
-      console.log(this.formConfig.formItems)
-      const formItems = this.formConfig.formItems
-      const item = formItems.find(item => item.prop === prop)
-      item.attrs.options = options
-    },
 
     /**
      * 暴露添加方法

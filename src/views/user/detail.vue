@@ -1,5 +1,5 @@
 <template>
-  <ImWrapper>
+  <div>
     <div slot="header" class="information">
       <div class="doctorNumber pb-4">
         {{ dataList.doctorNumber||"医生编号" }}
@@ -17,32 +17,13 @@
 
     </div>
 
-    <el-tabs v-model="activeName" class="mt-4" @tab-click="handleClick">
+    <el-tabs v-model="activeName" class="" @tab-click="handleClick">
       <el-tab-pane label="医生信息" name="doctor">
         <div>
-          <div class="pb-4" style="font-weight: bold; font-size: 16px;overflow:hidden">
-            <span class="fl mr-4">审核状态</span><span class="statusT fl mr-4">{{ getLabelByValue('realAuditStatus', auditStatus.status) }} </span>
-            <span class="fr auditStatus" @click="goAudit">查看审核信息</span>
-          </div>
-          <el-timeline class="timelineDiv">
-            <el-timeline-item
-              v-for="(item, index) in dataList.userRealApprovalRecordList"
-              :key="index"
-              :type="item.type"
-              :color="item.type != 3 ? '#005DBE' : ''"
-              timestamp="2018/4/12"
-              placement="top"
-            >
-              <h4>{{ item.status == 1 ? '同意' : item.status == 2 ? '拒绝' : item.status == 3 ? '提交审核' : '' }}</h4>
-              <p>{{ item.status == 3?item.createBy:item.employeeCode }}</p>
-              <p>{{ moment(item.status == 3?item.createTime:item.updateTime).format('YYYY-MM-DD hh:mm:ss') }}</p>
-            </el-timeline-item>
-          </el-timeline>
-
-          <div>
-            <div class="pb-4" style="font-weight: bold; font-size: 16px;overflow:hidden">
+          <div class="divCrad">
+            <div class="pb-4" style="font-weight: bold; font-size: 16px;overflow:hidden;border-bottom:1px solid #D8D8D8;margin:0 0 24px 0">
               <span class="fl mr-4">医生信息</span>
-              <span class="fr auditStatus" @click="goDoctorEdit">编辑</span>
+              <!-- <span class="fr auditStatus" @click="goDoctorEdit">编辑</span> -->
             </div>
             <el-descriptions class="margin-top" :column="1" :size="size">
               <el-descriptions-item label="医生简介">{{ dataList.doctorLabel }}</el-descriptions-item>
@@ -53,8 +34,6 @@
               <el-descriptions-item label="医生标签">
                 <el-tag size="small">{{ dataList.doctorLabel }}</el-tag>
               </el-descriptions-item>
-            </el-descriptions>
-            <el-descriptions class="margin-top" :column="2" :size="size">
               <el-descriptions-item label="客户经理">
                 <el-tag size="small">{{ dataList.realAccountManager }}</el-tag>
               </el-descriptions-item>
@@ -64,54 +43,68 @@
               </el-descriptions-item>
               <el-descriptions-item label="职称">{{ getLabelByValue('realJobTitle', dataList.realJobTitle) }}</el-descriptions-item>
               <el-descriptions-item label="执业分类">{{ "接口没给" }}</el-descriptions-item>
-              <el-descriptions-item label="行业协会">{{ "接口没给" }}</el-descriptions-item>
+              <el-descriptions-item label="行业协会">{{ dataList.realEmploymentIndustryAssociations }}</el-descriptions-item>
 
             </el-descriptions>
+
+            <div class="pt-4" style="font-weight: bold; font-size: 16px">
+              <span>所在机构</span>
+            </div>
+            <el-descriptions class="mt-4" :column="2" :size="size">
+              <el-descriptions-item label="机构名称">{{ dataList.realHospitalName }}</el-descriptions-item>
+              <el-descriptions-item label="机构性质">{{ getLabelByValue('registrationSource', dataList.realOrganizationOperation) }}</el-descriptions-item>
+              <el-descriptions-item label="科室">{{ getLabelByValue('realDepartment', dataList.realDepartment) }}</el-descriptions-item>
+              <el-descriptions-item label="机构关系">{{ getLabelByValue('realRelationshipInstitutions',dataList.realRelationshipInstitutions) }}</el-descriptions-item>
+              <el-descriptions-item label="机构职务">{{ getLabelByValue('practiceOrganization',dataList.practiceOrganization) }}</el-descriptions-item>
+            </el-descriptions>
           </div>
-          <div class="pb-4" style="font-weight: bold; font-size: 16px">
-            <span>坐诊机构</span>
-          </div>
-          <el-descriptions border class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="机构名称">{{ dataList.realHospitalName }}</el-descriptions-item>
-            <el-descriptions-item label="机构性质">{{ getLabelByValue('registrationSource', dataList.realOrganizationOperation) }}</el-descriptions-item>
-            <el-descriptions-item label="科室">{{ getLabelByValue('realDepartment', dataList.realDepartment) }}</el-descriptions-item>
-            <el-descriptions-item label="机构关系">{{ "接口没给" }}</el-descriptions-item>
-            <el-descriptions-item label="机构职务">{{ "接口没给" }}</el-descriptions-item>
-          </el-descriptions>
-          <div>
-            <el-descriptions title="执业信息" class="mt-4" :column="2" :size="size">
+          <div class="divCrad">
+            <div class="pt-4 titleDiv">
+
+              <span class="fl mr-4">资质信息</span>
+              <span class="fr auditStatus" @click="qualification">上传资质</span>
+            </div>
+            <el-descriptions title="执业信息" class="mt-4" :column="1" :size="size">
+              <el-descriptions-item label="医师执业证书"><img width="160px" height="80px" src="" alt="" /></el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions title="" class="mt-4" :column="3" :size="size">
               <el-descriptions-item label="医师执业证书编码">{{ dataList.realPracticeCertificateCode }}</el-descriptions-item>
               <el-descriptions-item label="执业地点">{{ dataList.realAddress }}</el-descriptions-item>
               <el-descriptions-item label="执业类别">{{ getLabelByValue("realPracticeCategory",dataList.realPracticeCategory) }}</el-descriptions-item>
               <el-descriptions-item label="执业范围">{{ getLabelByValue("realPracticeArea",dataList.realPracticeArea) }}</el-descriptions-item>
-              <el-descriptions-item label="医师执业证书"><img width="160px" height="80px" src="" alt="" /></el-descriptions-item>
             </el-descriptions>
-          </div>
 
-          <div>
-            <el-descriptions title="医师资格信息" class="mt-4" :column="2" :size="size">
+            <el-descriptions title="医师资格信息" class="mt-4" :column="1" :size="size">
+              <el-descriptions-item label="医师资格证书"><img width="160px" height="80px" src="" alt="" /></el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions title="" class="mt-4" :column="3" :size="size">
               <el-descriptions-item label="医师资格证书编码">{{ dataList.realQualificationCode }}</el-descriptions-item>
               <el-descriptions-item label="身份证号">{{ dataList.realIdNumber }}</el-descriptions-item>
-
               <el-descriptions-item label="学历">{{ getLabelByValue("realEducation",dataList.realEducation) }}</el-descriptions-item>
               <el-descriptions-item label="毕业学校">{{ dataList.realGraduationSchool }}</el-descriptions-item>
               <el-descriptions-item label="类别">{{ getLabelByValue("realCategory",dataList.realCategory) }}</el-descriptions-item>
               <el-descriptions-item label="专业">{{ getLabelByValue("realMajor",dataList.realMajor) }}</el-descriptions-item>
-              <el-descriptions-item label="医师资格证书"><img width="160px" height="80px" src="" alt="" /></el-descriptions-item>
             </el-descriptions>
-            <el-descriptions title="最近审核" class="mt-4" :column="2" :size="size">
+            <el-descriptions title="最近审核信息" class="mt-4" :column="2" :size="size">
               <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus==1?"同意":"拒绝" }}</el-descriptions-item>
               <el-descriptions-item label="审核编码">{{ "接口没给" }}</el-descriptions-item>
             </el-descriptions>
           </div>
         </div>
-        <div>
-          <el-descriptions title="账号信息" class="mt-4" :column="2" :size="size">
+
+        <div class="divCrad">
+          <div class="pt-4 titleDiv">
+
+            <span class="fl mr-4">账号信息</span>
+          </div>
+          <el-descriptions title="" class="mt-4" :column="2" :size="size">
             <el-descriptions-item label="注册时间">{{ moment(dataList.registrationTime).format('YYYY-MM-DD') }}</el-descriptions-item>
             <el-descriptions-item label="注册来源">{{ getLabelByValue('registrationSource', dataList.registrationSource) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions title="微信绑定" class="mt-4" :column="1" :size="size">
-            <el-descriptions-item label="是否绑定微信">{{ getLabelByValue('bindWechat', dataList.bindWechat) }}</el-descriptions-item>
+            <el-descriptions-item label="是否绑定微信">{{ getLabelByValue('bindingWechat', dataList.bindingWechat) }}
+              <img v-if="dataList.bindingWechat==1" width="18px" height="18px" src="~@/assets/img/level/WeChat.png" alt="">
+            </el-descriptions-item>
           </el-descriptions>
           <el-descriptions :column="3" :size="size">
             <el-descriptions-item label="OpenID">{{ dataList.OpenID }}</el-descriptions-item>
@@ -123,13 +116,14 @@
           </el-descriptions>
           <el-descriptions :column="3" :size="size">
             <el-descriptions-item label="关注时间"> {{ moment(dataList.officialAccountTime).format('YYYY-MM-DD') }}</el-descriptions-item>
-            <el-descriptions-item label="关注来源">{{ getLabelByValue('concernSource', dataList.concernSource) }}</el-descriptions-item>
+            <el-descriptions-item label="关注来源">{{ getLabelByValue('officialAccountSource', dataList.officialAccountSource) }}</el-descriptions-item>
           </el-descriptions>
         </div>
       </el-tab-pane>
       <el-tab-pane v-if="dataList.doctorLevel==4||dataList.doctorLevel==5" label="专家信息" name="experts">
-        <div>
-          <div class="pb-4" style="font-weight: bold; font-size: 16px">
+        <!-- <el-tab-pane label="专家信息" name="experts"> -->
+        <div class="divCrad">
+          <div class="pb-4 titleDiv">
             <span>专家偏好</span>
           </div>
           <el-descriptions title="临床相关" class="mt-4" :column="2" :size="size">
@@ -231,7 +225,7 @@
       <el-tab-pane label="课程记录" name="course">课程记录</el-tab-pane>
       <el-tab-pane label="操作日志" name="operation">操作日志</el-tab-pane>
     </el-tabs>
-  </ImWrapper>
+  </div>
 </template>
 <script>
 import moment from 'moment'
@@ -433,10 +427,14 @@ export default {
     // 编辑
     goEdit() {
       console.log('goEdit')
+      console.log(this.dataList.objectCode)
+      this.$router.push(`/user/create?objectCode=${this.dataList.objectCode}`)
     },
-    // 医生信息编辑
-    goDoctorEdit() {
-      console.log('goDoctorEdit')
+    // 上传资质
+    qualification() {
+      console.log('qualification')
+      this.$router.push(`/user/editExports?objectCode=${this.dataList.objectCode}`)
+      console.log(this.dataList.objectCode)
     },
     // level动态展示
     getIcon(code) {
@@ -446,9 +444,9 @@ export default {
       }
     },
     // 查看审核信息
-    goAudit() {
-      this.$router.push(`/audit/list?objectCode=${this.dataList.objectCode}`)
-    },
+    // goAudit() {
+    //   this.$router.push(`/audit/list?objectCode=${this.dataList.objectCode}`)
+    // },
     // 获取select默认值
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
@@ -517,41 +515,8 @@ export default {
   }
 }
 </script>
+<style lang="scss"  scoped>
 
-<style lang="scss" scoped>
-.information {
-  padding: 30px;
-  overflow: hidden;
-  background: white;
-
-  .doctorNumber {
-    font-weight: bold;
-    font-size: 16px;
-  }
-
-  .doctorMsg {
-    float: left;
-    width: 70%;
-    font-size: 14px;
-  }
-
-  .headerIcon {
-    float: left;
-    overflow:hidden;
-    margin-right: 24px;
-    border-radius:50px;
-    img{
-    width: 96px;
-    height: 96px;
-    background: #A6DBFF;
-    }
-  }
-}
-//tab样式修改
-.el-tabs{
-  background: white;
-  padding: 0 32px;
-}
 .statusT{
   width: 74px;
   height: 28px;
@@ -579,7 +544,7 @@ export default {
 }
 //产品认证
 .elRow {
-  display: flex;
+  // display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -624,5 +589,58 @@ export default {
   font-weight: bold;
   font-size: 16px;
   text-align: left;
+}
+.divCrad{
+  padding: 24px 32px;background: white;margin:  24px
+}
+.titleDiv{
+  font-weight: bold; font-size: 16px;overflow:hidden;border-bottom:1px solid #D8D8D8;padding:0 0 24px 0
+}
+</style>
+<style lang="scss" >
+.information {
+  padding: 30px;
+  overflow: hidden;
+  background: white;
+
+  .doctorNumber {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .doctorMsg {
+    float: left;
+    width: 70%;
+    font-size: 14px;
+  }
+
+  .headerIcon {
+    float: left;
+    overflow:hidden;
+    margin-right: 24px;
+    border-radius:50px;
+    img{
+    width: 96px;
+    height: 96px;
+    background: #A6DBFF;
+    }
+  }
+}
+//tab样式修改
+.el-tabs{
+  // background: white;
+  // padding: 0 32px;
+
+}
+.el-tabs__nav-scroll{
+  background: white !important;
+  padding: 0 32px;
+}
+.el-tabs__item{
+height: 60px;
+line-height: 60px;
+}
+.el-tabs__active-bar{
+  background-color: #1989FA; color: #1989FA;
 }
 </style>
