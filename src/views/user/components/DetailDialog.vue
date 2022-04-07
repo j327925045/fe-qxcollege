@@ -5,7 +5,7 @@
       <el-descriptions-item label="昵称">{{ userDetail.nickname }}</el-descriptions-item>
       <el-descriptions-item label="手机号码">{{ userDetail.phone }}</el-descriptions-item>
       <el-descriptions-item label="医生省市">{{ userDetail.regionFullName }}</el-descriptions-item>
-      <el-descriptions-item label="医院">{{ userDetail.realHospitalName }}</el-descriptions-item>
+      <el-descriptions-item label="机构">{{ userDetail.realHospitalName }}</el-descriptions-item>
       <el-descriptions-item label="科室">{{ userDetail.realDepartment }}</el-descriptions-item>
       <el-descriptions-item label="职称">
         <!-- todo realJobTitle应该返回字符串 这里返回的数据字段类型有问题 -->

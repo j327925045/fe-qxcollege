@@ -114,7 +114,7 @@ export default {
           },
           {
             prop: 'brandCode',
-            label: '品牌code',
+            label: '品牌',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,

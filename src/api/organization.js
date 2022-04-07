@@ -1,7 +1,7 @@
 import request from '@/utils/request.js'
 
 /**
- * 添加机构
+ * 添加集团
  * @param data
  * @returns {*}
  */
@@ -27,7 +27,7 @@ export function deleteOrganizationItem(data) {
 }
 
 /**
- * 删除机构
+ * 删除集团
  * @param data
  * @returns {*}
  */
@@ -40,7 +40,7 @@ export function updateOrganizationItem(data) {
 }
 
 /**
- * 获取机构详情
+ * 获取集团详情
  * @param params
  * @returns {*}
  */
@@ -53,7 +53,7 @@ export function getOrganizationDetail(params) {
 }
 
 /**
- * 获取机构列表
+ * 获取集团列表
  * @param params
  * @returns {*}
  */

@@ -2,7 +2,7 @@
   <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig">
-        <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
+        <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择机构"></HospitalSelect>
         <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
       </ImForm>
     </ImSearchArea>
@@ -58,7 +58,7 @@ export default {
           doctorLevel: null, // 医生等级
           realAuditStatus: null, // 审核状态
           regionCode: null, // 地区
-          realHospitalName: '', // 医院
+          realHospitalName: '', // 机构
           realDepartment: null, // 科室
           realJobTitle: null, // 职称
           realAccountManager: '', // 客户经理名字
@@ -134,8 +134,8 @@ export default {
           {
             type: 'ImSlot',
             prop: 'realHospitalCode',
-            label: '医院',
-            // rules: [{ required: true, message: '请选择医院' }],
+            label: '机构',
+            // rules: [{ required: true, message: '请选择机构' }],
             slots: {
               hospitalSlot: 'hospitalSelect'
             }
@@ -143,10 +143,10 @@ export default {
           // {
           //   type: 'ImInput',
           //   prop: 'realHospitalName',
-          //   label: '医院',
+          //   label: '机构',
           //   attrs: {
           //     type: 'text',
-          //     placeholder: '请输入医院名称',
+          //     placeholder: '请输入机构名称',
           //     style: 'width: 100%;'
           //   }
           // },
@@ -339,7 +339,7 @@ export default {
           },
           {
             prop: 'realHospitalName',
-            label: '医院',
+            label: '机构',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
