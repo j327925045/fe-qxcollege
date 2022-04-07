@@ -18,19 +18,14 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
 import { getOrganizationList, deleteOrganizationItem } from '@/api/organization'
-import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 export default {
   name: 'OrganizationList',
-  components: {
-    AddOrEdit
-  },
   data() {
     return {
       formConfig: {

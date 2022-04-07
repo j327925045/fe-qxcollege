@@ -21,13 +21,11 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
 import { getHospitalList, deleteHospitalItem } from '@/api/hospital'
-import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 import RegionCascader from '@/views/components/RegionCascader'
 import moment from 'moment'
@@ -35,8 +33,7 @@ import moment from 'moment'
 export default {
   name: 'HospitalList',
   components: {
-    RegionCascader,
-    AddOrEdit
+    RegionCascader
   },
   data() {
     return {
