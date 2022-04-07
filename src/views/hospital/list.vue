@@ -206,7 +206,7 @@ export default {
             }
           },
           {
-            prop: 'organizationCode',
+            prop: 'organizationName',
             label: '所属集团',
             attrs: {
               'show-overflow-tooltip': true,
