@@ -39,7 +39,7 @@
               </el-descriptions-item>
 
               <el-descriptions-item label="对接人">
-                <el-tag size="small">{{ dataList.realOppositePerson }}</el-tag>
+                <el-tag v-for="item,index in dataList.realOppositePerson" :key="index" size="small">{{ dataList.realOppositePerson }}</el-tag>
               </el-descriptions-item>
               <el-descriptions-item label="职称">{{ getLabelByValue('realJobTitle', dataList.realJobTitle) }}</el-descriptions-item>
               <el-descriptions-item label="执业分类">{{ "接口没给" }}</el-descriptions-item>

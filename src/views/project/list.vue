@@ -109,6 +109,14 @@ export default {
             }
           },
           {
+            prop: 'projectCode',
+            label: '项目编号',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
             prop: 'name',
             label: '项目名称',
             attrs: {
@@ -117,8 +125,16 @@ export default {
             }
           },
           {
-            prop: 'projectProductList',
-            label: '产品集合',
+            prop: 'projectDeteils',
+            label: '项目明细',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'productCount',
+            label: '产品数量',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'

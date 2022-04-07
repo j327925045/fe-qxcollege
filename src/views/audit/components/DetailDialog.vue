@@ -19,7 +19,7 @@
       <el-descriptions-item label="专业">{{ auditDetail.realMajor }}</el-descriptions-item>
     </el-descriptions>
 
-    <div v-if="auditDetail.status=='0'" slot="footer">
+    <div v-if="auditDetail.status!='1' && auditDetail.status!='2'" slot="footer">
       <el-button type="primary" @click="submit(1)">同意</el-button>
       <el-button type="primary" @click="submit(2)">拒绝</el-button>
     </div>

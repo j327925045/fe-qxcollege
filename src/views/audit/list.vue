@@ -142,13 +142,18 @@ export default {
             },
             options: [
               {
-                value: '1',
+                value: '1' + '',
                 label: '通过'
                 // style: 'color:red;'
               },
               {
-                value: '2',
+                value: '2' + '',
                 label: '拒绝'
+                // style: 'color:brown;'
+              },
+              {
+                value: '3' + '',
+                label: '待审批'
                 // style: 'color:brown;'
               }
             ]

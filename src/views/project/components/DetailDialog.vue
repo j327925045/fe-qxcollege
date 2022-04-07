@@ -1,25 +1,18 @@
 <template>
   <el-dialog title="产品信息" width="860px" :visible.sync="detailDialogVisible">
     <el-descriptions>
-      <el-descriptions-item label="品牌code">
-        {{ getLabelByValue('brandCode', productDetail.brandCode+'') }}
 
+      <el-descriptions-item label="项目名称">{{ productDetail.name }}</el-descriptions-item>
+      <el-descriptions-item label="项目编号">{{ productDetail.projectCode }}</el-descriptions-item>
+      <el-descriptions-item label="项目数量">{{ productDetail.productCount }}</el-descriptions-item>
+      <el-descriptions-item label="项目明细">{{ productDetail.projectDeteils }}</el-descriptions-item>
+      <el-descriptions-item label="项目介绍">{{ productDetail.projectIntroduce }}</el-descriptions-item>
+      <el-descriptions-item label="项目图片">
+        <el-avatar style="transform: translate(0, -10px)" size="medium" :src=" productDetail.projectPictureUrl"></el-avatar>
       </el-descriptions-item>
-      <el-descriptions-item label="业务类型">
-        {{ getLabelByValue('businessType', productDetail.businessType+'') }}
-
+      <el-descriptions-item label="产品集合">
+        <el-tag v-for="item,index in productDetail.projectProductList" :key="index" size="small">{{ item.productCode }}</el-tag>
       </el-descriptions-item>
-      <el-descriptions-item label="材料类别">
-        {{ getLabelByValue('category', productDetail.category+'') }}
-
-      </el-descriptions-item>
-      <el-descriptions-item label="产品图URL">{{ productDetail.imageUrl }}</el-descriptions-item>
-      <el-descriptions-item label="适应症">{{ productDetail.indication }}</el-descriptions-item>
-      <el-descriptions-item label="设备级别">
-        {{ getLabelByValue('level', productDetail.level+'') }}
-
-      </el-descriptions-item>
-      <el-descriptions-item label="名称">{{ productDetail.name }}</el-descriptions-item>
       <!-- <el-descriptions-item label="职称">
          todo realJobTitle应该返回字符串 这里返回的数据字段类型有问题
         {{ getLabelByValue('jobTitle', productDetail.realJobTitle+'') }}
@@ -54,6 +47,7 @@ export default {
   },
   methods: {
     show(productDetail) {
+      console.log(productDetail)
       this.detailDialogVisible = true
       this.productDetail = productDetail
     },

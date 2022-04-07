@@ -36,15 +36,8 @@ export default {
         },
         props: {
           projectProductList: '',
-          brandCode: null, // 品牌code
-          businessType: null, // 业务类型
-          category: null, // 材料类别
-          imageUrl: null, // 项目url
-          indication: '', // 适应症
-          level: null, // 设备级别
           name: '', // 名称
           remark: '', // 项目介绍
-          type: null// 项目类型
 
         },
         formItems: [
@@ -69,7 +62,48 @@ export default {
               type: 'text',
               placeholder: '请输入'
             }
-          }, {
+          },
+          {
+            type: 'ImInput',
+            prop: 'projectCode',
+            label: '项目编号',
+            rules: [{ required: true, message: '请输入' }],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'projectDeteils',
+            label: '项目明细',
+            rules: [{ required: true, message: '请输入' }],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'projectIntroduce',
+            label: '项目介绍',
+            rules: [{ required: true, message: '请输入' }],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'projectPictureUrl',
+            label: '项目图片',
+            rules: [{ required: true, message: '请输入' }],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入'
+            }
+          },
+           {
             type: 'ImSlot',
             prop: 'projectProductList',
             label: '产品列表',
@@ -88,7 +122,7 @@ export default {
     ...mapGetters(['enums'])
   },
   created() {
-    this.setOptions()
+    // this.setOptions()
   },
   methods: {
 
@@ -136,6 +170,11 @@ export default {
           this.$message('请检查表单项！')
           return
         }
+        let projectList = []
+        this.formConfig.props.projectProductList.forEach(function(val, key, arr) {
+          projectList.push({ productCode: val })
+        })
+        this.formConfig.props.projectProductList = projectList
         const data = {
           ...this.formConfig.props
         }

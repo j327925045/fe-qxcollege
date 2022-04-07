@@ -22,7 +22,7 @@ export default {
   name: 'ProjectProductList',
   props: {
     value: {
-      type: [Number, String],
+      type: [],
       default: undefined
     },
     placeholder: {
@@ -32,7 +32,8 @@ export default {
   },
   data() {
     return {
-      myValue: undefined,
+      myValue: [],
+      dataList: [],
       options: []
     }
   },
@@ -55,7 +56,7 @@ export default {
     getOptions() {
       getProjectProduct({ limit: 20000, page: 1 }).then(res => {
         if (res.code === 200) {
-          this.options = res.data
+          this.options = res.data.list
         }
         console.log('res', res)
       })
