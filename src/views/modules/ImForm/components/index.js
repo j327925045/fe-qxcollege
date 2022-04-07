@@ -16,6 +16,7 @@ import ImImgUpload from './upload/ImImgUpload.vue'
 import ImFileUpload from './upload/ImFileUpload.vue'
 import ImDragUpload from './upload/ImDragUpload.vue'
 import ImMultiImgUpload from './upload/ImMultiImgUpload.vue'
+import ImVideoUpload from './upload/ImVideoUpload.vue'
 
 export default {
   ImInput,
@@ -35,5 +36,6 @@ export default {
   ImImgUpload,
   ImFileUpload,
   ImDragUpload,
-  ImMultiImgUpload
+  ImMultiImgUpload,
+  ImVideoUpload
 }

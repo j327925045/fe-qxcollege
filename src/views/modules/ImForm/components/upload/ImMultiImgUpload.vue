@@ -11,7 +11,7 @@
     v-on="listeners"
   >
     <i class="el-icon-plus avatar-uploader-icon"></i>
-    <div slot="tip" class="el-upload__tip">请上传.png,.jpg,.jpeg,.gif,.svg格式文件，且不超过2M</div>
+    <div slot="tip" class="el-upload__tip">请上传.png,.jpg,.jpeg,.gif,.svg格式文件，且不超过5M</div>
   </el-upload>
 </template>
 <script>
