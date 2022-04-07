@@ -64,6 +64,7 @@ export default {
             type: 'ImInput',
             prop: 'socialCreditCode',
             label: '统一社会信用代码',
+            rules: ['number'],
             attrs: {
               controls: false,
               style: 'width: 100%;text-align: center;',

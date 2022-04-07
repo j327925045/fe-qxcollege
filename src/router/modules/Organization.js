@@ -22,6 +22,13 @@ export const Organization = [
         meta: { title: '机构操作', noTab: true, highlightPath: '/hospital/list' }
       },
       {
+        path: '/hospital/detail',
+        name: 'HospitalDetail',
+        hidden: true,
+        component: () => import('@/views/hospital/detail'),
+        meta: { title: '机构详情', noTab: true, highlightPath: '/hospital/list' }
+      },
+      {
         path: '/organization/list',
         name: 'OrganizationList',
         component: () => import('@/views/organization/list'),
@@ -32,7 +39,14 @@ export const Organization = [
         name: 'OrganizationAddOrEdit',
         hidden: true,
         component: () => import('@/views/organization/addOrEdit'),
-        meta: { title: '机构操作', noTab: true, highlightPath: '/organization/list' }
+        meta: { title: '集团操作', noTab: true, highlightPath: '/organization/list' }
+      },
+      {
+        path: '/organization/detail',
+        name: 'OrganizationDetail',
+        hidden: true,
+        component: () => import('@/views/organization/detail'),
+        meta: { title: '集团详情', noTab: true, highlightPath: '/organization/list' }
       }
     ]
   }
