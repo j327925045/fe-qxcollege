@@ -4,7 +4,19 @@
       <el-descriptions-item label="创建人">{{ auditDetail.createBy }}</el-descriptions-item>
       <el-descriptions-item label="创建时间">  {{ moment(auditDetail.createTime).format('YYYY-MM-DD') }}</el-descriptions-item>
       <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode }}</el-descriptions-item>
+      <el-descriptions-item label="审批编号">{{ auditDetail.objectCode }}</el-descriptions-item>
+      <el-descriptions-item label="申请人名字">{{ auditDetail.userName }}</el-descriptions-item>
+      <el-descriptions-item label="医生编号">{{ "接口没反" }}</el-descriptions-item>
+      <el-descriptions-item label="医生手机号">{{ "接口没反" }}</el-descriptions-item>
+      <el-descriptions-item label="执业地点">{{ auditDetail.realAddress }}</el-descriptions-item>
+      <el-descriptions-item label="执业类别">{{ auditDetail.realPracticeCategory }}</el-descriptions-item>
+      <el-descriptions-item label="执业范围">{{ auditDetail.realPracticeArea }}</el-descriptions-item>
       <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode }}</el-descriptions-item>
+      <el-descriptions-item label="身份证号">{{ auditDetail.realIdNumber }}</el-descriptions-item>
+      <el-descriptions-item label="学历">{{ auditDetail.realEducation }}</el-descriptions-item>
+      <el-descriptions-item label="毕业学校">{{ auditDetail.realGraduationSchool }}</el-descriptions-item>
+      <el-descriptions-item label="类别">{{ auditDetail.realCategory }}</el-descriptions-item>
+      <el-descriptions-item label="专业">{{ auditDetail.realMajor }}</el-descriptions-item>
     </el-descriptions>
 
     <div v-if="auditDetail.status=='0'" slot="footer">

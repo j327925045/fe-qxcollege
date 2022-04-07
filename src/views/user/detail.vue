@@ -3,11 +3,10 @@
     <div slot="header" class="information">
       <div class="doctorNumber pb-4">
         {{ dataList.doctorNumber||"医生编号" }}
-        <!-- <img src="../../assets/img/level/v1.png" alt=""> -->
-        <!-- " '../../assets/images/'+item.url+'.jpg' " -->
         <img width="24px" height="24px" :src="getIcon(dataList.doctorLevel)" alt="">
+        <span class="fr auditStatus" @click="goEdit">编辑</span>
       </div>
-      <div class="headerIcon"><img src="" alt="" /></div>
+      <div class="headerIcon"><img src="~@/assets/img/framework/avatar.svg" alt="" /></div>
       <el-descriptions class="doctorMsg" :column="2" :size="size">
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
@@ -41,7 +40,11 @@
           </el-timeline>
 
           <div>
-            <el-descriptions class="margin-top" title="医生信息" :column="1" :size="size">
+            <div class="pb-4" style="font-weight: bold; font-size: 16px;overflow:hidden">
+              <span class="fl mr-4">医生信息</span>
+              <span class="fr auditStatus" @click="goDoctorEdit">编辑</span>
+            </div>
+            <el-descriptions class="margin-top" :column="1" :size="size">
               <el-descriptions-item label="医生简介">{{ dataList.doctorLabel }}</el-descriptions-item>
               <el-descriptions-item label="医生介绍">
                 <img width="100px" height="100px" src="" alt="" />
@@ -206,6 +209,12 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="沟通记录" name="communication">
+        <el-row :gutter="12" class="mb10">
+          <el-col :span="9">
+            <column-mix-chart />
+          </el-col>
+
+        </el-row>
         <div>
           <ImSearchArea>
             <ImForm ref="ImForm" :form="formConfig"></ImForm>
@@ -229,8 +238,11 @@ import moment from 'moment'
 import utils from '@/utils/utils'
 import { getList } from '@/api/doctorDetail'
 
+import ColumnMixChart from './components/ColumnMixChart.vue'
 import { getUserList } from '@/api/user'
 export default {
+  name: 'UserDetail',
+  components: { ColumnMixChart },
   data() {
     return {
       // 表格数据
@@ -418,10 +430,20 @@ export default {
   },
 
   methods: {
+    // 编辑
+    goEdit() {
+      console.log('goEdit')
+    },
+    // 医生信息编辑
+    goDoctorEdit() {
+      console.log('goDoctorEdit')
+    },
     // level动态展示
     getIcon(code) {
-      const iconList = require(`../../assets/img/level/v${code}.png`)
-      return iconList
+      if (code) {
+        const iconList = require(`../../assets/img/level/v${code}.png`)
+        return iconList
+      }
     },
     // 查看审核信息
     goAudit() {
@@ -490,7 +512,7 @@ export default {
         })
     },
     handleClick(tab, event) {
-      console.log(tab, event)
+      // console.log(tab, event)
     }
   }
 }
