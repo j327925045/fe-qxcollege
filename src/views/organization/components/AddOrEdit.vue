@@ -35,6 +35,7 @@ export default {
           socialCreditCode: undefined,
           salesCounterpart: undefined,
           dealer: undefined,
+          whetherAccounts: undefined,
           cooperationMode: undefined,
           contactName: undefined,
           contactPhone: undefined
@@ -57,12 +58,12 @@ export default {
             }
           },
           {
-            type: 'ImInputNumber',
+            type: 'ImInput',
             prop: 'socialCreditCode',
             label: '统一社会信用代码',
             attrs: {
               controls: false,
-              style: 'width: 100%',
+              style: 'width: 100%;text-align: center;',
               placeholder: '请输入'
             }
           },
@@ -123,6 +124,7 @@ export default {
             type: 'ImInput',
             prop: 'contactPhone',
             label: '联系电话',
+            rules: ['phone'],
             attrs: {
               placeholder: '请输入'
             }

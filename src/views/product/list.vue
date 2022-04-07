@@ -48,7 +48,11 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''// 产品名称
+          name: undefined,
+          productNum: undefined,
+          businessType: undefined,
+          category: undefined,
+          type: undefined
         },
         formItems: [
           {
@@ -56,12 +60,49 @@ export default {
             prop: 'name',
             label: '产品名称',
             attrs: {
-              type: 'text',
-              placeholder: '请输入产品名称',
+              placeholder: '请输入',
               style: 'width: 100%;'
             }
           },
-
+          {
+            type: 'ImInput',
+            prop: 'productNum',
+            label: '产品编号',
+            attrs: {
+              placeholder: '请输入',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'businessType',
+            label: '业务类型',
+            attrs: {
+              placeholder: '请选择',
+              style: 'width: 100%;',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'category',
+            label: '材料类别',
+            attrs: {
+              placeholder: '请选择',
+              style: 'width: 100%;',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'type',
+            label: '产品类型',
+            attrs: {
+              placeholder: '请选择',
+              style: 'width: 100%;',
+              options: []
+            }
+          },
           {
             type: 'ImButton',
             attrs: {
@@ -104,23 +145,21 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: '',
-            label: '序号',
-            type: 'index',
+            prop: 'productNum',
+            label: '产品编号',
             attrs: {
               fixed: 'left',
-              width: 60
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
           {
-            prop: 'brandCode',
-            label: '品牌',
-            type: 'mapList',
+            prop: 'name',
+            label: '产品名称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            },
-            options: this?.enums?.brandCode ?? []
+            }
           },
           {
             prop: 'businessType',
@@ -143,48 +182,14 @@ export default {
             options: this?.enums?.category ?? []
           },
           {
-            prop: 'imageUrl',
-            label: '产品图',
-            type: 'slot',
-            slot: 'imageUrl',
-            attrs: {
-              width: '180'
-            }
-          },
-          {
-            prop: 'indication',
-            label: '适应症',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'level',
-            label: '设备类别',
+            prop: 'type',
+            label: '产品类型',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.level ?? []
-          },
-          {
-            prop: 'name',
-            label: '名称',
-            // type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-            // options: this?.enums?.jobTitle ?? []
-          },
-          {
-            prop: 'remark',
-            label: 'remark',
-            attrs: {
-              width: '110'
-            }
+            options: this?.enums?.type ?? []
           },
           {
             prop: '',
@@ -192,7 +197,7 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '160'
+              width: '150'
             },
             options: [
               {
@@ -218,8 +223,25 @@ export default {
   },
   activated() {
     this.getList()
+    this.setOptions()
   },
   methods: {
+    setOptions() {
+      this.setFormPropOptions('businessType', this.enums.businessType)
+      this.setFormPropOptions('category', this.enums.category)
+      this.setFormPropOptions('type', this.enums.type)
+    },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
     showDetail($index, record) {
       this.$refs.DetailDialog.show(record)
     },

@@ -171,6 +171,7 @@ export default {
           {
             prop: 'groupSize',
             label: '集团规模',
+            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -214,7 +215,7 @@ export default {
             }
           },
           {
-            prop: 'salesCounterpart',
+            prop: 'salesCounterpartName',
             label: '销售对接人',
             attrs: {
               'show-overflow-tooltip': true,
@@ -239,9 +240,14 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '120'
+              width: '150'
             },
             options: [
+              {
+                title: '查看',
+                type: 'text',
+                onClick: this.showItemDetail
+              },
               {
                 title: '编辑',
                 type: 'text',
@@ -258,7 +264,7 @@ export default {
       }
     }
   },
-  created() {
+  activated() {
     this.getList()
     this.setOptions()
   },
@@ -267,6 +273,9 @@ export default {
       this.setFormPropOptions('cooperationMode', this.enums.organizationCooperatType)
       this.setFormPropOptions('whetherAccounts', this.enums.organizationIsPrepareAccount)
       this.setFormPropOptions('groupSize', this.enums.organizationScale)
+    },
+
+    showItemDetail($index, record) {
     },
 
     /**

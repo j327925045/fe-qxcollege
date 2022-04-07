@@ -2,13 +2,11 @@
   <ImDrawer
     :visible.sync="drawerVisible"
     :title="editId ? '编辑产品' : '新建产品'"
-
     @closeDrower="closeDrower"
     @submit="submitForm"
   >
     <ImForm ref="ImForm" :form="formConfig">
       <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />产品信息</h3>
-
     </ImForm>
   </ImDrawer>
 </template>
@@ -30,16 +28,13 @@ export default {
           labelPosition: 'right'
         },
         props: {
-          brandCode: null, // 品牌code
-          businessType: null, // 业务类型
-          category: null, // 材料类别
-          imageUrl: null, // 产品url
-          indication: '', // 适应症
-          level: null, // 设备级别
-          name: '', // 名称
-          remark: '', // 产品介绍
-          type: null// 产品类型
-
+          name: undefined,
+          businessType: undefined,
+          category: undefined,
+          type: undefined,
+          indication: undefined,
+          imageUrl: undefined,
+          skuId: undefined
         },
         formItems: [
           {
@@ -50,15 +45,12 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'brandCode',
-            label: '品牌',
-            rules: [{ required: true, message: '请选择品牌' }],
+            type: 'ImInput',
+            prop: 'name',
+            label: '产品名称',
+            rules: [{ required: true, message: '请输入产品名称' }],
             attrs: {
-              placeholder: '请选择品牌',
-              clearable: true,
-              class: 'w-full',
-              options: []
+              placeholder: '请输入'
             }
           },
           {
@@ -67,7 +59,7 @@ export default {
             label: '业务类型',
             rules: [{ required: true, message: '请选择业务类型' }],
             attrs: {
-              placeholder: '请选择品牌',
+              placeholder: '请选择',
               clearable: true,
               class: 'w-full',
               options: []
@@ -77,75 +69,50 @@ export default {
             type: 'ImSelect',
             prop: 'category',
             label: '材料类别',
-            rules: [{ required: true, message: '请选择' }],
+            rules: [{ required: true, message: '请选择材料类别' }],
             attrs: {
               placeholder: '请选择',
               clearable: true,
               class: 'w-full',
               options: []
-            }
-          },
-          {
-            type: 'ImImgUpload',
-            prop: 'imageUrl',
-            label: '产品图',
-            rules: [{ required: true, message: '请上传产品图' }]
-          },
-          {
-            type: 'ImInput',
-            prop: 'indication',
-            label: '适应症',
-
-            attrs: {
-              type: 'text',
-              placeholder: '请输入'
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'level',
-            label: '设备级别',
-            rules: [{ required: true, message: '请选择' }],
-            attrs: {
-              placeholder: '请选择',
-              clearable: true,
-              class: 'w-full',
-              options: []
-            }
-          },
-          {
-            type: 'ImInput',
-            prop: 'name',
-            label: '产品名称',
-            rules: [{ required: true, message: '请输入' }],
-            attrs: {
-              type: 'text',
-              placeholder: '请输入'
-            }
-          },
-          {
-            type: 'ImInput',
-            prop: 'remark',
-            label: '产品介绍',
-            // rules: [{ required: true, message: '请输入' }],
-            attrs: {
-              type: 'text',
-              placeholder: '请输入'
             }
           },
           {
             type: 'ImSelect',
             prop: 'type',
             label: '产品类型',
-
+            rules: [{ required: true, message: '请选择产品类型' }],
             attrs: {
               placeholder: '请选择',
               clearable: true,
               class: 'w-full',
               options: []
             }
+          },
+          {
+            type: 'ImInput',
+            prop: 'indication',
+            label: '产品介绍',
+            attrs: {
+              type: 'textarea',
+              placeholder: '请输入'
+            }
+          },
+          {
+            type: 'ImImgUpload',
+            prop: 'imageUrl',
+            label: '产品图片'
+          },
+          {
+            type: 'ImInput',
+            prop: 'skuId',
+            label: 'SKU',
+            attrs: {
+              placeholder: '请输入',
+              class: 'w-full',
+              options: []
+            }
           }
-
         ]
       }
     }
@@ -161,13 +128,9 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      this.setFormPropOptions('brandCode', this.enums.brandCode) // 男女
-      this.setFormPropOptions('businessType', this.enums.businessType)// 医生等级
-      this.setFormPropOptions('category', this.enums.category) //
-      // this.setFormPropOptions('isCertified', this.enums.isCertified)
-      this.setFormPropOptions('level', this.enums.level)// 客户经理
-      // this.setFormPropOptions('realOppositePerson', this.enums.realOppositePerson)//对接人
-      this.setFormPropOptions('type', this.enums.type)// 科室
+      this.setFormPropOptions('businessType', this.enums.businessType)
+      this.setFormPropOptions('category', this.enums.category)
+      this.setFormPropOptions('type', this.enums.type)
     },
 
     /**
