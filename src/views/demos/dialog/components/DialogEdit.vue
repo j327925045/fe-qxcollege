@@ -3,7 +3,7 @@
     <el-form ref="ruleForm" :model="form" label-width="120px">
       <el-row :gutter="10" class="mb10">
         <el-col :span="12">
-          <el-form-item label="机构" prop="f1" required>
+          <el-form-item label="集团" prop="f1" required>
             <el-select v-model="form.f1" placeholder="请选择">
               <el-option label="区域一" value="shanghai" />
               <el-option label="区域二" value="beijing" />

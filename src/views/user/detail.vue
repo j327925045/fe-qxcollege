@@ -62,11 +62,11 @@
             </el-descriptions>
           </div>
           <div class="pb-4" style="font-weight: bold; font-size: 16px">
-            <span>坐诊医院</span>
+            <span>坐诊机构</span>
           </div>
           <el-descriptions border class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="医院名称">{{ dataList.realHospitalName }}</el-descriptions-item>
-            <el-descriptions-item label="医院性质">{{ getLabelByValue('registrationSource', dataList.realOrganizationOperation) }}</el-descriptions-item>
+            <el-descriptions-item label="机构名称">{{ dataList.realHospitalName }}</el-descriptions-item>
+            <el-descriptions-item label="机构性质">{{ getLabelByValue('registrationSource', dataList.realOrganizationOperation) }}</el-descriptions-item>
             <el-descriptions-item label="科室">{{ getLabelByValue('realDepartment', dataList.realDepartment) }}</el-descriptions-item>
             <el-descriptions-item label="职称">{{ getLabelByValue('realJobTitle', dataList.realJobTitle) }}</el-descriptions-item>
           </el-descriptions>

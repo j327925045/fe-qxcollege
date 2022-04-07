@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="产品信息" width="860px" :visible.sync="detailDialogVisible">
     <el-descriptions>
-      <el-descriptions-item label="品牌code">
+      <el-descriptions-item label="品牌">
         {{ getLabelByValue('brandCode', productDetail.brandCode+'') }}
 
       </el-descriptions-item>

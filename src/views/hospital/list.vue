@@ -6,7 +6,7 @@
 
     <ImTableArea>
       <div class="mb-4">
-        <el-button type="primary" @click="addItem">新建医院</el-button>
+        <el-button type="primary" @click="addItem">新建机构</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
@@ -47,7 +47,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '医院名称',
+            label: '机构名称',
             attrs: {
               type: 'text',
               placeholder: '请输入',
@@ -114,7 +114,7 @@ export default {
           },
           {
             prop: 'organizationName',
-            label: '所属机构',
+            label: '所属集团',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -130,7 +130,7 @@ export default {
           },
           {
             prop: 'status',
-            label: '医院状态',
+            label: '机构状态',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,

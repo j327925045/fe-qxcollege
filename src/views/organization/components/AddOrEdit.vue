@@ -1,7 +1,7 @@
 <template>
   <ImDrawer
     :visible.sync="drawerVisible"
-    :title="editId ? '编辑机构' : '新建机构'"
+    :title="editId ? '编辑集团' : '新建集团'"
     @closeDrower="closeDrower"
     @submit="submitForm"
   >
@@ -53,28 +53,28 @@ export default {
           {
             type: 'ImInput',
             prop: 'name',
-            label: '机构全称',
-            rules: [{ required: true, message: '请输入机构全称' }],
+            label: '集团全称',
+            rules: [{ required: true, message: '请输入集团全称' }],
             attrs: {
-              placeholder: '请输入机构全称'
+              placeholder: '请输入集团全称'
             }
           },
           {
             type: 'ImInput',
             prop: 'shortName',
-            label: '机构简称',
-            rules: [{ required: true, message: '请输入机构简称' }],
+            label: '集团简称',
+            rules: [{ required: true, message: '请输入集团简称' }],
             attrs: {
-              placeholder: '请输入机构简称'
+              placeholder: '请输入集团简称'
             }
           },
           {
             type: 'ImInput',
             prop: 'address',
-            label: '机构地址(详细地址)',
-            rules: [{ required: true, message: '请输入机构地址' }],
+            label: '集团地址(详细地址)',
+            rules: [{ required: true, message: '请输入集团地址' }],
             attrs: {
-              placeholder: '请输入机构地址'
+              placeholder: '请输入集团地址'
             }
           },
           {
@@ -88,10 +88,10 @@ export default {
           {
             type: 'ImSelect',
             prop: 'nature',
-            label: '机构性质',
-            rules: [{ required: true, message: '请选择机构性质' }],
+            label: '集团性质',
+            rules: [{ required: true, message: '请选择集团性质' }],
             attrs: {
-              placeholder: '请选择机构性质',
+              placeholder: '请选择集团性质',
               clearable: true,
               class: 'w-full',
               options: []
@@ -139,9 +139,9 @@ export default {
           {
             type: 'ImSelect',
             prop: 'scale',
-            label: '机构规模',
+            label: '集团规模',
             attrs: {
-              placeholder: '请选择机构规模',
+              placeholder: '请选择集团规模',
               clearable: true,
               class: 'w-full',
               options: []
@@ -150,9 +150,9 @@ export default {
           {
             type: 'ImSelect',
             prop: 'status',
-            label: '机构状态',
+            label: '集团状态',
             attrs: {
-              placeholder: '请选择机构状态',
+              placeholder: '请选择集团状态',
               clearable: true,
               class: 'w-full',
               options: []

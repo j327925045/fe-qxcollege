@@ -45,11 +45,11 @@ const state = {
     isCooperation: [], // 是否合作项目
     isLecturer: [], // 是否讲师
     isQualification: [], // 资质认证
-    organizationNature: [], // 机构性质
-    organizationOperateStatus: [], // 机构经营状态
-    organizationScale: [], // 机构规模
-    organizationStatus: [], // 机构状态
-    hospitalStatus: [], // 医院状态
+    organizationNature: [], // 集团性质
+    organizationOperateStatus: [], // 集团经营状态
+    organizationScale: [], // 集团规模
+    organizationStatus: [], // 集团状态
+    hospitalStatus: [], // 机构状态
     permissionHide: [], // 权限是否显示
     permissionType: [], // 权限类型
     jobTitle: [], // 职称

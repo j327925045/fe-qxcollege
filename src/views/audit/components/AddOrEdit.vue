@@ -8,7 +8,7 @@
     <ImForm ref="ImForm" :form="formConfig">
       <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />个人信息</h3>
       <h3 slot="professionalSlot" class="gyl-title"><i class="el-icon-s-order" />职业信息</h3>
-      <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择医院"></HospitalSelect>
+      <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择机构"></HospitalSelect>
       <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
     </ImForm>
   </ImDrawer>
@@ -136,8 +136,8 @@ export default {
           {
             type: 'ImSlot',
             prop: 'realHospitalCode',
-            label: '医院',
-            rules: [{ required: true, message: '请选择医院' }],
+            label: '机构',
+            rules: [{ required: true, message: '请选择机构' }],
             slots: {
               hospitalSlot: 'hospitalSelect'
             }
