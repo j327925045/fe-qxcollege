@@ -76,6 +76,7 @@ export default {
             label: '项目明细',
             // rules: [{ required: true, message: '请输入' }],
             attrs: {
+              maxLength: 1000,
               type: 'text',
               placeholder: '请输入项目明细'
             }

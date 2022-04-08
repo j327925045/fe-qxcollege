@@ -29,7 +29,7 @@
         </el-descriptions-item>
         <el-descriptions-item label="联系人姓名">{{ details.contactName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="联系人手机号">{{ details.contactPhone || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="销售对接人">{{ details.salesName || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName || '-' }}</el-descriptions-item>
       </el-descriptions>
     </el-card>
 
