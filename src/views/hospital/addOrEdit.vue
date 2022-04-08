@@ -104,6 +104,7 @@ export default {
             prop: 'location',
             label: '机构地址',
             attrs: {
+              maxLength: 64,
               placeholder: '请输入'
             }
           },
@@ -128,7 +129,7 @@ export default {
             type: 'ImInput',
             prop: 'contactPhone',
             label: '联系人手机号',
-            rules: ['phone'],
+            // rules: ['phone'],
             attrs: {
               placeholder: '请输入'
             }
@@ -203,6 +204,7 @@ export default {
     getItemDetail() {
       getHospitalDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
+          this.formConfig.props.salesCounterpartCode = this.formConfig.props.salesCounterpartCode + ''
           const props = this.formConfig.props
           const keys = Object.keys(props)
           // 直接遍历进行赋值，特殊属性需要单独拿出来处理

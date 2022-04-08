@@ -101,7 +101,8 @@ export default {
             attrs: {
               clearable: true,
               placeholder: '请输入',
-              style: 'width: 100%;'
+              style: 'width: 100%;',
+              options: []
             }
           },
           {
@@ -300,14 +301,19 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteOrganizationItem({ objectCode: record.objectCode }).then(res => {
-            if (res.code === 200) {
-              this.$message.success('操作成功！')
-              this.getList()
-            } else {
-              this.$message.error(res.message)
-            }
-          })
+          if (record.mechanismCount > 0) {
+            this.$message.error('删除失败，该集团下存在机构')
+          } else {
+            (
+              deleteOrganizationItem({ objectCode: record.objectCode }).then(res => {
+                if (res.code === 200) {
+                  this.$message.success('操作成功！')
+                  this.getList()
+                } else {
+                  this.$message.error(res.message)
+                }
+              }))
+          }
         })
         .catch(() => {
         })

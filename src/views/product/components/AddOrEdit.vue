@@ -50,6 +50,7 @@ export default {
             label: '产品名称',
             rules: [{ required: true, message: '请输入产品名称' }],
             attrs: {
+              maxLength: 32,
               placeholder: '请输入'
             }
           },
@@ -94,6 +95,7 @@ export default {
             prop: 'indication',
             label: '产品介绍',
             attrs: {
+              maxLength: 500,
               type: 'textarea',
               placeholder: '请输入'
             }
@@ -109,6 +111,7 @@ export default {
             label: 'SKU',
             attrs: {
               placeholder: '请输入',
+              maxLength: 128,
               class: 'w-full',
               options: []
             }

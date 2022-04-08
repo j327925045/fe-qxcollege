@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="产品信息" width="860px" :visible.sync="detailDialogVisible">
+  <el-dialog title="项目信息" width="860px" :visible.sync="detailDialogVisible">
     <el-descriptions>
 
       <el-descriptions-item label="项目名称">{{ productDetail.name }}</el-descriptions-item>
