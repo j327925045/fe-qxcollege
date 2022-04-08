@@ -72,19 +72,9 @@ export default {
           },
           {
             type: 'ImInput',
-            prop: 'projectCode',
-            label: '项目编号',
-            rules: [{ required: true, message: '请输入' }],
-            attrs: {
-              type: 'text',
-              placeholder: '请输入项目编号'
-            }
-          },
-          {
-            type: 'ImInput',
             prop: 'projectDeteils',
             label: '项目明细',
-            rules: [{ required: true, message: '请输入' }],
+            // rules: [{ required: true, message: '请输入' }],
             attrs: {
               type: 'text',
               placeholder: '请输入项目明细'
@@ -94,7 +84,7 @@ export default {
             type: 'ImInput',
             prop: 'projectIntroduce',
             label: '项目介绍',
-            rules: [{ required: true, message: '请输入' }],
+            // rules: [{ required: true, message: '请输入' }],
             attrs: {
               type: 'text',
               placeholder: '请输入项目介绍'
