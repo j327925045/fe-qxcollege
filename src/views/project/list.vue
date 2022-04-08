@@ -246,8 +246,6 @@ export default {
           this.loading = false
           if (res.code === 200) {
             this.total = res.data.totalCount
-            console.log(this.tableConfig.data)
-            console.log(res.data.list)
             this.tableConfig.data = res.data.list || []
           }
         })

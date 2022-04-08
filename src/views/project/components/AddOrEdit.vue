@@ -19,7 +19,7 @@
         slot="projectProductArr"
         v-model="formConfig.props.projectProductArr"
         class="w-full"
-        placeholder="请选择机构"
+        placeholder="请选择产品"
       ></projectProductArr>
     </ImForm>
   </ImDrawer>
@@ -67,7 +67,7 @@ export default {
             rules: [{ required: true, message: '请输入' }],
             attrs: {
               type: 'text',
-              placeholder: '请输入'
+              placeholder: '请输入项目名称'
             }
           },
           {
@@ -164,11 +164,13 @@ export default {
           this.$message('请检查表单项！')
           return
         }
-        const projectList = []
-        this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
-          projectList.push({ productCode: val + '' })
-        })
-        this.formConfig.props.ProjectProductList = projectList
+        if (this.formConfig.props.projectProductArr) {
+          const projectList = []
+          this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
+            projectList.push({ productCode: val + '' })
+          })
+          this.formConfig.props.ProjectProductList = projectList
+        }
 
         delete this.formConfig.props.projectProductArr
         const data = {
@@ -187,7 +189,6 @@ export default {
           })
         } else {
           console.log('走进新增项目')
-          console.log(data)
           addProjectItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
