@@ -52,8 +52,11 @@ export default {
           labelWidth: '100px'
         },
         props: {
-
-          search: '',
+          doctorNumber: '', // 医生编号
+          phone: undefined, // 手机号
+          realName: '', // 姓名
+          nickname: '', // 昵称
+          // search: '',
           gender: null,
           doctorLevel: null, // 医生等级
           realAuditStatus: null, // 审核状态
@@ -66,13 +69,53 @@ export default {
 
         },
         formItems: [
+          // {
+          //   type: 'ImInput',
+          //   prop: 'name',
+          //   label: '搜索',
+          //   attrs: {
+          //     type: 'text',
+          //     placeholder: '请输入医生编号、昵称、姓名、手机号',
+          //     style: 'width: 100%;'
+          //   }
+          // },
           {
             type: 'ImInput',
-            prop: 'name',
-            label: '搜索',
+            prop: 'doctorNumber',
+            label: '医生编号',
             attrs: {
               type: 'text',
-              placeholder: '请输入医生编号、昵称、姓名、手机号',
+              placeholder: '请输入医生编号',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'realName',
+            label: '姓名',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入姓名',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'nickname',
+            label: '昵称',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入昵称',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'phone',
+            label: '手机号',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入手机号',
               style: 'width: 100%;'
             }
           },
@@ -454,11 +497,13 @@ export default {
     },
 
     addItem() {
-      this.$refs.AddOrEdit.add()
+      // this.$refs.AddOrEdit.add()
+      this.$router.push('/user/create')
     },
 
     editItem($index, record) {
-      this.$refs.AddOrEdit.edit(record.objectCode)
+      // this.$refs.AddOrEdit.edit(record.objectCode)
+      this.$router.push(`/user/create?objectCode=${record.objectCode}`)
     },
 
     deleteItem($index, record) {
