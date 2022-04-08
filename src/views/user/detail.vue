@@ -39,7 +39,7 @@
               </el-descriptions-item>
 
               <el-descriptions-item label="对接人">
-                <el-tag size="small">{{ dataList.realOppositePerson }}</el-tag>
+                <el-tag v-for="item,index in dataList.realOppositePerson" :key="index" size="small">{{ dataList.realOppositePerson }}</el-tag>
               </el-descriptions-item>
               <el-descriptions-item label="职称">{{ getLabelByValue('realJobTitle', dataList.realJobTitle) }}</el-descriptions-item>
               <el-descriptions-item label="执业分类">{{ "接口没给" }}</el-descriptions-item>
@@ -596,8 +596,7 @@ export default {
 .titleDiv{
   font-weight: bold; font-size: 16px;overflow:hidden;border-bottom:1px solid #D8D8D8;padding:0 0 24px 0
 }
-</style>
-<style lang="scss" >
+
 .information {
   padding: 30px;
   overflow: hidden;
@@ -632,15 +631,15 @@ export default {
   // padding: 0 32px;
 
 }
-.el-tabs__nav-scroll{
+/deep/ .el-tabs__nav-scroll{
   background: white !important;
   padding: 0 32px;
 }
-.el-tabs__item{
+/deep/ .el-tabs__item{
 height: 60px;
 line-height: 60px;
 }
-.el-tabs__active-bar{
+/deep/ .el-tabs__active-bar{
   background-color: #1989FA; color: #1989FA;
 }
 </style>
