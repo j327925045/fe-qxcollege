@@ -1,15 +1,16 @@
 <template>
-  <ImDrawer
-    :visible.sync="drawerVisible"
-    :title="editId ? '编辑集团' : '新建集团'"
-    @closeDrower="closeDrower"
-    @submit="submitForm"
-  >
-    <ImForm ref="ImForm" :form="formConfig">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />集团信息</h3>
-      <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpart" class="w-full"></EmployeeSelect>
-    </ImForm>
-  </ImDrawer>
+  <ImWrapper>
+    <div class="bg-white p-4 mb-[32px]" style="height: calc(100vh - 168px)">
+      <ImForm ref="ImForm" :form="formConfig">
+        <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />集团信息</h3>
+        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpart" class="w-full"></EmployeeSelect>
+      </ImForm>
+    </div>
+    <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
+      <el-button @click="closeCurrent">取 消</el-button>
+      <el-button type="primary" @click="submitForm">保 存</el-button>
+    </div>
+  </ImWrapper>
 </template>
 
 <script>
@@ -18,16 +19,18 @@ import { mapGetters } from 'vuex'
 import EmployeeSelect from '@/views/components/EmployeeSelect'
 
 export default {
-  name: 'OrganizationCreate',
+  name: 'OrganizationAddOrEdit--nocache',
   components: {
     EmployeeSelect
   },
   data() {
     return {
       formConfig: {
+        column: 3,
+        gutter: 42,
         attrs: {
           labelWidth: '160px',
-          labelPosition: 'right'
+          labelPosition: 'top'
         },
         props: {
           name: undefined,
@@ -61,6 +64,7 @@ export default {
             type: 'ImInput',
             prop: 'socialCreditCode',
             label: '统一社会信用代码',
+            rules: ['number'],
             attrs: {
               controls: false,
               style: 'width: 100%;text-align: center;',
@@ -123,8 +127,8 @@ export default {
           {
             type: 'ImInput',
             prop: 'contactPhone',
-            label: '联系电话',
-            rules: ['phone'],
+            label: '联系人手机号',
+            rules: ['required', 'phone'],
             attrs: {
               placeholder: '请输入'
             }
@@ -139,8 +143,7 @@ export default {
           }
         ]
       },
-      editId: undefined,
-      drawerVisible: false
+      editId: this.$route.query.objectCode
     }
   },
   computed: {
@@ -148,6 +151,9 @@ export default {
   },
   created() {
     this.setOptions()
+    if (this.editId) {
+      this.getItemDetail()
+    }
   },
   methods: {
     /**
@@ -167,17 +173,6 @@ export default {
       const formItems = this.formConfig.formItems
       const item = formItems.find(item => item.prop === prop)
       item.attrs.options = options
-    },
-
-    add() {
-      this.editId = undefined
-      this.drawerVisible = true
-    },
-
-    edit(editId) {
-      this.editId = editId
-      this.drawerVisible = true
-      this.getItemDetail()
     },
 
     getItemDetail() {
@@ -209,7 +204,7 @@ export default {
             if (res.code === 200) {
               this.$message.success('更新成功！')
               this.$emit('update')
-              this.closeDrower()
+              this.closeCurrent()
             } else {
               this.$message.error(res.message)
             }
@@ -219,7 +214,7 @@ export default {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')
-              this.closeDrower()
+              this.closeCurrent()
             } else {
               this.$message.error(res.message)
             }
@@ -227,9 +222,9 @@ export default {
         }
       })
     },
-    closeDrower() {
+    closeCurrent() {
       this.$refs.ImForm.reset()
-      this.drawerVisible = false
+      this.$router.replace({ name: 'OrganizationList' })
     }
   }
 }

@@ -1,18 +1,19 @@
 <template>
-  <ImDrawer
-    :visible.sync="drawerVisible"
-    :title="editId ? '编辑机构' : '新建机构'"
-    @closeDrower="closeDrower"
-    @submit="submitForm"
-  >
-    <ImForm ref="ImForm" :form="formConfig">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />机构信息</h3>
-      <h3 slot="qualification" class="gyl-title"><i class="el-icon-s-order" />资质信息</h3>
-      <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" placeholder="请选择"></OrganizationSelect>
-      <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择"></RegionCascader>
-      <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" class="w-full"></EmployeeSelect>
-    </ImForm>
-  </ImDrawer>
+  <ImWrapper>
+    <div class="bg-white p-4 mb-[32px]">
+      <ImForm ref="ImForm" :form="formConfig">
+        <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />机构信息</h3>
+        <h3 slot="qualification" class="gyl-title"><i class="el-icon-s-order" />资质信息</h3>
+        <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" class="w-full" placeholder="请选择"></OrganizationSelect>
+        <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择"></RegionCascader>
+        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" class="w-full"></EmployeeSelect>
+      </ImForm>
+    </div>
+    <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
+      <el-button @click="closeCurrent">取 消</el-button>
+      <el-button type="primary" @click="submitForm">保 存</el-button>
+    </div>
+  </ImWrapper>
 </template>
 
 <script>
@@ -21,9 +22,8 @@ import { mapGetters } from 'vuex'
 import OrganizationSelect from '@/views/components/OrganizationSelect'
 import RegionCascader from '@/views/components/RegionCascader'
 import EmployeeSelect from '@/views/components/EmployeeSelect'
-
 export default {
-  name: 'AddOrEdit',
+  name: 'HospitalAddOrEdit--nocache',
   components: {
     EmployeeSelect,
     OrganizationSelect,
@@ -32,9 +32,11 @@ export default {
   data() {
     return {
       formConfig: {
+        column: 3,
+        gutter: 42,
         attrs: {
           labelWidth: '140px',
-          labelPosition: 'right'
+          labelPosition: 'top'
         },
         props: {
           name: undefined,
@@ -74,6 +76,7 @@ export default {
             rules: [{ required: true, message: '请选择机构性质' }],
             attrs: {
               placeholder: '请选择',
+              class: 'w-full',
               options: []
             }
           },
@@ -124,7 +127,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'contactPhone',
-            label: '联系电话',
+            label: '联系人手机号',
             rules: ['phone'],
             attrs: {
               placeholder: '请输入'
@@ -141,6 +144,7 @@ export default {
           {
             type: 'ImImgUpload',
             prop: 'orgPictureUrl',
+            span: 24,
             label: '机构图片'
           },
           {
@@ -152,6 +156,7 @@ export default {
           },
           {
             type: 'ImImgUpload',
+            span: 24,
             prop: 'licencePictureUrl',
             label: '医疗机构执业许可证'
           },
@@ -165,8 +170,7 @@ export default {
           }
         ]
       },
-      editId: undefined,
-      drawerVisible: false
+      editId: this.$route.query.objectCode
     }
   },
   computed: {
@@ -174,6 +178,9 @@ export default {
   },
   created() {
     this.setOptions()
+    if (this.editId) {
+      this.getItemDetail()
+    }
   },
   methods: {
     /**
@@ -191,17 +198,6 @@ export default {
       const formItems = this.formConfig.formItems
       const item = formItems.find(item => item.prop === prop)
       item.attrs.options = options
-    },
-
-    add() {
-      this.editId = undefined
-      this.drawerVisible = true
-    },
-
-    edit(editId) {
-      this.editId = editId
-      this.drawerVisible = true
-      this.getItemDetail()
     },
 
     getItemDetail() {
@@ -233,7 +229,7 @@ export default {
             if (res.code === 200) {
               this.$message.success('更新成功！')
               this.$emit('update')
-              this.closeDrower()
+              this.closeCurrent()
             } else {
               this.$message.error(res.message)
             }
@@ -243,7 +239,7 @@ export default {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')
-              this.closeDrower()
+              this.closeCurrent()
             } else {
               this.$message.error(res.message)
             }
@@ -252,9 +248,9 @@ export default {
       })
     },
 
-    closeDrower() {
+    closeCurrent() {
       this.$refs.ImForm.reset()
-      this.drawerVisible = false
+      this.$router.replace({ name: 'HospitalList' })
     }
   }
 }

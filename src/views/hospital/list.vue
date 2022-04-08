@@ -21,13 +21,11 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
 import { getHospitalList, deleteHospitalItem } from '@/api/hospital'
-import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 import RegionCascader from '@/views/components/RegionCascader'
 import moment from 'moment'
@@ -35,8 +33,7 @@ import moment from 'moment'
 export default {
   name: 'HospitalList',
   components: {
-    RegionCascader,
-    AddOrEdit
+    RegionCascader
   },
   data() {
     return {
@@ -251,9 +248,14 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '100'
+              width: '150'
             },
             options: [
+              {
+                title: '查看',
+                type: 'text',
+                onClick: this.detailItem
+              },
               {
                 title: '编辑',
                 type: 'text',
@@ -290,11 +292,17 @@ export default {
     },
 
     addItem() {
-      this.$refs.AddOrEdit.add()
+      // this.$refs.AddOrEdit.add()
+      this.$router.push({ name: 'HospitalAddOrEdit' })
     },
 
     editItem($index, record) {
-      this.$refs.AddOrEdit.edit(record.objectCode)
+      this.$router.push({ name: 'HospitalAddOrEdit', query: { objectCode: record.objectCode } })
+      // this.$refs.AddOrEdit.edit(record.objectCode)
+    },
+
+    detailItem($index, record) {
+      this.$router.push({ name: 'HospitalDetail', query: { objectCode: record.objectCode } })
     },
 
     deleteItem($index, record) {
