@@ -1,6 +1,6 @@
 <template>
-  <el-dialog title="员工信息" width="600px" :visible.sync="detailDialogVisible">
-    <el-descriptions>
+  <el-dialog title="员工信息" width="750px" :visible.sync="detailDialogVisible">
+    <el-descriptions size="medium">
       <el-descriptions-item label="员工姓名">{{ employDetail.name }}</el-descriptions-item>
       <el-descriptions-item label="员工性别">{{ getLabelByValue('gender',employDetail.gender) }}</el-descriptions-item>
       <el-descriptions-item label="员工头像">

@@ -2,8 +2,9 @@
   <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig">
-        <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择机构"></HospitalSelect>
-        <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请输入所在区域(省市县)"></RegionCascader>
+        <HospitalSelect slot="hospitalSelect" v-model="formConfig.props.realHospitalCode" class="w-full" placeholder="请选择"></HospitalSelect>
+        <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择"></RegionCascader>
+        <EmployeeSelect slot="EmployeeSelect" v-model="formConfig.props.realAccountManagerCode" class="w-full" placeholder="请选择"></EmployeeSelect>
       </ImForm>
     </ImSearchArea>
     <ImTableArea>
@@ -21,27 +22,23 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <DetailDialog ref="DetailDialog"></DetailDialog>
-    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
 import { getUserList, deleteUserItem } from '@/api/user'
-import DetailDialog from './components/DetailDialog'
-import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 
 import HospitalSelect from '@/views/components/HospitalSelect'
 import RegionCascader from '@/views/components/RegionCascader'
+import EmployeeSelect from '@/views/components/EmployeeSelect'
 export default {
   name: 'UserList',
   components: {
-    DetailDialog,
-    AddOrEdit,
     HospitalSelect,
-    RegionCascader
+    RegionCascader,
+    EmployeeSelect
   },
   data() {
     return {
@@ -52,40 +49,28 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          doctorNumber: '', // 医生编号
+          doctorNumber: undefined, // 医生编号
           phone: undefined, // 手机号
-          realName: '', // 姓名
-          nickname: '', // 昵称
-          // search: '',
-          gender: null,
-          doctorLevel: null, // 医生等级
-          realAuditStatus: null, // 审核状态
-          regionCode: null, // 地区
-          realHospitalName: '', // 机构
-          realDepartment: null, // 科室
-          realJobTitle: null, // 职称
-          realAccountManager: '', // 客户经理名字
-          bindingWechat: null// 是否绑定微信
-
+          realName: undefined, // 姓名
+          nickname: undefined, // 昵称
+          gender: undefined,
+          doctorLevel: undefined, // 医生等级
+          realAuditStatus: undefined, // 审核状态
+          regionCode: undefined, // 地区
+          realHospitalName: undefined, // 机构
+          realDepartment: undefined, // 科室
+          realJobTitle: undefined, // 职称
+          realAccountManagerCode: undefined, // 客户经理名字
+          bindingWechat: undefined// 是否绑定微信
         },
         formItems: [
-          // {
-          //   type: 'ImInput',
-          //   prop: 'name',
-          //   label: '搜索',
-          //   attrs: {
-          //     type: 'text',
-          //     placeholder: '请输入医生编号、昵称、姓名、手机号',
-          //     style: 'width: 100%;'
-          //   }
-          // },
           {
             type: 'ImInput',
             prop: 'doctorNumber',
             label: '医生编号',
             attrs: {
-              type: 'text',
-              placeholder: '请输入医生编号',
+              clearable: true,
+              placeholder: '请输入',
               style: 'width: 100%;'
             }
           },
@@ -94,8 +79,8 @@ export default {
             prop: 'realName',
             label: '姓名',
             attrs: {
-              type: 'text',
-              placeholder: '请输入姓名',
+              clearable: true,
+              placeholder: '请输入',
               style: 'width: 100%;'
             }
           },
@@ -104,8 +89,8 @@ export default {
             prop: 'nickname',
             label: '昵称',
             attrs: {
-              type: 'text',
-              placeholder: '请输入昵称',
+              clearable: true,
+              placeholder: '请输入',
               style: 'width: 100%;'
             }
           },
@@ -114,8 +99,8 @@ export default {
             prop: 'phone',
             label: '手机号',
             attrs: {
-              type: 'text',
-              placeholder: '请输入手机号',
+              clearable: true,
+              placeholder: '请输入',
               style: 'width: 100%;'
             }
           },
@@ -165,34 +150,14 @@ export default {
               regionSlot: 'RegionCascader'
             }
           },
-          // {
-          //   type: 'ImGroupSelect',
-          //   prop: 'regionCode',
-          //   label: '城市',
-          //   attrs: {
-          //     style: 'width: 100%',
-          //     options: cityOptions
-          //   }
-          // },
           {
             type: 'ImSlot',
             prop: 'realHospitalCode',
             label: '机构',
-            // rules: [{ required: true, message: '请选择机构' }],
             slots: {
               hospitalSlot: 'hospitalSelect'
             }
           },
-          // {
-          //   type: 'ImInput',
-          //   prop: 'realHospitalName',
-          //   label: '机构',
-          //   attrs: {
-          //     type: 'text',
-          //     placeholder: '请输入机构名称',
-          //     style: 'width: 100%;'
-          //   }
-          // },
           {
             type: 'ImSelect',
             prop: 'realDepartment',
@@ -203,7 +168,6 @@ export default {
               style: 'width: 100%',
               options: []
             }
-
           },
           {
             type: 'ImSelect',
@@ -215,29 +179,25 @@ export default {
               style: 'width: 100%',
               options: []
             }
-
           },
           {
-            type: 'ImInput',
-            prop: 'realHospitalName',
+            type: 'ImSlot',
+            prop: 'realAccountManagerCode',
             label: '客户经理',
-            attrs: {
-              type: 'text',
-              placeholder: '请输入客户经理姓名',
-              style: 'width: 100%;'
+            slots: {
+              realAccountManagerCode: 'EmployeeSelect'
             }
           },
           {
             type: 'ImSelect',
             prop: 'bindingWechat',
-            label: '是否绑定微信',
+            label: '绑定微信',
             attrs: {
               clearable: true,
               placeholder: '请选择',
               style: 'width: 100%',
               options: []
             }
-
           },
           {
             type: 'ImButton',
@@ -280,19 +240,11 @@ export default {
       return {
         data: [],
         tableItems: [
-          // {
-          //   prop: '',
-          //   label: '序号',
-          //   type: 'index',
-          //   attrs: {
-          //     fixed: 'left',
-          //     width: 60
-          //   }
-          // },
           {
             prop: 'doctorNumber',
             label: '医生编号',
             attrs: {
+              fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
@@ -302,19 +254,9 @@ export default {
             label: '昵称',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '100'
+              'min-width': '120'
             }
           },
-          // {
-          //   prop: 'realJobTitle',
-          //   label: '职称',
-          //   type: 'mapList',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   },
-          //   options: this?.enums?.jobTitle ?? []
-          // },
           {
             prop: 'realName',
             label: '姓名',
@@ -435,7 +377,7 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '160'
+              width: '150'
             },
             options: [
               {
@@ -461,8 +403,6 @@ export default {
   },
   activated() {
     this.getList()
-  },
-  created() {
     this.setOptions()
   },
   methods: {
@@ -470,11 +410,8 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      // doctorLabel expertNeedleHabit
-
       this.setFormPropOptions('gender', this.enums.gender) // 男女
       this.setFormPropOptions('doctorLevel', this.enums.doctorLevel)// 医生等级
-
       this.setFormPropOptions('realJobTitle', this.enums.jobTitle) // 职称
       this.setFormPropOptions('bindingWechat', this.enums.bindingWechat) // 是否绑定微信
       this.setFormPropOptions('realAuditStatus', this.enums.realAuditStatus) // 审核状态
@@ -490,20 +427,17 @@ export default {
       const item = formItems.find(item => item.prop === prop)
       item.attrs.options = options
     },
+
     showDetail($index, record) {
-      console.log(record)
-      this.$router.push(`/user/detail?objectCode=${record.objectCode}`)
-      // this.$refs.DetailDialog.show(record)
+      this.$router.push({ name: 'UserDetail', query: { objectCode: record.objectCode } })
     },
 
     addItem() {
-      // this.$refs.AddOrEdit.add()
-      this.$router.push('/user/create')
+      this.$router.push({ name: 'UserAddOrEdit' })
     },
 
     editItem($index, record) {
-      // this.$refs.AddOrEdit.edit(record.objectCode)
-      this.$router.push(`/user/create?objectCode=${record.objectCode}`)
+      this.$router.push({ name: 'UserAddOrEdit', query: { objectCode: record.objectCode } })
     },
 
     deleteItem($index, record) {

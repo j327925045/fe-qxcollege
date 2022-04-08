@@ -36,6 +36,7 @@ export default {
      */
     handleSizeChange(val) {
       this.$emit('update:pageSize', val)
+      this.$emit('update:currentPage', 1)
       this.$emit('change')
     },
 

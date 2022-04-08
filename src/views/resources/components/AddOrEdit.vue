@@ -6,7 +6,7 @@
     @submit="submitForm"
   >
     <ImForm ref="ImForm" :form="formConfig">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />个人信息</h3>
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />素材信息</h3>
     </ImForm>
   </ImDrawer>
 </template>

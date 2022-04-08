@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <Imform ref="demoForm" class="bg-white mb-4 pt-4 pr-4" :form="form">
+  <ImWrapper>
+    <ImForm ref="demoForm" class="bg-white mb-4 pt-4 pr-4" :form="form">
       <i slot="nameSuffix" class="el-input__icon el-icon-date"></i>
       <template slot="namePrepend">name</template>
       <i slot="nicknameSuffix" class="el-input__icon el-icon-view"></i>
       <template slot="nicknamePrepend">nickname</template>
       <el-input slot="slotComp" v-model="form.props.testSlot" placeholder="slot7777"></el-input>
-    </Imform>
+    </ImForm>
     <pre class="codeList">{{ JSON.stringify(form.props, true, '    ') }}
     </pre>
     <ImTable ref="demoTable" :table="table">
@@ -21,7 +21,7 @@
         <el-button type="text" @click="onslotClick(scope)">click</el-button>
       </template>
     </ImTable>
-  </div>
+  </ImWrapper>
 </template>
 
 <script>

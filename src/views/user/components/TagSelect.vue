@@ -1,32 +1,23 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" clearable @change="onChange">
-    <el-option
-      v-for="item in options"
-      :key="item.objectCode"
-      :label="item.name"
-      :value="item.objectCode"
-    >
-    </el-option>
+  <el-select v-model="myValue" filterable multiple clearable :placeholder="placeholder" @change="onChange">
+    <el-option v-for="(item, idx) in options" :key="idx" :label="item.name" :value="item.objectCode"></el-option>
   </el-select>
 </template>
 
 <script>
-// todo 接口支持以后换成员工选择列表
-import { getEmployeesList } from '@/api/employees'
+import { getTagList } from '@/api/tag'
 export default {
-  name: 'HospitalSelect',
+  name: 'TagSelect',
   props: {
     value: {
-      type: [Number, String, Array],
-      default: undefined
+      type: Array,
+      default() {
+        return []
+      }
     },
     placeholder: {
       type: String,
       default: '请选择'
-    },
-    multiple: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -56,17 +47,15 @@ export default {
     },
 
     getOptions() {
-      getEmployeesList({ limit: 10000, page: 1 }).then(res => {
+      getTagList({ page: 1, limit: 10000 }).then(res => {
         if (res.code === 200) {
           this.options = res.data.list || []
         }
-        console.log('res', res)
       })
     },
 
     onChange() {
       this.$emit('input', this.myValue)
-      this.$emit('change', this.myValue)
     }
   }
 }
