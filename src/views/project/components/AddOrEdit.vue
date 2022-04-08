@@ -194,6 +194,7 @@ export default {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')
+              location.reload()
               this.closeDrower()
             } else {
               this.$message.error(res.message)
