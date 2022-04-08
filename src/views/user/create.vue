@@ -51,7 +51,7 @@
         <el-button type="primary" @click="next('go')">下一步</el-button>
       </el-row>
     </div> -->
-    <div v-show="btnStatus==3" class="btnWrap">
+    <div  class="btnWrap">
       <el-row>
         <el-button>取消</el-button>
         <el-button type="primary" @click="submitForm">提交</el-button>
