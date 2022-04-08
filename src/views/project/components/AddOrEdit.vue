@@ -187,7 +187,6 @@ export default {
           })
         } else {
           console.log('走进新增项目')
-          console.log(data)
           addProjectItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
