@@ -15,6 +15,12 @@ export const System = [
         meta: { title: '字段列表' }
       },
       {
+        path: '/tag/list',
+        name: 'TagList',
+        component: () => import('@/views/tag/list'),
+        meta: { title: '标签列表' }
+      },
+      {
         path: '/audit/list',
         name: 'AuditList',
         component: () => import('@/views/audit/list'),

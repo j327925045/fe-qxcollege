@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="myValue" filterable multiple clearable :placeholder="placeholder" @change="onChange">
+  <el-select v-model="myValue" filterable collapse-tags multiple clearable :placeholder="placeholder" @change="onChange">
     <el-option v-for="(item, idx) in options" :key="idx" :label="item.name" :value="item.objectCode"></el-option>
   </el-select>
 </template>
