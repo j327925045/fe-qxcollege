@@ -9,7 +9,7 @@
         </el-col>
         <el-col :span="6">
           <el-form-item label-width="80px" label="科室" required>
-            <el-select v-model="item.realDepartment" class="w-full" placeholder="请选择" @change="onChange">
+            <el-select v-model="item.orgDepartment" class="w-full" placeholder="请选择" @change="onChange">
               <el-option v-for="(opt, index) in enums.realDepartment" :key="index" :label="opt.label" :value="opt.value"> </el-option>
             </el-select>
           </el-form-item>
@@ -81,20 +81,23 @@ export default {
       if (!this.value || this.value.length === 0) {
         this.myValue = [
           {
-            name: undefined,
-            objectCode: undefined
+            hospitalCode: undefined,
+            orgDepartment: undefined,
+            relationship: undefined,
+            post: undefined
           }
         ]
         return
       }
       try {
         this.myValue = JSON.parse(JSON.stringify(this.value))
-        console.log(this.myValue)
       } catch (error) {
         this.myValue = [
           {
-            name: undefined,
-            objectCode: undefined
+            hospitalCode: undefined,
+            orgDepartment: undefined,
+            relationship: undefined,
+            post: undefined
           }
         ]
       }
@@ -103,7 +106,7 @@ export default {
     addItem() {
       this.myValue.push({
         hospitalCode: undefined,
-        realDepartment: undefined,
+        orgDepartment: undefined,
         relationship: undefined,
         post: undefined
       })

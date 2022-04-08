@@ -179,8 +179,8 @@ export default {
       getOrganizationDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200) {
           console.log(res.data)
-          if (res.data.salesCounterpart == 0) {
-            res.data.salesCounterpart = ''
+          if (res.data.salesCounterpart === '0') {
+            res.data.salesCounterpart = undefined
           }
           const props = this.formConfig.props
           const keys = Object.keys(props)

@@ -24,6 +24,12 @@ export default {
     TagSelect,
     OrgInfoList
   },
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       formConfig: {
@@ -39,14 +45,14 @@ export default {
           tagDTOList: undefined,
           realAccountManagerCode: undefined, // WYF客户经理
           userOppositeDTOList: undefined, // WYF对接人名字
-          realPracticeCategory: undefined, // 执业分类
+          occupationalClassification: undefined, // 执业分类
           realJobTitle: undefined, // 职称
           realEmploymentIndustryAssociations: undefined, // 行业协会任职信息
-          userOrgInfoDTOList: [], // 所属机构列表
+          userOrgInfoDTOList: undefined, // 所属机构列表
           realDoctorPracticeCertificate: undefined,
           realPracticeCertificateCode: undefined, // 医师执业证书编号
           realAddress: undefined, // 执业地点
-          // realPracticeCategory: '', // 执业类别
+          realPracticeCategory: undefined, // 执业类别
           realPracticeArea: undefined, // 执业范围
           realDoctorQualificationCertificate: undefined, // 医师资格证书
           realQualificationCode: undefined, // 医师资格证书编号
@@ -112,7 +118,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'realPracticeCategory',
+            prop: 'occupationalClassification',
             label: '执业分类',
             rules: [{ required: true, message: '请选择执业分类' }],
             attrs: {
@@ -126,6 +132,7 @@ export default {
             type: 'ImSelect',
             prop: 'realJobTitle',
             label: '职称',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请选择职称' }],
             attrs: {
               placeholder: '请选择职称',
@@ -138,6 +145,7 @@ export default {
             type: 'ImInput',
             prop: 'realEmploymentIndustryAssociations',
             label: '行业协会任职信息',
+            hidden: this.isEdit,
             attrs: {
               placeholder: '请输入'
             }
@@ -145,6 +153,7 @@ export default {
           {
             type: 'ImSlot',
             notInForm: true,
+            hidden: this.isEdit,
             slots: {
               slot: 'orgInfoSlot'
             }
@@ -153,6 +162,7 @@ export default {
             type: 'ImSlot',
             span: 24,
             lebel: '所在机构信息',
+            hidden: this.isEdit,
             slots: {
               sort: 'OrgInfoList'
             }
@@ -160,6 +170,7 @@ export default {
           {
             type: 'ImSlot',
             notInForm: true,
+            hidden: this.isEdit,
             slots: {
               slot: 'hospitalzizhiSlot'
             }
@@ -168,6 +179,7 @@ export default {
             type: 'ImImgUpload',
             prop: 'realDoctorPracticeCertificate',
             label: '医师执业证书',
+            hidden: this.isEdit,
             span: 24,
             rules: [{ required: true, message: '请上传医师执业证书' }]
           },
@@ -175,6 +187,7 @@ export default {
             type: 'ImInput',
             prop: 'realPracticeCertificateCode',
             label: '医师执业证书编号',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入医师执业证书编号' }],
             attrs: {
               placeholder: '请输入'
@@ -184,6 +197,7 @@ export default {
             type: 'ImInput',
             prop: 'realAddress',
             label: '执业地点',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入执业地点' }],
             attrs: {
               placeholder: '请输入'
@@ -194,6 +208,7 @@ export default {
             prop: 'realPracticeCategory',
             rules: [{ required: true, message: '请输入执业类别' }],
             label: '执业类别',
+            hidden: this.isEdit,
             attrs: {
               placeholder: '请输入'
             }
@@ -203,6 +218,7 @@ export default {
             prop: 'realPracticeArea',
             rules: [{ required: true, message: '请输入执业范围' }],
             label: '执业范围',
+            hidden: this.isEdit,
             attrs: {
               placeholder: '请输入'
             }
@@ -211,6 +227,7 @@ export default {
             type: 'ImImgUpload',
             prop: 'realDoctorQualificationCertificate',
             span: 24,
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请上传医师资格证书' }],
             label: '医师资格证书'
           },
@@ -218,6 +235,7 @@ export default {
             type: 'ImInput',
             prop: 'realQualificationCode',
             label: '医师资格证书编号',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入医师资格证书编号' }],
             attrs: {
               placeholder: '请输入'
@@ -226,15 +244,18 @@ export default {
           {
             type: 'ImInput',
             prop: 'realIdNumber',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入身份证号' }],
             label: '身份证号',
             attrs: {
+              maxLength: 18,
               placeholder: '请输入'
             }
           },
           {
             type: 'ImInput',
             prop: 'realEducation',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入学历' }],
             label: '学历',
             attrs: {
@@ -246,6 +267,7 @@ export default {
             type: 'ImInput',
             prop: 'realGraduationSchool',
             label: '毕业学校',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入毕业学校' }],
             attrs: {
               placeholder: '请输入'
@@ -255,6 +277,7 @@ export default {
             type: 'ImInput',
             prop: 'realCategory',
             label: '类别',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入类别' }],
             attrs: {
               placeholder: '请输入'
@@ -264,6 +287,7 @@ export default {
             type: 'ImInput',
             prop: 'realMajor',
             label: '专业',
+            hidden: this.isEdit,
             rules: [{ required: true, message: '请输入专业' }],
             attrs: {
               placeholder: '请输入'
@@ -281,7 +305,7 @@ export default {
   },
   methods: {
     setOptions() {
-      this.setFormPropOptions('realPracticeCategory', this.enums.realPracticeCategory) // 执业类别
+      this.setFormPropOptions('occupationalClassification', this.enums.realPracticeCategory) // 执业类别
       this.setFormPropOptions('realJobTitle', this.enums.jobTitle) // 职称
     },
     setFormPropOptions(prop, options) {

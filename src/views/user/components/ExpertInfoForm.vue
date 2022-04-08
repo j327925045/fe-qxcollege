@@ -2,7 +2,7 @@
   <el-card>
     <ImForm ref="ImForm" :form="formConfig">
       <h3 slot="expertsSlot" class="gyl-title"><i class="el-icon-s-order" />专家信息</h3>
-      <NeedleHabit slot="expertNeedleHabitSort" v-model="formConfig.props.expertNeedleHabit" class="w-full"></NeedleHabit>
+      <NeedleHabit slot="userHabitAddDTOListSort" v-model="formConfig.props.userHabitAddDTOList" class="w-full"></NeedleHabit>
     </ImForm>
   </el-card>
 </template>
@@ -27,7 +27,7 @@ export default {
           expertSpecificationsHandWashingClothes: '', // 吸收衣规格
           expertGloveSpecification: '', // 手套规格
           expertDisinfectantPreference: '', // 消毒剂偏好
-          expertNeedleHabit: [], // 针头习惯
+          userHabitAddDTOList: [], // 针头习惯
           expertStandardAccommodation: '', // 舱位标准
           expertAirlinePreference: '', // 航司偏好
           expertHotelPreference: '', // 酒店偏好
@@ -79,10 +79,10 @@ export default {
           {
             type: 'ImSlot',
             span: 24,
-            prop: 'expertNeedleHabit',
+            prop: 'userHabitAddDTOList',
             label: '针头习惯',
             slots: {
-              sort: 'expertNeedleHabitSort'
+              sort: 'userHabitAddDTOListSort'
             }
           },
           {

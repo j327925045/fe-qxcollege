@@ -9,7 +9,7 @@
     </div>
     <div class="mb-[32px]">
       <BaseInfoForm v-show="step===0" ref="BaseInfoForm" @levelChange="onLevelChanged"></BaseInfoForm>
-      <DoctorInfoForm v-show="step===1" ref="DoctorInfoForm"></DoctorInfoForm>
+      <DoctorInfoForm v-show="step===1" ref="DoctorInfoForm" :is-edit="!!editId"></DoctorInfoForm>
       <ExpertInfoForm v-show="step===2" ref="ExpertInfoForm"></ExpertInfoForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
@@ -148,10 +148,22 @@ export default {
           this.$message('请检查表单项！')
           return
         }
-        const data = {
-          ...this.baseInfoData,
-          ...this.doctorInfoData,
-          ...this.expertInfoData
+        let data = {}
+        if (this.step === 0) {
+          data = {
+            ...this.baseInfoData
+          }
+        } else if (this.step === 1) {
+          data = {
+            ...this.baseInfoData,
+            ...this.doctorInfoData
+          }
+        } else if (this.step === 2) {
+          data = {
+            ...this.baseInfoData,
+            ...this.doctorInfoData,
+            ...this.expertInfoData
+          }
         }
         if (this.editId) {
           data.objectCode = this.editId
