@@ -33,6 +33,7 @@ export default {
           expertHotelPreference: '', // 酒店偏好
           expertEatingHabits: '', // 饮食偏好
           expertDrinkingPreference: '', // 饮酒偏好
+          personalTaboo: '', // 个人禁忌
           expertHobby: '' // 兴趣爱好
         },
         formItems: [
@@ -138,7 +139,7 @@ export default {
           },
           {
             type: 'ImInput',
-            prop: 'personal_taboo',
+            prop: 'personalTaboo',
             label: '个人禁忌',
             attrs: {
               placeholder: '请输入'
