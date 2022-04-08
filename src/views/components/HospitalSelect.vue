@@ -2,7 +2,7 @@
   <el-select
     v-model="myValue"
     :placeholder="placeholder"
-    multiple
+    :multiple="multiple"
     clearable
     @change="onChange"
   >
@@ -28,6 +28,10 @@ export default {
     placeholder: {
       type: String,
       default: '请选择'
+    },
+    multiple: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -57,7 +61,6 @@ export default {
         if (res.code === 200) {
           this.options = res.data
         }
-        console.log('res', res)
       })
     },
 

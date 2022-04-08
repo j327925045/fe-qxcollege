@@ -22,18 +22,18 @@ export const User = [
         meta: { title: '医生详情', noTab: true, highlightPath: '/user/list' }
       },
       {
-        path: '/user/create',
-        name: 'create',
+        path: '/user/addOrEdit',
+        name: 'UserAddOrEdit',
         hidden: true,
-        component: () => import('@/views/user/create'),
-        meta: { title: '创建医生', noTab: true, highlightPath: '/user/create' }
+        component: () => import('@/views/user/addOrEdit'),
+        meta: { title: '医生管理', noTab: true, highlightPath: '/user/list' }
       },
       {
         path: '/user/editExports',
         name: 'editExports',
         hidden: true,
         component: () => import('@/views/user/editExports'),
-        meta: { title: '创建医生', noTab: true, highlightPath: '/user/editExports' }
+        meta: { title: '创建医生', noTab: true, highlightPath: '/user/list' }
       }
     ]
     // detail

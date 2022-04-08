@@ -14,14 +14,13 @@
         <el-descriptions-item label="性别">{{ getLabelByValue('gender', dataList.gender) }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ dataList.phone }} </el-descriptions-item>
       </el-descriptions>
-
     </div>
 
     <el-tabs v-model="activeName" class="" @tab-click="handleClick">
       <el-tab-pane label="医生信息" name="doctor">
         <div>
           <div class="divCrad">
-            <div class="pb-4" style="font-weight: bold; font-size: 16px;overflow:hidden;border-bottom:1px solid #D8D8D8;margin:0 0 24px 0">
+            <div class="pb-4" style="margin:0 0 24px 0;overflow:hidden;font-weight: bold; font-size: 16px;border-bottom:1px solid #D8D8D8">
               <span class="fl mr-4">医生信息</span>
               <!-- <span class="fr auditStatus" @click="goDoctorEdit">编辑</span> -->
             </div>
@@ -230,13 +229,9 @@
 <script>
 import moment from 'moment'
 import utils from '@/utils/utils'
-import { getList } from '@/api/doctorDetail'
-
-import ColumnMixChart from './components/ColumnMixChart.vue'
-import { getUserList } from '@/api/user'
+import { getUserList, getUserDetail } from '@/api/user'
 export default {
   name: 'UserDetail',
-  components: { ColumnMixChart },
   data() {
     return {
       // 表格数据
@@ -497,7 +492,7 @@ export default {
         objectCode: this.objectCode
       }
       this.loading = true
-      getList(params)
+      getUserDetail(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {
@@ -520,27 +515,29 @@ export default {
 .statusT{
   width: 74px;
   height: 28px;
-  text-align: center;
-  background: #E6F1FC;
-  border-radius: 4px;
-  border: 1px solid #A3D0FD;
   color: #1989FA;
   font-weight: 400;
+  text-align: center;
+  background: #E6F1FC;
+  border: 1px solid #A3D0FD;
+  border-radius: 4px;
 }
+
 .timelineDiv{
   padding-left: 20px;
 }
+
 .auditStatus{
   display: inline-block;
-  padding: 0 16px;
   height: 32px;
-  line-height: 32px;
-  text-align: center;
-  border-radius: 4px;
+  padding: 0 16px;
+  color: #fff;
   font-weight: 400;
   font-size: 12px;
-  color: #ffffff;
+  line-height: 32px;
+  text-align: center;
   background: #005DBE;
+  border-radius: 4px;
 }
 //产品认证
 .elRow {
@@ -590,11 +587,13 @@ export default {
   font-size: 16px;
   text-align: left;
 }
-.divCrad{
-  padding: 24px 32px;background: white;margin:  24px
+
+.divCrad{margin:  24px;
+  padding: 24px 32px;background: white
 }
-.titleDiv{
-  font-weight: bold; font-size: 16px;overflow:hidden;border-bottom:1px solid #D8D8D8;padding:0 0 24px 0
+
+.titleDiv{padding:0 0 24px 0;overflow:hidden;
+  font-weight: bold; font-size: 16px;border-bottom:1px solid #D8D8D8
 }
 
 .information {
@@ -615,9 +614,10 @@ export default {
 
   .headerIcon {
     float: left;
-    overflow:hidden;
     margin-right: 24px;
+    overflow:hidden;
     border-radius:50px;
+
     img{
     width: 96px;
     height: 96px;
@@ -631,15 +631,18 @@ export default {
   // padding: 0 32px;
 
 }
+
 /deep/ .el-tabs__nav-scroll{
-  background: white !important;
   padding: 0 32px;
+  background: white !important;
 }
+
 /deep/ .el-tabs__item{
 height: 60px;
 line-height: 60px;
 }
-/deep/ .el-tabs__active-bar{
-  background-color: #1989FA; color: #1989FA;
+
+/deep/ .el-tabs__active-bar{ color: #1989FA;
+  background-color: #1989FA;
 }
 </style>

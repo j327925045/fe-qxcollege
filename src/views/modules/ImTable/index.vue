@@ -98,7 +98,7 @@ export default {
      */
     filterOperation(val, map, style) {
       if (val === null) {
-        return '暂无'
+        return '-'
       }
       for (let i = 0; i < map.length; i++) {
         const cur = map[i]
@@ -109,7 +109,7 @@ export default {
           return cur.label
         }
       }
-      return '暂无'
+      return '-'
     },
 
     /**

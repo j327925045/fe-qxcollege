@@ -1,11 +1,4 @@
 <template>
-  <!-- <ImDrawer
-    :visible.sync="drawerVisible"
-    :title="editId ? '编辑医生' : '新建医生'"
-
-    @closeDrower="closeDrower"
-    @submit="submitForm"
-  > -->
   <section>
     <ImWrapper>
       <div class="box">
@@ -15,8 +8,7 @@
         <ImForm ref="ImForm2" :form="formConfig2">
           <h3 slot="professionalSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />医生信息</h3>
           <doctorLabelSelectMore slot="doctorLabelSort" v-model="formConfig2.props.doctorLabel" class="w-full" placeholder="请选择医生标签"></doctorLabelSelectMore>
-
-          <AccountManagerSelect slot="realAccountManagerSort" v-model="formConfig2.props.realAccountManagerCode" class="w-full" placeholder="请选择客户经理"></AccountManagerSelect>
+          <EmployeeSelect slot="realAccountManagerSort" v-model="formConfig2.props.realAccountManagerCode" class="w-full" placeholder="请选择客户经理"></EmployeeSelect>
           <SelectItemList slot="userOrgInfoDTOListSort" v-model="formConfig2.props.userOrgInfoDTOList" class="w-full"></SelectItemList>
           <SelectSearchMore
             slot="realOppositePersonSort"
@@ -32,55 +24,29 @@
           <zhen slot="expertNeedleHabitSort" v-model="formConfig3.props.expertNeedleHabit" class="w-full"></zhen>
         </ImForm>
       </div>
-      <!-- <doctorLabelSelectMore ></doctorLabelSelectMore>
-      <AccountManagerSelect ></AccountManagerSelect>
-      <EnumOption></EnumOption>
-      <zhen></zhen>
-      <SelectItemList></SelectItemList> -->
     </ImWrapper>
-    <!-- <div class="btnWrap" v-show="btnStatus==1">
-      <el-row>
-        <el-button>取消</el-button>
-        <el-button type="primary" @click="next">下一步</el-button>
-      </el-row>
-    </div>
-    <div class="btnWrap" v-show="btnStatus==2">
-      <el-row>
-        <el-button>取消</el-button>
-        <el-button type="primary" @click="next('back')">上一步</el-button>
-        <el-button type="primary" @click="next('go')">下一步</el-button>
-      </el-row>
-    </div> -->
-    <div v-show="btnStatus==3" class="btnWrap">
+    <div class="btnWrap">
       <el-row>
         <el-button>取消</el-button>
         <el-button type="primary" @click="submitForm">提交</el-button>
       </el-row>
     </div>
   </section>
-
-  <!-- </ImDrawer> -->
 </template>
 
 <script>
 import { addUserItem, getUserDetail, updateUserItem } from '@/api/user'
 import { mapGetters } from 'vuex'
-// import HospitalSelect from '@/views/components/HospitalSelect'
-// import RegionCascader from '@/views/components/RegionCascader'
 import SelectSearchMore from './components/SelectSearchMore'
-import AccountManagerSelect from './components/AccountManagerSelect'
+import EmployeeSelect from '@/views/components/EmployeeSelect'
 import doctorLabelSelectMore from './components/doctorLabelSelectMore'
-import SelectItemList from './components/SelectItemList.vue'
-import zhen from './components/zhen.vue'
-// import EnumOption from '../dictionary/components/EnumOption'
+import SelectItemList from './components/OrgInfoList.vue'
+import zhen from './components/NeedleHabit.vue'
 export default {
-  // name: 'AddOrEdit',
-  name: 'UserCreate',
+  name: 'UserCreate-nocache',
   components: {
-    // HospitalSelect,
-    // RegionCascader,
     SelectSearchMore,
-    AccountManagerSelect,
+    EmployeeSelect,
     doctorLabelSelectMore,
     SelectItemList,
     zhen
@@ -809,15 +775,16 @@ export default {
 .box {
   margin-bottom: 1rem;
   background: white;
-  padding: 24px;
 }
+
 .btnWrap {
-  width: 100%;
+  right: 0;
+
   /* position: fixed; */
   bottom: 0;
-  right: 0;
-  background: #fff;
-  text-align: right;
+  width: 100%;
   padding: 1rem;
+  text-align: right;
+  background: #fff;
 }
 </style>

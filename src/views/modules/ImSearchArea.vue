@@ -59,7 +59,7 @@ export default {
   padding: 32px 20px 16px 20px;
   overflow: hidden;
   background: #fff;
-  transition: max-height 0.5s;
+  transition: max-height 0.3s;
 
   &.show {
     max-height: 500px;

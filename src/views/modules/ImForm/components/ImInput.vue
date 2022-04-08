@@ -12,7 +12,7 @@ export default {
   name: 'ImInput',
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: undefined
     },
     attrs: {
