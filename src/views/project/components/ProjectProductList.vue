@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     setMyValue() {
-      this.myValue = this.value
+      // this.myValue = this.value
     },
 
     getOptions() {
