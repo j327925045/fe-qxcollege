@@ -13,6 +13,12 @@ export const Product = [
         name: 'ProductList',
         component: () => import('@/views/product/list'),
         meta: { title: '产品列表' }
+      },
+      {
+        path: '/project/list',
+        name: 'ProjectList',
+        component: () => import('@/views/project/list'),
+        meta: { title: '项目列表' }
       }
     ]
   }
