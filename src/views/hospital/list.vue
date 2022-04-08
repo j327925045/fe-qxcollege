@@ -157,7 +157,7 @@ export default {
           },
           {
             prop: 'name',
-            label: '名称',
+            label: '机构名称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
