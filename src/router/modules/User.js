@@ -20,6 +20,20 @@ export const User = [
         hidden: true,
         component: () => import('@/views/user/detail'),
         meta: { title: '医生详情', noTab: true, highlightPath: '/user/list' }
+      },
+      {
+        path: '/user/create',
+        name: 'create',
+        hidden: true,
+        component: () => import('@/views/user/create'),
+        meta: { title: '创建医生', noTab: true, highlightPath: '/user/create' }
+      },
+      {
+        path: '/user/editExports',
+        name: 'editExports',
+        hidden: true,
+        component: () => import('@/views/user/editExports'),
+        meta: { title: '创建医生', noTab: true, highlightPath: '/user/editExports' }
       }
     ]
     // detail

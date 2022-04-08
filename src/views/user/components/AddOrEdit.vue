@@ -62,7 +62,7 @@ export default {
           realQualificationCode: undefined, // 医师资格证书编号
           realEducation: undefined, // 学历
           realGraduationSchool: undefined, // 毕业学校
-          realPracticeCategory: undefined, // 类别
+          realPracticeCategory: undefined, // 执业类别
           realMajor: undefined, // 专业
           doctorLevel: undefined, // 医师级别
           expertSpecificationsHandWashingClothes: undefined, // 吸收衣规格
