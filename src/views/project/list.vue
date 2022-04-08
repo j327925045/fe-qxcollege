@@ -49,8 +49,18 @@ export default {
         formItems: [
           {
             type: 'ImInput',
-            prop: 'name',
+            prop: 'projectName',
             label: '项目名称',
+            attrs: {
+              type: 'text',
+              placeholder: '请输入项目名称',
+              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'projectCode',
+            label: '项目编号',
             attrs: {
               type: 'text',
               placeholder: '请输入项目名称',
