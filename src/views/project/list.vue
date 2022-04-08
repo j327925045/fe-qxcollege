@@ -109,15 +109,7 @@ export default {
       return {
         data: [],
         tableItems: [
-          {
-            prop: '',
-            label: '序号',
-            type: 'index',
-            attrs: {
-              fixed: 'left',
-              width: 60
-            }
-          },
+
           {
             prop: 'projectCode',
             label: '项目编号',

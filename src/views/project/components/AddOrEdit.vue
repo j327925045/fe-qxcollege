@@ -64,7 +64,7 @@ export default {
             type: 'ImInput',
             prop: 'name',
             label: '项目名称',
-            rules: [{ required: true, message: '请输入' }],
+            rules: [{ required: true, message: '请输入项目名称' }],
             attrs: {
               type: 'text',
               placeholder: '请输入项目名称'
@@ -103,7 +103,8 @@ export default {
             // rules: [{ required: true, message: '请选择机构' }],
             slots: {
               multiple: true,
-              projectProductListSlot: 'projectProductArr'
+              projectProductListSlot: 'projectProductArr',
+              options: []
             }
           }
 
