@@ -170,7 +170,7 @@ export default {
           this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
             projectList.push({ productCode: val + '' })
           })
-          this.formConfig.props.ProjectProductList = projectList
+          this.formConfig.props.projectProductList = projectList
         }
 
         delete this.formConfig.props.projectProductArr
