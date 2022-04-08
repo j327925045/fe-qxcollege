@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { Content } from './modules/Content'
 import { Employees } from './modules/Employees'
+import { Examples } from './modules/Examples'
 import { Organization } from './modules/Organization'
 import { Product } from './modules/Product'
 import { System } from './modules/System'
@@ -61,6 +62,8 @@ const originRoutes = [
     hidden: true,
     meta: { title: '登录' }
   },
+
+  ...Examples,
   ...User,
   ...Organization,
   ...Product,
@@ -76,7 +79,7 @@ formatRoutes(originRoutes.filter(item => !item.hidden))
 export const routes = originRoutes
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

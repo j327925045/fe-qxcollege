@@ -1,13 +1,25 @@
 <template>
-  <el-dialog title="审批详情" width="860px" :visible.sync="detailDialogVisible">
+  <el-dialog title="审批详情" width="860px" :visible.sync="detailDialogVisible" @close="visibleFn">
     <el-descriptions>
       <el-descriptions-item label="创建人">{{ auditDetail.createBy }}</el-descriptions-item>
       <el-descriptions-item label="创建时间">  {{ moment(auditDetail.createTime).format('YYYY-MM-DD') }}</el-descriptions-item>
       <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode }}</el-descriptions-item>
+      <el-descriptions-item label="审批编号">{{ auditDetail.objectCode }}</el-descriptions-item>
+      <el-descriptions-item label="申请人名字">{{ auditDetail.userName }}</el-descriptions-item>
+      <el-descriptions-item label="医生编号">{{ "接口没反" }}</el-descriptions-item>
+      <el-descriptions-item label="医生手机号">{{ "接口没反" }}</el-descriptions-item>
+      <el-descriptions-item label="执业地点">{{ auditDetail.realAddress }}</el-descriptions-item>
+      <el-descriptions-item label="执业类别">{{ getLabelByValue('employeeStatus', auditDetail.realPracticeCategory ) }}</el-descriptions-item>
+      <el-descriptions-item label="执业范围">{{ getLabelByValue('employeeStatus', auditDetail.realPracticeArea ) }}</el-descriptions-item>
       <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode }}</el-descriptions-item>
+      <el-descriptions-item label="身份证号">{{ auditDetail.realIdNumber }}</el-descriptions-item>
+      <el-descriptions-item label="学历">{{ getLabelByValue('employeeStatus', auditDetail.realEducation ) }}</el-descriptions-item>
+      <el-descriptions-item label="毕业学校">{{ auditDetail.realGraduationSchool }}</el-descriptions-item>
+      <el-descriptions-item label="类别">{{ auditDetail.realCategory }}</el-descriptions-item>
+      <el-descriptions-item label="专业">{{ auditDetail.realMajor }}</el-descriptions-item>
     </el-descriptions>
 
-    <div slot="footer">
+    <div v-if="auditDetail.status!='1' && auditDetail.status!='2'" slot="footer">
       <el-button type="primary" @click="submit(1)">同意</el-button>
       <el-button type="primary" @click="submit(2)">拒绝</el-button>
     </div>
@@ -59,6 +71,7 @@ export default {
       this.getInfos(auditDetail.objectCode)
     },
     getInfos(data) {
+      console.log(data)
       this.loading = true
       getDetail(data)
         .then((res) => {
@@ -72,6 +85,9 @@ export default {
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || ''
+    },
+    visibleFn() {
+      this.$router.push('/audit/list')
     }
   }
 }

@@ -5,13 +5,9 @@
     </ImSearchArea>
     <ImTableArea>
       <div class="mb-4">
-        <el-button type="primary" @click="addItem">新建产品</el-button>
+        <el-button type="primary" @click="addItem">新建项目</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig">
-        <template slot="imageUrl" slot-scope="scope">
-          <img :src="scope.row.imageUrl" alt="">
-        </template>
-      </ImTable>
+      <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
         <ImPagination
           ref="ImPagination"
@@ -28,13 +24,13 @@
 </template>
 
 <script>
-import { getProductList, deleteProductItem } from '@/api/product'
+import { getProjectList, deleteProjectItem } from '@/api/project'
 import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 export default {
-  name: 'ProductList',
+  name: 'ProjectList',
   components: {
     DetailDialog,
     AddOrEdit
@@ -48,61 +44,20 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: undefined,
-          productNum: undefined,
-          businessType: undefined,
-          category: undefined,
-          type: undefined
+          name: ''// 项目名称
         },
         formItems: [
           {
             type: 'ImInput',
             prop: 'name',
-            label: '产品名称',
+            label: '项目名称',
             attrs: {
-              placeholder: '请输入',
+              type: 'text',
+              placeholder: '请输入项目名称',
               style: 'width: 100%;'
             }
           },
-          {
-            type: 'ImInput',
-            prop: 'productNum',
-            label: '产品编号',
-            attrs: {
-              placeholder: '请输入',
-              style: 'width: 100%;'
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'businessType',
-            label: '业务类型',
-            attrs: {
-              placeholder: '请选择',
-              style: 'width: 100%;',
-              options: []
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'category',
-            label: '材料类别',
-            attrs: {
-              placeholder: '请选择',
-              style: 'width: 100%;',
-              options: []
-            }
-          },
-          {
-            type: 'ImSelect',
-            prop: 'type',
-            label: '产品类型',
-            attrs: {
-              placeholder: '请选择',
-              style: 'width: 100%;',
-              options: []
-            }
-          },
+
           {
             type: 'ImButton',
             attrs: {
@@ -145,51 +100,45 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: 'productNum',
-            label: '产品编号',
+            prop: '',
+            label: '序号',
+            type: 'index',
             attrs: {
               fixed: 'left',
+              width: 60
+            }
+          },
+          {
+            prop: 'projectCode',
+            label: '项目编号',
+            attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
             prop: 'name',
-            label: '产品名称',
+            label: '项目名称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'businessType',
-            label: '业务类型',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '100'
-            },
-            options: this?.enums?.businessType ?? []
-          },
-          {
-            prop: 'category',
-            label: '材料类别',
-            type: 'mapList',
+            prop: 'projectDeteils',
+            label: '项目明细',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            },
-            options: this?.enums?.category ?? []
+            }
           },
           {
-            prop: 'type',
-            label: '产品类型',
-            type: 'mapList',
+            prop: 'productCount',
+            label: '产品数量',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            },
-            options: this?.enums?.type ?? []
+            }
           },
           {
             prop: '',
@@ -197,7 +146,7 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '150'
+              width: '160'
             },
             options: [
               {
@@ -223,25 +172,8 @@ export default {
   },
   activated() {
     this.getList()
-    this.setOptions()
   },
   methods: {
-    setOptions() {
-      this.setFormPropOptions('businessType', this.enums.businessType)
-      this.setFormPropOptions('category', this.enums.category)
-      this.setFormPropOptions('type', this.enums.type)
-    },
-
-    /**
-     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
-     * 放到计算属性会有prop绑定失效的问题
-     */
-    setFormPropOptions(prop, options) {
-      const formItems = this.formConfig.formItems
-      const item = formItems.find(item => item.prop === prop)
-      item.attrs.options = options
-    },
-
     showDetail($index, record) {
       this.$refs.DetailDialog.show(record)
     },
@@ -260,7 +192,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteProductItem({ objectCode: record.objectCode }).then((res) => {
+          deleteProjectItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -299,11 +231,13 @@ export default {
         ...this.formConfig.props
       }
       this.loading = true
-      getProductList(params)
+      getProjectList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {
             this.total = res.data.totalCount
+            console.log(this.tableConfig.data)
+            console.log(res.data.list)
             this.tableConfig.data = res.data.list || []
           }
         })

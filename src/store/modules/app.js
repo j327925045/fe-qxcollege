@@ -53,7 +53,9 @@ const state = {
     permissionHide: [], // 权限是否显示
     permissionType: [], // 权限类型
     jobTitle: [], // 职称
-    realAccountManager: []
+    realAccountManager: [],
+    organizationCooperatType: [], // 集团合作方式
+    organizationIsPrepareAccount: [] // 集团是否建账
   }
 }
 

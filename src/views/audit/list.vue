@@ -142,13 +142,18 @@ export default {
             },
             options: [
               {
-                value: '1',
+                value: '1' + '',
                 label: '通过'
                 // style: 'color:red;'
               },
               {
-                value: '2',
+                value: '2' + '',
                 label: '拒绝'
+                // style: 'color:brown;'
+              },
+              {
+                value: '3' + '',
+                label: '待审批'
                 // style: 'color:brown;'
               }
             ]
@@ -186,11 +191,16 @@ export default {
   },
   activated() {
     this.getList()
+    if (this.$route.query.objectCode) {
+      this.showDetail()
+    }
   },
   methods: {
     showDetail($index, record) {
-      console.log(record)
-      // this.$router.push(`/user/detail?objectCode=${record.objectCode}`)
+      if (this.$route.query.objectCode) {
+        record = { objectCode: this.$route.query.objectCode }
+      }
+      // this.$router.push(`/audit/detail?objectCode=${record.objectCode}`)
       this.$refs.DetailDialog.show(record)
     },
 

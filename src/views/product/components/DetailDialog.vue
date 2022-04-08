@@ -1,34 +1,28 @@
 <template>
   <el-dialog title="产品信息" width="860px" :visible.sync="detailDialogVisible">
-    <el-descriptions>
-      <el-descriptions-item label="品牌">
-        {{ getLabelByValue('brandCode', productDetail.brandCode+'') }}
-
+    <el-descriptions size="medium">
+      <el-descriptions-item label="产品名称">
+        {{ productDetail.name }}
       </el-descriptions-item>
       <el-descriptions-item label="业务类型">
-        {{ getLabelByValue('businessType', productDetail.businessType+'') }}
-
+        {{ getLabelByValue('businessType', productDetail.businessType) }}
       </el-descriptions-item>
       <el-descriptions-item label="材料类别">
-        {{ getLabelByValue('category', productDetail.category+'') }}
-
+        {{ getLabelByValue('category', productDetail.category) }}
       </el-descriptions-item>
-      <el-descriptions-item label="产品图URL">{{ productDetail.imageUrl }}</el-descriptions-item>
-      <el-descriptions-item label="适应症">{{ productDetail.indication }}</el-descriptions-item>
-      <el-descriptions-item label="设备级别">
-        {{ getLabelByValue('level', productDetail.level+'') }}
-
+      <el-descriptions-item label="产品类型">
+        {{ getLabelByValue('type', productDetail.type) }}
       </el-descriptions-item>
-      <el-descriptions-item label="名称">{{ productDetail.name }}</el-descriptions-item>
-      <!-- <el-descriptions-item label="职称">
-         todo realJobTitle应该返回字符串 这里返回的数据字段类型有问题
-        {{ getLabelByValue('jobTitle', productDetail.realJobTitle+'') }}
+      <el-descriptions-item label="产品介绍">
+        {{ productDetail.indication }}
       </el-descriptions-item>
-      <el-descriptions-item label="出生日期">
-        {{ moment(productDetail.birthday).format('YYYY-MM-DD') }}
-      </el-descriptions-item> -->
+      <el-descriptions-item label="SKU">
+        {{ productDetail.skuId }}
+      </el-descriptions-item>
+      <el-descriptions-item :column="1" label="产品图片">
+        <img class="imageClass" :src="productDetail.imageUrl" alt="" />
+      </el-descriptions-item>
     </el-descriptions>
-
     <div slot="footer">
       <el-button type="primary" @click="detailDialogVisible = false">确 定</el-button>
     </div>
@@ -64,3 +58,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.imageClass {
+  width: 124px;
+  height: 124px;
+  border: 1px solid #ccc;
+}
+</style>

@@ -11,6 +11,9 @@
         <template slot="coverUrl" slot-scope="scope">
           <img :src="scope.row.coverUrl" alt="">
         </template>
+        <template slot="videoItem" slot-scope="scope">
+          <a href="javascript:;" @click="playVideo(scope.row)">{{ scope.row.fileUrl }}</a>
+        </template>
       </ImTable>
       <div class="mt-4 text-right">
         <ImPagination
@@ -24,12 +27,14 @@
     </ImTableArea>
     <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
+    <VideoPlayer ref="VideoPlayer"></VideoPlayer>
   </ImWrapper>
 </template>
 
 <script>
 import { getDataList, deleteResources } from '@/api/resources'
 import DetailDialog from './components/DetailDialog'
+import VideoPlayer from '@/views/components/VideoPlayer'
 import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
@@ -37,6 +42,7 @@ import moment from 'moment'
 export default {
   name: 'Resources',
   components: {
+    VideoPlayer,
     DetailDialog,
     AddOrEdit
   },
@@ -156,35 +162,25 @@ export default {
             }
           },
           {
-            prop: 'objectCode',
-            label: '主键',
+            prop: 'fileUrl',
+            label: '视频ID',
+            type: 'slot',
+            slot: 'videoItem',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '100'
             }
           },
-          {
-            prop: 'type',
-            label: '审核状态',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            },
-            options: [
-              {
-                value: '1',
-                label: '视频'
-                // style: 'color:red;'
-              },
-              {
-                value: '2',
-                label: '音频'
-                // style: 'color:brown;'
-              }
-            ]
-          },
-
+          // {
+          //   prop: 'type',
+          //   label: '素材类型',
+          //   type: 'mapList',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   },
+          //   options: this.enums.materialType
+          // },
           {
             prop: '',
             label: '操作',
@@ -195,7 +191,7 @@ export default {
             },
             options: [
               {
-                title: '查看',
+                title: '查看视频',
                 type: 'text',
                 onClick: this.showDetail
               },
@@ -222,12 +218,15 @@ export default {
     this.getList()
   },
   methods: {
+    playVideo(record) {
+      this.$refs.VideoPlayer.play(record.fileUrl, record.coverUrl)
+    },
+
     addItem() {
       this.$refs.AddOrEdit.add()
     },
     showDetail($index, record) {
-      console.log(record)
-      this.$refs.DetailDialog.show(record)
+      this.playVideo(record)
     },
 
     editItem($index, record) {

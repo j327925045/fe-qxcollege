@@ -1,6 +1,6 @@
 <template>
   <el-form ref="form" :model="form.props" v-bind="form.attrs">
-    <el-row>
+    <el-row :gutter="form.gutter">
       <template v-for="(item, idx) in formList">
         <el-col v-if="item.type==='ImButton'||item.notInForm" :key="idx" :span="24">
           <FormComponents :form="form" :item="item">
@@ -12,7 +12,11 @@
         <el-col
           v-else
           :key="idx"
-          v-bind="columnConfig"
+          :xl="item.span||columnConfig.xl"
+          :lg="item.span||columnConfig.lg"
+          :md="item.span||columnConfig.md"
+          :sm="item.span||columnConfig.sm"
+          :xs="item.span||columnConfig.xs"
         >
           <el-form-item
             :label="item.label"
@@ -60,7 +64,7 @@ export default {
       phone: {
         validator: function(rule, value, callback) {
           const regex = /^1\d{10}$/g
-          if (regex.test(value) || value === '' || value === null) {
+          if (regex.test(value) || value === '' || value === null || value === undefined) {
             callback()
           } else {
             callback(new Error('请正确填写手机号'))
@@ -70,7 +74,7 @@ export default {
       password: {
         validator: function(rule, value, callback) {
           const regex = /^(?![^a-zA-Z]+$)(?!\D+$).{8,20}$/
-          if (regex.test(value) || value === '' || value === null) {
+          if (regex.test(value) || value === '' || value === null || value === undefined) {
             callback()
           } else {
             callback(new Error('密码必须包含字母和数字，且为8-20个字符!'))
@@ -79,7 +83,7 @@ export default {
       },
       number: {
         validator: function(rule, value, callback) {
-          if (isNumeric(value) || value === '' || value === null) {
+          if (isNumeric(value) || value === '' || value === null || value === undefined) {
             callback()
           } else {
             callback(new Error('该项须填写数字类型值'))
