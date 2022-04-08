@@ -51,6 +51,19 @@ export function updateUserItem(data) {
 }
 
 /**
+ * 更新需要认证信息
+ * @param data
+ * @returns {*}
+ */
+export function realPcAuthentication(data) {
+  return request({
+    url: '/qxcollege/user/realPcAuthentication',
+    method: 'post',
+    data: data
+  })
+}
+
+/**
  * 获取用户详情
  * @param params
  * @returns {*}

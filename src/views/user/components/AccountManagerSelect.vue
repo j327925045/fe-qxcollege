@@ -1,14 +1,17 @@
 <template>
+
   <el-select
     v-model="myValue"
-    :placeholder="placeholder"
-    multiple
+    filterable
+    allow-create
     clearable
+    default-first-option
+    :placeholder="placeholder"
     @change="onChange"
   >
     <el-option
       v-for="item in options"
-      :key="item.objectCode+'objectCode'"
+      :key="item.value"
       :label="item.name"
       :value="item.objectCode"
     >
@@ -17,12 +20,13 @@
 </template>
 
 <script>
-import { getProjectProduct } from '@/api/project'
+// import { getAllHospitalItems } from '@/api/hospital'
+import { getEmployeesList } from '@/api/employees'
 export default {
-  name: 'ProjectProductArr',
+  name: 'HospitalSelect',
   props: {
     value: {
-      type: [],
+      type: [Number, String, Array],
       default: undefined
     },
     placeholder: {
@@ -32,8 +36,7 @@ export default {
   },
   data() {
     return {
-      myValue: [],
-      dataList: [],
+      myValue: undefined,
       options: []
     }
   },
@@ -54,12 +57,21 @@ export default {
     },
 
     getOptions() {
-      getProjectProduct({ limit: 20000, page: 1 }).then(res => {
+      // getEmployeesList
+      getEmployeesList({ page: 1, limit: 10000 }).then(res => {
+        console.log(res)
         if (res.code === 200) {
           this.options = res.data.list
         }
         console.log('res', res)
       })
+
+      // getAllHospitalItems({}).then(res => {
+      //   if (res.code === 200) {
+      //     this.options = res.data
+      //   }
+      //   console.log('res', res)
+      // })
     },
 
     onChange() {
