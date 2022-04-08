@@ -204,8 +204,8 @@ export default {
     getItemDetail() {
       getHospitalDetail({ objectCode: this.editId }).then(res => {
         if (res.code === 200) {
-          if (res.data.salesCounterpartCode == 0) {
-            res.data.salesCounterpartCode = ''
+          if (res.data.salesCounterpartCode === '0') {
+            res.data.salesCounterpartCode = undefined
           }
           const props = this.formConfig.props
           const keys = Object.keys(props)
