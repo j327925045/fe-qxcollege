@@ -63,7 +63,7 @@ export default {
             label: '项目编号',
             attrs: {
               type: 'text',
-              placeholder: '请输入项目名称',
+              placeholder: '请输入项目编号',
               style: 'width: 100%;'
             }
           },
