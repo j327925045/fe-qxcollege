@@ -22,7 +22,7 @@ export default {
   name: 'ProjectProductList',
   props: {
     value: {
-      type: [],
+      type: [Number, Object],
       default: undefined
     },
     placeholder: {
@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     setMyValue() {
-      // this.myValue = this.value
+      this.myValue = this.value
     },
 
     getOptions() {
