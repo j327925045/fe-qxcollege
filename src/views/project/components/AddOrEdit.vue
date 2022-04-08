@@ -1,18 +1,26 @@
 <template>
-  <ImDrawer :visible.sync="drawerVisible"
-            :title="editId ? '编辑项目' : '新建项目'"
-            @closeDrower="closeDrower"
-            @submit="submitForm">
-    <ImForm ref="ImForm"
-            :form="formConfig">
+  <ImDrawer
+    :visible.sync="drawerVisible"
+    :title="editId ? '编辑项目' : '新建项目'"
+    @closeDrower="closeDrower"
+    @submit="submitForm"
+  >
+    <ImForm
+      ref="ImForm"
+      :form="formConfig"
+    >
       <!-- <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />项目信息</h3> -->
-      <OrganizationSelect slot="OrganizationSelect"
-                          v-model="formConfig.props.organizationCode"
-                          placeholder="请选择"></OrganizationSelect>
-      <ProjectProductList slot="projectProductList"
-                          v-model="formConfig.props.projectProductList"
-                          class="w-full"
-                          placeholder="请选择机构"></ProjectProductList>
+      <OrganizationSelect
+        slot="OrganizationSelect"
+        v-model="formConfig.props.organizationCode"
+        placeholder="请选择"
+      ></OrganizationSelect>
+      <projectProductArr
+        slot="projectProductArr"
+        v-model="formConfig.props.projectProductArr"
+        class="w-full"
+        placeholder="请选择产品"
+      ></projectProductArr>
     </ImForm>
   </ImDrawer>
 </template>
@@ -22,15 +30,15 @@ import { addProjectItem, getProjectDetail, updateProjectItem } from '@/api/proje
 import { mapGetters } from 'vuex'
 
 import OrganizationSelect from '@/views/components/OrganizationSelect'
-import ProjectProductList from '../components/ProjectProductList'
+import ProjectProductArr from '../components/ProjectProductList'
 export default {
   name: 'AddOrEdit',
 
   components: {
-    ProjectProductList,
+    ProjectProductArr,
     OrganizationSelect
   },
-  data () {
+  data() {
     return {
       drawerVisible: false,
       editId: undefined,
@@ -41,7 +49,7 @@ export default {
           labelPosition: 'right'
         },
         props: {
-          projectProductList: '',
+          projectProductArr: '',
           name: '', // 名称
           remark: '', // 项目介绍
           //
@@ -56,28 +64,19 @@ export default {
             type: 'ImInput',
             prop: 'name',
             label: '项目名称',
-            rules: [{ required: true, message: '请输入' }],
+            rules: [{ required: true, message: '请输入项目名称' }],
             attrs: {
               type: 'text',
-              placeholder: '请输入'
-            }
-          },
-          {
-            type: 'ImInput',
-            prop: 'projectCode',
-            label: '项目编号',
-            rules: [{ required: true, message: '请输入' }],
-            attrs: {
-              type: 'text',
-              placeholder: '请输入项目编号'
+              placeholder: '请输入项目名称'
             }
           },
           {
             type: 'ImInput',
             prop: 'projectDeteils',
             label: '项目明细',
-            rules: [{ required: true, message: '请输入' }],
+            // rules: [{ required: true, message: '请输入' }],
             attrs: {
+              maxLength: 1000,
               type: 'text',
               placeholder: '请输入项目明细'
             }
@@ -86,7 +85,7 @@ export default {
             type: 'ImInput',
             prop: 'projectIntroduce',
             label: '项目介绍',
-            rules: [{ required: true, message: '请输入' }],
+            // rules: [{ required: true, message: '请输入' }],
             attrs: {
               type: 'text',
               placeholder: '请输入项目介绍'
@@ -97,16 +96,16 @@ export default {
             prop: 'projectPictureUrl',
             label: '项目图片'
           },
-          
 
           {
             type: 'ImSlot',
-            prop: 'projectProductList',
+            prop: 'projectProductArr',
             label: '产品列表',
             // rules: [{ required: true, message: '请选择机构' }],
             slots: {
               multiple: true,
-              projectProductListSlot: 'projectProductList'
+              projectProductListSlot: 'projectProductArr',
+              options: []
             }
           }
 
@@ -117,7 +116,7 @@ export default {
   computed: {
     ...mapGetters(['enums'])
   },
-  created () {
+  created() {
     // this.setOptions()
   },
   methods: {
@@ -125,7 +124,7 @@ export default {
     /**
      * 暴露添加方法
      */
-    add () {
+    add() {
       this.editId = undefined
       this.drawerVisible = true
     },
@@ -133,7 +132,7 @@ export default {
     /**
      * 暴露编辑方法
      */
-    edit (editId) {
+    edit(editId) {
       this.editId = editId
       this.drawerVisible = true
       this.getItemDetail()
@@ -142,11 +141,10 @@ export default {
     /**
      * 获取详情
      */
-    getItemDetail () {
+    getItemDetail() {
       getProjectDetail({ objectCode: this.editId }).then(res => {
+        res.data.projectProductArr = [...new Set(res.data.projectProductArr)]
         if (res.code === 200) {
-
-     
           const props = this.formConfig.props
           const keys = Object.keys(props)
           // 直接遍历进行赋值，特殊属性需要单独拿出来处理
@@ -161,18 +159,22 @@ export default {
     /**
      * 提交表单
      */
-    submitForm () {
+    submitForm() {
       console.log('提交')
       this.$refs.ImForm.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
         }
-        let projectList = []
-        this.formConfig.props.projectProductList.forEach(function (val, key, arr) {
-          projectList.push({ productCode: val+"" })
-        })
-        this.formConfig.props.projectProductList = projectList
+        if (this.formConfig.props.projectProductArr) {
+          const projectList = []
+          this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
+            projectList.push({ productCode: val + '' })
+          })
+          this.formConfig.props.projectProductList = projectList
+        }
+
+        delete this.formConfig.props.projectProductArr
         const data = {
           ...this.formConfig.props
         }
@@ -189,11 +191,11 @@ export default {
           })
         } else {
           console.log('走进新增项目')
-          console.log(data)
           addProjectItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.$emit('add')
+              location.reload()
               this.closeDrower()
             } else {
               this.$message.error(res.message)
@@ -206,7 +208,7 @@ export default {
     /**
      * 关闭弹层
      */
-    closeDrower () {
+    closeDrower() {
       this.$refs.ImForm.reset()
       this.drawerVisible = false
     }

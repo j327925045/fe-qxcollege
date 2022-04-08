@@ -15,19 +15,19 @@
         <span class="headertext">机构信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="机构名称">{{ details.name || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="机构名称">{{ details.name }}</el-descriptions-item>
         <el-descriptions-item label="机构性质">
           {{ getLabelByValue('hospitalNature', details.nature) }}
         </el-descriptions-item>
         <el-descriptions-item label="成立时间">{{ getDate(details.establishedTime) }}</el-descriptions-item>
-        <el-descriptions-item label="所在城市">{{ details.regionFullName || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="机构地址">{{ details.location || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="所属集团">{{ details.organizationName || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="联系人姓名">{{ details.contactName || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="联系人电话">{{ details.contactPhone || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="所在城市">{{ details.regionFullName }}</el-descriptions-item>
+        <el-descriptions-item label="机构地址">{{ details.location }}</el-descriptions-item>
+        <el-descriptions-item label="所属集团">{{ details.organizationName }}</el-descriptions-item>
+        <el-descriptions-item label="联系人姓名">{{ details.contactName }}</el-descriptions-item>
+        <el-descriptions-item label="联系人电话">{{ details.contactPhone }}</el-descriptions-item>
+        <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName }}</el-descriptions-item>
         <el-descriptions-item label="机构图片">
-          <img class="imageClass" :src="details.orgPictureUrl" alt="" />
+          <img v-if="details.orgPictureUrl" class="imageClass" :src="details.orgPictureUrl" alt="" />
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -38,9 +38,9 @@
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="医疗解构许可证">
-          <img class="imageClass" :src="details.licencePictureUrl" alt="" />
+          <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt="" />
         </el-descriptions-item>
-        <el-descriptions-item label="登记号">{{ details.registrationNo || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="登记号">{{ details.registrationNo==0?"":details.registrationNo }}</el-descriptions-item>
       </el-descriptions>
     </el-card>
 

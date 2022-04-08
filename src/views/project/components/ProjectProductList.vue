@@ -8,7 +8,7 @@
   >
     <el-option
       v-for="item in options"
-      :key="item.value"
+      :key="item.objectCode+'objectCode'"
       :label="item.name"
       :value="item.objectCode"
     >
@@ -19,10 +19,10 @@
 <script>
 import { getProjectProduct } from '@/api/project'
 export default {
-  name: 'ProjectProductList',
+  name: 'ProjectProductArr',
   props: {
     value: {
-      type: [Number, Object],
+      type: [],
       default: undefined
     },
     placeholder: {
@@ -58,7 +58,6 @@ export default {
         if (res.code === 200) {
           this.options = res.data.list
         }
-        console.log('res', res)
       })
     },
 
