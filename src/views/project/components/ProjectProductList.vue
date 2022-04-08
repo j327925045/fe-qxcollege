@@ -54,7 +54,7 @@ export default {
     },
 
     getOptions() {
-      getProjectProduct({ limit: 20000, page: 1 }).then(res => {
+      getProjectProduct({ limit: 5000, page: 1 }).then(res => {
         if (res.code === 200) {
           this.options = res.data.list
         }

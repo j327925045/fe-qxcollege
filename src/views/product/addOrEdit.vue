@@ -1,14 +1,15 @@
 <template>
-  <ImDrawer
-    :visible.sync="drawerVisible"
-    :title="editId ? '编辑产品' : '新建产品'"
-    @closeDrower="closeDrower"
-    @submit="submitForm"
-  >
-    <ImForm ref="ImForm" :form="formConfig">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />产品信息</h3>
-    </ImForm>
-  </ImDrawer>
+  <ImWrapper>
+    <div class="bg-white p-4 mb-[32px]">
+      <ImForm ref="ImForm" :form="formConfig">
+        <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />产品信息</h3>
+      </ImForm>
+    </div>
+    <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
+      <el-button @click="closeCurrent">取 消</el-button>
+      <el-button type="primary" @click="submitForm">保 存</el-button>
+    </div>
+  </ImWrapper>
 </template>
 
 <script>
@@ -16,16 +17,15 @@ import { addProductItem, getProductDetail, updateProductItem } from '@/api/produ
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'AddOrEdit',
+  name: 'ProductAddOrEdit--nocache',
   data() {
     return {
-      drawerVisible: false,
-      editId: undefined,
       formConfig: {
-        // column: 3,
+        column: 3,
+        gutter: 42,
         attrs: {
           labelWidth: '140px',
-          labelPosition: 'right'
+          labelPosition: 'top'
         },
         props: {
           name: undefined,
@@ -94,8 +94,10 @@ export default {
             type: 'ImInput',
             prop: 'indication',
             label: '产品介绍',
+            span: 24,
             attrs: {
               maxLength: 500,
+              style: 'width: 31%',
               type: 'textarea',
               placeholder: '请输入'
             }
@@ -103,21 +105,25 @@ export default {
           {
             type: 'ImImgUpload',
             prop: 'imageUrl',
+            span: 24,
             label: '产品图片'
           },
           {
             type: 'ImInput',
             prop: 'skuId',
             label: 'SKU',
+            span: 24,
             attrs: {
               placeholder: '请输入',
               maxLength: 128,
+              style: 'width: 31%',
               class: 'w-full',
               options: []
             }
           }
         ]
-      }
+      },
+      editId: this.$route.query.objectCode
     }
   },
   computed: {
@@ -125,6 +131,9 @@ export default {
   },
   created() {
     this.setOptions()
+    if (this.editId) {
+      this.getItemDetail()
+    }
   },
   methods: {
     /**
@@ -141,35 +150,18 @@ export default {
      * 放到计算属性会有prop绑定失效的问题
      */
     setFormPropOptions(prop, options) {
-      console.log(options)
       const formItems = this.formConfig.formItems
       const item = formItems.find(item => item.prop === prop)
       item.attrs.options = options
     },
 
-    /**
-     * 暴露添加方法
-     */
-    add() {
-      this.editId = undefined
-      this.drawerVisible = true
-    },
-
-    /**
-     * 暴露编辑方法
-     */
-    edit(editId) {
-      this.editId = editId
-      this.drawerVisible = true
-      this.getItemDetail()
-    },
-
-    /**
-     * 获取详情
-     */
     getItemDetail() {
-      getProductDetail({ objectCode: this.editId }).then(res => {
+      getProductDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200) {
+          console.log(res.data)
+          if (res.data.salesCounterpart === '0') {
+            res.data.salesCounterpart = undefined
+          }
           const props = this.formConfig.props
           const keys = Object.keys(props)
           // 直接遍历进行赋值，特殊属性需要单独拿出来处理
@@ -181,12 +173,8 @@ export default {
       })
     },
 
-    /**
-     * 提交表单
-     */
     submitForm() {
-      console.log('提交')
-      this.$refs.ImForm.validate(valid => {
+      this.$refs.ImForm.validate((valid) => {
         if (!valid) {
           this.$message('请检查表单项！')
           return
@@ -196,23 +184,19 @@ export default {
         }
         if (this.editId) {
           data.objectCode = this.editId
-          updateProductItem(data).then(res => {
+          updateProductItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('更新成功！')
-              this.$emit('update')
-              this.closeDrower()
+              this.closeCurrent()
             } else {
               this.$message.error(res.message)
             }
           })
         } else {
-          console.log('走进新增产品')
-          console.log(data)
-          addProductItem(data).then(res => {
+          addProductItem(data).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
-              this.$emit('add')
-              this.closeDrower()
+              this.closeCurrent()
             } else {
               this.$message.error(res.message)
             }
@@ -220,13 +204,9 @@ export default {
         }
       })
     },
-
-    /**
-     * 关闭弹层
-     */
-    closeDrower() {
+    closeCurrent() {
       this.$refs.ImForm.reset()
-      this.drawerVisible = false
+      this.$router.replace({ name: 'ProductList' })
     }
   }
 }

@@ -2,7 +2,7 @@
   <ImWrapper>
     <div slot="header" class="bg-white rounded p-6 mt-2">
       <div class="header-container">
-        <span class="header-text">集团编号:{{ details.groupCode }}</span>
+        <span class="header-text">产品编号:{{ details.productNum }}</span>
         <div>
           <el-button @click="deleteItem">删 除</el-button>
           <el-button type="primary" @click="editItem">编 辑</el-button>
@@ -12,51 +12,59 @@
 
     <el-card class="box-card">
       <div slot="header">
-        <span class="headertext">集团信息</span>
+        <span class="headertext">产品信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="集团名称">{{ details.name || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="统一社会信用代码">{{ details.socialCreditCode || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="集团规模">
-          {{ getLabelByValue('organizationScale', details.groupSize) }}
+        <el-descriptions-item :span="3" label="产品名称">{{ details.name || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="业务类型">
+          {{ getLabelByValue('businessType', details.businessType) }}
         </el-descriptions-item>
-        <el-descriptions-item label="合作方式">
-          {{ getLabelByValue('organizationCooperatType', details.cooperationMode) }}
+        <el-descriptions-item label="材料类别">
+          {{ getLabelByValue('category', details.category) }}
         </el-descriptions-item>
-        <el-descriptions-item label="所属经销商">{{ details.dealer || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="是否建账">
-          {{ getLabelByValue('organizationIsPrepareAccount', details.whetherAccounts) }}
+        <el-descriptions-item label="产品类型">
+          {{ getLabelByValue('type', details.type) }}
         </el-descriptions-item>
-        <el-descriptions-item label="联系人姓名">{{ details.contactName || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="联系人手机号">{{ details.contactPhone || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName || '-' }}</el-descriptions-item>
+        <el-descriptions-item :span="3" label="产品介绍">
+          {{ details.indication || '' }}
+        </el-descriptions-item>
+        <el-descriptions-item :span="3" label="产品图片">
+          <img class="imageClass" :src="details.imageUrl" alt="" />
+        </el-descriptions-item>
+        <el-descriptions-item :span="3" label="SKU">
+          {{ details.skuId || '-' }}
+        </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
     <el-card class="box-card">
       <div slot="header">
-        <span class="headertext">机构信息</span>
+        <span class="headertext">关联项目(todo列表需支持筛选)</span>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <div class="mt-4 text-right">
+        <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
+      </div>
     </el-card>
   </ImWrapper>
 </template>
 
 <script>
-import { getOrganizationDetail, deleteOrganizationItem, getHospitalsInOrg } from '@/api/organization'
+import { getProductDetail, deleteProductItem } from '@/api/product'
+import { getProjectList } from '@/api/project'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
 
 export default {
-  name: 'OrganizationDetail--nocache',
+  name: 'ProductDetail--nocache',
   data() {
     return {
       details: {},
       objectCode: this.$route.query.objectCode,
       loading: false,
-      currentPage: 1,
       pageSize: 10,
+      currentPage: 1,
       total: 0
     }
   },
@@ -68,25 +76,16 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: 'orgCode',
-            label: '机构编号',
+            prop: 'projectCode',
+            label: '项目编号',
             attrs: {
-              fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
             prop: 'name',
-            label: '机构名称',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'regionFullName',
-            label: '所在城市',
+            label: '项目名称',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -111,7 +110,7 @@ export default {
     },
 
     getItemDetail() {
-      getOrganizationDetail({ objectCode: this.objectCode }).then((res) => {
+      getProductDetail({ objectCode: this.objectCode }).then((res) => {
         if (res.code === 200) {
           this.details = res.data || {}
         }
@@ -119,7 +118,7 @@ export default {
     },
 
     editItem() {
-      this.$router.push({ name: 'OrganizationAddOrEdit', query: { objectCode: this.objectCode } })
+      this.$router.push({ name: 'ProductAddOrEdit', query: { objectCode: this.objectCode } })
     },
 
     deleteItem($index, record) {
@@ -128,7 +127,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteOrganizationItem({ objectCode: this.objectCode }).then((res) => {
+          deleteProductItem({ objectCode: this.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.goListPage()
@@ -141,7 +140,7 @@ export default {
     },
 
     goListPage() {
-      this.$router.replace({ name: 'OrganizationList' })
+      this.$router.replace({ name: 'ProductList' })
     },
 
     getList() {
@@ -149,7 +148,7 @@ export default {
         objectCode: this.objectCode
       }
       this.loading = true
-      getHospitalsInOrg(params)
+      getProjectList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {
@@ -190,6 +189,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    border: 1px solid #ccc;
   }
 }
 

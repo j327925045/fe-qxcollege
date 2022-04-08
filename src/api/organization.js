@@ -72,3 +72,14 @@ export function getAllOrganizationItems(params) {
     params
   })
 }
+
+/**
+ * 获取集团下所有机构
+ */
+export function getHospitalsInOrg(params) {
+  return request({
+    url: `/qxcollege/organization/list/hospital/${params.objectCode}`,
+    method: 'get',
+    params: {}
+  })
+}

@@ -15,6 +15,20 @@ export const Product = [
         meta: { title: '产品列表' }
       },
       {
+        path: '/product/addOrEdit',
+        name: 'ProductAddOrEdit',
+        hidden: true,
+        component: () => import('@/views/product/addOrEdit'),
+        meta: { title: '产品操作', noTab: true, highlightPath: '/product/list' }
+      },
+      {
+        path: '/product/detail',
+        name: 'ProductDetail',
+        hidden: true,
+        component: () => import('@/views/product/detail'),
+        meta: { title: '产品详情', noTab: true, highlightPath: '/product/list' }
+      },
+      {
         path: '/project/list',
         name: 'ProjectList',
         component: () => import('@/views/project/list'),
