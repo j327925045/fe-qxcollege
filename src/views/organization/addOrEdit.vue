@@ -178,6 +178,10 @@ export default {
     getItemDetail() {
       getOrganizationDetail({ objectCode: this.editId }).then((res) => {
         if (res.code === 200) {
+          console.log(res.data)
+          if (res.data.salesCounterpart == 0) {
+            res.data.salesCounterpart = ''
+          }
           const props = this.formConfig.props
           const keys = Object.keys(props)
           // 直接遍历进行赋值，特殊属性需要单独拿出来处理
