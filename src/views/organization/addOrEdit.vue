@@ -128,7 +128,7 @@ export default {
             type: 'ImInput',
             prop: 'contactPhone',
             label: '联系人手机号',
-            rules: ['required', 'phone'],
+            // rules: ['required', 'phone'],
             attrs: {
               placeholder: '请输入'
             }
