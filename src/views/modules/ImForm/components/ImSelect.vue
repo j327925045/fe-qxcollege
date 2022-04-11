@@ -3,6 +3,7 @@
   <el-select
     v-model="myValue"
     v-bind="attrs"
+    :placeholder="attrs.placeholder||'请选择'"
     v-on="listeners"
     @change="onUpdate"
   >

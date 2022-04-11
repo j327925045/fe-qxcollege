@@ -15,10 +15,38 @@ export const Content = [
         meta: { title: '专栏列表' }
       },
       {
+        path: '/column/detail',
+        name: 'ColumnDetail',
+        hidden: true,
+        component: () => import('@/views/column/detail'),
+        meta: { title: '专栏详情', noTab: true, highlightPath: '/column/list' }
+      },
+      {
+        path: '/column/addOrEdit',
+        name: 'ColumnAddOrEdit',
+        hidden: true,
+        component: () => import('@/views/column/addOrEdit'),
+        meta: { title: '课程管理', noTab: true, highlightPath: '/column/list' }
+      },
+      {
         path: '/course/list',
         name: 'CourseList',
         component: () => import('@/views/course/list'),
         meta: { title: '课程列表' }
+      },
+      {
+        path: '/course/detail',
+        name: 'CourseDetail',
+        hidden: true,
+        component: () => import('@/views/course/detail'),
+        meta: { title: '课程详情', noTab: true, highlightPath: '/course/list' }
+      },
+      {
+        path: '/course/addOrEdit',
+        name: 'CourseAddOrEdit',
+        hidden: true,
+        component: () => import('@/views/course/addOrEdit'),
+        meta: { title: '课程管理', noTab: true, highlightPath: '/course/list' }
       },
       {
         path: '/resources/list',
