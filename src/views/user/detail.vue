@@ -138,7 +138,7 @@
           <div>
             <div style="color: #606266; font-size: 14px;padding-bottom:10px">针头习惯：</div>
             <el-descriptions v-for="item,index in dataList.userHabitAddDTOList" :key="index" style="font-size: 14px" direction="vertical" :column="3">
-              <el-descriptions-item label-class-name="my-label" label="针头">{{ getLabelByValue('expertGloveSpecification',item.type) }}</el-descriptions-item>
+              <el-descriptions-item label-class-name="my-label" label="针头">{{ item.name }}</el-descriptions-item>
               <el-descriptions-item label-class-name="my-label" label="规格">{{ getLabelByValue('zhen',item.details) }}</el-descriptions-item>
             </el-descriptions>
           </div>
