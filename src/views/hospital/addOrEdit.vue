@@ -123,7 +123,8 @@ export default {
             prop: 'contactName',
             label: '联系人姓名',
             attrs: {
-              placeholder: '请输入联系人姓名'
+              placeholder: '请输入联系人姓名',
+              maxLength: 32
             }
           },
           {

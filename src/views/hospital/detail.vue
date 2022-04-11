@@ -86,16 +86,8 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: 'doctorNumber',
-            label: '医生编号',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
             type: 'slot',
-            label: 'slot',
+            label: '医生编号',
             attrs: {
               fixed: 'left',
               minWidth: '120'

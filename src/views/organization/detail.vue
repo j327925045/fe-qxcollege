@@ -73,7 +73,7 @@ export default {
         tableItems: [
           {
             type: 'slot',
-            label: 'slot',
+            label: '机构编号',
             attrs: {
               fixed: 'left',
               minWidth: '120'
