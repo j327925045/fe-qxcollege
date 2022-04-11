@@ -3,7 +3,7 @@
     <div class="bg-white p-4 mb-[32px]" style="height: calc(100vh - 168px)">
       <ImForm ref="ImForm" :form="formConfig">
         <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />集团信息</h3>
-        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpart" class="w-full"></EmployeeSelect>
+        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpart" filterable class="w-full"></EmployeeSelect>
       </ImForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
@@ -57,7 +57,8 @@ export default {
             label: '集团名称',
             rules: [{ required: true, message: '请输入集团名称' }],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入集团名称',
+              maxLength: 32
             }
           },
           {
@@ -67,8 +68,9 @@ export default {
             rules: ['number'],
             attrs: {
               controls: false,
+              maxLength: 18,
               style: 'width: 100%;text-align: center;',
-              placeholder: '请输入'
+              placeholder: '请输入统一社会信用代码'
             }
           },
           {
@@ -77,7 +79,7 @@ export default {
             label: '集团规模',
             rules: [{ required: true, message: '请选择集团规模' }],
             attrs: {
-              placeholder: '请选择',
+              placeholder: '请选择集团规模',
               clearable: true,
               class: 'w-full',
               options: []
@@ -101,7 +103,8 @@ export default {
             label: '所属经销商',
             rules: [{ required: true, message: '请输入所属经销商' }],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入所属经销商',
+              maxLength: 32
             }
           },
           {
@@ -121,16 +124,18 @@ export default {
             prop: 'contactName',
             label: '联系人姓名',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人姓名',
+              maxLength: 32
             }
           },
           {
             type: 'ImInput',
             prop: 'contactPhone',
             label: '联系人手机号',
-            // rules: ['required', 'phone'],
+            rules: [{ required: false, message: '请输入联系人手机号' }, 'phone'],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人手机号',
+              maxLength: 11
             }
           },
           {

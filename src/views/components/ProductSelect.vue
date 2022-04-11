@@ -1,8 +1,8 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" :filterable="filterable" :allow-create="allowCreate" clearable @change="onChange">
+  <el-select v-model="myValue" :filterable="filterable" :allow-create="allowCreate" :placeholder="placeholder" @change="onChange">
     <el-option
       v-for="item in options"
-      :key="item.objectCode"
+      :key="item.value"
       :label="item.name"
       :value="item.objectCode"
     >
@@ -11,21 +11,17 @@
 </template>
 
 <script>
-import { getEmployeesList } from '@/api/employees'
+import { getProductList } from '@/api/product'
 export default {
-  name: 'HospitalSelect',
+  name: 'OrganizationSelect',
   props: {
     value: {
-      type: [Number, String, Array],
+      type: [Number, String],
       default: undefined
     },
     placeholder: {
       type: String,
       default: '请选择'
-    },
-    multiple: {
-      type: Boolean,
-      default: false
     },
     filterable: {
       type: Boolean,
@@ -55,17 +51,13 @@ export default {
   },
   methods: {
     setMyValue() {
-      try {
-        this.myValue = JSON.parse(JSON.stringify(this.value))
-      } catch (error) {
-        this.myValue = undefined
-      }
+      this.myValue = this.value
     },
 
     getOptions() {
-      getEmployeesList({ limit: 10000, page: 1 }).then(res => {
+      getProductList({}).then(res => {
         if (res.code === 200) {
-          this.options = res.data.list || []
+          this.options = res.data
         }
         console.log('res', res)
       })

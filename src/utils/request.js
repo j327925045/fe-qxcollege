@@ -28,7 +28,9 @@ service.interceptors.response.use(
     // 业务接口统一处理response异常
     if (res.code !== 200) {
       if (!noMessageCode.includes(res.code)) {
-        Message(res.message)
+        if (res.list.length > 0 || res.data.length > 0) {
+          Message(res.message)
+        }
       }
       return Promise.reject(res)
     }

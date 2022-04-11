@@ -3,7 +3,7 @@
     <ImForm ref="ImForm" :form="formConfig">
       <TagSelect slot="TagSelect" v-model="formConfig.props.tagDTOList" class="w-full" placeholder="请选择"></TagSelect>
       <EmployeeSelect slot="EmployeeSelect" v-model="formConfig.props.realAccountManagerCode" class="w-full" placeholder="请选择"></EmployeeSelect>
-      <EmployeeSelect slot="EmployeeSelect1" v-model="formConfig.props.userOppositeDTOList" multiple class="w-full" placeholder="请选择"></EmployeeSelect>
+      <EmployeeSelect slot="EmployeeSelect1" v-model="formConfig.props.userOppositeDTOList" filterable multiple class="w-full" placeholder="请选择"></EmployeeSelect>
       <OrgInfoList slot="OrgInfoList" v-model="formConfig.props.userOrgInfoDTOList" class="w-full"></OrgInfoList>
       <h3 slot="baseInfoSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />医生基本信息</h3>
       <h3 slot="orgInfoSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />所在机构信息</h3>
@@ -162,7 +162,7 @@ export default {
             type: 'ImSlot',
             span: 24,
             lebel: '所在机构信息',
-            hidden: this.isEdit,
+            // hidden: this.isEdit,
             slots: {
               sort: 'OrgInfoList'
             }
@@ -181,14 +181,14 @@ export default {
             label: '医师执业证书',
             hidden: this.isEdit,
             span: 24,
-            rules: [{ required: true, message: '请上传医师执业证书' }]
+            rules: [{ required: true, message: '请上传医师执业证书', trigger: 'change' }]
           },
           {
             type: 'ImInput',
             prop: 'realPracticeCertificateCode',
             label: '医师执业证书编号',
             hidden: this.isEdit,
-            rules: [{ required: true, message: '请输入医师执业证书编号' }],
+            rules: [{ required: true, message: '请输入医师执业证书编号' }, 'number'],
             attrs: {
               placeholder: '请输入'
             }
@@ -236,8 +236,9 @@ export default {
             prop: 'realQualificationCode',
             label: '医师资格证书编号',
             hidden: this.isEdit,
-            rules: [{ required: true, message: '请输入医师资格证书编号' }],
+            rules: [{ required: true, message: '请输入医师资格证书编号' }, 'number'],
             attrs: {
+              maxLength: 27,
               placeholder: '请输入'
             }
           },

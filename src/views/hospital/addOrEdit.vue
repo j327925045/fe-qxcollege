@@ -4,9 +4,9 @@
       <ImForm ref="ImForm" :form="formConfig">
         <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />机构信息</h3>
         <h3 slot="qualification" class="gyl-title"><i class="el-icon-s-order" />资质信息</h3>
-        <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" class="w-full" placeholder="请选择"></OrganizationSelect>
+        <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" filterable class="w-full" placeholder="请选择"></OrganizationSelect>
         <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择"></RegionCascader>
-        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" class="w-full"></EmployeeSelect>
+        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" filterable class="w-full"></EmployeeSelect>
       </ImForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
@@ -66,7 +66,8 @@ export default {
             label: '机构名称',
             rules: [{ required: true, message: '请输入机构名称' }],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入',
+              maxLength: 32
             }
           },
           {
@@ -87,14 +88,14 @@ export default {
             attrs: {
               style: 'width: 100%',
               type: 'date',
-              placeholder: '请选择'
+              placeholder: '请选择成立时间'
             }
           },
           {
             type: 'ImSlot',
             prop: 'regionCode',
             label: '所在城市',
-            rules: [{ required: true, message: '请选择' }],
+            rules: [{ required: true, message: '请选择所在城市' }],
             slots: {
               regionCode: 'RegionCascader'
             }
@@ -105,7 +106,7 @@ export default {
             label: '机构地址',
             attrs: {
               maxLength: 64,
-              placeholder: '请输入'
+              placeholder: '请输入机构地址'
             }
           },
           {
@@ -122,16 +123,17 @@ export default {
             prop: 'contactName',
             label: '联系人姓名',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人姓名'
             }
           },
           {
             type: 'ImInput',
             prop: 'contactPhone',
             label: '联系人手机号',
-            // rules: ['phone'],
+            rules: [{ required: false, message: '请输入手机号' }, 'phone'],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人手机号',
+              maxLength: 11
             }
           },
           {
@@ -165,8 +167,10 @@ export default {
             type: 'ImInput',
             prop: 'registrationNo',
             label: '登记号',
+            rules: [{ required: false }, 'number'],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入登记号',
+              maxLength: 18
             }
           }
         ]

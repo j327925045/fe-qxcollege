@@ -37,7 +37,11 @@
       <div slot="header">
         <span class="headertext">机构信息</span>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="orgCodeSlot" slot-scope="scope">
+          <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.orgCode }}</el-button>
+        </template>
+      </ImTable>
     </el-card>
   </ImWrapper>
 </template>
@@ -68,13 +72,13 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: 'orgCode',
-            label: '机构编号',
+            type: 'slot',
+            label: 'slot',
             attrs: {
               fixed: 'left',
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+              minWidth: '120'
+            },
+            slot: 'orgCodeSlot'
           },
           {
             prop: 'name',
@@ -101,6 +105,9 @@ export default {
     this.getList()
   },
   methods: {
+    onslotClick(objectCode) {
+      this.$router.push({ name: 'HospitalDetail', query: { objectCode: objectCode } })
+    },
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || ''
@@ -154,7 +161,7 @@ export default {
           this.loading = false
           if (res.code === 200) {
             this.total = res.data.totalCount
-            this.tableConfig.data = res.data.list || []
+            this.tableConfig.data = res.data || []
           }
         })
         .catch((_) => {
