@@ -297,7 +297,11 @@ export default {
               width: '110'
             },
             filter(val, row) {
-              return moment(val).format('YYYY-MM-DD')
+              if (val) {
+                return moment(val).format('YYYY-MM-DD')
+              } else {
+                return '_'
+              }
             }
           },
           {
