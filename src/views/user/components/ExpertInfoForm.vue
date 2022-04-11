@@ -102,7 +102,8 @@ export default {
             prop: 'expertAirlinePreference',
             label: '航司偏好',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入',
+              maxLength: 32
             }
           },
           {
@@ -110,7 +111,8 @@ export default {
             prop: 'expertHotelPreference',
             label: '酒店偏好',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入',
+              maxLength: 32
             }
           },
           {
@@ -118,7 +120,8 @@ export default {
             prop: 'expertEatingHabits',
             label: '饮食偏好',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入',
+              maxLength: 32
             }
           },
           {
@@ -126,7 +129,8 @@ export default {
             prop: 'expertDrinkingPreference',
             label: '饮酒偏好',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入',
+              maxLength: 32
             }
           },
           {
@@ -134,7 +138,8 @@ export default {
             prop: 'expertHobby',
             label: '兴趣爱好',
             attrs: {
-              placeholder: '请输入兴趣爱好'
+              placeholder: '请输入兴趣爱好',
+              maxLength: 256
             }
           },
           {
@@ -142,7 +147,8 @@ export default {
             prop: 'personalTaboo',
             label: '个人禁忌',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入',
+              maxLength: 256
             }
           }
         ]
