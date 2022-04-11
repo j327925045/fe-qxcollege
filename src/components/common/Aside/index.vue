@@ -20,19 +20,17 @@
         <svg-icon :icon-class="sidebar.opened ? 'side-unfold' : 'side-fold'"></svg-icon>
       </div>
     </div>
-    <!-- <hamburger :is-active="sidebar.opened" @toggleClick="toggleSideBar" /> -->
   </div>
 </template>
 
 <script>
-import Hamburger from '@/components/common/Hamburger/index.vue'
 import SidebarItem from './SidebarItem.vue'
 import Favourites from './Favourites.vue'
 import { routes } from '@/router/index.js'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { SidebarItem, Hamburger, Favourites },
+  components: { SidebarItem, Favourites },
   provide() {
     return {
       showToolTip: this.sidebar.showToolTip

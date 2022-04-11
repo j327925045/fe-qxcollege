@@ -1,6 +1,6 @@
 <!-- 我们把ele组件常用属性放在这里，如果会用到更多其他属性可以进行扩展 -->
 <template>
-  <el-input v-model="myValue" v-bind="attrs" v-on="listeners" @input="onInput">
+  <el-input v-model="myValue" v-bind="attrs" :placeholder="attrs.placeholder||'请输入'" v-on="listeners" @input="onInput">
     <template v-for="(val, key) in slots" :slot="key">
       <slot :name="val" />
     </template>

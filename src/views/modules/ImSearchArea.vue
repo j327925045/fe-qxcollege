@@ -62,7 +62,7 @@ export default {
   transition: max-height 0.3s;
 
   &.show {
-    max-height: 500px;
+    max-height: 1000px;
   }
 
   &.hide {

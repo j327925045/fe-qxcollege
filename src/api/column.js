@@ -4,6 +4,7 @@ import request from '@/utils/request.js'
  * 添加专栏项
  */
 export function addColumnItem(data) {
+  data.createSource = 1 // 创建来源(1.后台创建 2,小程序创建)
   return request({
     url: '/qxcollege/column/add',
     method: 'post',

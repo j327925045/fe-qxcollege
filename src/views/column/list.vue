@@ -35,17 +35,31 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+          columnNumber: undefined,
+          title: undefined,
+          status: undefined
         },
         formItems: [
+          {
+            type: 'ImInput',
+            prop: 'columnNumber',
+            label: '专栏编号',
+            attrs: {
+            }
+          },
           {
             type: 'ImInput',
             prop: 'title',
             label: '专栏标题',
             attrs: {
-              type: 'text',
-              placeholder: '请输入',
-              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'status',
+            label: '专栏状态',
+            attrs: {
+              class: 'w-full'
             }
           },
           {
@@ -89,64 +103,47 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: '',
-            label: '序号',
-            type: 'index',
+            prop: 'columnNumber',
+            label: '专栏编号',
             attrs: {
               fixed: 'left',
-              width: 60
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
           {
             prop: 'title',
-            label: '标题',
+            label: '专栏标题',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            }
+          },
+          {
+            prop: 'courseCount',
+            label: '课程数量',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'coverUrl',
-            label: '封面图片url',
+            prop: 'productName',
+            label: '产品认证',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
-          },
-          {
-            prop: 'introduction',
-            label: '简介',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
-          },
-          {
-            prop: 'isRecommend',
-            label: '首页是否推荐',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            },
-            options: this?.enums?.columnIsRecommend ?? []
-          },
-          {
-            prop: 'sort',
-            label: '首页排序',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
             }
           },
           {
             prop: 'status',
-            label: '状态',
+            label: '上架状态',
+            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '180'
+              'min-width': '120'
             },
-            options: this?.enums?.columnStatus ?? []
+            options: [] // 1上架 2下架
           },
           {
             prop: '',
@@ -154,9 +151,14 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '100'
+              width: '150'
             },
             options: [
+              {
+                title: '查看',
+                type: 'text',
+                onClick: this.viewItem
+              },
               {
                 title: '编辑',
                 type: 'text',
@@ -180,26 +182,22 @@ export default {
     /**
      * 展示详情
      */
-    showDetail($index, record) {
-      this.$refs.DetailDialog.show(record)
-    },
-
-    setRole($index, record) {
-      this.$refs.SetRoleDrower.edit(record.objectCode)
+    viewItem($index, record) {
+      this.$router.push({ name: 'ColumnDetail', query: { objectCode: record.objectCode } })
     },
 
     /**
      * 编辑
      */
     editItem($index, record) {
-      this.$refs.AddOrEdit.edit(record.objectCode)
+      this.$router.push({ name: 'ColumnAddOrEdit', query: { objectCode: record.objectCode } })
     },
 
     /**
      * 添加
      */
     addItem() {
-      this.$refs.AddOrEdit.add()
+      this.$router.push({ name: 'ColumnAddOrEdit' })
     },
 
     /**

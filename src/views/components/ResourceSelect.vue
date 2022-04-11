@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import { getEmployeesList } from '@/api/employees'
+import { getDataList } from '@/api/resources'
 export default {
-  name: 'HospitalSelect',
+  name: 'CourseSelect',
   props: {
     value: {
       type: [Number, String, Array],
@@ -55,7 +55,7 @@ export default {
     },
 
     getOptions() {
-      getEmployeesList({ limit: 10000, page: 1 }).then(res => {
+      getDataList({ limit: 10000, page: 1 }).then(res => {
         if (res.code === 200) {
           this.options = res.data.list || []
         }

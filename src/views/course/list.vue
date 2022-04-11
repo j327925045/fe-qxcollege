@@ -41,17 +41,92 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+          a: undefined,
+          b: undefined,
+          c: undefined,
+          d: undefined,
+          e: undefined,
+          f: undefined,
+          g: undefined,
+          h: undefined,
+          i: undefined
         },
         formItems: [
           {
             type: 'ImInput',
-            prop: 'title',
+            prop: 'a',
+            label: '课程编号',
+            attrs: {
+            }
+          },
+          {
+            type: 'ImInput',
+            prop: 'b',
             label: '课程标题',
             attrs: {
-              type: 'text',
-              placeholder: '请输入',
-              style: 'width: 100%;'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'c',
+            label: '课程作者',
+            attrs: {
+              allowClear: true,
+              class: 'w-full'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'd',
+            label: '课程分类',
+            attrs: {
+              allowClear: true,
+              class: 'w-full'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'e',
+            label: '课程分级',
+            attrs: {
+              allowClear: true,
+              class: 'w-full'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'f',
+            label: '用户等级要求',
+            attrs: {
+              allowClear: true,
+              class: 'w-full'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'g',
+            label: '付费类型',
+            attrs: {
+              allowClear: true,
+              class: 'w-full'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'h',
+            label: '审核状态',
+            attrs: {
+              allowClear: true,
+              class: 'w-full'
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'i',
+            label: '上架状态',
+            attrs: {
+              allowClear: true,
+              class: 'w-full'
             }
           },
           {
@@ -95,16 +170,16 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: '',
-            label: '序号',
-            type: 'index',
+            prop: 'a',
+            label: '课程编号',
             attrs: {
               fixed: 'left',
-              width: 60
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
           {
-            prop: 'title',
+            prop: 'b',
             label: '标题',
             attrs: {
               'show-overflow-tooltip': true,
@@ -112,32 +187,40 @@ export default {
             }
           },
           {
-            prop: 'author',
-            label: '作者',
+            prop: 'c',
+            label: '视频类型',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'collectCount',
-            label: '收藏总次数',
+            prop: 'd',
+            label: '视频时长',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
           {
-            prop: 'introduction',
-            label: '介绍',
+            prop: 'e',
+            label: '视频作者',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '180'
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'f',
+            label: '视频分类',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
           {
             prop: 'level',
-            label: '分级',
+            label: '视频分级',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
@@ -146,49 +229,82 @@ export default {
             options: this.enums.courseLevel
           },
           {
-            prop: 'price',
-            label: '积分价格',
+            prop: 'h',
+            label: '用户等级要求',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
-          },
-          {
-            prop: 'starCount',
-            label: '点赞总次数',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'status',
-            label: '申请结果',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'summary',
-            label: '简介',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
             }
           },
           {
             prop: 'type',
-            label: '类型',
+            label: '付费类型',
+            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             },
             options: this.enums.courseType
           },
           {
-            prop: 'viewCount',
-            label: '观看总次数',
+            prop: 'price',
+            label: '积分数值',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'i',
+            label: '观看次数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'j',
+            label: '观看人数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'k',
+            label: '收藏数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'l',
+            label: '点赞数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'n',
+            label: '评论数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'o',
+            label: '审核状态',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'p',
+            label: '上架状态',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
@@ -200,9 +316,14 @@ export default {
             type: 'buttons',
             attrs: {
               fixed: 'right',
-              width: '100'
+              width: '150'
             },
             options: [
+              {
+                title: '查看',
+                type: 'text',
+                onClick: this.viewItem
+              },
               {
                 title: '编辑',
                 type: 'text',
@@ -234,18 +355,22 @@ export default {
       this.$refs.SetRoleDrower.edit(record.objectCode)
     },
 
+    viewItem($index, record) {
+      this.$router.push({ name: 'CourseDetail', query: { objectCode: record.objectCode } })
+    },
+
     /**
      * 编辑
      */
     editItem($index, record) {
-      this.$refs.AddOrEdit.edit(record.objectCode)
+      this.$router.push({ name: 'CourseAddOrEdit', query: { objectCode: record.objectCode } })
     },
 
     /**
      * 添加
      */
     addItem() {
-      this.$refs.AddOrEdit.add()
+      this.$router.push({ name: 'CourseAddOrEdit' })
     },
 
     /**
