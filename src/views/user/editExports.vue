@@ -43,7 +43,6 @@ export default {
           realMajor: undefined
         },
         formItems: [
-
           {
             type: 'ImSlot',
             notInForm: true,

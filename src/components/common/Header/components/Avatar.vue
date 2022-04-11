@@ -64,6 +64,7 @@ export default {
       display: inline-block;
       padding: 0 8px;
       color: #fff;
+      font-size: 14px;
     }
 
     .el-icon-arrow-down {
