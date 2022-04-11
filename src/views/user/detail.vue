@@ -61,7 +61,7 @@
           <div class="divCrad">
             <div class="pt-4 titleDiv">
               <span class="fl mr-4">资质信息</span>
-              <span class="fr auditStatus" @click="qualification">上传资质</span>
+              <span v-if="dataList.realAuditStatus==1" class="fr auditStatus" @click="qualification">上传资质</span>
             </div>
             <el-descriptions title="执业信息" class="mt-4" :column="1" :size="size">
               <el-descriptions-item label="医师执业证书">
@@ -89,7 +89,7 @@
               <el-descriptions-item label="专业">{{ dataList.realMajor }}</el-descriptions-item>
             </el-descriptions>
             <el-descriptions title="最近审核信息" class="mt-4" :column="2" :size="size">
-              <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '同意' : '拒绝' }}</el-descriptions-item>
+              <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '审核通过' : '审核驳回' }}</el-descriptions-item>
               <el-descriptions-item label="审核编码">{{ dataList.userRealApprovalRecordList[0].applyCode }}</el-descriptions-item>
             </el-descriptions>
           </div>
