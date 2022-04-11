@@ -11,7 +11,21 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建医生</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="someSlot" slot-scope="scope">
+          <span> {{ scope.row.nickname }}</span>
+          <img width="24px" height="24px" :src="getIcon(scope.row.doctorLevel)" alt="">
+        </template>
+        <template slot="realAuditSlot" slot-scope="scope">
+          <div style="position:relative">
+            <span v-if="scope.row.realAuditStatus==1" style="position: absolute;font-size: 50px;top:-2px;color:#0093FF">·</span>
+            <span v-if="scope.row.realAuditStatus==2" style="position: absolute;font-size: 50px;top:-2px;color:#E1251B">·</span>
+            <span v-if="scope.row.realAuditStatus==3" style="position: absolute;font-size: 50px;top:-2px;color:#0093FF">·</span>
+            <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"同意":scope.row.realAuditStatus==2?"拒绝":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
+          </div>
+        </template>
+      </ImTable>
+
       <div class="mt-4 text-right">
         <ImPagination
           ref="ImPagination"
@@ -246,16 +260,16 @@ export default {
             attrs: {
               fixed: 'left',
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             }
           },
           {
-            prop: 'nickname',
+            type: 'slot',
             label: '昵称',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+              width: '160'
+            },
+            slot: 'someSlot'
           },
           {
             prop: 'realName',
@@ -304,15 +318,24 @@ export default {
             },
             options: this?.enums?.doctorLevel ?? []
           },
+          // {
+          //   prop: 'realAuditStatus',
+          //   label: '审核状态',
+          //   type: 'mapList',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   },
+          //   options: this?.enums?.realAuditStatus ?? []
+          // },
+
           {
-            prop: 'realAuditStatus',
+            type: 'slot',
             label: '审核状态',
-            type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             },
-            options: this?.enums?.realAuditStatus ?? []
+            slot: 'realAuditSlot'
           },
           {
             prop: 'regionFullName',
@@ -406,6 +429,13 @@ export default {
     this.setOptions()
   },
   methods: {
+    // level动态展示
+    getIcon(code) {
+      if (code) {
+        const iconList = require(`../../assets/img/level/v${code}.png`)
+        return iconList
+      }
+    },
     /**
      * 统一处理options
      */

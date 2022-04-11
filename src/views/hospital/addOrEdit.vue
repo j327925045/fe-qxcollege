@@ -87,14 +87,14 @@ export default {
             attrs: {
               style: 'width: 100%',
               type: 'date',
-              placeholder: '请选择'
+              placeholder: '请选择成立时间'
             }
           },
           {
             type: 'ImSlot',
             prop: 'regionCode',
             label: '所在城市',
-            rules: [{ required: true, message: '请选择' }],
+            rules: [{ required: true, message: '请选择所在城市' }],
             slots: {
               regionCode: 'RegionCascader'
             }
@@ -105,7 +105,7 @@ export default {
             label: '机构地址',
             attrs: {
               maxLength: 64,
-              placeholder: '请输入'
+              placeholder: '请输入机构地址'
             }
           },
           {
@@ -122,16 +122,17 @@ export default {
             prop: 'contactName',
             label: '联系人姓名',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人姓名'
             }
           },
           {
             type: 'ImInput',
             prop: 'contactPhone',
             label: '联系人手机号',
-            // rules: ['phone'],
+            rules: [{ required: false, message: '请输入手机号' }, 'phone'],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人手机号',
+              maxLength: 11
             }
           },
           {
@@ -166,7 +167,7 @@ export default {
             prop: 'registrationNo',
             label: '登记号',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入登记号'
             }
           }
         ]

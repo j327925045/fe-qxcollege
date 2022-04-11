@@ -32,10 +32,11 @@ export default {
             type: 'ImInput',
             prop: 'realName',
             label: '姓名',
-            rules: [{ required: true, message: '请输入姓名' }],
+            // rules: [{ required: true, message: '请输入姓名' }],
             attrs: {
               type: 'text',
-              placeholder: '请输入姓名'
+              placeholder: '请输入姓名',
+              maxLength: 32
             }
           },
           {

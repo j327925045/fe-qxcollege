@@ -48,7 +48,7 @@ export default {
             label: '集团名称',
             attrs: {
               clearable: true,
-              placeholder: '请输入',
+              placeholder: '请输入集团名称',
               style: 'width: 100%;'
             }
           },
@@ -58,7 +58,7 @@ export default {
             label: '集团规模',
             attrs: {
               clearable: true,
-              placeholder: '请选择',
+              placeholder: '请选择集团规模',
               style: 'width: 100%;',
               options: []
             }
@@ -69,7 +69,7 @@ export default {
             label: '集团编号',
             attrs: {
               clearable: true,
-              placeholder: '请输入',
+              placeholder: '请输入集团编号',
               style: 'width: 100%;'
             }
           },
@@ -79,7 +79,7 @@ export default {
             label: '合作方式',
             attrs: {
               clearable: true,
-              placeholder: '请选择',
+              placeholder: '请选择合作方式',
               style: 'width: 100%;',
               options: []
             }
@@ -90,7 +90,7 @@ export default {
             label: '销售对接人',
             attrs: {
               clearable: true,
-              placeholder: '请输入',
+              placeholder: '请输入销售对接人',
               style: 'width: 100%;'
             }
           },
@@ -100,7 +100,7 @@ export default {
             label: '是否建账',
             attrs: {
               clearable: true,
-              placeholder: '请输入',
+              placeholder: '请输入是否建账',
               style: 'width: 100%;',
               options: []
             }
