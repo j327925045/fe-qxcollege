@@ -3,7 +3,7 @@
     <div class="bg-white p-4 mb-[32px]" style="height: calc(100vh - 168px)">
       <ImForm ref="ImForm" :form="formConfig">
         <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />集团信息</h3>
-        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpart" class="w-full"></EmployeeSelect>
+        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpart" allow-create filterable class="w-full"></EmployeeSelect>
       </ImForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
@@ -124,7 +124,8 @@ export default {
             prop: 'contactName',
             label: '联系人姓名',
             attrs: {
-              placeholder: '请输入联系人姓名'
+              placeholder: '请输入联系人姓名',
+              maxLength: 32
             }
           },
           {
