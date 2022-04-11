@@ -33,7 +33,7 @@
 
               <el-descriptions-item label="医生标签">
                 <div v-if="dataList.tagDTOList">
-                  <el-tag v-for="item,index in dataList.tagDTOList" :key="index" size="small">{{ item }}</el-tag>
+                  <el-tag v-for="item,index in dataList.tagDTOShowList" :key="index" size="small">{{ item }}</el-tag>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="客户经理">
@@ -41,7 +41,7 @@
               </el-descriptions-item>
 
               <el-descriptions-item label="对接人">
-                <el-tag v-for="(item, index) in dataList.userOppositeDTOList" :key="index" size="small">{{ item }}</el-tag>
+                <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" size="small">{{ item }}</el-tag>
               </el-descriptions-item>
               <el-descriptions-item label="职称">{{ getLabelByValue('jobTitle', dataList.realJobTitle) }}</el-descriptions-item>
               <el-descriptions-item label="执业分类">{{ dataList.occupationalClassification }}</el-descriptions-item>
@@ -90,7 +90,7 @@
               <el-descriptions-item label="专业">{{ dataList.realMajor }}</el-descriptions-item>
             </el-descriptions>
             <el-descriptions title="最近审核信息" class="mt-4" :column="2" :size="size">
-              <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '审核通过' : '审核驳回' }}</el-descriptions-item>
+              <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '审核通过' :dataList.realAuditStatus == 2 ? '审核驳回':dataList.realAuditStatus == 3 ? '审核中':"" }}</el-descriptions-item>
               <el-descriptions-item label="审核编码">{{ dataList.userRealApprovalRecordList[0].applyCode }}</el-descriptions-item>
             </el-descriptions>
           </div>

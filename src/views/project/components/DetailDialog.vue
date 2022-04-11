@@ -60,7 +60,7 @@ export default {
     getItemDetail(objectCode) {
       getProjectDetail({ objectCode: objectCode }).then(res => {
         if (res.code === 200) {
-          this.productDetail.projectProductList = res.data.projectProductStrArr
+          this.productDetail.projectProductList = res.data.projectProductArr
         }
       })
     },
