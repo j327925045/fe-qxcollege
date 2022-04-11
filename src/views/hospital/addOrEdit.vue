@@ -166,8 +166,10 @@ export default {
             type: 'ImInput',
             prop: 'registrationNo',
             label: '登记号',
+            rules: [{ required: false }, 'number'],
             attrs: {
-              placeholder: '请输入登记号'
+              placeholder: '请输入登记号',
+              maxLength: 18
             }
           }
         ]
