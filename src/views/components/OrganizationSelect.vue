@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" @change="onChange">
+  <el-select v-model="myValue" :filterable="filterable" :allow-create="allowCreate" :placeholder="placeholder" @change="onChange">
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -22,6 +22,14 @@ export default {
     placeholder: {
       type: String,
       default: '请选择'
+    },
+    filterable: {
+      type: Boolean,
+      default: false
+    },
+    allowCreate: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
