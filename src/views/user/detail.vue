@@ -422,7 +422,7 @@ export default {
     goEdit() {
       console.log('goEdit')
       console.log(this.dataList.objectCode)
-      this.$router.push(`/user/create?objectCode=${this.dataList.objectCode}`)
+      this.$router.push(`/user/addOrEdit?objectCode=${this.dataList.objectCode}`)
     },
     // 上传资质
     qualification() {

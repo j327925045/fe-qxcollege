@@ -143,17 +143,17 @@ export default {
             options: [
               {
                 value: '1' + '',
-                label: '通过'
+                label: '审核通过'
                 // style: 'color:red;'
               },
               {
                 value: '2' + '',
-                label: '拒绝'
+                label: '审核驳回'
                 // style: 'color:brown;'
               },
               {
                 value: '3' + '',
-                label: '待审批'
+                label: '审核中'
                 // style: 'color:brown;'
               }
             ]

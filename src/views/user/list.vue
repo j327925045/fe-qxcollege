@@ -21,7 +21,7 @@
             <span v-if="scope.row.realAuditStatus==1" style="position: absolute;font-size: 50px;top:-2px;color:#0093FF">·</span>
             <span v-if="scope.row.realAuditStatus==2" style="position: absolute;font-size: 50px;top:-2px;color:#E1251B">·</span>
             <span v-if="scope.row.realAuditStatus==3" style="position: absolute;font-size: 50px;top:-2px;color:#0093FF">·</span>
-            <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"同意":scope.row.realAuditStatus==2?"拒绝":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
+            <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
           </div>
         </template>
       </ImTable>
