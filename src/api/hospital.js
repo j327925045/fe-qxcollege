@@ -55,3 +55,12 @@ export function getTagList(params) {
     params: params
   })
 }
+
+// 关联信息列表
+export function getTabhList(params) {
+  return request({
+    url: '/qxcollege/hospital/list/doctor',
+    method: 'get',
+    params: params
+  })
+}

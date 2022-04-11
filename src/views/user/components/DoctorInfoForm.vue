@@ -188,7 +188,7 @@ export default {
             prop: 'realPracticeCertificateCode',
             label: '医师执业证书编号',
             hidden: this.isEdit,
-            rules: [{ required: true, message: '请输入医师执业证书编号' }],
+            rules: [{ required: true, message: '请输入医师执业证书编号' }, 'number'],
             attrs: {
               placeholder: '请输入'
             }
@@ -236,8 +236,9 @@ export default {
             prop: 'realQualificationCode',
             label: '医师资格证书编号',
             hidden: this.isEdit,
-            rules: [{ required: true, message: '请输入医师资格证书编号' }],
+            rules: [{ required: true, message: '请输入医师资格证书编号' }, 'number'],
             attrs: {
+              maxLength: 27,
               placeholder: '请输入'
             }
           },

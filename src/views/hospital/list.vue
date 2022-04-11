@@ -56,7 +56,7 @@ export default {
             label: '机构名称',
             attrs: {
               type: 'text',
-              placeholder: '请输入',
+              placeholder: '请输入机构名称',
               style: 'width: 100%;'
             }
           },
@@ -66,7 +66,7 @@ export default {
             label: '机构编号',
             attrs: {
               type: 'text',
-              placeholder: '请输入',
+              placeholder: '请输入机构编号',
               style: 'width: 100%;'
             }
           },
@@ -76,7 +76,7 @@ export default {
             label: '机构性质',
             attrs: {
               clearable: true,
-              placeholder: '请选择',
+              placeholder: '请选择机构性质',
               style: 'width: 100%;',
               options: []
             }
@@ -87,7 +87,7 @@ export default {
             label: '所在城市',
             attrs: {
               clearable: true,
-              placeholder: '请选择',
+              placeholder: '请选择所在城市',
               style: 'width: 100%;',
               options: []
             },
@@ -101,7 +101,7 @@ export default {
             label: '销售对接人',
             attrs: {
               type: 'text',
-              placeholder: '请输入',
+              placeholder: '请输入销售对接人',
               style: 'width: 100%;'
             }
           },

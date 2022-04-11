@@ -57,8 +57,7 @@
 </template>
 
 <script>
-import { getHospitalDetail, deleteHospitalItem } from '@/api/hospital'
-import { getUserList } from '@/api/user'
+import { getHospitalDetail, deleteHospitalItem, getTabhList } from '@/api/hospital'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
@@ -174,10 +173,10 @@ export default {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        realHospitalCode: this.objectCode
+        hospitalCode: this.objectCode
       }
       this.loading = true
-      getUserList(params)
+      getTabhList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {

@@ -57,7 +57,7 @@ export default {
             label: '集团名称',
             rules: [{ required: true, message: '请输入集团名称' }],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入集团名称'
             }
           },
           {
@@ -68,7 +68,7 @@ export default {
             attrs: {
               controls: false,
               style: 'width: 100%;text-align: center;',
-              placeholder: '请输入'
+              placeholder: '请输入统一社会信用代码'
             }
           },
           {
@@ -77,7 +77,7 @@ export default {
             label: '集团规模',
             rules: [{ required: true, message: '请选择集团规模' }],
             attrs: {
-              placeholder: '请选择',
+              placeholder: '请选择集团规模',
               clearable: true,
               class: 'w-full',
               options: []
@@ -101,7 +101,7 @@ export default {
             label: '所属经销商',
             rules: [{ required: true, message: '请输入所属经销商' }],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入所属经销商'
             }
           },
           {
@@ -121,16 +121,17 @@ export default {
             prop: 'contactName',
             label: '联系人姓名',
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人姓名'
             }
           },
           {
             type: 'ImInput',
             prop: 'contactPhone',
             label: '联系人手机号',
-            // rules: ['required', 'phone'],
+            rules: [{ required: false, message: '请输入联系人手机号' }, 'phone'],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入联系人手机号',
+              maxLength: 11
             }
           },
           {
