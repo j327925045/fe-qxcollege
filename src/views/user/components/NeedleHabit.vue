@@ -2,7 +2,7 @@
   <div>
     <div v-for="(item, idx) in myValue" :key="idx" class="mb-4">
       <el-select v-model="item.type" placeholder="请选择产品" @change="onChange">
-        <el-option v-for="opt in enums.habit" :key="opt.value" :label="opt.label" :value="opt.value"> </el-option>
+        <el-option v-for="opt in options" :key="opt.objectCode" :label="opt.name" :value="opt.objectCode"> </el-option>
       </el-select>
       <el-select v-model="item.details" class="ml-4 mr-4" placeholder="请选择针头" @change="onChange">
         <el-option v-for="opt in enums.zhen" :key="opt.value" :label="opt.label" :value="opt.value"> </el-option>
@@ -15,6 +15,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getProductList } from '@/api/product'
 export default {
   name: 'NeedleHabit',
   props: {
@@ -27,8 +28,12 @@ export default {
   },
   data() {
     return {
-      myValue: []
+      myValue: [],
+      options: []
     }
+  },
+  created() {
+    this.getOptions()
   },
   computed: {
     ...mapGetters(['enums'])
@@ -42,6 +47,14 @@ export default {
     }
   },
   methods: {
+    getOptions() {
+      getProductList({}).then(res => {
+        if (res.code === 200) {
+          this.options = res.data.list
+        }
+        console.log('res', res)
+      })
+    },
     setMyValue() {
       if (!Array.isArray(this.value) || !this.value || this.value.length === 0) {
         this.myValue = [{
