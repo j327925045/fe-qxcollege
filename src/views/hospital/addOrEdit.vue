@@ -4,7 +4,7 @@
       <ImForm ref="ImForm" :form="formConfig">
         <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />机构信息</h3>
         <h3 slot="qualification" class="gyl-title"><i class="el-icon-s-order" />资质信息</h3>
-        <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" class="w-full" placeholder="请选择"></OrganizationSelect>
+        <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" filterable class="w-full" placeholder="请选择"></OrganizationSelect>
         <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择"></RegionCascader>
         <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" filterable class="w-full"></EmployeeSelect>
       </ImForm>
@@ -66,7 +66,8 @@ export default {
             label: '机构名称',
             rules: [{ required: true, message: '请输入机构名称' }],
             attrs: {
-              placeholder: '请输入'
+              placeholder: '请输入',
+              maxLength: 32
             }
           },
           {
