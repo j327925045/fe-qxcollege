@@ -181,7 +181,7 @@ export default {
           this.loading = false
           if (res.code === 200) {
             this.total = res.data.totalCount
-            this.tableConfig.data = res.data.list || []
+            this.tableConfig.data = res.list || []
           }
         })
         .catch((_) => {
