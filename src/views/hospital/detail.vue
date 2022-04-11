@@ -19,7 +19,7 @@
         <el-descriptions-item label="机构性质">
           {{ getLabelByValue('hospitalNature', details.nature) }}
         </el-descriptions-item>
-        <el-descriptions-item label="成立时间">{{ getDate(details.establishedTime) }}</el-descriptions-item>
+        <el-descriptions-item label="成立时间">{{ details.establishedTime?getDate(details.establishedTime):"" }}</el-descriptions-item>
         <el-descriptions-item label="所在城市">{{ details.regionFullName }}</el-descriptions-item>
         <el-descriptions-item label="机构地址">{{ details.location }}</el-descriptions-item>
         <el-descriptions-item label="所属集团">{{ details.organizationName }}</el-descriptions-item>
