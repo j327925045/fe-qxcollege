@@ -3,7 +3,7 @@
     <ImForm ref="ImForm" :form="formConfig">
       <TagSelect slot="TagSelect" v-model="formConfig.props.tagDTOList" class="w-full" placeholder="请选择"></TagSelect>
       <EmployeeSelect slot="EmployeeSelect" v-model="formConfig.props.realAccountManagerCode" class="w-full" placeholder="请选择"></EmployeeSelect>
-      <EmployeeSelect slot="EmployeeSelect1" v-model="formConfig.props.userOppositeDTOList" multiple class="w-full" placeholder="请选择"></EmployeeSelect>
+      <EmployeeSelect slot="EmployeeSelect1" v-model="formConfig.props.userOppositeDTOList" allow-create filterable multiple class="w-full" placeholder="请选择"></EmployeeSelect>
       <OrgInfoList slot="OrgInfoList" v-model="formConfig.props.userOrgInfoDTOList" class="w-full"></OrgInfoList>
       <h3 slot="baseInfoSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />医生基本信息</h3>
       <h3 slot="orgInfoSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />所在机构信息</h3>

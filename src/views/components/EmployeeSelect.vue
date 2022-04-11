@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" clearable @change="onChange">
+  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" :filterable="filterable" :allow-create="allowCreate" clearable @change="onChange">
     <el-option
       v-for="item in options"
       :key="item.objectCode"
@@ -25,6 +25,14 @@ export default {
       default: '请选择'
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    filterable: {
+      type: Boolean,
+      default: false
+    },
+    allowCreate: {
       type: Boolean,
       default: false
     }
