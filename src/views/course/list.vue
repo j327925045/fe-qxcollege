@@ -19,20 +19,15 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
 import { getCourseList, deleteCourseItem } from '@/api/course.js'
-import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'CourseList',
-  components: {
-    AddOrEdit
-  },
   data() {
     return {
       formConfig: {
