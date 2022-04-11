@@ -539,6 +539,7 @@ export default {
   text-align: center;
   background: #005dbe;
   border-radius: 4px;
+  float: right;
 }
 //产品认证
 .elRow {
