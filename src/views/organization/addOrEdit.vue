@@ -57,7 +57,8 @@ export default {
             label: '集团名称',
             rules: [{ required: true, message: '请输入集团名称' }],
             attrs: {
-              placeholder: '请输入集团名称'
+              placeholder: '请输入集团名称',
+              maxLength: 32
             }
           },
           {
@@ -67,6 +68,7 @@ export default {
             rules: ['number'],
             attrs: {
               controls: false,
+              maxLength: 18,
               style: 'width: 100%;text-align: center;',
               placeholder: '请输入统一社会信用代码'
             }
@@ -101,7 +103,8 @@ export default {
             label: '所属经销商',
             rules: [{ required: true, message: '请输入所属经销商' }],
             attrs: {
-              placeholder: '请输入所属经销商'
+              placeholder: '请输入所属经销商',
+              maxLength: 32
             }
           },
           {

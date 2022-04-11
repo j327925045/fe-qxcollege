@@ -162,7 +162,7 @@ export default {
             type: 'ImSlot',
             span: 24,
             lebel: '所在机构信息',
-            hidden: this.isEdit,
+            // hidden: this.isEdit,
             slots: {
               sort: 'OrgInfoList'
             }
@@ -181,7 +181,7 @@ export default {
             label: '医师执业证书',
             hidden: this.isEdit,
             span: 24,
-            rules: [{ required: true, message: '请上传医师执业证书' }]
+            rules: [{ required: true, message: '请上传医师执业证书', trigger: 'change' }]
           },
           {
             type: 'ImInput',
