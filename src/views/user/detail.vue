@@ -136,11 +136,10 @@
             <el-descriptions-item label="消毒剂偏好">{{ getLabelByValue('expertDisinfectantPreference', dataList.expertDisinfectantPreference + '') }}</el-descriptions-item>
           </el-descriptions>
           <div>
-            <div style="color: #606266; font-size: 12px">针头习惯：</div>
-            <el-descriptions direction="vertical" :column="3">
-              <el-descriptions-item label-class-name="my-label" label="填充剂">{{ '接口没有' }}</el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="嗨体">{{ '接口没有' }}</el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="冭活">{{ '接口没有' }}</el-descriptions-item>
+            <div style="color: #606266; font-size: 14px;padding-bottom:10px">针头习惯：</div>
+            <el-descriptions v-for="item,index in dataList.userHabitAddDTOList" :key="index" style="font-size: 14px" direction="vertical" :column="3">
+              <el-descriptions-item label-class-name="my-label" label="针头">{{ getLabelByValue('expertGloveSpecification',item.type) }}</el-descriptions-item>
+              <el-descriptions-item label-class-name="my-label" label="规格">{{ getLabelByValue('zhen',item.details) }}</el-descriptions-item>
             </el-descriptions>
           </div>
           <el-descriptions title="出行相关" class="mt-4" :column="2" :size="size">
@@ -632,6 +631,10 @@ export default {
       background: #a6dbff;
     }
   }
+}
+
+/deep/.el-descriptions-row{
+font-size: 14px;
 }
 
 /deep/ .el-tabs__nav-scroll {
