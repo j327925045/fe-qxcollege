@@ -25,7 +25,7 @@
               <!-- <span class="fr auditStatus" @click="goDoctorEdit">编辑</span> -->
             </div>
             <el-descriptions class="margin-top" :column="1" :size="size">
-              <el-descriptions-item label="医生简介">{{ dataList.doctorLabel }}</el-descriptions-item>
+              <el-descriptions-item label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
               <el-descriptions-item label="医生介绍">
                 <img :src="dataList.doctorIntroduction" alt="">
                 {{ dataList.personalIntroduction }}

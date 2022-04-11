@@ -6,7 +6,7 @@
         <h3 slot="qualification" class="gyl-title"><i class="el-icon-s-order" />资质信息</h3>
         <OrganizationSelect slot="OrganizationSelect" v-model="formConfig.props.organizationCode" class="w-full" placeholder="请选择"></OrganizationSelect>
         <RegionCascader slot="RegionCascader" v-model="formConfig.props.regionCode" class="w-full" placeholder="请选择"></RegionCascader>
-        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" allow-create filterable class="w-full"></EmployeeSelect>
+        <EmployeeSelect slot="employeeSelect" v-model="formConfig.props.salesCounterpartCode" filterable class="w-full"></EmployeeSelect>
       </ImForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">

@@ -50,7 +50,11 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <div class="mt-4 text-right">
-        <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
+        <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList">
+          <template slot="doctorNumberSlot" slot-scope="scope">
+            <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.doctorNumber }}</el-button>
+          </template>
+        </ImPagination>
       </div>
     </el-card>
   </ImWrapper>
@@ -90,6 +94,15 @@ export default {
             }
           },
           {
+            type: 'slot',
+            label: 'slot',
+            attrs: {
+              fixed: 'left',
+              minWidth: '120'
+            },
+            slot: 'doctorNumberSlot'
+          },
+          {
             prop: 'realName',
             label: '医生姓名',
             attrs: {
@@ -126,6 +139,9 @@ export default {
     this.getList()
   },
   methods: {
+    onslotClick(objectCode) {
+      this.$router.push({ name: 'UserDetail', query: { objectCode: objectCode } })
+    },
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || ''
