@@ -10,7 +10,7 @@
       <el-descriptions class="doctorMsg" :column="2" :size="size">
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
-        <el-descriptions-item label="生日">{{ moment(dataList.birthday).format('YYYY-MM-DD hh:mm:ss') }} </el-descriptions-item>
+        <el-descriptions-item label="生日">{{ dataList.birthday? moment(dataList.birthday).format('YYYY-MM-DD hh:mm:ss'):"" }} </el-descriptions-item>
         <el-descriptions-item label="性别">{{ getLabelByValue('gender', dataList.gender) }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ dataList.phone }} </el-descriptions-item>
       </el-descriptions>
@@ -25,8 +25,9 @@
               <!-- <span class="fr auditStatus" @click="goDoctorEdit">编辑</span> -->
             </div>
             <el-descriptions class="margin-top" :column="1" :size="size">
-              <el-descriptions-item label="医生简介">{{ dataList.doctorLabel }}</el-descriptions-item>
+              <el-descriptions-item label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
               <el-descriptions-item label="医生介绍">
+                <img :src="dataList.doctorIntroduction" alt="">
                 {{ dataList.personalIntroduction }}
               </el-descriptions-item>
 
@@ -100,7 +101,7 @@
             <span class="fl mr-4">账号信息</span>
           </div>
           <el-descriptions title="" class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="注册时间">{{ moment(dataList.registrationTime).format('YYYY-MM-DD')||'' }}</el-descriptions-item>
+            <el-descriptions-item label="注册时间">{{ dataList.registrationTime? moment(dataList.registrationTime).format('YYYY-MM-DD'):'' }}</el-descriptions-item>
             <el-descriptions-item label="注册来源">{{ getLabelByValue('registrationSource', dataList.registrationSource) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions title="微信绑定" class="mt-4" :column="1" :size="size">
@@ -118,7 +119,7 @@
             <el-descriptions-item label="是否关注公众号">{{ getLabelByValue('officialAccount', dataList.officialAccount) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions :column="3" :size="size">
-            <el-descriptions-item label="关注时间"> {{ moment(dataList.officialAccountTime).format('YYYY-MM-DD') }}</el-descriptions-item>
+            <el-descriptions-item label="关注时间"> {{ dataList.officialAccountTime?moment(dataList.officialAccountTime).format('YYYY-MM-DD'):'' }}</el-descriptions-item>
             <el-descriptions-item label="关注来源">{{ getLabelByValue('officialAccountSource', dataList.officialAccountSource) }}</el-descriptions-item>
           </el-descriptions>
         </div>
@@ -154,7 +155,7 @@
           </el-descriptions>
         </div>
       </el-tab-pane>
-      <el-tab-pane class="productPane" label="产品认证" name="product">
+      <!-- <el-tab-pane class="productPane" label="产品认证" name="product">
         <div>
           <div class="productTitle pb-4">
             <span>认证证书 </span>
@@ -220,7 +221,7 @@
       </el-tab-pane>
       <el-tab-pane label="活动记录" name="activity">活动记录</el-tab-pane>
       <el-tab-pane label="课程记录" name="course">课程记录</el-tab-pane>
-      <el-tab-pane label="操作日志" name="operation">操作日志</el-tab-pane>
+      <el-tab-pane label="操作日志" name="operation">操作日志</el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

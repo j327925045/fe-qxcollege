@@ -14,7 +14,7 @@
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="someSlot" slot-scope="scope">
           <span> {{ scope.row.nickname }}</span>
-          <img width="24px" height="24px" :src="getIcon(scope.row.doctorLevel)" alt="">
+          <img v-if="scope.row.nickname" width="24px" height="24px" :src="getIcon(scope.row.doctorLevel)" alt="">
         </template>
         <template slot="realAuditSlot" slot-scope="scope">
           <div style="position:relative">
