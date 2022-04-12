@@ -59,7 +59,6 @@ export default {
         if (res.code === 200) {
           this.options = res.data
         }
-        console.log('res', res)
       })
     },
 

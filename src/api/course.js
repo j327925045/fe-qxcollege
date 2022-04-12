@@ -54,3 +54,25 @@ export function getCourseList(params) {
     params
   })
 }
+
+/**
+ * 当前课程对应的专栏列表
+ */
+export function getCourseColumnList(params) {
+  return request({
+    url: '',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 当前课程对应的评论列表
+ */
+export function getCourseCommentList(params) {
+  return request({
+    url: '',
+    method: 'get',
+    params
+  })
+}

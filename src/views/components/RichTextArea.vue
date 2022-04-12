@@ -92,7 +92,6 @@ export default {
     onCreated(editor) {
       // 一定要用 Object.seal() ，否则会报错
       this.editor = Object.seal(editor)
-      console.log('this.editor.', this.editor.getConfig())
     },
     onChange() {
       this.$emit('input', this.myValue)
