@@ -1,28 +1,31 @@
 <template>
-  <ImDrawer
-    :visible.sync="drawerVisible"
-    :title="editId ? '编辑项目' : '新建项目'"
-    @closeDrower="closeDrower"
-    @submit="submitForm"
-  >
-    <ImForm
-      ref="ImForm"
-      :form="formConfig"
-    >
-      <!-- <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />项目信息</h3> -->
-      <OrganizationSelect
-        slot="OrganizationSelect"
-        v-model="formConfig.props.organizationCode"
-        placeholder="请选择"
-      ></OrganizationSelect>
-      <projectProductArr
-        slot="projectProductArr"
-        v-model="formConfig.props.projectProductArr"
-        class="w-full"
-        placeholder="请选择产品"
-      ></projectProductArr>
-    </ImForm>
-  </ImDrawer>
+
+  <ImWrapper>
+    <div class="bg-white p-4 mb-[32px]">
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />项目信息</h3>
+      <ImForm
+        ref="ImForm"
+        :form="formConfig"
+      >
+        <!-- <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />项目信息</h3> -->
+        <OrganizationSelect
+          slot="OrganizationSelect"
+          v-model="formConfig.props.organizationCode"
+          placeholder="请选择"
+        ></OrganizationSelect>
+        <projectProductArr
+          slot="projectProductArr"
+          v-model="formConfig.props.projectProductArr"
+          class="w-full"
+          placeholder="请选择产品"
+        ></projectProductArr>
+      </ImForm>
+    </div>
+    <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
+      <el-button @click="closeDrower">取 消</el-button>
+      <el-button type="primary" @click="submitForm">保 存</el-button>
+    </div>
+  </ImWrapper>
 </template>
 
 <script>
@@ -30,7 +33,7 @@ import { addProjectItem, getProjectDetail, updateProjectItem } from '@/api/proje
 import { mapGetters } from 'vuex'
 
 import OrganizationSelect from '@/views/components/OrganizationSelect'
-import ProjectProductArr from '../components/ProjectProductList'
+import ProjectProductArr from './components/ProjectProductList'
 export default {
   name: 'AddOrEdit',
 
@@ -41,7 +44,7 @@ export default {
   data() {
     return {
       drawerVisible: false,
-      editId: undefined,
+      editId: this.$route.query.objectCode,
       formConfig: {
         // column: 3,
         attrs: {
@@ -117,33 +120,35 @@ export default {
     ...mapGetters(['enums'])
   },
   created() {
-    // this.setOptions()
+    this.setOptions()
+    if (this.editId) {
+      this.getItemDetail()
+    }
   },
   methods: {
-
     /**
-     * 暴露添加方法
+     * 统一处理options
      */
-    add() {
-      this.editId = undefined
-      this.drawerVisible = true
+    setOptions() {
+
     },
 
     /**
-     * 暴露编辑方法
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
      */
-    edit(editId) {
-      this.editId = editId
-      this.drawerVisible = true
-      this.getItemDetail()
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      console.log(item.attrs)
+      item.attrs.options = options
     },
-
     /**
      * 获取详情
      */
     getItemDetail() {
       getProjectDetail({ objectCode: this.editId }).then(res => {
-        res.data.projectProductArr = [...new Set(res.data.projectProductArr)]
+        res.data.projectProductArr = [...new Set(res.data.projectProductCodeArr)]
         if (res.code === 200) {
           const props = this.formConfig.props
           const keys = Object.keys(props)
@@ -166,6 +171,7 @@ export default {
           this.$message('请检查表单项！')
           return
         }
+        console.log(this.formConfig.props)
         if (this.formConfig.props.projectProductArr) {
           const projectList = []
           this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
@@ -183,7 +189,6 @@ export default {
           updateProjectItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')
-              this.$emit('update')
               this.closeDrower()
             } else {
               this.$message.error(res.message)
@@ -194,8 +199,6 @@ export default {
           addProjectItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
-              this.$emit('add')
-              location.reload()
               this.closeDrower()
             } else {
               this.$message.error(res.message)
@@ -210,7 +213,7 @@ export default {
      */
     closeDrower() {
       this.$refs.ImForm.reset()
-      this.drawerVisible = false
+      this.$router.push({ name: 'ProjectList' })
     }
   }
 }

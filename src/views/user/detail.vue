@@ -10,7 +10,7 @@
       <el-descriptions class="doctorMsg" :column="2" :size="size">
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
-        <el-descriptions-item label="生日">{{ dataList.birthday? moment(dataList.birthday).format('YYYY-MM-DD hh:mm:ss'):"" }} </el-descriptions-item>
+        <el-descriptions-item label="生日">{{ dataList.birthday? moment(dataList.birthday).format('YYYY-MM-DD'):"" }} </el-descriptions-item>
         <el-descriptions-item label="性别">{{ getLabelByValue('gender', dataList.gender) }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ dataList.phone }} </el-descriptions-item>
       </el-descriptions>
@@ -33,7 +33,7 @@
 
               <el-descriptions-item label="医生标签">
                 <div v-if="dataList.tagDTOList">
-                  <el-tag v-for="item,index in dataList.tagDTOList" :key="index" size="small">{{ item }}</el-tag>
+                  <el-tag v-for="item,index in dataList.tagDTOShowList" :key="index" size="small">{{ item }}</el-tag>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="客户经理">
@@ -41,10 +41,10 @@
               </el-descriptions-item>
 
               <el-descriptions-item label="对接人">
-                <el-tag v-for="(item, index) in dataList.userOppositeDTOList" :key="index" size="small">{{ item }}</el-tag>
+                <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" size="small">{{ item }}</el-tag>
               </el-descriptions-item>
               <el-descriptions-item label="职称">{{ getLabelByValue('jobTitle', dataList.realJobTitle) }}</el-descriptions-item>
-              <el-descriptions-item label="执业分类">{{ dataList.occupationalClassification }}</el-descriptions-item>
+              <el-descriptions-item label="执业分类">{{ getLabelByValue('realPracticeCategory', dataList.occupationalClassification) }}</el-descriptions-item>
               <el-descriptions-item label="行业协会">{{ dataList.realEmploymentIndustryAssociations }}</el-descriptions-item>
             </el-descriptions>
 
@@ -62,7 +62,7 @@
           <div class="divCrad">
             <div class="pt-4 titleDiv">
               <span class="fl mr-4">资质信息</span>
-              <span v-if="dataList.realAuditStatus==1" class="fr auditStatus" @click="qualification">上传资质</span>
+              <span v-if="dataList.realAuditStatus==1||dataList.realAuditStatus==2" class="fr auditStatus" @click="qualification">上传资质</span>
             </div>
             <el-descriptions title="执业信息" class="mt-4" :column="1" :size="size">
               <el-descriptions-item label="医师执业证书">
@@ -90,7 +90,7 @@
               <el-descriptions-item label="专业">{{ dataList.realMajor }}</el-descriptions-item>
             </el-descriptions>
             <el-descriptions title="最近审核信息" class="mt-4" :column="2" :size="size">
-              <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '审核通过' : '审核驳回' }}</el-descriptions-item>
+              <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '审核通过' :dataList.realAuditStatus == 2 ? '审核驳回':dataList.realAuditStatus == 3 ? '审核中':"" }}</el-descriptions-item>
               <el-descriptions-item label="审核编码">{{ dataList.userRealApprovalRecordList[0].applyCode }}</el-descriptions-item>
             </el-descriptions>
           </div>
@@ -136,19 +136,18 @@
             <el-descriptions-item label="消毒剂偏好">{{ getLabelByValue('expertDisinfectantPreference', dataList.expertDisinfectantPreference + '') }}</el-descriptions-item>
           </el-descriptions>
           <div>
-            <div style="color: #606266; font-size: 12px">针头习惯：</div>
-            <el-descriptions direction="vertical" :column="3">
-              <el-descriptions-item label-class-name="my-label" label="填充剂">{{ '接口没有' }}</el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="嗨体">{{ '接口没有' }}</el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="冭活">{{ '接口没有' }}</el-descriptions-item>
+            <div style="color: #606266; font-size: 14px;padding-bottom:10px">针头习惯：</div>
+            <el-descriptions v-for="item,index in dataList.userHabitAddDTOList" :key="index" style="font-size: 14px" direction="vertical" :column="3">
+              <el-descriptions-item label-class-name="my-label" label="针头">{{ item.name }}</el-descriptions-item>
+              <el-descriptions-item label-class-name="my-label" label="规格">{{ getLabelByValue('zhen',item.details) }}</el-descriptions-item>
             </el-descriptions>
           </div>
           <el-descriptions title="出行相关" class="mt-4" :column="2" :size="size">
             <el-descriptions-item label="舱位标准">{{ getLabelByValue('expertStandardAccommodation', dataList.expertStandardAccommodation) }}</el-descriptions-item>
-            <el-descriptions-item label="航司偏好">{{ getLabelByValue('expertAirlinePreference', dataList.expertAirlinePreference) }}</el-descriptions-item>
-            <el-descriptions-item label="酒店偏好">{{ getLabelByValue('expertHotelPreference', dataList.expertHotelPreference) }}</el-descriptions-item>
-            <el-descriptions-item label="饮食偏好">{{ getLabelByValue('expertEatingHabits', dataList.expertEatingHabits) }}</el-descriptions-item>
-            <el-descriptions-item label="饮酒偏好">{{ getLabelByValue('expertDrinkingPreference', dataList.expertDrinkingPreference) }}</el-descriptions-item>
+            <el-descriptions-item label="航司偏好">{{ dataList.expertAirlinePreference }}</el-descriptions-item>
+            <el-descriptions-item label="酒店偏好">{{ dataList.expertHotelPreference }}</el-descriptions-item>
+            <el-descriptions-item label="饮食偏好">{{ dataList.expertEatingHabits }}</el-descriptions-item>
+            <el-descriptions-item label="饮酒偏好">{{ dataList.expertDrinkingPreference }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions title="休闲相关" class="mt-4" :column="2" :size="size">
             <el-descriptions-item label="兴趣爱好">{{ dataList.expertHobby }}</el-descriptions-item>
@@ -539,6 +538,7 @@ export default {
   text-align: center;
   background: #005dbe;
   border-radius: 4px;
+  float: right;
 }
 //产品认证
 .elRow {
@@ -631,6 +631,10 @@ export default {
       background: #a6dbff;
     }
   }
+}
+
+/deep/.el-descriptions-row{
+font-size: 14px;
 }
 
 /deep/ .el-tabs__nav-scroll {

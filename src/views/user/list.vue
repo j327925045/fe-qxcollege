@@ -14,7 +14,7 @@
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="someSlot" slot-scope="scope">
           <span> {{ scope.row.nickname }}</span>
-          <img v-if="scope.row.nickname" width="24px" height="24px" :src="getIcon(scope.row.doctorLevel)" alt="">
+          <!-- <img v-if="scope.row.nickname" width="24px" height="24px" :src="getIcon(scope.row.doctorLevel)" alt=""> -->
         </template>
         <template slot="realAuditSlot" slot-scope="scope">
           <div style="position:relative">
@@ -24,6 +24,34 @@
             <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
           </div>
         </template>
+        <template slot="realAccountManagerSlot" slot-scope="scope">
+          <el-tag v-for="item,index in scope.row.userOppositeStrList" :key="index">
+            {{ item }}
+          </el-tag>
+        </template>
+        <template slot="regionFullNameSlot" slot-scope="scope">
+          <div v-if="scope.row.userOrgInfoShowDTOList">
+            <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+              <span>{{ item.region }}</span>
+            </div></div>
+        </template>
+        <template slot="realHospitalNameSlot" slot-scope="scope">
+
+          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+            <span> {{ item.hospital }}</span>
+          </div>
+        </template>
+        <template slot="realDepartmentSlot" slot-scope="scope">
+          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+            <span> {{ getLabelByValue('realDepartment', item.orgDepartment) }}</span>
+          </div>
+        </template>
+        <template slot="realJobTitleSlot" slot-scope="scope">
+          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+            <span> {{ getLabelByValue('jobTitle',item.post) }}</span>
+          </div>
+        </template>
+
       </ImTable>
 
       <div class="mt-4 text-right">
@@ -43,6 +71,7 @@
 import { getUserList, deleteUserItem } from '@/api/user'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import utils from '@/utils/utils'
 
 import HospitalSelect from '@/views/components/HospitalSelect'
 import RegionCascader from '@/views/components/RegionCascader'
@@ -341,51 +370,48 @@ export default {
             },
             slot: 'realAuditSlot'
           },
+
           {
-            prop: 'regionFullName',
+            type: 'slot',
             label: '地区',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
+              width: '160'
+            },
+            slot: 'regionFullNameSlot'
           },
+
           {
-            prop: 'realHospitalName',
+            type: 'slot',
             label: '机构',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+              width: '160'
+            },
+            slot: 'realHospitalNameSlot'
           },
+
           {
-            prop: 'realDepartment',
+            type: 'slot',
             label: '科室',
-            type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             },
-            options: this?.enums?.realDepartment ?? []
+            slot: 'realDepartmentSlot'
           },
           {
-            prop: 'realJobTitle',
+            type: 'slot',
             label: '职称',
-            type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             },
-            options: this?.enums?.jobTitle ?? []
+            slot: 'realJobTitleSlot'
           },
           {
-            prop: 'realAccountManager',
+            type: 'slot',
             label: '客户经理',
-            type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             },
-            options: this?.enums?.realAccountManager ?? []
+            slot: 'realAccountManagerSlot'
           },
           {
             prop: 'bindingWechat',
@@ -433,6 +459,10 @@ export default {
     this.setOptions()
   },
   methods: {
+    getLabelByValue(key, value) {
+      const item = utils.getOptionsItemByValue(key, value)
+      return item.label || ''
+    },
     // level动态展示
     getIcon(code) {
       if (code) {

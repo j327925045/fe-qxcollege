@@ -1,13 +1,13 @@
 <template>
   <el-dialog title="审批详情" width="860px" :visible.sync="detailDialogVisible" @close="visibleFn">
     <el-descriptions>
-      <el-descriptions-item label="创建人">{{ auditDetail.createBy }}</el-descriptions-item>
+      <el-descriptions-item label="创建人">{{ auditDetail.createName }}</el-descriptions-item>
       <el-descriptions-item label="创建时间">  {{ moment(auditDetail.createTime).format('YYYY-MM-DD') }}</el-descriptions-item>
       <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode }}</el-descriptions-item>
       <el-descriptions-item label="审批编号">{{ auditDetail.objectCode }}</el-descriptions-item>
       <el-descriptions-item label="申请人名字">{{ auditDetail.userName }}</el-descriptions-item>
-      <el-descriptions-item label="医生编号">{{ "接口没反" }}</el-descriptions-item>
-      <el-descriptions-item label="医生手机号">{{ "接口没反" }}</el-descriptions-item>
+      <el-descriptions-item label="医生编号">{{ auditDetail.doctorNumber }}</el-descriptions-item>
+      <el-descriptions-item label="医生手机号">{{ auditDetail.phone }}</el-descriptions-item>
       <el-descriptions-item label="执业地点">{{ auditDetail.realAddress }}</el-descriptions-item>
       <el-descriptions-item label="执业类别">{{ auditDetail.realPracticeCategory!='0'?auditDetail.realPracticeCategory:'' }}</el-descriptions-item>
       <el-descriptions-item label="执业范围">{{ auditDetail.realPracticeArea!='0'?auditDetail.realPracticeArea:'' }}</el-descriptions-item>
