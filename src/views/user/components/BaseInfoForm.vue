@@ -50,15 +50,8 @@ export default {
               maxLength: 11
             },
             listeners: {
-              change(value) {
-                checkPhone(value).then((res) => {
-                  console.log(res)
-                  this.$message(res.message)
-                })
-              }
-              // input(input) {
-              //   this.getPhone()
-              // }
+              change: this.getPhone
+
             }
           },
           {
@@ -124,14 +117,18 @@ export default {
   },
 
   methods: {
-    // 校验手机号是否存在
-    /// qxcollege/user/check/phone
-    // getPhone(value) {
-    //   console.log(value)
-    //   checkPhone(value).then((res) => {
-    //     console.log(res)
-    //   })
-    // },
+    getPhone(value) {
+      checkPhone(value)
+        .then((res) => {
+          console.log(res)
+          this.$message.success(res.message)
+        })
+        .catch((res) => {
+          console.log(res)
+          this.$message.error('手机号已经被注册')
+        })
+    },
+
     onLevelChanged(val) {
       this.$emit('levelChange', val)
     },
