@@ -160,6 +160,10 @@ export default {
       list-style-position: inside;
       list-style-type: decimal;
     }
+
+    em {
+      font-style: italic;
+    }
   }
 }
 </style>

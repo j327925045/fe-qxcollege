@@ -53,11 +53,8 @@
           <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.doctorCode)">{{ scope.row.doctorNumber }}</el-button>
         </template>
       </ImTable>
-      <div class="mt-4 text-right">
-        <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList">
-
-        </ImPagination>
-      </div>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList">
+      </ImPagination>
     </el-card>
   </ImWrapper>
 </template>

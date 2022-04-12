@@ -8,15 +8,13 @@
         <el-button type="primary" @click="addItem">新建项目</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
-      <div class="mt-4 text-right">
-        <ImPagination
-          ref="ImPagination"
-          :page-size.sync="pageSize"
-          :current-page.sync="currentPage"
-          :total="total"
-          @change="getList"
-        ></ImPagination>
-      </div>
+      <ImPagination
+        ref="ImPagination"
+        :page-size.sync="pageSize"
+        :current-page.sync="currentPage"
+        :total="total"
+        @change="getList"
+      ></ImPagination>
     </ImTableArea>
   </ImWrapper>
 </template>
