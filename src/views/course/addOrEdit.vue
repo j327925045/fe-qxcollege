@@ -49,6 +49,7 @@ export default {
         props: {
           materialCode: undefined,
           introduction: undefined,
+          title: undefined,
           author: undefined,
           coverUrl: undefined,
           courseType: undefined,
@@ -295,6 +296,8 @@ export default {
             const key = keys[i]
             props[key] = res.data[key] || undefined
           }
+          props.prodCodes = res.data.courseProducts.map(item => item.objectCode)
+          props.projectCodes = res.data.courseProjects.map(item => item.objectCode)
         }
       })
     },

@@ -60,19 +60,8 @@ export function getCourseList(params) {
  */
 export function getCourseColumnList(params) {
   return request({
-    url: '',
+    url: `/qxcollege/course/list/column/${params.objectCode}`,
     method: 'get',
-    params
-  })
-}
-
-/**
- * 当前课程对应的评论列表
- */
-export function getCourseCommentList(params) {
-  return request({
-    url: '',
-    method: 'get',
-    params
+    params: {}
   })
 }
