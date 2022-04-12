@@ -1,8 +1,13 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" clearable @change="onChange">
+  <el-select
+    v-model="myValue"
+    :placeholder="$attrs.placeholder||'请选择'"
+    v-bind="$attrs"
+    @change="onChange"
+  >
     <el-option
       v-for="item in options"
-      :key="item.objectCode"
+      :key="item.value"
       :label="item.name"
       :value="item.objectCode"
     >
@@ -11,21 +16,13 @@
 </template>
 
 <script>
-import { getDataList } from '@/api/resources'
+import { getProjectList } from '@/api/project'
 export default {
-  name: 'ResourseSelect',
+  name: 'ProjectSelect',
   props: {
     value: {
       type: [Number, String, Array],
       default: undefined
-    },
-    placeholder: {
-      type: String,
-      default: '请选择'
-    },
-    multiple: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -47,15 +44,11 @@ export default {
   },
   methods: {
     setMyValue() {
-      try {
-        this.myValue = JSON.parse(JSON.stringify(this.value))
-      } catch (error) {
-        this.myValue = undefined
-      }
+      this.myValue = this.value
     },
 
     getOptions() {
-      getDataList({ limit: 10000, page: 1 }).then(res => {
+      getProjectList({ limit: 10000, page: 1 }).then(res => {
         if (res.code === 200) {
           this.options = res.data.list || []
         }
