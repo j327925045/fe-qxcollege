@@ -50,7 +50,7 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="doctorNumberSlot" slot-scope="scope">
-          <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.doctorNumber)">{{ scope.row.doctorCode }}</el-button>
+          <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.doctorCode)">{{ scope.row.doctorNumber }}</el-button>
         </template>
       </ImTable>
       <div class="mt-4 text-right">

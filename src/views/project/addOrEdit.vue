@@ -2,7 +2,7 @@
 
   <ImWrapper>
     <div class="bg-white p-4 mb-[32px]">
-      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />产品信息</h3>
+      <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />项目信息</h3>
       <ImForm
         ref="ImForm"
         :form="formConfig"
@@ -148,7 +148,7 @@ export default {
      */
     getItemDetail() {
       getProjectDetail({ objectCode: this.editId }).then(res => {
-        res.data.projectProductArr = [...new Set(res.data.projectProductArr)]
+        res.data.projectProductArr = [...new Set(res.data.projectProductCodeArr)]
         if (res.code === 200) {
           const props = this.formConfig.props
           const keys = Object.keys(props)
