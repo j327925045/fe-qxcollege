@@ -47,10 +47,11 @@ export default {
           author: undefined,
           courseType: undefined,
           courseLevel: undefined,
-          f: undefined,
-          g: undefined,
-          h: undefined,
-          i: undefined
+          userLevel: undefined,
+          paymentType: undefined,
+          status: undefined,
+          shelfStatus: undefined,
+          videoType: undefined
         },
         formItems: [
           {
@@ -97,38 +98,52 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'f',
+            prop: 'userLevel',
             label: '用户等级要求',
             attrs: {
               clearable: true,
-              class: 'w-full'
+              class: 'w-full',
+              options: []
             }
           },
           {
             type: 'ImSelect',
-            prop: 'g',
+            prop: 'paymentType',
             label: '付费类型',
             attrs: {
               clearable: true,
-              class: 'w-full'
+              class: 'w-full',
+              options: []
             }
           },
           {
             type: 'ImSelect',
-            prop: 'h',
+            prop: 'status',
             label: '审核状态',
             attrs: {
               clearable: true,
-              class: 'w-full'
+              class: 'w-full',
+              options: []
             }
           },
           {
             type: 'ImSelect',
-            prop: 'i',
+            prop: 'shelfStatus',
             label: '上架状态',
             attrs: {
               clearable: true,
-              class: 'w-full'
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImSelect',
+            prop: 'videoType',
+            label: '视频类型',
+            attrs: {
+              clearable: true,
+              class: 'w-full',
+              options: []
             }
           },
           {
@@ -171,15 +186,15 @@ export default {
       return {
         data: [],
         tableItems: [
-          // {
-          //   prop: '',
-          //   label: '课程编号',
-          //   attrs: {
-          //     fixed: 'left',
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
+          {
+            prop: 'courseNum',
+            label: '课程编号',
+            attrs: {
+              fixed: 'left',
+              'show-overflow-tooltip': true,
+              'min-width': '140'
+            }
+          },
           {
             prop: 'title',
             label: '课程标题',
@@ -188,130 +203,148 @@ export default {
               'min-width': '120'
             }
           },
-          // {
-          //   prop: '',
-          //   label: '视频类型',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '视频时长',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '视频作者',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '视频分类',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '视频分级',
-          //   type: 'mapList',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   },
-          //   options: this.enums.courseLevel
-          // },
-          // {
-          //   prop: '',
-          //   label: '用户等级要求',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '付费类型',
-          //   type: 'mapList',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '180'
-          //   },
-          //   options: this.enums.courseType
-          // },
-          // {
-          //   prop: 'price',
-          //   label: '积分数值',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '观看次数',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '观看人数',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '收藏数',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '点赞数',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '评论数',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '审核状态',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
-          // {
-          //   prop: '',
-          //   label: '上架状态',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   }
-          // },
+          {
+            prop: 'videoType',
+            label: '视频类型',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.videoType
+          },
+          {
+            prop: 'videoTimeLen',
+            label: '视频时长',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return val || '-'
+            }
+          },
+          {
+            prop: 'authorName',
+            label: '视频作者',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return val || '-'
+            }
+          },
+          {
+            prop: 'courseType',
+            label: '课程分类',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.courseType
+          },
+          {
+            prop: 'courseLevel',
+            label: '课程分级',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.courseLevel
+          },
+          {
+            prop: 'userLevel',
+            label: '用户等级要求',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.doctorLevel
+          },
+          {
+            prop: 'paymentType',
+            label: '付费类型',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '180'
+            },
+            options: this.enums.paymentType
+          },
+          {
+            prop: 'price',
+            label: '积分数值',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'viewCount',
+            label: '观看次数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'viewUserCnt',
+            label: '观看人数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'collectCount',
+            label: '收藏数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'starCount',
+            label: '点赞数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'commentCount',
+            label: '评论数',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'status',
+            label: '审核状态',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.courseAuditStatus
+          },
+          {
+            prop: 'shelfStatus',
+            label: '上架状态',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: this.enums.courseShelfStatus
+          },
           {
             prop: '',
             label: '操作',
@@ -350,6 +383,11 @@ export default {
     setOptions() {
       this.setFormPropOptions('courseType', this.enums.courseType)
       this.setFormPropOptions('courseLevel', this.enums.courseLevel)
+      this.setFormPropOptions('userLevel', this.enums.doctorLevel)
+      this.setFormPropOptions('paymentType', this.enums.paymentType)
+      this.setFormPropOptions('status', this.enums.courseAuditStatus)
+      this.setFormPropOptions('shelfStatus', this.enums.courseShelfStatus)
+      this.setFormPropOptions('videoType', this.enums.videoType)
     },
     /**
      * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
