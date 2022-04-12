@@ -32,9 +32,6 @@ export default {
       options: []
     }
   },
-  created() {
-    this.getOptions()
-  },
   computed: {
     ...mapGetters(['enums'])
   },
@@ -46,13 +43,15 @@ export default {
       }
     }
   },
+  created() {
+    this.getOptions()
+  },
   methods: {
     getOptions() {
       getProductList({}).then(res => {
         if (res.code === 200) {
           this.options = res.data.list
         }
-        console.log('res', res)
       })
     },
     setMyValue() {

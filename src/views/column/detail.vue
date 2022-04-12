@@ -141,7 +141,6 @@ export default {
     getItemDetail() {
       getColumnDetail({ objectCode: this.objectCode }).then((res) => {
         if (res.code === 200) {
-          console.log('res', res)
           this.details = res.data || {}
         }
       })

@@ -66,7 +66,6 @@ export default {
 
     getOptions() {
       getPermissionTree({}).then(res => {
-        console.log('res', res)
         if (res.code === 200) {
           this.options = res.data || []
           this.formatData(this.options)
