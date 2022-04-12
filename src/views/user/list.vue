@@ -24,6 +24,20 @@
             <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
           </div>
         </template>
+        <template slot="realHospitalNameSlot" slot-scope="scope">
+          <span> {{ scope.row.userOrgInfoShowDTOList[0].hospital }}</span>
+        </template>
+        <template slot="realDepartmentSlot" slot-scope="scope">
+          <span> {{ getLabelByValue('realDepartment', scope.row.userOrgInfoShowDTOList[0].orgDepartment) }}</span>
+        </template>
+        <template slot="realJobTitleSlot" slot-scope="scope">
+          <span> {{ getLabelByValue('jobTitle', scope.row.userOrgInfoShowDTOList[0].post) }}</span>
+        </template>
+        <template slot="realAccountManagerSlot" slot-scope="scope">
+          <el-tag v-for="item,index in scope.row.userOppositeStrList" :key="index">
+            {{ item }}
+          </el-tag>
+        </template>
       </ImTable>
 
       <div class="mt-4 text-right">
@@ -43,6 +57,7 @@
 import { getUserList, deleteUserItem } from '@/api/user'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
+import utils from '@/utils/utils'
 
 import HospitalSelect from '@/views/components/HospitalSelect'
 import RegionCascader from '@/views/components/RegionCascader'
@@ -349,43 +364,39 @@ export default {
               'min-width': '180'
             }
           },
+
           {
-            prop: 'realHospitalName',
+            type: 'slot',
             label: '机构',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+              width: '160'
+            },
+            slot: 'realHospitalNameSlot'
           },
+
           {
-            prop: 'realDepartment',
+            type: 'slot',
             label: '科室',
-            type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             },
-            options: this?.enums?.realDepartment ?? []
+            slot: 'realDepartmentSlot'
           },
           {
-            prop: 'realJobTitle',
+            type: 'slot',
             label: '职称',
-            type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             },
-            options: this?.enums?.jobTitle ?? []
+            slot: 'realJobTitleSlot'
           },
           {
-            prop: 'realAccountManager',
+            type: 'slot',
             label: '客户经理',
-            type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             },
-            options: this?.enums?.realAccountManager ?? []
+            slot: 'realAccountManagerSlot'
           },
           {
             prop: 'bindingWechat',
@@ -433,6 +444,10 @@ export default {
     this.setOptions()
   },
   methods: {
+    getLabelByValue(key, value) {
+      const item = utils.getOptionsItemByValue(key, value)
+      return item.label || ''
+    },
     // level动态展示
     getIcon(code) {
       if (code) {

@@ -33,6 +33,21 @@ export const Product = [
         name: 'ProjectList',
         component: () => import('@/views/project/list'),
         meta: { title: '项目列表' }
+      },
+
+      {
+        path: '/project/addOrEdit',
+        name: 'ProjectAddOrEdit',
+        hidden: true,
+        component: () => import('@/views/project/addOrEdit'),
+        meta: { title: '项目操作', noTab: true, highlightPath: '/project/list' }
+      },
+      {
+        path: '/project/detail',
+        name: 'ProjectDetail',
+        hidden: true,
+        component: () => import('@/views/project/detail'),
+        meta: { title: '项目详情', noTab: true, highlightPath: '/project/list' }
       }
     ]
   }

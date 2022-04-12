@@ -19,7 +19,7 @@
 <script>
 import { getProjectProduct } from '@/api/project'
 export default {
-  name: 'ProjectProductArr',
+  name: 'ProjectAddOrEdit--nocache',
   props: {
     value: {
       type: [],

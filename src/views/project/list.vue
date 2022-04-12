@@ -18,23 +18,16 @@
         ></ImPagination>
       </div>
     </ImTableArea>
-    <DetailDialog ref="DetailDialog"></DetailDialog>
-    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
 import { getProjectList, deleteProjectItem } from '@/api/project'
-import DetailDialog from './components/DetailDialog'
-import AddOrEdit from './components/AddOrEdit'
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 export default {
   name: 'ProjectList',
-  components: {
-    DetailDialog,
-    AddOrEdit
-  },
+
   data() {
     return {
       moment,
@@ -177,15 +170,15 @@ export default {
   },
   methods: {
     showDetail($index, record) {
-      this.$refs.DetailDialog.show(record)
+      this.$router.push({ name: 'ProjectDetail', query: { objectCode: record.objectCode } })
     },
 
     addItem() {
-      this.$refs.AddOrEdit.add()
+      this.$router.push({ name: 'ProjectAddOrEdit' })
     },
 
     editItem($index, record) {
-      this.$refs.AddOrEdit.edit(record.objectCode)
+      this.$router.push({ name: 'ProjectAddOrEdit', query: { objectCode: record.objectCode } })
     },
 
     deleteItem($index, record) {

@@ -48,12 +48,14 @@
       <div slot="header">
         <span class="headertext">医生信息</span>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="doctorNumberSlot" slot-scope="scope">
+          <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.doctorCode }}</el-button>
+        </template>
+      </ImTable>
       <div class="mt-4 text-right">
         <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList">
-          <template slot="doctorNumberSlot" slot-scope="scope">
-            <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.doctorNumber }}</el-button>
-          </template>
+
         </ImPagination>
       </div>
     </el-card>
@@ -95,7 +97,7 @@ export default {
             slot: 'doctorNumberSlot'
           },
           {
-            prop: 'realName',
+            prop: 'doctorName',
             label: '医生姓名',
             attrs: {
               'show-overflow-tooltip': true,
@@ -103,7 +105,7 @@ export default {
             }
           },
           {
-            prop: 'realDepartment',
+            prop: 'orgDepartment',
             label: '科室',
             type: 'mapList',
             attrs: {
@@ -113,7 +115,7 @@ export default {
             options: this?.enums?.realDepartment ?? []
           },
           {
-            prop: 'realJobTitle',
+            prop: 'post',
             label: '职称',
             type: 'mapList',
             attrs: {
@@ -189,7 +191,7 @@ export default {
           this.loading = false
           if (res.code === 200) {
             this.total = res.data.totalCount
-            this.tableConfig.data = res.list || []
+            this.tableConfig.data = res.data.list || []
           }
         })
         .catch((_) => {
