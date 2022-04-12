@@ -75,3 +75,15 @@ export function getUserDetail(params) {
     params: {}
   })
 }
+
+/**
+ * 校验手机号
+ * @param params
+ * @returns {*}
+ */
+export function checkPhone(params) {
+  return request({
+    url: `/qxcollege/user/check/phone/${params}`,
+    method: 'get'
+  })
+}
