@@ -46,7 +46,7 @@
             </el-tooltip>
           </template>
           <template v-else-if="item.type === 'val2btn'">
-            <el-button v-for="(opt, idx) in btnList(item.options, scope)" :key="idx" v-bind="opt.attrs" @click="opt.onClick(scope.$index, scope.row)">
+            <el-button v-for="(opt, idx) in btnList(item.options, scope)" :key="idx" size="medium" v-bind="opt.attrs" @click="opt.onClick(scope.$index, scope.row)">
               {{ opt.label }}
             </el-button>
           </template>

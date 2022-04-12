@@ -91,6 +91,7 @@ export default {
     width: 106px;
     height: 22px;
     color: #666;
+    font-size: 14px;
     line-height: 22px;
     text-align: center;
     background: rgba(239, 239, 239, 1);

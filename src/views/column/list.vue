@@ -13,20 +13,15 @@
         <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
       </div>
     </ImTableArea>
-    <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
-import { getColumnList, deleteColumnItem } from '@/api/column.js'
-import AddOrEdit from './components/AddOrEdit'
+import { getColumnList, deleteColumnItem, operateColumnItem } from '@/api/column.js'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'ColumnList',
-  components: {
-    AddOrEdit
-  },
   data() {
     return {
       formConfig: {
@@ -45,6 +40,7 @@ export default {
             prop: 'columnNumber',
             label: '专栏编号',
             attrs: {
+              clearable: true
             }
           },
           {
@@ -52,6 +48,7 @@ export default {
             prop: 'title',
             label: '专栏标题',
             attrs: {
+              clearable: true
             }
           },
           {
@@ -59,7 +56,9 @@ export default {
             prop: 'status',
             label: '专栏状态',
             attrs: {
-              class: 'w-full'
+              class: 'w-full',
+              clearable: true,
+              options: []
             }
           },
           {
@@ -122,51 +121,109 @@ export default {
           {
             prop: 'courseCount',
             label: '课程数量',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
+            },
+            filter(value, row) {
+              return value || 0
             }
           },
           {
             prop: 'productName',
             label: '产品认证',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
+            },
+            filter(value, row) {
+              return value || '-'
             }
           },
           {
             prop: 'status',
             label: '上架状态',
-            type: 'mapList',
+            type: 'val2tag',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: [] // 1上架 2下架
+            options: [
+              {
+                prop: 'status',
+                value: ['1'],
+                label: '上架',
+                attrs: {
+                  type: 'success'
+                }
+              },
+              {
+                prop: 'status',
+                value: ['2'],
+                label: '下架',
+                attrs: {
+                  type: 'danger'
+                }
+              }
+            ] // 1上架 2下架
           },
           {
             prop: '',
             label: '操作',
-            type: 'buttons',
+            type: 'val2btn',
             attrs: {
               fixed: 'right',
-              width: '150'
+              width: '200'
             },
             options: [
               {
-                title: '查看',
-                type: 'text',
+                prop: 'status',
+                value: ['1'],
+                label: '下架',
+                attrs: {
+                  type: 'text'
+                },
+                onClick: this.stopItem
+              },
+              {
+                prop: 'status',
+                value: ['2'],
+                label: '上架',
+                attrs: {
+                  type: 'text'
+                },
+                onClick: this.startItem
+              },
+              {
+                prop: 'status',
+                value: [],
+                isNot: true,
+                label: '查看',
+                attrs: {
+                  type: 'text'
+                },
                 onClick: this.viewItem
               },
               {
-                title: '编辑',
-                type: 'text',
+                prop: 'status',
+                value: [],
+                isNot: true,
+                label: '编辑',
+                attrs: {
+                  type: 'text'
+                },
                 onClick: this.editItem
               },
               {
-                title: '删除',
-                type: 'text',
+                prop: 'status',
+                value: [],
+                isNot: true,
+                label: '删除',
+                attrs: {
+                  type: 'text'
+                },
                 onClick: this.deleteItem
               }
             ]
@@ -177,8 +234,60 @@ export default {
   },
   activated() {
     this.getList()
+    this.setOptions()
   },
   methods: {
+    setOptions() {
+      this.setFormPropOptions('status', this.enums.columnStatus)
+    },
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      item.attrs.options = options
+    },
+
+    stopItem($index, record) {
+      this.$confirm('确定要下架该专栏吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          this.operateItem(record.objectCode, 2)
+        })
+        .catch(() => {})
+    },
+
+    startItem($index, record) {
+      this.$confirm('确定要上架该专栏吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          this.operateItem(record.objectCode, 1)
+        })
+        .catch(() => {})
+    },
+
+    /**
+     * 操作上下架
+     */
+    operateItem(objectCode, status) {
+      const data = {
+        objectCode,
+        status
+      }
+      operateColumnItem(data).then(res => {
+        if (res.code === 200) {
+          this.$message.success('操作成功！')
+          this.getList()
+        }
+      })
+    },
+
     /**
      * 展示详情
      */

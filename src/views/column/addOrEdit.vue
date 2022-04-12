@@ -34,12 +34,9 @@ export default {
           labelPosition: 'top'
         },
         props: {
+          coverUrl: undefined,
           title: undefined,
           introduction: undefined,
-          level: undefined,
-          price: undefined,
-          summary: undefined,
-          type: undefined,
           courseCodes: undefined
         },
         formItems: [
@@ -178,7 +175,7 @@ export default {
 
     closeCurrent() {
       this.$refs.ImForm.reset()
-      this.$router.replace({ name: 'CourseList' })
+      this.$router.replace({ name: 'ColumnList' })
     }
   }
 }

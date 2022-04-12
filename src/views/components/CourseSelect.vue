@@ -3,7 +3,7 @@
     <el-option
       v-for="item in options"
       :key="item.objectCode"
-      :label="item.name"
+      :label="item.title"
       :value="item.objectCode"
     >
     </el-option>
