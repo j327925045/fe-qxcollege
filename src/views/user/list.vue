@@ -24,6 +24,11 @@
             <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
           </div>
         </template>
+        <template slot="realAccountManagerSlot" slot-scope="scope">
+          <el-tag v-for="item,index in scope.row.userOppositeStrList" :key="index">
+            {{ item }}
+          </el-tag>
+        </template>
         <template slot="realHospitalNameSlot" slot-scope="scope">
           <span> {{ scope.row.userOrgInfoShowDTOList[0].hospital }}</span>
         </template>
@@ -33,10 +38,8 @@
         <template slot="realJobTitleSlot" slot-scope="scope">
           <span> {{ getLabelByValue('jobTitle', scope.row.userOrgInfoShowDTOList[0].post) }}</span>
         </template>
-        <template slot="realAccountManagerSlot" slot-scope="scope">
-          <el-tag v-for="item,index in scope.row.userOppositeStrList" :key="index">
-            {{ item }}
-          </el-tag>
+        <template slot="regionFullNameSlot" slot-scope="scope">
+          <span>{{ scope.row.userOrgInfoShowDTOList[0].region }}</span>
         </template>
       </ImTable>
 
@@ -355,6 +358,15 @@ export default {
               width: '160'
             },
             slot: 'realAuditSlot'
+          },
+
+          {
+            type: 'slot',
+            label: '地区',
+            attrs: {
+              width: '160'
+            },
+            slot: 'regionFullNameSlot'
           },
           {
             prop: 'regionFullName',

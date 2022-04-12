@@ -167,7 +167,7 @@ export default {
     // 写法跟method里面一样。这个名字随意取
 
   },
-  created() {
+  activated() {
     this.editId = this.$route.query.objectCode
     if (this.editId) {
       this.getItemDetail()
