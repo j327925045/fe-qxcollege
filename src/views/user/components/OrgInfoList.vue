@@ -119,6 +119,17 @@ export default {
     },
 
     onChange() {
+      console.log(this.myValue)
+      const s = this.myValue.join(',') + ','
+      for (let i = 0; i < this.myValue.length; i++) {
+        console.log(s)
+        console.log(this.myValue[i].hospitalCode)
+        if (s.replace(this.myValue[i] + ',', '').indexOf(this.myValue[i].hospitalCode + ',') > -1) {
+          alert('数组中有重复元素：' + this.myValue[i])
+
+          break
+        }
+      }
       this.$emit('input', this.myValue)
     }
   }

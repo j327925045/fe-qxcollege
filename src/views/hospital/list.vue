@@ -311,14 +311,18 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteHospitalItem({ objectCode: record.objectCode }).then(res => {
-            if (res.code === 200) {
-              this.$message.success('操作成功！')
-              this.getList()
-            } else {
-              this.$message.error(res.message)
-            }
-          })
+          if (record.doctorCount != 0) {
+            this.$message('该机构下有关联医生不能删除。')
+          } else {
+            deleteHospitalItem({ objectCode: record.objectCode }).then(res => {
+              if (res.code === 200) {
+                this.$message.success('操作成功！')
+                this.getList()
+              } else {
+                this.$message.error(res.message)
+              }
+            })
+          }
         })
         .catch(() => {
         })
