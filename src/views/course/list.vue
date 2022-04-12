@@ -2,7 +2,7 @@
   <ImWrapper>
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig">
-        <EmployeeSelect slot="EmployeeSelect" v-model="formConfig.props.author" filterable class="w-full"></EmployeeSelect>
+        <UserSelect slot="UserSelect" v-model="formConfig.props.author" filterable class="w-full"></UserSelect>
       </ImForm>
     </ImSearchArea>
 
@@ -27,12 +27,12 @@
 <script>
 import { getCourseList, deleteCourseItem } from '@/api/course.js'
 import { mapGetters } from 'vuex'
-import EmployeeSelect from '@/views/components/EmployeeSelect'
+import UserSelect from '@/views/components/UserSelect'
 
 export default {
   name: 'CourseList',
   components: {
-    EmployeeSelect
+    UserSelect
   },
   data() {
     return {
@@ -73,7 +73,7 @@ export default {
             prop: 'author',
             label: '课程作者',
             slots: {
-              slot: 'EmployeeSelect'
+              slot: 'UserSelect'
             }
           },
           {

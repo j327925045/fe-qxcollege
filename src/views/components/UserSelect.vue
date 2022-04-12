@@ -1,9 +1,9 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" clearable @change="onChange">
+  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" :filterable="filterable" :allow-create="allowCreate" clearable @change="onChange">
     <el-option
       v-for="item in options"
       :key="item.objectCode"
-      :label="item.name"
+      :label="item.realName"
       :value="item.objectCode"
     >
     </el-option>
@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import { getDataList } from '@/api/resources'
+import { getUserList } from '@/api/user'
 export default {
-  name: 'ResourseSelect',
+  name: 'UserSelect',
   props: {
     value: {
       type: [Number, String, Array],
@@ -24,6 +24,14 @@ export default {
       default: '请选择'
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    filterable: {
+      type: Boolean,
+      default: false
+    },
+    allowCreate: {
       type: Boolean,
       default: false
     }
@@ -55,11 +63,10 @@ export default {
     },
 
     getOptions() {
-      getDataList({ limit: 10000, page: 1 }).then(res => {
+      getUserList({ limit: 10000, page: 1 }).then(res => {
         if (res.code === 200) {
           this.options = res.data.list || []
         }
-        console.log('res', res)
       })
     },
 

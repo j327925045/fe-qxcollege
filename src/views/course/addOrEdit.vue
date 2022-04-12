@@ -5,7 +5,11 @@
         <h3 slot="infoSlot" class="gyl-title"><i class="el-icon-s-order" />课程信息</h3>
         <h3 slot="contentSlot" class="gyl-title"><i class="el-icon-s-order" />内容属性</h3>
         <h3 slot="viewLimitSlot" class="gyl-title"><i class="el-icon-s-order" />观看限制</h3>
+        <ResourceSelect slot="ResourceSelect" v-model="formConfig.props.materialCode" class="w-full"></ResourceSelect>
         <RichTextArea slot="RichTextArea" v-model="formConfig.props.introduction"></RichTextArea>
+        <UserSelect slot="UserSelect" v-model="formConfig.props.author" class="w-full"></UserSelect>
+        <ProductSelect slot="ProductSelect" v-model="formConfig.props.prodCodes" multiple collapse-tags class="w-full"></ProductSelect>
+        <ProjectSelect slot="ProjectSelect" v-model="formConfig.props.projectCodes" multiple collapse-tags class="w-full"></ProjectSelect>
       </ImForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
@@ -19,11 +23,19 @@
 import { mapGetters } from 'vuex'
 import { addCourseItem, getCourseDetail, updateCourseItem } from '@/api/course'
 import RichTextArea from '@/views/components/RichTextArea'
+import ResourceSelect from '@/views/components/ResourceSelect'
+import UserSelect from '@/views/components/UserSelect'
+import ProductSelect from '@/views/components/ProductSelect'
+import ProjectSelect from '@/views/components/ProjectSelect'
 
 export default {
   name: 'CourseAddOrEdit-noCache',
   components: {
-    RichTextArea
+    RichTextArea,
+    ResourceSelect,
+    UserSelect,
+    ProjectSelect,
+    ProductSelect
   },
   data() {
     return {
@@ -35,13 +47,22 @@ export default {
           labelPosition: 'top'
         },
         props: {
-          title: undefined,
+          materialCode: undefined,
           introduction: undefined,
-          level: undefined,
+          author: undefined,
+          coverUrl: undefined,
+          courseType: undefined,
+          prodCodes: undefined,
+          projectCodes: undefined,
+          partition: undefined,
+          position: undefined,
+          indication: undefined,
+          complication: undefined,
+          courseLevel: undefined,
+          userLevel: undefined,
+          paymentType: undefined,
           price: undefined,
-          summary: undefined,
-          type: undefined,
-          cover: undefined
+          summary: undefined
         },
         formItems: [
           {
@@ -52,12 +73,11 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'title',
+            type: 'ImSlot',
             label: '视频素材',
             rules: [{ required: true, message: '请选择视频素材' }],
-            attrs: {
-              class: 'w-full'
+            slots: {
+              slot: 'ResourceSelect'
             }
           },
           {
@@ -69,17 +89,16 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'title',
+            type: 'ImSlot',
             label: '课程作者',
             rules: [{ required: true, message: '请选择课程作者' }],
-            attrs: {
-              class: 'w-full'
+            slots: {
+              slot: 'UserSelect'
             }
           },
           {
             type: 'ImImgUpload',
-            prop: 'cover',
+            prop: 'coverUrl',
             label: '课程封面',
             span: 24,
             rules: [{ required: true, message: '请选择课程封面' }],
@@ -111,12 +130,12 @@ export default {
             type: 'ImSlot',
             notInForm: true,
             slots: {
-              firstSlot: 'contentSlot'
+              slot: 'contentSlot'
             }
           },
           {
             type: 'ImSelect',
-            prop: 'type',
+            prop: 'courseType',
             label: '课程分类',
             rules: [{ required: true, message: '请选择课程分类' }],
             attrs: {
@@ -125,28 +144,24 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'product',
+            type: 'ImSlot',
             label: '关联产品',
             rules: [{ required: true, message: '请选择关联产品' }],
-            attrs: {
-              class: 'w-full',
-              options: []
+            slots: {
+              slot: 'ProductSelect'
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'hospitalCode',
+            type: 'ImSlot',
             label: '关联项目',
             rules: [{ required: true, message: '请选择关联项目' }],
-            attrs: {
-              class: 'w-full',
-              options: []
+            slots: {
+              slot: 'ProjectSelect'
             }
           },
           {
             type: 'ImSelect',
-            prop: 'level',
+            prop: 'partition',
             label: '分区',
             rules: [{ required: true, message: '请选择分区' }],
             attrs: {
@@ -156,7 +171,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'part',
+            prop: 'position',
             label: '部位',
             rules: [{ required: true, message: '请选择部位' }],
             attrs: {
@@ -166,7 +181,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'part',
+            prop: 'indication',
             label: '适应症',
             rules: [{ required: true, message: '请选择适应症' }],
             attrs: {
@@ -176,7 +191,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'part',
+            prop: 'complication',
             label: '并发症',
             rules: [{ required: true, message: '请选择并发症' }],
             attrs: {
@@ -193,7 +208,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'part',
+            prop: 'courseLevel',
             label: '课程分级',
             rules: [{ required: true, message: '请选择课程分级' }],
             attrs: {
@@ -203,7 +218,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'part',
+            prop: 'userLevel',
             label: '用户等级要求',
             rules: [{ required: true, message: '请选择用户等级要求' }],
             attrs: {
@@ -213,7 +228,7 @@ export default {
           },
           {
             type: 'ImSelect',
-            prop: 'part',
+            prop: 'paymentType',
             label: '付费类型',
             rules: [{ required: true, message: '请选择付费类型' }],
             attrs: {
@@ -250,8 +265,14 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      this.setFormPropOptions('level', this.enums.courseLevel)
-      this.setFormPropOptions('type', this.enums.courseType)
+      this.setFormPropOptions('courseType', this.enums.courseType)
+      this.setFormPropOptions('partition', this.enums.coursePartition)
+      this.setFormPropOptions('position', this.enums.coursePosition)
+      this.setFormPropOptions('indication', this.enums.courseIndication)
+      this.setFormPropOptions('complication', this.enums.courseComplication)
+      this.setFormPropOptions('courseLevel', this.enums.courseLevel)
+      this.setFormPropOptions('userLevel', this.enums.doctorLevel)
+      this.setFormPropOptions('paymentType', this.enums.paymentType)
     },
 
     /**
