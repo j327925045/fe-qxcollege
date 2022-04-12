@@ -3,13 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --mode dev",
+
     "build": "vue-cli-service build --mode prod",
-    "lint": "vue-cli-service lint",
     "build:pre": "vue-cli-service build --mode pre",
+    "build:dev": "vue-cli-service build --mode dev",
+    "build:prod": "vue-cli-service build --mode prod",
+    "build:test": "vue-cli-service build --mode test",
+    
     "serve:dev": "vue-cli-service serve --mode dev",
     "serve:pre": "vue-cli-service serve --mode pre",
     "serve:prod": "vue-cli-service serve --mode prod",
+
+    "lint": "vue-cli-service lint",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
