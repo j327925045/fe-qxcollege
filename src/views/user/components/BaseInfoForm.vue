@@ -11,6 +11,19 @@ import { checkPhone } from '@/api/user'
 export default {
   name: 'BaseInfoForm',
   data() {
+    // 设置手机号的验证规则
+    const phoneRules = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入联系方式'))
+      } else {
+        const reg = /^1[3|4|5|6|7|8][0-9]\d{8}$/
+        if (reg.test(value)) {
+          callback()
+        } else {
+          return callback(new Error('请输入正确的电话'))
+        }
+      }
+    }
     return {
       formConfig: {
         column: 3,
@@ -44,7 +57,7 @@ export default {
             type: 'ImInput',
             prop: 'phone',
             label: '手机号',
-            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            rules: [{ required: true, message: '请输入手机号', min: 11, validator: phoneRules }, 'phone'],
             attrs: {
               placeholder: '请输入手机号码',
               maxLength: 11

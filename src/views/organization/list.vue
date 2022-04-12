@@ -300,7 +300,7 @@ export default {
       })
         .then(() => {
           if (record.mechanismCount > 0) {
-            this.$message.error('删除失败，该集团下存在机构')
+            this.$message.error('该机构下有医生 ，不允许删除。')
           } else {
             (
               deleteOrganizationItem({ objectCode: record.objectCode }).then(res => {
