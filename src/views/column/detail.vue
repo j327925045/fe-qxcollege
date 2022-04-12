@@ -61,7 +61,7 @@ export default {
         data: [],
         tableItems: [
           {
-            prop: '',
+            prop: 'courseNum',
             label: '课程编号',
             attrs: {
               fixed: 'left',
@@ -78,15 +78,19 @@ export default {
             }
           },
           {
-            prop: '',
+            prop: 'videoTimeLen',
             label: '视频时长',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
+            },
+            filter(val, row) {
+              return val || '-'
             }
           },
           {
-            prop: '',
+            prop: 'authorName',
             label: '视频作者',
             attrs: {
               'show-overflow-tooltip': true,
@@ -94,20 +98,24 @@ export default {
             }
           },
           {
-            prop: '',
+            prop: 'courseType',
             label: '视频分类',
+            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            options: this.enums.courseType
           },
           {
-            prop: '',
+            prop: 'userLevel',
             label: '用户等级要求',
+            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            options: this.enums.doctorLevel
           }
         ]
       }
@@ -174,7 +182,7 @@ export default {
         .then((res) => {
           this.loading = false
           if (res.code === 200) {
-            this.tableConfig.data = res.courseDTOList || []
+            this.tableConfig.data = res.data || []
           }
         })
         .catch((_) => {
