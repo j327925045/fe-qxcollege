@@ -144,10 +144,10 @@
           </div>
           <el-descriptions title="出行相关" class="mt-4" :column="2" :size="size">
             <el-descriptions-item label="舱位标准">{{ getLabelByValue('expertStandardAccommodation', dataList.expertStandardAccommodation) }}</el-descriptions-item>
-            <el-descriptions-item label="航司偏好">{{ getLabelByValue('expertAirlinePreference', dataList.expertAirlinePreference) }}</el-descriptions-item>
-            <el-descriptions-item label="酒店偏好">{{ getLabelByValue('expertHotelPreference', dataList.expertHotelPreference) }}</el-descriptions-item>
-            <el-descriptions-item label="饮食偏好">{{ getLabelByValue('expertEatingHabits', dataList.expertEatingHabits) }}</el-descriptions-item>
-            <el-descriptions-item label="饮酒偏好">{{ getLabelByValue('expertDrinkingPreference', dataList.expertDrinkingPreference) }}</el-descriptions-item>
+            <el-descriptions-item label="航司偏好">{{ dataList.expertAirlinePreference }}</el-descriptions-item>
+            <el-descriptions-item label="酒店偏好">{{ dataList.expertHotelPreference }}</el-descriptions-item>
+            <el-descriptions-item label="饮食偏好">{{ dataList.expertEatingHabits }}</el-descriptions-item>
+            <el-descriptions-item label="饮酒偏好">{{ dataList.expertDrinkingPreference }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions title="休闲相关" class="mt-4" :column="2" :size="size">
             <el-descriptions-item label="兴趣爱好">{{ dataList.expertHobby }}</el-descriptions-item>

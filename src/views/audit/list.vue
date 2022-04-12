@@ -106,7 +106,7 @@ export default {
             }
           },
           {
-            prop: 'createBy',
+            prop: 'createName',
             label: '创建人',
             attrs: {
               'show-overflow-tooltip': true,
