@@ -1,5 +1,10 @@
 <template>
-  <el-select v-model="myValue" :filterable="filterable" :allow-create="allowCreate" :placeholder="placeholder" @change="onChange">
+  <el-select
+    v-model="myValue"
+    :placeholder="$attrs.placeholder||'请选择'"
+    v-bind="$attrs"
+    @change="onChange"
+  >
     <el-option
       v-for="item in options"
       :key="item.value"
@@ -13,23 +18,11 @@
 <script>
 import { getProductList } from '@/api/product'
 export default {
-  name: 'OrganizationSelect',
+  name: 'ProductSelect',
   props: {
     value: {
-      type: [Number, String],
+      type: [Number, String, Array],
       default: undefined
-    },
-    placeholder: {
-      type: String,
-      default: '请选择'
-    },
-    filterable: {
-      type: Boolean,
-      default: false
-    },
-    allowCreate: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -55,9 +48,9 @@ export default {
     },
 
     getOptions() {
-      getProductList({}).then(res => {
+      getProductList({ limit: 10000, page: 1 }).then(res => {
         if (res.code === 200) {
-          this.options = res.data
+          this.options = res.data.list || []
         }
         console.log('res', res)
       })

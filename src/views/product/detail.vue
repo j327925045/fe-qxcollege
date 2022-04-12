@@ -42,9 +42,7 @@
         <span class="headertext">关联项目(todo列表需支持筛选)</span>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
-      <div class="mt-4 text-right">
-        <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
-      </div>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </el-card>
   </ImWrapper>
 </template>

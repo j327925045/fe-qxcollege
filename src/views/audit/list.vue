@@ -5,15 +5,13 @@
     </ImSearchArea>
     <ImTableArea>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
-      <div class="mt-4 text-right">
-        <ImPagination
-          ref="ImPagination"
-          :page-size.sync="pageSize"
-          :current-page.sync="currentPage"
-          :total="total"
-          @change="getList"
-        ></ImPagination>
-      </div>
+      <ImPagination
+        ref="ImPagination"
+        :page-size.sync="pageSize"
+        :current-page.sync="currentPage"
+        :total="total"
+        @change="getList"
+      ></ImPagination>
     </ImTableArea>
     <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>

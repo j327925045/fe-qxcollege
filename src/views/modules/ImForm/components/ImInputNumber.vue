@@ -8,7 +8,7 @@ export default {
   name: 'ImInputNumber',
   props: {
     value: {
-      type: Number,
+      type: [Number, String],
       default: undefined
     },
     attrs: {
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     setMyValue() {
-      this.myValue = this.value
+      this.myValue = Number(this.value)
     },
     onUpdate() {
       this.$emit('input', this.myValue)

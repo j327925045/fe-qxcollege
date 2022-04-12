@@ -136,7 +136,7 @@
             <el-descriptions-item label="消毒剂偏好">{{ getLabelByValue('expertDisinfectantPreference', dataList.expertDisinfectantPreference + '') }}</el-descriptions-item>
           </el-descriptions>
           <div>
-            <div style="color: #606266; font-size: 14px;padding-bottom:10px">针头习惯：</div>
+            <div style="padding-bottom:10px;color: #606266; font-size: 14px">针头习惯：</div>
             <el-descriptions v-for="item,index in dataList.userHabitAddDTOList" :key="index" style="font-size: 14px" direction="vertical" :column="3">
               <el-descriptions-item label-class-name="my-label" label="针头">{{ item.name }}</el-descriptions-item>
               <el-descriptions-item label-class-name="my-label" label="规格">{{ getLabelByValue('zhen',item.details) }}</el-descriptions-item>
@@ -212,9 +212,7 @@
           </ImSearchArea>
           <ImTableArea>
             <ImTable :loading="loading" :table="tableConfig"></ImTable>
-            <div class="mt-4 text-right">
-              <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
-            </div>
+            <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
           </ImTableArea>
         </div>
       </el-tab-pane>
@@ -529,6 +527,7 @@ export default {
 
 .auditStatus {
   display: inline-block;
+  float: right;
   height: 32px;
   padding: 0 16px;
   color: #fff;
@@ -538,7 +537,6 @@ export default {
   text-align: center;
   background: #005dbe;
   border-radius: 4px;
-  float: right;
 }
 //产品认证
 .elRow {
