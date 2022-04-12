@@ -29,18 +29,29 @@
             {{ item }}
           </el-tag>
         </template>
+        <template slot="regionFullNameSlot" slot-scope="scope">
+          <div v-if="scope.row.userOrgInfoShowDTOList">
+            <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+              <span>{{ item.region }}</span>
+            </div></div>
+        </template>
         <template slot="realHospitalNameSlot" slot-scope="scope">
-          <span> {{ scope.row.userOrgInfoShowDTOList[0].hospital }}</span>
+
+          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+            <span> {{ item.hospital }}</span>
+          </div>
         </template>
         <template slot="realDepartmentSlot" slot-scope="scope">
-          <span> {{ getLabelByValue('realDepartment', scope.row.userOrgInfoShowDTOList[0].orgDepartment) }}</span>
+          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+            <span> {{ getLabelByValue('realDepartment', item.orgDepartment) }}</span>
+          </div>
         </template>
         <template slot="realJobTitleSlot" slot-scope="scope">
-          <span> {{ getLabelByValue('jobTitle', scope.row.userOrgInfoShowDTOList[0].post) }}</span>
+          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+            <span> {{ getLabelByValue('jobTitle',item.post) }}</span>
+          </div>
         </template>
-        <template slot="regionFullNameSlot" slot-scope="scope">
-          <span>{{ scope.row.userOrgInfoShowDTOList[0].region }}</span>
-        </template>
+
       </ImTable>
 
       <div class="mt-4 text-right">
@@ -367,14 +378,6 @@ export default {
               width: '160'
             },
             slot: 'regionFullNameSlot'
-          },
-          {
-            prop: 'regionFullName',
-            label: '地区',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            }
           },
 
           {
