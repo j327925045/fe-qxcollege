@@ -135,6 +135,7 @@ export default {
             const key = keys[i]
             props[key] = res.data[key] || undefined
           }
+          props.courseCodes = res.data.courseCodesStr
         }
       })
     },

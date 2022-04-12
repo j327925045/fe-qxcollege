@@ -117,6 +117,7 @@ export default {
         },
         // 文件上传成功
         onUploadSucceed(uploadInfo) {
+          console.log('onUploadSucceed', uploadInfo)
           self.myValue = uploadInfo.videoId
           self.videoUploadPercent = 0
           self.onUpdate()
