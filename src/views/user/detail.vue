@@ -62,7 +62,7 @@
           <div class="divCrad">
             <div class="pt-4 titleDiv">
               <span class="fl mr-4">资质信息</span>
-              <span v-if="dataList.realAuditStatus==1" class="fr auditStatus" @click="qualification">上传资质</span>
+              <span v-if="dataList.realAuditStatus==1||dataList.realAuditStatus==2" class="fr auditStatus" @click="qualification">上传资质</span>
             </div>
             <el-descriptions title="执业信息" class="mt-4" :column="1" :size="size">
               <el-descriptions-item label="医师执业证书">
