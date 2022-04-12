@@ -296,7 +296,7 @@ export default {
             type: 'slot',
             label: '昵称',
             attrs: {
-              width: '160'
+              width: '100'
             },
             slot: 'someSlot'
           },
@@ -344,12 +344,15 @@ export default {
           {
             prop: 'doctorLevel',
             label: '医生等级',
-            type: 'mapList',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '120',
+              'text-align': 'center'
             },
-            options: this?.enums?.doctorLevel ?? []
+            filter(val, row) {
+              return `<h3 style="text-align: center;">V${val}</h3>`
+            }
           },
           // {
           //   prop: 'realAuditStatus',
@@ -375,7 +378,7 @@ export default {
             type: 'slot',
             label: '地区',
             attrs: {
-              width: '160'
+              width: '260'
             },
             slot: 'regionFullNameSlot'
           },
@@ -384,7 +387,7 @@ export default {
             type: 'slot',
             label: '机构',
             attrs: {
-              width: '160'
+              width: '230'
             },
             slot: 'realHospitalNameSlot'
           },
