@@ -1,7 +1,9 @@
 <template>
   <ImWrapper>
     <ImSearchArea>
-      <ImForm ref="ImForm" :form="formConfig"></ImForm>
+      <ImForm ref="ImForm" :form="formConfig">
+        <EmployeeSelect slot="EmployeeSelect" v-model="formConfig.props.author" filterable class="w-full"></EmployeeSelect>
+      </ImForm>
     </ImSearchArea>
 
     <ImTableArea>
@@ -25,9 +27,13 @@
 <script>
 import { getCourseList, deleteCourseItem } from '@/api/course.js'
 import { mapGetters } from 'vuex'
+import EmployeeSelect from '@/views/components/EmployeeSelect'
 
 export default {
   name: 'CourseList',
+  components: {
+    EmployeeSelect
+  },
   data() {
     return {
       formConfig: {
@@ -36,11 +42,11 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          a: undefined,
-          b: undefined,
-          c: undefined,
-          d: undefined,
-          e: undefined,
+          courseNum: undefined,
+          title: undefined,
+          author: undefined,
+          courseType: undefined,
+          courseLevel: undefined,
           f: undefined,
           g: undefined,
           h: undefined,
@@ -49,43 +55,44 @@ export default {
         formItems: [
           {
             type: 'ImInput',
-            prop: 'a',
+            prop: 'courseNum',
             label: '课程编号',
             attrs: {
             }
           },
           {
             type: 'ImInput',
-            prop: 'b',
+            prop: 'title',
             label: '课程标题',
             attrs: {
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'c',
+            type: 'ImSlot',
+            prop: 'author',
             label: '课程作者',
-            attrs: {
-              allowClear: true,
-              class: 'w-full'
+            slots: {
+              slot: 'EmployeeSelect'
             }
           },
           {
             type: 'ImSelect',
-            prop: 'd',
+            prop: 'courseType',
             label: '课程分类',
             attrs: {
-              allowClear: true,
-              class: 'w-full'
+              clearable: true,
+              class: 'w-full',
+              options: []
             }
           },
           {
             type: 'ImSelect',
-            prop: 'e',
+            prop: 'courseLevel',
             label: '课程分级',
             attrs: {
-              allowClear: true,
-              class: 'w-full'
+              clearable: true,
+              class: 'w-full',
+              options: []
             }
           },
           {
@@ -93,7 +100,7 @@ export default {
             prop: 'f',
             label: '用户等级要求',
             attrs: {
-              allowClear: true,
+              clearable: true,
               class: 'w-full'
             }
           },
@@ -102,7 +109,7 @@ export default {
             prop: 'g',
             label: '付费类型',
             attrs: {
-              allowClear: true,
+              clearable: true,
               class: 'w-full'
             }
           },
@@ -111,7 +118,7 @@ export default {
             prop: 'h',
             label: '审核状态',
             attrs: {
-              allowClear: true,
+              clearable: true,
               class: 'w-full'
             }
           },
@@ -120,7 +127,7 @@ export default {
             prop: 'i',
             label: '上架状态',
             attrs: {
-              allowClear: true,
+              clearable: true,
               class: 'w-full'
             }
           },
@@ -337,8 +344,23 @@ export default {
   },
   activated() {
     this.getList()
+    this.setOptions()
   },
   methods: {
+    setOptions() {
+      this.setFormPropOptions('courseType', this.enums.courseType)
+      this.setFormPropOptions('courseLevel', this.enums.courseLevel)
+    },
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      console.log('item', item)
+      item.attrs.options = options
+    },
     /**
      * 展示详情
      */
