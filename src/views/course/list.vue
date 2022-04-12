@@ -164,147 +164,147 @@ export default {
       return {
         data: [],
         tableItems: [
+          // {
+          //   prop: '',
+          //   label: '课程编号',
+          //   attrs: {
+          //     fixed: 'left',
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
           {
-            prop: 'a',
-            label: '课程编号',
-            attrs: {
-              fixed: 'left',
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'b',
-            label: '标题',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'c',
-            label: '视频类型',
+            prop: 'title',
+            label: '课程标题',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
           },
-          {
-            prop: 'd',
-            label: '视频时长',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'e',
-            label: '视频作者',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'f',
-            label: '视频分类',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'level',
-            label: '视频分级',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            },
-            options: this.enums.courseLevel
-          },
-          {
-            prop: 'h',
-            label: '用户等级要求',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'type',
-            label: '付费类型',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '180'
-            },
-            options: this.enums.courseType
-          },
-          {
-            prop: 'price',
-            label: '积分数值',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'i',
-            label: '观看次数',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'j',
-            label: '观看人数',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'k',
-            label: '收藏数',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'l',
-            label: '点赞数',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'n',
-            label: '评论数',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'o',
-            label: '审核状态',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'p',
-            label: '上架状态',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
+          // {
+          //   prop: '',
+          //   label: '视频类型',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '视频时长',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '视频作者',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '视频分类',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '视频分级',
+          //   type: 'mapList',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   },
+          //   options: this.enums.courseLevel
+          // },
+          // {
+          //   prop: '',
+          //   label: '用户等级要求',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '付费类型',
+          //   type: 'mapList',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '180'
+          //   },
+          //   options: this.enums.courseType
+          // },
+          // {
+          //   prop: 'price',
+          //   label: '积分数值',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '观看次数',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '观看人数',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '收藏数',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '点赞数',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '评论数',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '审核状态',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
+          // {
+          //   prop: '',
+          //   label: '上架状态',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120'
+          //   }
+          // },
           {
             prop: '',
             label: '操作',

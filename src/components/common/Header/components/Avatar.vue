@@ -85,6 +85,7 @@ export default {
     .dropdown-item {
       min-width: 140px;
       padding: 12px 22px;
+      font-size: 14px;
       line-height: 100%;
       cursor: pointer;
 
