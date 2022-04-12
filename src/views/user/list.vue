@@ -42,8 +42,8 @@
           </div>
         </template>
         <template slot="realJobTitleSlot" slot-scope="scope">
-          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
-            <span> {{ getLabelByValue('jobTitle',item.post) }}</span>
+          <div>
+            <span> {{ getLabelByValue('jobTitle',scope.row.realJobTitle) }}</span>
           </div>
         </template>
 
@@ -402,12 +402,12 @@ export default {
             slot: 'realJobTitleSlot'
           },
           {
-            type: 'slot',
+            prop: 'realAccountManager',
             label: '客户经理',
             attrs: {
-              width: '160'
-            },
-            slot: 'realAccountManagerSlot'
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
           },
           {
             prop: 'bindingWechat',
@@ -417,7 +417,7 @@ export default {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.jobTitle ?? []
+            options: this?.enums?.bindingWechat ?? []
           },
 
           {
