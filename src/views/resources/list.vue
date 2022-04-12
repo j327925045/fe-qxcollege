@@ -15,15 +15,13 @@
           <a href="javascript:;" @click="playVideo(scope.row)">{{ scope.row.fileUrl }}</a>
         </template>
       </ImTable>
-      <div class="mt-4 text-right">
-        <ImPagination
-          ref="ImPagination"
-          :page-size.sync="pageSize"
-          :current-page.sync="currentPage"
-          :total="total"
-          @change="getList"
-        ></ImPagination>
-      </div>
+      <ImPagination
+        ref="ImPagination"
+        :page-size.sync="pageSize"
+        :current-page.sync="currentPage"
+        :total="total"
+        @change="getList"
+      ></ImPagination>
     </ImTableArea>
     <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
     <AddOrEdit ref="AddOrEdit" @update="getList" @add="getList"></AddOrEdit>

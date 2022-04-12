@@ -11,15 +11,13 @@
         <el-button type="primary" @click="addItem">新建课程</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
-      <div class="mt-4 text-right">
-        <ImPagination
-          ref="ImPagination"
-          :page-size.sync="pageSize"
-          :current-page.sync="currentPage"
-          :total="total"
-          @change="getList"
-        ></ImPagination>
-      </div>
+      <ImPagination
+        ref="ImPagination"
+        :page-size.sync="pageSize"
+        :current-page.sync="currentPage"
+        :total="total"
+        @change="getList"
+      ></ImPagination>
     </ImTableArea>
   </ImWrapper>
 </template>
@@ -396,7 +394,6 @@ export default {
     setFormPropOptions(prop, options) {
       const formItems = this.formConfig.formItems
       const item = formItems.find(item => item.prop === prop)
-      console.log('item', item)
       item.attrs.options = options
     },
     /**
