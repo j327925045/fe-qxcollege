@@ -10,7 +10,7 @@
       <el-descriptions class="doctorMsg" :column="2" :size="size">
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
-        <el-descriptions-item label="生日">{{ dataList.birthday? moment(dataList.birthday).format('YYYY-MM-DD hh:mm:ss'):"" }} </el-descriptions-item>
+        <el-descriptions-item label="生日">{{ dataList.birthday? moment(dataList.birthday).format('YYYY-MM-DD'):"" }} </el-descriptions-item>
         <el-descriptions-item label="性别">{{ getLabelByValue('gender', dataList.gender) }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ dataList.phone }} </el-descriptions-item>
       </el-descriptions>
@@ -44,7 +44,7 @@
                 <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" size="small">{{ item }}</el-tag>
               </el-descriptions-item>
               <el-descriptions-item label="职称">{{ getLabelByValue('jobTitle', dataList.realJobTitle) }}</el-descriptions-item>
-              <el-descriptions-item label="执业分类">{{ dataList.occupationalClassification }}</el-descriptions-item>
+              <el-descriptions-item label="执业分类">{{ getLabelByValue('realPracticeCategory', dataList.occupationalClassification) }}</el-descriptions-item>
               <el-descriptions-item label="行业协会">{{ dataList.realEmploymentIndustryAssociations }}</el-descriptions-item>
             </el-descriptions>
 
