@@ -135,14 +135,18 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteOrganizationItem({ objectCode: this.objectCode }).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('操作成功！')
-              this.goListPage()
-            } else {
-              this.$message.error(res.message)
-            }
-          })
+          if (this.tableConfig.data.length > 0) {
+            this.$message.error('该机构下有医生 ，不允许删除。')
+          } else {
+            deleteOrganizationItem({ objectCode: this.objectCode }).then((res) => {
+              if (res.code === 200) {
+                this.$message.success('操作成功！')
+                this.goListPage()
+              } else {
+                this.$message.error(res.message)
+              }
+            })
+          }
         })
         .catch(() => {})
     },

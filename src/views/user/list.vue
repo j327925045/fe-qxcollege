@@ -24,11 +24,6 @@
             <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
           </div>
         </template>
-        <template slot="realAccountManagerSlot" slot-scope="scope">
-          <el-tag v-for="item,index in scope.row.userOppositeStrList" :key="index">
-            {{ item }}
-          </el-tag>
-        </template>
         <template slot="regionFullNameSlot" slot-scope="scope">
           <div v-if="scope.row.userOrgInfoShowDTOList">
             <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
@@ -47,8 +42,8 @@
           </div>
         </template>
         <template slot="realJobTitleSlot" slot-scope="scope">
-          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
-            <span> {{ getLabelByValue('jobTitle',item.post) }}</span>
+          <div>
+            <span> {{ getLabelByValue('jobTitle',scope.row.realJobTitle) }}</span>
           </div>
         </template>
 
@@ -222,11 +217,11 @@ export default {
             }
           },
           {
-            type: 'ImSlot',
-            prop: 'realAccountManagerCode',
+            prop: 'realAccountManager',
             label: '客户经理',
-            slots: {
-              realAccountManagerCode: 'EmployeeSelect'
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
             }
           },
           {
@@ -407,12 +402,12 @@ export default {
             slot: 'realJobTitleSlot'
           },
           {
-            type: 'slot',
+            prop: 'realAccountManager',
             label: '客户经理',
             attrs: {
-              width: '160'
-            },
-            slot: 'realAccountManagerSlot'
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
           },
           {
             prop: 'bindingWechat',
@@ -422,7 +417,7 @@ export default {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.jobTitle ?? []
+            options: this?.enums?.bindingWechat ?? []
           },
 
           {
