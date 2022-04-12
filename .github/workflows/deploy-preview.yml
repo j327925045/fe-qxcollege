@@ -49,4 +49,4 @@ jobs:
           port: 22
           key: ${{ secrets.ACCESS_TOKEN }}
           source: "dist"
-          target: "/opt/www/template/"
+          target: "/opt/www/preview/"
