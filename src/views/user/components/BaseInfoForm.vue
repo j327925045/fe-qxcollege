@@ -7,6 +7,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { checkPhone } from '@/api/user'
 export default {
   name: 'BaseInfoForm',
   data() {
@@ -47,6 +48,17 @@ export default {
             attrs: {
               placeholder: '请输入手机号码',
               maxLength: 11
+            },
+            listeners: {
+              change(value) {
+                checkPhone(value).then((res) => {
+                  console.log(res)
+                  this.$message(res.message)
+                })
+              }
+              // input(input) {
+              //   this.getPhone()
+              // }
             }
           },
           {
@@ -112,6 +124,14 @@ export default {
   },
 
   methods: {
+    // 校验手机号是否存在
+    /// qxcollege/user/check/phone
+    // getPhone(value) {
+    //   console.log(value)
+    //   checkPhone(value).then((res) => {
+    //     console.log(res)
+    //   })
+    // },
     onLevelChanged(val) {
       this.$emit('levelChange', val)
     },
