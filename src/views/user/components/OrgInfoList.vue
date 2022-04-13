@@ -4,7 +4,7 @@
       <el-row class="row" :gutter="24">
         <el-col :span="6">
           <el-form-item label-width="80px" label="机构" required>
-            <HospitalSelect v-model="item.hospitalCode" class="w-full" @change="onChange"></HospitalSelect>
+            <HospitalSelect :disabledCode="disabledCode" v-model="item.hospitalCode" class="w-full" @change="onChange"></HospitalSelect>
           </el-form-item>
         </el-col>
         <el-col :span="6">
@@ -66,7 +66,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['enums'])
+    ...mapGetters(['enums']),
+    disabledCode () {
+      return this.myValue.map(i => i.hospitalCode)
+    }
   },
   watch: {
     value: {
