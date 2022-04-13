@@ -107,8 +107,7 @@ export default {
             prop: 'createName',
             label: '创建人',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              'show-overflow-tooltip': true
             }
           },
           {
@@ -116,7 +115,6 @@ export default {
             label: '创建时间',
             type: 'customFilter',
             attrs: {
-              width: '110'
             },
             filter(val, row) {
               return moment(val).format('YYYY-MM-DD')
@@ -126,8 +124,7 @@ export default {
             prop: 'objectCode',
             label: '审核编号',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '100'
+              'show-overflow-tooltip': true
             }
           },
           {
@@ -135,8 +132,7 @@ export default {
             label: '审核状态',
             type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              'show-overflow-tooltip': true
             },
             options: [
               {
