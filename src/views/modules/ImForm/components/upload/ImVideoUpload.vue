@@ -12,7 +12,7 @@
       <div>{{ myValue }}</div>
       <el-progress v-if="videoUploadPercent>0" :percentage="videoUploadPercent" :colors="colors"></el-progress>
     </div>
-    <div slot="tip" class="el-upload__tip">请上传不超过500M的文件</div>
+    <div slot="tip" class="el-upload__tip">请上传不超过1GB的文件</div>
   </el-upload>
 </template>
 <script>
@@ -76,8 +76,8 @@ export default {
 
     beforeUpload(file) {
       if (file) {
-        if (file.size > 500 * 1024 * 1024) {
-          this.$message.error('上传文件大小不能超过500MB!')
+        if (file.size > 1024 * 1024 * 1024) {
+          this.$message.error('上传文件大小不能超过1GB!')
           return false
         }
         this.uploader.addFile(file, null, null, null, '{"Vod":{}}')

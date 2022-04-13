@@ -148,7 +148,7 @@ export default {
             label: '评论时间',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '160'
             }
           },
           {
