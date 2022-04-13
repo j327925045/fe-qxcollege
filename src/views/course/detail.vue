@@ -25,8 +25,8 @@
         <el-descriptions-item :span="3" label="课程封面">
           <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" />
         </el-descriptions-item>
-        <el-descriptions-item :span="3" label="课程视频">
-          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" />
+        <el-descriptions-item v-if="getMeterial(details.materials)" :span="3" label="课程视频">
+          <img class="imageClass" :src="getMeterial(details.materials).coverUrl" alt="" @click="playVideo(getMeterial(details.materials))" />
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="课程标题">
           {{ details.title }}
@@ -35,7 +35,7 @@
           {{ details.summary }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="课程介绍">
-          {{ details.introduction }}
+          <div class="__RichTextArea" v-html="details.introduction"></div>
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -101,13 +101,7 @@
         <span class="headertext">课程评论</span>
       </div>
       <ImTable :loading="commentLoading" :table="commitTableConfig"></ImTable>
-      <ImPagination
-        ref="ImPagination"
-        :page-size.sync="pageSize"
-        :current-page.sync="currentPage"
-        :total="total"
-        @change="getCommentList"
-      ></ImPagination>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getCommentList"></ImPagination>
     </el-card>
     <el-card class="box-card">
       <div slot="header">
@@ -128,6 +122,7 @@
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
+    <VideoPlayer ref="VideoPlayer"></VideoPlayer>
   </ImWrapper>
 </template>
 
@@ -137,9 +132,13 @@ import { getCommentList } from '@/api/coursecomment'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
+import VideoPlayer from '@/views/components/VideoPlayer'
 
 export default {
   name: 'CourseDetail--nocache',
+  components: {
+    VideoPlayer
+  },
   data() {
     return {
       details: {},
@@ -184,7 +183,7 @@ export default {
             }
           },
           {
-            prop: 'createTime',
+            prop: 'createTimeStr',
             label: '创建时间',
             attrs: {
               'show-overflow-tooltip': true,
@@ -207,9 +206,7 @@ export default {
     commitTableConfig() {
       return {
         data: [],
-        tableItems: [
-
-        ]
+        tableItems: []
       }
     }
   },
@@ -219,6 +216,18 @@ export default {
     this.getCommentList()
   },
   methods: {
+    playVideo(record) {
+      this.$refs.VideoPlayer.play(record.fileUrl, record.coverUrl)
+    },
+
+    getMeterial(meterials) {
+      let item = null
+      if (meterials && meterials.length > 0) {
+        item = meterials[0]
+      }
+      return item
+    },
+
     getNames(objArr) {
       if (!objArr) {
         return '-'
@@ -229,7 +238,7 @@ export default {
 
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
-      return item.label || ''
+      return item.label || '-'
     },
 
     getDateTime(date) {
@@ -330,6 +339,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    cursor: pointer;
   }
 }
 
@@ -337,5 +347,71 @@ export default {
   justify-content: right;
   width: 120px;
   margin-bottom: 24px;
+}
+
+/deep/ .__RichTextArea {
+  width: 100%;
+  max-height: 300px;
+  padding: 16px;
+  overflow: auto;
+  border: 2px solid gray;
+
+  //标题
+  h1 {
+    margin: 0.67em 0;
+    color: red;
+    font-size: 2em;
+  }
+
+  h2 {
+    margin: 0.75em 0;
+    font-size: 1.5em;
+  }
+
+  h3 {
+    margin: 0.83em 0;
+    font-size: 1.17em;
+  }
+
+  h4 {
+    margin: 1.12em 0;
+  }
+
+  h5 {
+    margin: 1.5em 0;
+    font-size: 0.83em;
+  }
+
+  h6 {
+    margin: 1.67em 0;
+    font-size: 0.75em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  b,
+  strong {
+    font-weight: bolder;
+  }
+
+  ul,
+  ul li {
+    list-style-position: inside;
+    list-style-type: disc;
+  }
+
+  ol,
+  ol li {
+    list-style-position: inside;
+    list-style-type: decimal;
+  }
+
+  em {
+    font-style: italic;
+  }
 }
 </style>
