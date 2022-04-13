@@ -19,6 +19,7 @@
           class="w-full"
           placeholder="请选择产品"
         ></projectProductArr>
+        <RichTextArea slot="RichTextArea" v-model="formConfig.props.projectIntroduce"></RichTextArea>
       </ImForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
@@ -31,6 +32,7 @@
 <script>
 import { addProjectItem, getProjectDetail, updateProjectItem } from '@/api/project'
 import { mapGetters } from 'vuex'
+import RichTextArea from '@/views/components/RichTextArea'
 
 import OrganizationSelect from '@/views/components/OrganizationSelect'
 import ProjectProductArr from './components/ProjectProductList'
@@ -39,7 +41,8 @@ export default {
 
   components: {
     ProjectProductArr,
-    OrganizationSelect
+    OrganizationSelect,
+    RichTextArea
   },
   data() {
     return {
@@ -84,21 +87,6 @@ export default {
               placeholder: '请输入项目明细'
             }
           },
-          {
-            type: 'ImInput',
-            prop: 'projectIntroduce',
-            label: '项目介绍',
-            // rules: [{ required: true, message: '请输入' }],
-            attrs: {
-              type: 'text',
-              placeholder: '请输入项目介绍'
-            }
-          },
-          {
-            type: 'ImImgUpload',
-            prop: 'projectPictureUrl',
-            label: '项目图片'
-          },
 
           {
             type: 'ImSlot',
@@ -109,6 +97,31 @@ export default {
               multiple: true,
               projectProductListSlot: 'projectProductArr',
               options: []
+            }
+          },
+          {
+            type: 'ImImgUpload',
+            prop: 'projectPictureUrl',
+            label: '项目图片'
+          },
+          // {
+          //   type: 'ImInput',
+          //   prop: 'projectIntroduce',
+          //   label: '项目介绍',
+          //   // rules: [{ required: true, message: '请输入' }],
+          //   attrs: {
+          //     type: 'text',
+          //     placeholder: '请输入项目介绍'
+          //   }
+          // },
+          {
+            type: 'ImSlot',
+            prop: 'projectIntroduce',
+            label: '项目介绍',
+            span: 24,
+            // rules: [{ required: true, message: '请输入项目介绍' }],
+            slots: {
+              projectIntroduce: 'RichTextArea'
             }
           }
 

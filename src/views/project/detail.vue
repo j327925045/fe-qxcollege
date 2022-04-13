@@ -28,9 +28,11 @@
           </div>
         </el-descriptions-item>
         <el-descriptions-item label="项目图片">
-          <img class="imageClass" :src=" productDetail.projectPictureUrl" alt="">
+          <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="">
         </el-descriptions-item>
-        <el-descriptions-item label="项目介绍"><span class="projectText">{{ productDetail.projectIntroduce }}</span></el-descriptions-item>
+        <el-descriptions-item label="项目介绍">
+          <div v-html="productDetail.projectIntroduce"></div>
+        </el-descriptions-item>
 
       </el-descriptions>
 
