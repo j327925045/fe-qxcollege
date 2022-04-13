@@ -255,7 +255,8 @@ export default {
           }
         ]
       },
-      editId: this.$route.query.objectCode
+      editId: this.$route.query.objectCode,
+      courseNum: undefined
     }
   },
   computed: {
@@ -302,8 +303,12 @@ export default {
             const key = keys[i]
             props[key] = res.data[key] || undefined
           }
+          this.courseNum = res.data.courseNum
           props.prodCodes = res.data.courseProducts.map(item => item.objectCode)
           props.projectCodes = res.data.courseProjects.map(item => item.objectCode)
+          if (res.data.materials && res.data.materials[0]) {
+            props.materialCode = res.data.materials[0].objectCode
+          }
         }
       })
     },
@@ -319,6 +324,7 @@ export default {
         }
         if (this.editId) {
           data.objectCode = this.editId
+          data.courseNum = this.courseNum
           updateCourseItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')
