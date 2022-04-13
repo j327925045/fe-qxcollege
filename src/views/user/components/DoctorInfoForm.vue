@@ -78,7 +78,8 @@ export default {
             attrs: {
               type: 'textarea',
               style: 'width: 50%',
-              placeholder: '请输入医生简介'
+              placeholder: '请输入医生简介',
+              maxLength: 500
             }
           },
           {
@@ -162,6 +163,7 @@ export default {
             type: 'ImSlot',
             span: 24,
             lebel: '所在机构信息',
+            props: 'userOrgInfoDtoList',
             // hidden: this.isEdit,
             slots: {
               sort: 'OrgInfoList'
