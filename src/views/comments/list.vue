@@ -3,7 +3,6 @@
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig"></ImForm>
     </ImSearchArea>
-
     <ImTableArea>
       <div class="mb-4">
         <el-button type="primary">批量删除</el-button>
@@ -12,15 +11,20 @@
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </ImTableArea>
+    <AddOrEdit ref="AddOrEdit"></AddOrEdit>
   </ImWrapper>
 </template>
 
 <script>
 import { getCommentsList, deleteCommentsItem } from '@/api/comments.js'
 import { mapGetters } from 'vuex'
+import AddOrEdit from './components/AddOrEdit'
 
 export default {
   name: 'CommentsList',
+  components: {
+    AddOrEdit
+  },
   data() {
     return {
       formConfig: {
@@ -95,12 +99,22 @@ export default {
     tableConfig() {
       return {
         data: [],
+        listeners: {
+          'sort-change'() {
+            console.log('sort-change')
+          },
+          'selection-change'(selection) {
+            console.log('selection', selection)
+          }
+        },
         tableItems: [
+          {
+            type: 'selection'
+          },
           {
             prop: 'courseTitle',
             label: '课程标题',
             attrs: {
-              fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
@@ -109,7 +123,6 @@ export default {
             prop: 'content',
             label: '评论内容',
             attrs: {
-              fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
@@ -118,7 +131,6 @@ export default {
             prop: 'replyContent',
             label: '管理员回复',
             attrs: {
-              fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
@@ -127,7 +139,6 @@ export default {
             prop: 'createBy',
             label: '评论人',
             attrs: {
-              fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
@@ -136,7 +147,6 @@ export default {
             prop: 'createTime',
             label: '评论时间',
             attrs: {
-              fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
             }
@@ -232,8 +242,9 @@ export default {
      * 回复
      */
 
-    editItem() {
-      console.log('editItem')
+    editItem($index, record) {
+      console.log(record)
+      this.$refs.AddOrEdit.edit(record)
     },
     /**
      * 删除
