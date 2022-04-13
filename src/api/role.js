@@ -2,7 +2,7 @@ import request from '@/utils/request.js'
 
 export function addRoleItem(data) {
   return request({
-    url: '/qxcollege/role/add',
+    url: '/qxcollege/admin/role/add',
     method: 'post',
     data: data
   })
@@ -10,7 +10,7 @@ export function addRoleItem(data) {
 
 export function deleteRoleItem(data) {
   return request({
-    url: '/qxcollege/role/delete',
+    url: '/qxcollege/admin/role/delete',
     method: 'post',
     data: data
   })
@@ -18,7 +18,7 @@ export function deleteRoleItem(data) {
 
 export function updateRoleItem(data) {
   return request({
-    url: '/qxcollege/role/edit',
+    url: '/qxcollege/admin/role/edit',
     method: 'post',
     data: data
   })
@@ -26,7 +26,7 @@ export function updateRoleItem(data) {
 
 export function getAllRoleList(params) {
   return request({
-    url: '/qxcollege/role/findAll',
+    url: '/qxcollege/admin/role/findAll',
     method: 'get',
     params: params
   })
@@ -34,7 +34,7 @@ export function getAllRoleList(params) {
 
 export function getRoleDetail(params) {
   return request({
-    url: `/qxcollege/role/get/${params.objectCode}`,
+    url: `/qxcollege/admin/role/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -42,7 +42,7 @@ export function getRoleDetail(params) {
 
 export function getRoleList(params) {
   return request({
-    url: '/qxcollege/role/list',
+    url: '/qxcollege/admin/role/list',
     method: 'get',
     params: params
   })

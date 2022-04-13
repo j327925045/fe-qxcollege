@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function setEmployeesRole(data) {
   return request({
-    url: '/qxcollege/employeerole/set',
+    url: '/qxcollege/admin/employeerole/set',
     method: 'post',
     data: data
   })
@@ -13,7 +13,7 @@ export function setEmployeesRole(data) {
 
 export function getEmployeesRoleDetail(params) {
   return request({
-    url: `/qxcollege/employeerole/get/${params.objectCode}`,
+    url: `/qxcollege/admin/employeerole/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

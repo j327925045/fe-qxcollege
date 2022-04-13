@@ -53,6 +53,12 @@ export const Content = [
         name: 'resourcesList',
         component: () => import('@/views/resources/list'),
         meta: { title: '素材列表' }
+      },
+      {
+        path: '/comments/list',
+        name: 'CommentsList',
+        component: () => import('@/views/comments/list'),
+        meta: { title: '评论列表' }
       }
     ]
   }

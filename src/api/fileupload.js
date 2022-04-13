@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function findAliToken() {
   return request({
-    url: '/qxcollege/fileUpload/findAliToken',
+    url: '/qxcollege/admin/fileUpload/findAliToken',
     method: 'post',
     data: {}
   })
@@ -16,7 +16,7 @@ export function findAliToken() {
  */
 export function findAliVideoToken() {
   return request({
-    url: '/qxcollege/fileUpload/findAliVideoToken',
+    url: '/qxcollege/admin/fileUpload/findAliVideoToken',
     method: 'post',
     data: {}
   })
@@ -27,7 +27,7 @@ export function findAliVideoToken() {
  */
 export function getAliPlayerAuth(params) {
   return request({
-    url: `/qxcollege/fileUpload/findAliPlay/${params.vid}`,
+    url: `/qxcollege/admin/fileUpload/findAliPlay/${params.vid}`,
     method: 'get',
     params
   })
