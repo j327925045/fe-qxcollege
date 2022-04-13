@@ -97,6 +97,15 @@ export default {
         data: [],
         tableItems: [
           {
+            prop: 'courseTitle',
+            label: '课程标题',
+            attrs: {
+              fixed: 'left',
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
             prop: 'content',
             label: '评论内容',
             attrs: {
@@ -106,8 +115,26 @@ export default {
             }
           },
           {
-            prop: 'courseTitle',
-            label: '课程标题',
+            prop: 'replyContent',
+            label: '管理员回复',
+            attrs: {
+              fixed: 'left',
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'createBy',
+            label: '评论人',
+            attrs: {
+              fixed: 'left',
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'createTime',
+            label: '评论时间',
             attrs: {
               fixed: 'left',
               'show-overflow-tooltip': true,
