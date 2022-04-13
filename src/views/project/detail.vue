@@ -1,20 +1,25 @@
 <template>
   <ImWrapper>
-
+    <div slot="header" class="bg-white rounded p-6 mt-2">
+      <div class="header-container">
+        <span class="header-text">项目编号:{{ productDetail.projectCode }}</span>
+        <div>
+          <el-button @click="deleteItem">删 除</el-button>
+          <el-button type="primary" @click="editItem">编 辑</el-button>
+        </div>
+      </div>
+    </div>
     <el-card class="box-card">
       <div slot="header">
         <span class="headertext">项目信息</span>
       </div>
-      <el-descriptions>
+      <el-descriptions :column="1" size="medium">
 
-        <el-descriptions-item label="项目名称">{{ productDetail.name }}</el-descriptions-item>
-        <el-descriptions-item label="项目编号">{{ productDetail.projectCode }}</el-descriptions-item>
-        <el-descriptions-item label="产品数量">{{ productDetail.productCount }}</el-descriptions-item>
-        <el-descriptions-item label="项目明细">{{ productDetail.projectDeteils }}</el-descriptions-item>
-        <el-descriptions-item label="项目介绍">{{ productDetail.projectIntroduce }}</el-descriptions-item>
-        <el-descriptions-item label="项目图片">
-          <el-avatar style="transform: translate(0, -10px)" size="medium" :src=" productDetail.projectPictureUrl"></el-avatar>
-        </el-descriptions-item>
+        <el-descriptions-item label="项目名称"><span class="projectName">{{ productDetail.name }}</span></el-descriptions-item>
+        <el-descriptions-item label="项目编号"><span class="projectText">{{ productDetail.projectCode }}</span></el-descriptions-item>
+        <el-descriptions-item label="产品数量"><span class="projectText">{{ productDetail.projectProductCodeArr.length }}</span></el-descriptions-item>
+        <el-descriptions-item label="项目明细"><span class="projectText">{{ productDetail.projectDeteils }}</span></el-descriptions-item>
+
         <el-descriptions-item label="产品集合">
           <div>
             <span v-for="item,index in productDetail.projectProductList" :key="index">
@@ -22,13 +27,11 @@
             </span>
           </div>
         </el-descriptions-item>
-      <!-- <el-descriptions-item label="职称">
-         todo realJobTitle应该返回字符串 这里返回的数据字段类型有问题
-        {{ getLabelByValue('jobTitle', productDetail.realJobTitle+'') }}
-      </el-descriptions-item>
-      <el-descriptions-item label="出生日期">
-        {{ moment(productDetail.birthday).format('YYYY-MM-DD') }}
-      </el-descriptions-item> -->
+        <el-descriptions-item label="项目图片">
+          <img class="imageClass" :src=" productDetail.projectPictureUrl" alt="">
+        </el-descriptions-item>
+        <el-descriptions-item label="项目介绍"><span class="projectText">{{ productDetail.projectIntroduce }}</span></el-descriptions-item>
+
       </el-descriptions>
 
       <div slot="footer">
@@ -43,7 +46,7 @@ import { mapGetters } from 'vuex'
 import moment from 'moment'
 import utils from '@/utils/utils'
 
-import { getProjectDetail } from '@/api/project'
+import { deleteProjectItem, getProjectDetail } from '@/api/project'
 export default {
   name: 'DetailDialog',
   data() {
@@ -75,7 +78,80 @@ export default {
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || ''
+    },
+    deleteItem($index, record) {
+      console.log(record)
+      this.$confirm('确定要删除该项吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          // if (this.tableConfig.data.length > 0) {
+          //   this.$message.error('该项目下有机构 ，不允许删除。')
+          // } else {
+          deleteProjectItem({ objectCode: this.objectCode }).then((res) => {
+            if (res.code === 200) {
+              this.$message.success('操作成功！')
+              this.goListPage()
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+          // }
+        })
+        .catch(() => {})
+    },
+
+    editItem($index, record) {
+      this.$router.push({ name: 'ProjectAddOrEdit', query: { objectCode: this.productDetail.objectCode } })
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .header-text {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.box-card {
+  margin-bottom: 16px;
+
+  .headertext {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .imageClass {
+    width: 124px;
+    height: 124px;
+  }
+
+  .projectName{
+    font-weight: 500;
+  }
+
+  .projectText{
+    font-size: 14px;
+  }
+}
+
+/deep/.el-descriptions-item__label{
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+/deep/.el-tag{
+  margin-right: 5px;
+}
+
+</style>
