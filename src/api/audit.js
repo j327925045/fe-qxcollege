@@ -4,7 +4,7 @@ import request from '@/utils/request.js'
  */
 export function getDataList(params) {
   return request({
-    url: '/qxcollege/userrealapplyrecord/list',
+    url: '/qxcollege/admin/userrealapplyrecord/list',
     method: 'get',
     params
   })
@@ -17,7 +17,7 @@ export function getDataList(params) {
  */
 export function deleteAudit(data) {
   return request({
-    url: '/qxcollege/userrealapplyrecord/delete',
+    url: '/qxcollege/admin/userrealapplyrecord/delete',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function deleteAudit(data) {
 export function getDetail(params) {
   console.log(params)
   return request({
-    url: `/qxcollege/userrealapplyrecord/get/${params}`,
+    url: `/qxcollege/admin/userrealapplyrecord/get/${params}`,
     method: 'get'
   })
 }
@@ -41,7 +41,7 @@ export function getDetail(params) {
  */
 export function auditCommit(data) {
   return request({
-    url: '/qxcollege/userrealapplyrecord/commit',
+    url: '/qxcollege/admin/userrealapplyrecord/commit',
     method: 'post',
     data: data
   })

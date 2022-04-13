@@ -10,6 +10,15 @@
         <UserSelect slot="UserSelect" v-model="formConfig.props.author" class="w-full"></UserSelect>
         <ProductSelect slot="ProductSelect" v-model="formConfig.props.prodCodes" multiple collapse-tags class="w-full"></ProductSelect>
         <ProjectSelect slot="ProjectSelect" v-model="formConfig.props.projectCodes" multiple collapse-tags class="w-full"></ProjectSelect>
+        <DictionaryCascader
+          slot="DictionaryCascader"
+          v-model="formConfig.props.courseType"
+          sign="courseFirstCategory"
+          :multiple="true"
+          :collapse-tags="true"
+          :show-all-levels="true"
+          style="width: 31%"
+        ></DictionaryCascader>
       </ImForm>
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
@@ -27,6 +36,7 @@ import ResourceSelect from '@/views/components/ResourceSelect'
 import UserSelect from '@/views/components/UserSelect'
 import ProductSelect from '@/views/components/ProductSelect'
 import ProjectSelect from '@/views/components/ProjectSelect'
+import DictionaryCascader from '@/views/components/DictionaryCascader'
 
 export default {
   name: 'CourseAddOrEdit-noCache',
@@ -35,7 +45,8 @@ export default {
     ResourceSelect,
     UserSelect,
     ProjectSelect,
-    ProductSelect
+    ProductSelect,
+    DictionaryCascader
   },
   data() {
     return {
@@ -52,13 +63,13 @@ export default {
           title: undefined,
           author: undefined,
           coverUrl: undefined,
-          courseType: undefined,
-          prodCodes: undefined,
-          projectCodes: undefined,
-          partition: undefined,
-          position: undefined,
-          indication: undefined,
-          complication: undefined,
+          courseType: [],
+          prodCodes: [],
+          projectCodes: [],
+          partition: [],
+          position: [],
+          indication: [],
+          complication: [],
           courseLevel: undefined,
           userLevel: undefined,
           paymentType: undefined,
@@ -137,13 +148,13 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
+            type: 'ImSlot',
             prop: 'courseType',
             label: '课程分类',
+            span: 24,
             rules: [{ required: true, message: '请选择课程分类' }],
-            attrs: {
-              class: 'w-full',
-              options: []
+            slots: {
+              slot: 'DictionaryCascader'
             }
           },
           {
@@ -170,6 +181,7 @@ export default {
             label: '分区',
             rules: [{ required: true, message: '请选择分区' }],
             attrs: {
+              multiple: true,
               class: 'w-full',
               options: []
             }
@@ -180,6 +192,7 @@ export default {
             label: '部位',
             rules: [{ required: true, message: '请选择部位' }],
             attrs: {
+              multiple: true,
               class: 'w-full',
               options: []
             }
@@ -190,6 +203,7 @@ export default {
             label: '适应症',
             rules: [{ required: true, message: '请选择适应症' }],
             attrs: {
+              multiple: true,
               class: 'w-full',
               options: []
             }
@@ -200,6 +214,7 @@ export default {
             label: '并发症',
             rules: [{ required: true, message: '请选择并发症' }],
             attrs: {
+              multiple: true,
               class: 'w-full',
               options: []
             }
@@ -273,7 +288,7 @@ export default {
      * 统一处理options
      */
     setOptions() {
-      this.setFormPropOptions('courseType', this.enums.courseType)
+      // this.setFormPropOptions('courseType', this.enums.courseType)
       this.setFormPropOptions('partition', this.enums.coursePartition)
       this.setFormPropOptions('position', this.enums.coursePosition)
       this.setFormPropOptions('indication', this.enums.courseIndication)

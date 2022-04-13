@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getProjectList(params) {
   return request({
-    url: '/qxcollege/project/list',
+    url: '/qxcollege/admin/project/list',
     method: 'get',
     params
   })
@@ -18,7 +18,7 @@ export function getProjectList(params) {
  */
 export function addProjectItem(data) {
   return request({
-    url: '/qxcollege/project/add',
+    url: '/qxcollege/admin/project/add',
     method: 'post',
     data: data
   })
@@ -31,7 +31,7 @@ export function addProjectItem(data) {
  */
 export function deleteProjectItem(data) {
   return request({
-    url: '/qxcollege/project/delete',
+    url: '/qxcollege/admin/project/delete',
     method: 'post',
     data: data
   })
@@ -44,7 +44,7 @@ export function deleteProjectItem(data) {
  */
 export function updateProjectItem(data) {
   return request({
-    url: '/qxcollege/project/edit',
+    url: '/qxcollege/admin/project/edit',
     method: 'post',
     data: data
   })
@@ -57,13 +57,13 @@ export function updateProjectItem(data) {
  */
 export function getProjectDetail(params) {
   return request({
-    url: `/qxcollege/project/get/${params.objectCode}`,
+    url: `/qxcollege/admin/project/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
 }
 
-// /qxcollege/product/list
+// /qxcollege/admin/product/list
 /**
  * 获取用户详情
  * @param params
@@ -71,7 +71,7 @@ export function getProjectDetail(params) {
  */
 export function getProjectProduct(params) {
   return request({
-    url: '/qxcollege/product/list',
+    url: '/qxcollege/admin/product/list',
     method: 'get',
     params: params
   })
