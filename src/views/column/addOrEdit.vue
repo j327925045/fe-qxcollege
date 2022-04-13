@@ -71,7 +71,7 @@ export default {
             prop: 'introduction',
             label: '专栏简介',
             span: 24,
-            rules: [{ required: false, message: '请输入专栏简介' }],
+            rules: [{ required: true, message: '请输入专栏简介' }],
             attrs: {
               type: 'textarea',
               style: 'width: 33%'
@@ -86,8 +86,10 @@ export default {
           },
           {
             type: 'ImSlot',
+            prop: 'courseCodes',
             span: 24,
             label: '选择课程',
+            rules: [{ required: true, message: '请选择课程' }],
             slots: {
               slot: 'CourseSelect'
             }

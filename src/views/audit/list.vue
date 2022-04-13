@@ -40,12 +40,12 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+          objectCode: ''
         },
         formItems: [
           {
             type: 'ImInput',
-            prop: 'name',
+            prop: 'objectCode',
             label: '审核编号',
             attrs: {
               type: 'text',
