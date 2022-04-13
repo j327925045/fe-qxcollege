@@ -165,6 +165,7 @@ export default {
             lebel: '所在机构信息',
             props: 'userOrgInfoDtoList',
             // hidden: this.isEdit,
+            rules: [{ required: true, message: '请选择所在机构信息' }],
             slots: {
               sort: 'OrgInfoList'
             }

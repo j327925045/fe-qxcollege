@@ -4,7 +4,7 @@
       <el-row class="row" :gutter="24">
         <el-col :span="6">
           <el-form-item label-width="80px" label="机构" required>
-            <HospitalSelect :disabledCode="disabledCode" v-model="item.hospitalCode" class="w-full" @change="onChange"></HospitalSelect>
+            <HospitalSelect v-model="item.hospitalCode" :disabled-code="disabledCode" class="w-full" @change="onChange"></HospitalSelect>
           </el-form-item>
         </el-col>
         <el-col :span="6">
@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     ...mapGetters(['enums']),
-    disabledCode () {
+    disabledCode() {
       return this.myValue.map(i => i.hospitalCode)
     }
   },
@@ -120,25 +120,9 @@ export default {
       this.myValue.splice(idx, 1)
       this.onChange()
     },
-    isRepeat(arr) {
-      const hash = {}
-
-      for (const i in arr) {
-        if (hash[arr[i].hospitalCode]) {
-          this.$message.error('请勿重复选择同一个机构')
-          return true
-          // hash[arr[i].itemType] = true;
-        } else {
-          hash[arr[i].hospitalCode] = true
-          this.$emit('input', this.myValue)
-        }
-      }
-
-      return false
-    },
 
     onChange() {
-      this.isRepeat(this.myValue)
+      this.$emit('input', this.myValue)
     }
   }
 }
