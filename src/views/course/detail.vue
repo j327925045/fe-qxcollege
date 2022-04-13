@@ -15,8 +15,8 @@
         <span class="headertext">课程信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="课程时长">{{ getMeterial(details.materials) && getMeterial(details.materials).duration || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="视频类型">{{ getMeterial(details.materials) && getLabelByValue('videoType', details.durationType) }}</el-descriptions-item>
+        <el-descriptions-item label="课程时长">{{ (getMeterial(details.materials) && getMeterial(details.materials).duration) || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="视频类型">{{ getMeterial(details.materials) && getLabelByValue('videoType', getMeterial(details.materials).durationType) }}</el-descriptions-item>
         <el-descriptions-item label="课程作者">{{ details.authorName }}</el-descriptions-item>
         <el-descriptions-item label="上架状态">{{ getLabelByValue('courseShelfStatus', details.shelfStatus) }}</el-descriptions-item>
         <el-descriptions-item label="创建人">{{ details.createBy }}</el-descriptions-item>
@@ -55,16 +55,16 @@
           {{ getNames(details.courseProjects) }}
         </el-descriptions-item>
         <el-descriptions-item label="分区">
-          {{ getLabelsByValues('coursePartition', details.partition) }}
+          {{ getLabelsByValues('coursePartition', details.partition) || '-' }}
         </el-descriptions-item>
         <el-descriptions-item label="部位">
-          {{ getLabelsByValues('coursePosition', details.position) }}
+          {{ getLabelsByValues('coursePosition', details.position) || '-' }}
         </el-descriptions-item>
         <el-descriptions-item label="适应症">
-          {{ getLabelsByValues('courseIndication', details.indication) }}
+          {{ getLabelsByValues('courseIndication', details.indication) || '-' }}
         </el-descriptions-item>
         <el-descriptions-item label="并发症">
-          {{ getLabelsByValues('courseComplication', details.complication) }}
+          {{ getLabelsByValues('courseComplication', details.complication) || '-' }}
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -206,7 +206,75 @@ export default {
     commitTableConfig() {
       return {
         data: [],
-        tableItems: []
+        tableItems: [
+          {
+            prop: 'content',
+            label: '评论内容',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'replyContent',
+            label: '管理员回复',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'createBy',
+            label: '评论人',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'createTime',
+            label: '评论时间',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '160'
+            }
+          },
+          {
+            prop: 'status',
+            label: '审核状态',
+            type: 'val2tag',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            options: [
+              {
+                prop: 'status',
+                value: ['1'],
+                label: '审核通过',
+                attrs: {
+                  type: 'success'
+                }
+              },
+              {
+                prop: 'status',
+                value: ['2'],
+                label: '审核驳回',
+                attrs: {
+                  type: 'danger'
+                }
+              },
+              {
+                prop: 'status',
+                value: ['2'],
+                label: '审核中',
+                attrs: {
+                  type: ''
+                }
+              }
+            ]
+          }
+        ]
       }
     }
   },
@@ -220,7 +288,7 @@ export default {
       if (!courseType || courseType.length === 0) {
         return '-'
       }
-      const courseTypeLabel = courseType.map(item => {
+      const courseTypeLabel = courseType.map((item) => {
         return `${item.firName}-${item.secName}`
       })
       return courseTypeLabel.join(',')
@@ -326,11 +394,15 @@ export default {
         limit: 10,
         courseCode: this.objectCode
       }
+      this.commentLoading = true
       getCommentList(params).then((res) => {
+        this.commentLoading = false
         if (res.code === 200) {
           this.total = res.data.totalCount
           this.commitTableConfig.data = res.data.list || []
         }
+      }).catch(_ => {
+        this.commentLoading = false
       })
     }
   }
