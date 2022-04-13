@@ -7,7 +7,7 @@ import request from '@/utils/request.js'
  */
 export function addOrganizationItem(data) {
   return request({
-    url: '/qxcollege/organization/add',
+    url: '/qxcollege/admin/organization/add',
     method: 'post',
     data: data
   })
@@ -20,7 +20,7 @@ export function addOrganizationItem(data) {
  */
 export function deleteOrganizationItem(data) {
   return request({
-    url: '/qxcollege/organization/delete',
+    url: '/qxcollege/admin/organization/delete',
     method: 'post',
     data: data
   })
@@ -33,7 +33,7 @@ export function deleteOrganizationItem(data) {
  */
 export function updateOrganizationItem(data) {
   return request({
-    url: '/qxcollege/organization/edit',
+    url: '/qxcollege/admin/organization/edit',
     method: 'post',
     data: data
   })
@@ -46,7 +46,7 @@ export function updateOrganizationItem(data) {
  */
 export function getOrganizationDetail(params) {
   return request({
-    url: `/qxcollege/organization/get/${params.objectCode}`,
+    url: `/qxcollege/admin/organization/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -59,7 +59,7 @@ export function getOrganizationDetail(params) {
  */
 export function getOrganizationList(params) {
   return request({
-    url: '/qxcollege/organization/list',
+    url: '/qxcollege/admin/organization/list',
     method: 'get',
     params
   })
@@ -67,7 +67,7 @@ export function getOrganizationList(params) {
 
 export function getAllOrganizationItems(params) {
   return request({
-    url: '/qxcollege/organization/findAll',
+    url: '/qxcollege/admin/organization/findAll',
     method: 'get',
     params
   })
@@ -78,7 +78,7 @@ export function getAllOrganizationItems(params) {
  */
 export function getHospitalsInOrg(params) {
   return request({
-    url: `/qxcollege/organization/list/hospital/${params.objectCode}`,
+    url: `/qxcollege/admin/organization/list/hospital/${params.objectCode}`,
     method: 'get',
     params: {}
   })

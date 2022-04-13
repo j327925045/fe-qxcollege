@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function addCourseItem(data) {
   return request({
-    url: '/qxcollege/course/add',
+    url: '/qxcollege/admin/course/add',
     method: 'post',
     data
   })
@@ -16,7 +16,7 @@ export function addCourseItem(data) {
  */
 export function updateCourseItem(data) {
   return request({
-    url: '/qxcollege/course/edit',
+    url: '/qxcollege/admin/course/edit',
     method: 'post',
     data
   })
@@ -27,7 +27,7 @@ export function updateCourseItem(data) {
  */
 export function deleteCourseItem(data) {
   return request({
-    url: '/qxcollege/course/delete',
+    url: '/qxcollege/admin/course/delete',
     method: 'post',
     data
   })
@@ -38,7 +38,7 @@ export function deleteCourseItem(data) {
  */
 export function getCourseDetail(params) {
   return request({
-    url: `/qxcollege/course/get/${params.objectCode}`,
+    url: `/qxcollege/admin/course/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -49,7 +49,7 @@ export function getCourseDetail(params) {
  */
 export function getCourseList(params) {
   return request({
-    url: '/qxcollege/course/list',
+    url: '/qxcollege/admin/course/list',
     method: 'get',
     params
   })
@@ -60,7 +60,7 @@ export function getCourseList(params) {
  */
 export function getCourseColumnList(params) {
   return request({
-    url: `/qxcollege/course/list/column/${params.objectCode}`,
+    url: `/qxcollege/admin/course/list/column/${params.objectCode}`,
     method: 'get',
     params: {}
   })

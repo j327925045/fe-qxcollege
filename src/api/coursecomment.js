@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getCommentList(params) {
   return request({
-    url: '/qxcollege/coursecomment/list',
+    url: '/qxcollege/admin/coursecomment/list',
     method: 'get',
     params
   })

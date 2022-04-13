@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getDictionaryList(params) {
   return request({
-    url: '/qxcollege/dictionary/list',
+    url: '/qxcollege/admin/dictionary/list',
     method: 'get',
     params
   })
@@ -13,7 +13,7 @@ export function getDictionaryList(params) {
 
 export function deleteDictionaryItem(data) {
   return request({
-    url: '/qxcollege/dictionary/delete',
+    url: '/qxcollege/admin/dictionary/delete',
     method: 'post',
     data
   })
@@ -21,7 +21,7 @@ export function deleteDictionaryItem(data) {
 
 export function addDictionaryItem(data) {
   return request({
-    url: '/qxcollege/dictionary/add',
+    url: '/qxcollege/admin/dictionary/add',
     method: 'post',
     data
   })
@@ -29,7 +29,7 @@ export function addDictionaryItem(data) {
 
 export function updateDictionaryItem(data) {
   return request({
-    url: '/qxcollege/dictionary/edit',
+    url: '/qxcollege/admin/dictionary/edit',
     method: 'post',
     data
   })
@@ -37,7 +37,7 @@ export function updateDictionaryItem(data) {
 
 export function getDictionaryDetail(params) {
   return request({
-    url: `/qxcollege/dictionary/get/${params.objectCode}`,
+    url: `/qxcollege/admin/dictionary/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -45,7 +45,7 @@ export function getDictionaryDetail(params) {
 
 export function getAllDictionaryItems(params) {
   return request({
-    url: '/qxcollege/dictionary/tree',
+    url: '/qxcollege/admin/dictionary/tree',
     method: 'get',
     params
   })
@@ -53,8 +53,16 @@ export function getAllDictionaryItems(params) {
 
 export function setDictionaryByOnce(data) {
   return request({
-    url: '/qxcollege/dictionary/wholeAdd',
+    url: '/qxcollege/admin/dictionary/wholeAdd',
     method: 'post',
     data
+  })
+}
+
+export function getDictionaryBySine(params) {
+  return request({
+    url: '/qxcollege/admin/dictionary/getListBySign',
+    method: 'post',
+    params
   })
 }

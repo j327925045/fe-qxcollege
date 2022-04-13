@@ -4,7 +4,7 @@ import request from '@/utils/request.js'
  */
 export function getDataList(params) {
   return request({
-    url: '/qxcollege/material/list',
+    url: '/qxcollege/admin/material/list',
     method: 'get',
     params
   })
@@ -15,7 +15,7 @@ export function getDataList(params) {
  */
 export function getDetail(params) {
   return request({
-    url: `/qxcollege/material/get/${params}`,
+    url: `/qxcollege/admin/material/get/${params}`,
     method: 'get'
   })
 }
@@ -25,7 +25,7 @@ export function getDetail(params) {
  */
 export function getExport(params) {
   return request({
-    url: `/qxcollege/material/export/${params}`,
+    url: `/qxcollege/admin/material/export/${params}`,
     method: 'get'
   })
 }
@@ -36,7 +36,7 @@ export function getExport(params) {
  */
 export function editResources(data) {
   return request({
-    url: '/qxcollege/material/edit',
+    url: '/qxcollege/admin/material/edit',
     method: 'post',
     data: data
   })
@@ -49,7 +49,7 @@ export function editResources(data) {
  */
 export function deleteResources(data) {
   return request({
-    url: '/qxcollege/material/delete',
+    url: '/qxcollege/admin/material/delete',
     method: 'post',
     data: data
   })
@@ -62,7 +62,7 @@ export function deleteResources(data) {
  */
 export function resourcesCommit(data) {
   return request({
-    url: '/qxcollege/material/add',
+    url: '/qxcollege/admin/material/add',
     method: 'post',
     data: data
   })

@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getRegionData(params) {
   return request({
-    url: '/qxcollege/city/tree',
+    url: '/qxcollege/admin/city/tree',
     method: 'get',
     params
   })
