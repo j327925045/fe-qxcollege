@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getUserList(params) {
   return request({
-    url: '/qxcollege/user/list',
+    url: '/qxcollege/admin/user/list',
     method: 'get',
     params
   })
@@ -18,7 +18,7 @@ export function getUserList(params) {
  */
 export function addUserItem(data) {
   return request({
-    url: '/qxcollege/user/add',
+    url: '/qxcollege/admin/user/add',
     method: 'post',
     data: data
   })
@@ -31,7 +31,7 @@ export function addUserItem(data) {
  */
 export function deleteUserItem(data) {
   return request({
-    url: '/qxcollege/user/delete',
+    url: '/qxcollege/admin/user/delete',
     method: 'post',
     data: data
   })
@@ -44,7 +44,7 @@ export function deleteUserItem(data) {
  */
 export function updateUserItem(data) {
   return request({
-    url: '/qxcollege/user/edit',
+    url: '/qxcollege/admin/user/edit',
     method: 'post',
     data: data
   })
@@ -57,7 +57,7 @@ export function updateUserItem(data) {
  */
 export function realPcAuthentication(data) {
   return request({
-    url: '/qxcollege/user/realPcAuthentication',
+    url: '/qxcollege/admin/user/realPcAuthentication',
     method: 'post',
     data: data
   })
@@ -70,7 +70,7 @@ export function realPcAuthentication(data) {
  */
 export function getUserDetail(params) {
   return request({
-    url: `/qxcollege/user/get/${params.objectCode}`,
+    url: `/qxcollege/admin/user/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -83,7 +83,7 @@ export function getUserDetail(params) {
  */
 export function checkPhone(params) {
   return request({
-    url: `/qxcollege/user/check/phone/${params}`,
+    url: `/qxcollege/admin/user/check/phone/${params}`,
     method: 'get'
   })
 }

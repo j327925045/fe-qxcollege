@@ -6,7 +6,7 @@ import request from '@/utils/request.js'
 export function addColumnItem(data) {
   data.createSource = 1 // 创建来源(1.后台创建 2,小程序创建)
   return request({
-    url: '/qxcollege/column/add',
+    url: '/qxcollege/admin/column/add',
     method: 'post',
     data
   })
@@ -17,7 +17,7 @@ export function addColumnItem(data) {
  */
 export function deleteColumnItem(data) {
   return request({
-    url: '/qxcollege/column/delete',
+    url: '/qxcollege/admin/column/delete',
     method: 'post',
     data
   })
@@ -29,7 +29,7 @@ export function deleteColumnItem(data) {
 export function updateColumnItem(data) {
   data.createSource = 1 // 创建来源(1.后台创建 2,小程序创建)
   return request({
-    url: '/qxcollege/column/edit',
+    url: '/qxcollege/admin/column/edit',
     method: 'post',
     data
   })
@@ -40,7 +40,7 @@ export function updateColumnItem(data) {
  */
 export function getColumnDetail(params) {
   return request({
-    url: `/qxcollege/column/get/${params.objectCode}`,
+    url: `/qxcollege/admin/column/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -51,7 +51,7 @@ export function getColumnDetail(params) {
  */
 export function getColumnList(params) {
   return request({
-    url: '/qxcollege/column/list',
+    url: '/qxcollege/admin/column/list',
     method: 'get',
     params
   })
@@ -62,7 +62,7 @@ export function getColumnList(params) {
  */
 export function operateColumnItem(data) {
   return request({
-    url: '/qxcollege/column/operation',
+    url: '/qxcollege/admin/column/operation',
     method: 'post',
     data
   })
@@ -73,7 +73,7 @@ export function operateColumnItem(data) {
  */
 export function getColumnCourseList(params) {
   return request({
-    url: `/qxcollege/column/list/ref/${params.objectCode}`,
+    url: `/qxcollege/admin/column/list/ref/${params.objectCode}`,
     method: 'get',
     params: {}
   })

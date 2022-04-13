@@ -7,7 +7,7 @@ import request from '@/utils/request.js'
  */
 export function setRolePermission(data) {
   return request({
-    url: '/qxcollege/rolepermission/set',
+    url: '/qxcollege/admin/rolepermission/set',
     method: 'post',
     data: data
   })
@@ -15,7 +15,7 @@ export function setRolePermission(data) {
 
 export function getRolePermissionDetail(params) {
   return request({
-    url: `/qxcollege/rolepermission/get/${params.objectCode}`,
+    url: `/qxcollege/admin/rolepermission/get/${params.objectCode}`,
     method: 'get',
     params
   })

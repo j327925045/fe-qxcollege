@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getProductList(params) {
   return request({
-    url: '/qxcollege/product/list',
+    url: '/qxcollege/admin/product/list',
     method: 'get',
     params
   })
@@ -18,7 +18,7 @@ export function getProductList(params) {
  */
 export function addProductItem(data) {
   return request({
-    url: '/qxcollege/product/add',
+    url: '/qxcollege/admin/product/add',
     method: 'post',
     data: data
   })
@@ -31,7 +31,7 @@ export function addProductItem(data) {
  */
 export function deleteProductItem(data) {
   return request({
-    url: '/qxcollege/product/delete',
+    url: '/qxcollege/admin/product/delete',
     method: 'post',
     data: data
   })
@@ -44,7 +44,7 @@ export function deleteProductItem(data) {
  */
 export function updateProductItem(data) {
   return request({
-    url: '/qxcollege/product/edit',
+    url: '/qxcollege/admin/product/edit',
     method: 'post',
     data: data
   })
@@ -57,7 +57,7 @@ export function updateProductItem(data) {
  */
 export function getProductDetail(params) {
   return request({
-    url: `/qxcollege/product/get/${params.objectCode}`,
+    url: `/qxcollege/admin/product/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })

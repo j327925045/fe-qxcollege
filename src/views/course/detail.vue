@@ -15,7 +15,7 @@
         <span class="headertext">课程信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="课程时长">{{ details.videoTimeLen }}</el-descriptions-item>
+        <el-descriptions-item label="课程时长">{{ details.videoTimeLen || '-' }}</el-descriptions-item>
         <el-descriptions-item label="视频类型">{{ getLabelByValue('videoType', details.videoType) }}</el-descriptions-item>
         <el-descriptions-item label="课程作者">{{ details.authorName }}</el-descriptions-item>
         <el-descriptions-item label="上架状态">{{ getLabelByValue('courseShelfStatus', details.shelfStatus) }}</el-descriptions-item>

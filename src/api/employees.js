@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getCurrentInfo(params) {
   return request({
-    url: '/qxcollege/employee/info',
+    url: '/qxcollege/admin/employee/info',
     method: 'get',
     params
   })
@@ -16,7 +16,7 @@ export function getCurrentInfo(params) {
  */
 export function getEmployeesList(params) {
   return request({
-    url: '/qxcollege/employee/list',
+    url: '/qxcollege/admin/employee/list',
     method: 'get',
     params
   })
@@ -27,7 +27,7 @@ export function getEmployeesList(params) {
  */
 export function addEmployeesItem(data) {
   return request({
-    url: '/qxcollege/employee/add',
+    url: '/qxcollege/admin/employee/add',
     method: 'post',
     data
   })
@@ -38,7 +38,7 @@ export function addEmployeesItem(data) {
  */
 export function deleteEmployeesItem(data) {
   return request({
-    url: '/qxcollege/employee/delete',
+    url: '/qxcollege/admin/employee/delete',
     method: 'post',
     data
   })
@@ -49,7 +49,7 @@ export function deleteEmployeesItem(data) {
  */
 export function getEmployeesDetail(params) {
   return request({
-    url: `/qxcollege/employee/get/${params.objectCode}`,
+    url: `/qxcollege/admin/employee/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -60,7 +60,7 @@ export function getEmployeesDetail(params) {
  */
 export function updateEmployeesItem(data) {
   return request({
-    url: '/qxcollege/employee/edit',
+    url: '/qxcollege/admin/employee/edit',
     method: 'post',
     data
   })

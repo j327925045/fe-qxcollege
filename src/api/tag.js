@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function addTagItem(data) {
   return request({
-    url: '/qxcollege/tag/add',
+    url: '/qxcollege/admin/tag/add',
     method: 'post',
     data
   })
@@ -16,7 +16,7 @@ export function addTagItem(data) {
  */
 export function deleteTagItem(data) {
   return request({
-    url: '/qxcollege/tag/delete',
+    url: '/qxcollege/admin/tag/delete',
     method: 'post',
     data
   })
@@ -27,7 +27,7 @@ export function deleteTagItem(data) {
  */
 export function updateTagItem(data) {
   return request({
-    url: '/qxcollege/tag/edit',
+    url: '/qxcollege/admin/tag/edit',
     method: 'post',
     data
   })
@@ -38,7 +38,7 @@ export function updateTagItem(data) {
  */
 export function getTagDetail(params) {
   return request({
-    url: `/qxcollege/tag/get/${params.objectCode}`,
+    url: `/qxcollege/admin/tag/get/${params.objectCode}`,
     method: 'get',
     params: {}
   })
@@ -49,7 +49,7 @@ export function getTagDetail(params) {
  */
 export function getTagList(params) {
   return request({
-    url: '/qxcollege/tag/list',
+    url: '/qxcollege/admin/tag/list',
     method: 'get',
     params: params
   })
