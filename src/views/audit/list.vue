@@ -40,12 +40,12 @@ export default {
           labelWidth: '100px'
         },
         props: {
-          name: ''
+          objectCode: ''
         },
         formItems: [
           {
             type: 'ImInput',
-            prop: 'name',
+            prop: 'objectCode',
             label: '审核编号',
             attrs: {
               type: 'text',
@@ -170,17 +170,17 @@ export default {
                 title: '查看',
                 type: 'text',
                 onClick: this.showDetail
-              },
+              }
               // {
               //   title: '编辑',
               //   type: 'text',
               //   onClick: this.editItem
               // },
-              {
-                title: '删除',
-                type: 'text',
-                onClick: this.deleteItem
-              }
+              // {
+              //   title: '删除',
+              //   type: 'text',
+              //   onClick: this.deleteItem
+              // }
             ]
           }
         ]

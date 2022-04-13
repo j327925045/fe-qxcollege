@@ -104,6 +104,9 @@ export default {
         .catch(() => {})
     },
 
+    goListPage() {
+      this.$router.replace({ name: 'ProjectList' })
+    },
     editItem($index, record) {
       this.$router.push({ name: 'ProjectAddOrEdit', query: { objectCode: this.productDetail.objectCode } })
     }
