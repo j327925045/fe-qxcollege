@@ -18,8 +18,11 @@
 </template>
 <script>
 import { beforeUpload, fnUploadRequest } from './upload'
+import emitter from 'element-ui/src/mixins/emitter'
+
 export default {
   name: 'ImImgUpload',
+  mixins: [emitter],
   props: {
     value: {
       type: String,
@@ -77,6 +80,7 @@ export default {
 
     onUpdate() {
       this.$emit('input', this.myValue)
+      this.dispatch('ElFormItem', 'el.form.change', this.myValue)
     },
 
     beforeUpload,

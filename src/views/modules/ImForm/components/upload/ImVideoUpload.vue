@@ -17,8 +17,10 @@
 </template>
 <script>
 import { findAliVideoToken } from '@/api/fileupload'
+import emitter from 'element-ui/src/mixins/emitter'
 export default {
   name: 'ImVideoUpload',
+  mixins: [emitter],
   props: {
     value: {
       type: String,
@@ -69,6 +71,7 @@ export default {
 
     onUpdate() {
       this.$emit('input', this.myValue)
+      this.dispatch('ElFormItem', 'el.form.change', this.myValue)
     },
 
     beforeUpload(file) {
