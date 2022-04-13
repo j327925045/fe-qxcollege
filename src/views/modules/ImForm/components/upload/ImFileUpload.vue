@@ -14,8 +14,10 @@
 </template>
 <script>
 import { beforeUpload, fnUploadRequest } from './upload'
+import emitter from 'element-ui/src/mixins/emitter'
 export default {
   name: 'ImFileUpload',
+  mixins: [emitter],
   props: {
     value: {
       type: [Array],
@@ -79,6 +81,7 @@ export default {
 
     onUpdate() {
       this.$emit('input', this.fileList)
+      this.dispatch('ElFormItem', 'el.form.change', this.fileList)
     },
 
     beforeUpload,

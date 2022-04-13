@@ -171,7 +171,7 @@ export default {
     },
     validate(callback) {
       this.$refs.form.validate(valid => {
-        callback(valid)
+        callback && callback(valid)
       })
     },
     reset() {
