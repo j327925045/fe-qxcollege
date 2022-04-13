@@ -2,9 +2,9 @@
   <el-form ref="form" :model="form.props" v-bind="form.attrs">
     <el-row :gutter="form.gutter">
       <template v-for="(item, idx) in formList">
-        <el-col v-if="item.type==='ImButton'||item.notInForm" :key="idx" :span="24">
+        <el-col v-if="item.type === 'ImButton' || item.notInForm" :key="idx" :span="24">
           <FormComponents :form="form" :item="item">
-            <template v-for="(value) in item.slots" :slot="value">
+            <template v-for="value in item.slots" :slot="value">
               <slot :name="value" />
             </template>
           </FormComponents>
@@ -12,20 +12,15 @@
         <el-col
           v-else
           :key="idx"
-          :xl="item.span||columnConfig.xl"
-          :lg="item.span||columnConfig.lg"
-          :md="item.span||columnConfig.md"
-          :sm="item.span||columnConfig.sm"
-          :xs="item.span||columnConfig.xs"
+          :xl="item.span || columnConfig.xl"
+          :lg="item.span || columnConfig.lg"
+          :md="item.span || columnConfig.md"
+          :sm="item.span || columnConfig.sm"
+          :xs="item.span || columnConfig.xs"
         >
-          <el-form-item
-            :label="item.label"
-            :prop="item.prop"
-            :rules="getRules(item.rules)"
-            :style="item.style"
-          >
+          <el-form-item :label="item.label" :prop="item.prop" :rules="getRules(item.rules)" :style="item.style">
             <FormComponents :form="form" :item="item">
-              <template v-for="(value) in item.slots" :slot="value">
+              <template v-for="value in item.slots" :slot="value">
                 <slot :name="value" />
               </template>
             </FormComponents>
@@ -103,7 +98,16 @@ export default {
           }
         }
       },
-      url: { type: 'url', message: '请输入正确网址类型值' }
+      url: { type: 'url', message: '请输入正确网址类型值' },
+      idcard: {
+        validator: function(rule, value, callback) {
+          const regIdCard = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+          if (regIdCard.test(value)) {
+            return callback()
+          }
+          callback(new Error('您输入的身份证号码不是有效格式'))
+        }
+      }
     }
   },
   computed: {
@@ -171,7 +175,7 @@ export default {
     },
     validate(callback) {
       this.$refs.form.validate(valid => {
-        callback(valid)
+        callback && callback(valid)
       })
     },
     reset() {

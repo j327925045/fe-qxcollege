@@ -9,6 +9,7 @@
 import '@wangeditor/editor/dist/css/style.css'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { findAliToken } from '@/api/fileupload'
+import emitter from 'element-ui/src/mixins/emitter'
 const OSS = require('ali-oss')
 
 export default {
@@ -17,6 +18,7 @@ export default {
     Editor,
     Toolbar
   },
+  mixins: [emitter],
   props: {
     value: {
       type: String,
@@ -59,6 +61,7 @@ export default {
   },
   methods: {
     setMyValue() {
+      console.log('this.value', this.value)
       this.myValue = this.value
     },
     customUpload(file, insertFn) {
@@ -95,6 +98,7 @@ export default {
     },
     onChange() {
       this.$emit('input', this.myValue)
+      this.dispatch('ElFormItem', 'el.form.change', this.myValue)
     },
     beforeDestroy() {
       const editor = this.editor

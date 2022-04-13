@@ -49,6 +49,7 @@ export default {
         props: {
           materialCode: undefined,
           introduction: undefined,
+          title: undefined,
           author: undefined,
           coverUrl: undefined,
           courseType: undefined,
@@ -61,7 +62,7 @@ export default {
           courseLevel: undefined,
           userLevel: undefined,
           paymentType: undefined,
-          price: undefined,
+          price: 0,
           summary: undefined
         },
         formItems: [
@@ -75,6 +76,7 @@ export default {
           {
             type: 'ImSlot',
             label: '视频素材',
+            prop: 'materialCode',
             rules: [{ required: true, message: '请选择视频素材' }],
             slots: {
               slot: 'ResourceSelect'
@@ -91,6 +93,7 @@ export default {
           {
             type: 'ImSlot',
             label: '课程作者',
+            prop: 'author',
             rules: [{ required: true, message: '请选择课程作者' }],
             slots: {
               slot: 'UserSelect'
@@ -121,7 +124,7 @@ export default {
             prop: 'introduction',
             label: '课程介绍',
             span: 24,
-            rules: [{ required: true, message: '请输入简介' }],
+            rules: [{ required: true, message: '请输入课程介绍' }],
             slots: {
               introduction: 'RichTextArea'
             }
@@ -146,6 +149,7 @@ export default {
           {
             type: 'ImSlot',
             label: '关联产品',
+            prop: 'prodCodes',
             rules: [{ required: true, message: '请选择关联产品' }],
             slots: {
               slot: 'ProductSelect'
@@ -154,6 +158,7 @@ export default {
           {
             type: 'ImSlot',
             label: '关联项目',
+            prop: 'projectCodes',
             rules: [{ required: true, message: '请选择关联项目' }],
             slots: {
               slot: 'ProjectSelect'
@@ -242,13 +247,16 @@ export default {
             label: '积分数值',
             rules: [{ required: true, message: '请输入积分数值' }],
             attrs: {
+              min: 0,
+              precision: 0,
               style: 'width:100%;',
               controls: false
             }
           }
         ]
       },
-      editId: this.$route.query.objectCode
+      editId: this.$route.query.objectCode,
+      courseNum: undefined
     }
   },
   computed: {
@@ -295,6 +303,12 @@ export default {
             const key = keys[i]
             props[key] = res.data[key] || undefined
           }
+          this.courseNum = res.data.courseNum
+          props.prodCodes = res.data.courseProducts.map(item => item.objectCode)
+          props.projectCodes = res.data.courseProjects.map(item => item.objectCode)
+          if (res.data.materials && res.data.materials[0]) {
+            props.materialCode = res.data.materials[0].objectCode
+          }
         }
       })
     },
@@ -310,6 +324,7 @@ export default {
         }
         if (this.editId) {
           data.objectCode = this.editId
+          data.courseNum = this.courseNum
           updateCourseItem(data).then(res => {
             if (res.code === 200) {
               this.$message.success('更新成功！')

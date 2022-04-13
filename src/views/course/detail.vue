@@ -25,8 +25,8 @@
         <el-descriptions-item :span="3" label="课程封面">
           <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" />
         </el-descriptions-item>
-        <el-descriptions-item :span="3" label="课程视频">
-          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" />
+        <el-descriptions-item v-if="getMeterial(details.materials)" :span="3" label="课程视频">
+          <img class="imageClass" :src="getMeterial(details.materials).coverUrl" alt="" @click="playVideo(getMeterial(details.materials))" />
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="课程标题">
           {{ details.title }}
@@ -35,7 +35,7 @@
           {{ details.summary }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="课程介绍">
-          {{ details.introduction }}
+          <div class="__RichTextArea" v-html="details.introduction"></div>
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -45,50 +45,121 @@
         <span class="headertext">内容属性</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="课程分类">{{ details.videoTimeLen }}</el-descriptions-item>
-        <el-descriptions-item label="关联产品">{{ getLabelByValue('videoType', details.videoType) }}</el-descriptions-item>
-        <el-descriptions-item label="关联项目">{{ details.authorName }}</el-descriptions-item>
-        <el-descriptions-item label="分区">{{ getLabelByValue('courseShelfStatus', details.shelfStatus) }}</el-descriptions-item>
-        <el-descriptions-item label="部位">{{ details.createBy }}</el-descriptions-item>
-        <el-descriptions-item label="适应症">{{ getDateTime(details.createTime) }}</el-descriptions-item>
-        <el-descriptions-item label="并发症">{{ getDateTime(details.createTime) }}</el-descriptions-item>
+        <el-descriptions-item label="课程分类">
+          {{ details.courseType }}
+        </el-descriptions-item>
+        <el-descriptions-item label="关联产品">
+          {{ getNames(details.courseProducts) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="关联项目">
+          {{ getNames(details.courseProjects) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="分区">
+          {{ getLabelByValue('coursePartition', details.partition) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="部位">
+          {{ getLabelByValue('coursePosition', details.position) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="适应症">
+          {{ getLabelByValue('courseIndication', details.indication) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="并发症">
+          {{ getLabelByValue('courseComplication', details.complication) }}
+        </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
     <el-card class="box-card">
       <div slot="header">
-        <span class="headertext">收录课程</span>
+        <span class="headertext">观看限制</span>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
+        <el-descriptions-item label="课程分级">
+          {{ getLabelByValue('courseLevel', details.courseLevel) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="用户等级要求">
+          {{ getLabelByValue('doctorLevel', details.userLevel) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="付费类型">
+          {{ getLabelByValue('paymentType', details.paymentType) }}
+        </el-descriptions-item>
+        <el-descriptions-item label="积分数值">
+          {{ details.price }}
+        </el-descriptions-item>
+      </el-descriptions>
     </el-card>
+
+    <el-card class="box-card">
+      <div slot="header">
+        <span class="headertext">关联专栏</span>
+      </div>
+      <ImTable :loading="columnLoading" :table="columnTableConfig"></ImTable>
+    </el-card>
+
+    <el-card class="box-card">
+      <div slot="header">
+        <span class="headertext">课程评论</span>
+      </div>
+      <ImTable :loading="commentLoading" :table="commitTableConfig"></ImTable>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getCommentList"></ImPagination>
+    </el-card>
+    <el-card class="box-card">
+      <div slot="header">
+        <span class="headertext">课程数据</span>
+      </div>
+      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
+        <el-descriptions-item label="观看次数">
+          {{ details.viewCount }}
+        </el-descriptions-item>
+        <el-descriptions-item label="观看人数">
+          {{ details.viewUserCnt }}
+        </el-descriptions-item>
+        <el-descriptions-item label="收藏数">
+          {{ details.collectCount }}
+        </el-descriptions-item>
+        <el-descriptions-item label="点赞数">
+          {{ details.starCount }}
+        </el-descriptions-item>
+      </el-descriptions>
+    </el-card>
+    <VideoPlayer ref="VideoPlayer"></VideoPlayer>
   </ImWrapper>
 </template>
 
 <script>
-import { getCourseDetail, deleteCourseItem, getCourseColumnList, getCourseCommentList } from '@/api/course'
+import { getCourseDetail, deleteCourseItem, getCourseColumnList } from '@/api/course'
+import { getCommentList } from '@/api/coursecomment'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
+import VideoPlayer from '@/views/components/VideoPlayer'
 
 export default {
   name: 'CourseDetail--nocache',
+  components: {
+    VideoPlayer
+  },
   data() {
     return {
       details: {},
       objectCode: this.$route.query.objectCode,
-      loading: false
+      columnLoading: false,
+      commentLoading: false,
+      currentPage: 1,
+      pageSize: 10,
+      total: 0
     }
   },
   computed: {
     ...mapGetters(['enums']),
     // 之所以把tableConfig放在计算属性里边，是因为里边用到了enums计算属性，enums是异步获取
-    tableConfig() {
+    columnTableConfig() {
       return {
         data: [],
         tableItems: [
           {
-            prop: 'courseNum',
-            label: '课程编号',
+            prop: 'columnNumber',
+            label: '专栏编号',
             attrs: {
               fixed: 'left',
               'show-overflow-tooltip': true,
@@ -97,64 +168,77 @@ export default {
           },
           {
             prop: 'title',
-            label: '课程标题',
+            label: '专栏标题',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             }
           },
           {
-            prop: 'videoTimeLen',
-            label: '视频时长',
-            type: 'customFilter',
+            prop: 'createBy',
+            label: '创建人',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
-            },
-            filter(val, row) {
-              return val || '-'
+              'min-width': '180'
             }
           },
           {
-            prop: 'authorName',
-            label: '视频作者',
+            prop: 'createTimeStr',
+            label: '创建时间',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             }
           },
           {
-            prop: 'courseType',
-            label: '视频分类',
+            prop: 'status',
+            label: '上架状态',
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this.enums.courseType
-          },
-          {
-            prop: 'userLevel',
-            label: '用户等级要求',
-            type: 'mapList',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            },
-            options: this.enums.doctorLevel
+            options: this.enums.columnStatus // 1上架 2下架
           }
         ]
+      }
+    },
+    commitTableConfig() {
+      return {
+        data: [],
+        tableItems: []
       }
     }
   },
   created() {
     this.getItemDetail()
-    this.getList()
+    this.getColumnList()
+    this.getCommentList()
   },
   methods: {
+    playVideo(record) {
+      this.$refs.VideoPlayer.play(record.fileUrl, record.coverUrl)
+    },
+
+    getMeterial(meterials) {
+      let item = null
+      if (meterials && meterials.length > 0) {
+        item = meterials[0]
+      }
+      return item
+    },
+
+    getNames(objArr) {
+      if (!objArr) {
+        return '-'
+      }
+      const result = objArr.map((item) => item.name)
+      return result.join(',')
+    },
+
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
-      return item.label || ''
+      return item.label || '-'
     },
 
     getDateTime(date) {
@@ -196,21 +280,35 @@ export default {
       this.$router.replace({ name: 'CourseList' })
     },
 
-    getList() {
+    getColumnList() {
       const params = {
         objectCode: this.objectCode
       }
-      this.loading = true
+      this.columnLoading = true
       getCourseColumnList(params)
         .then((res) => {
-          this.loading = false
+          this.columnLoading = false
           if (res.code === 200) {
-            this.tableConfig.data = res.data || []
+            this.columnTableConfig.data = res.data || []
           }
         })
         .catch((_) => {
-          this.loading = false
+          this.columnLoading = false
         })
+    },
+
+    getCommentList() {
+      const params = {
+        page: 1,
+        limit: 10,
+        courseCode: this.objectCode
+      }
+      getCommentList(params).then((res) => {
+        if (res.code === 200) {
+          this.total = res.data.totalCount
+          this.commitTableConfig.data = res.data.list || []
+        }
+      })
     }
   }
 }
@@ -241,6 +339,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    cursor: pointer;
   }
 }
 
@@ -248,5 +347,71 @@ export default {
   justify-content: right;
   width: 120px;
   margin-bottom: 24px;
+}
+
+/deep/ .__RichTextArea {
+  width: 100%;
+  max-height: 300px;
+  padding: 16px;
+  overflow: auto;
+  border: 2px solid gray;
+
+  //标题
+  h1 {
+    margin: 0.67em 0;
+    color: red;
+    font-size: 2em;
+  }
+
+  h2 {
+    margin: 0.75em 0;
+    font-size: 1.5em;
+  }
+
+  h3 {
+    margin: 0.83em 0;
+    font-size: 1.17em;
+  }
+
+  h4 {
+    margin: 1.12em 0;
+  }
+
+  h5 {
+    margin: 1.5em 0;
+    font-size: 0.83em;
+  }
+
+  h6 {
+    margin: 1.67em 0;
+    font-size: 0.75em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  b,
+  strong {
+    font-weight: bolder;
+  }
+
+  ul,
+  ul li {
+    list-style-position: inside;
+    list-style-type: disc;
+  }
+
+  ol,
+  ol li {
+    list-style-position: inside;
+    list-style-type: decimal;
+  }
+
+  em {
+    font-style: italic;
+  }
 }
 </style>

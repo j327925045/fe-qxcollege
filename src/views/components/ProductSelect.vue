@@ -44,7 +44,11 @@ export default {
   },
   methods: {
     setMyValue() {
-      this.myValue = this.value
+      try {
+        this.myValue = JSON.parse(JSON.stringify(this.value))
+      } catch (error) {
+        this.myValue = undefined
+      }
     },
 
     getOptions() {
