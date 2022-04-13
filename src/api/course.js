@@ -65,3 +65,29 @@ export function getCourseColumnList(params) {
     params: {}
   })
 }
+
+/**
+ * 课程审核
+ */
+export function changeCourseStatus(params) {
+  return request({
+    url: '/qxcollege/admin/course/apply',
+    method: 'post',
+    params
+  })
+}
+
+/**
+ * 操作课程上下架
+ * @param {*} params
+ * courseCode
+ * shelfStatus 状态（1上架，2下架）
+ * @returns
+ */
+export function operateCourseShelfStatus(params) {
+  return request({
+    url: '/qxcollege/admin/course/operation',
+    method: 'post',
+    params
+  })
+}
