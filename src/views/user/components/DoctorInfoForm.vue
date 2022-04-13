@@ -78,7 +78,8 @@ export default {
             attrs: {
               type: 'textarea',
               style: 'width: 50%',
-              placeholder: '请输入医生简介'
+              placeholder: '请输入医生简介',
+              maxLength: 500
             }
           },
           {
@@ -160,18 +161,11 @@ export default {
           },
           {
             type: 'ImSlot',
-            prop: 'userOrgInfoDTOList',
             span: 24,
             lebel: '所在机构信息',
+            props: 'userOrgInfoDtoList',
             // hidden: this.isEdit,
-            rules: [{
-              validator: function(rule, value, callback) {
-                // if () {
-                //   return callback()
-                // }
-                // callback(new Error('您输入的内容有误'))
-              }
-            }],
+            rules: [{ required: true, message: '请选择所在机构信息' }],
             slots: {
               sort: 'OrgInfoList'
             }

@@ -8,7 +8,8 @@
   >
     <el-option
       v-for="item in options"
-      :key="item.value"
+      :disabled="getDisabled(item)"
+      :key="item.objectCode"
       :label="item.name"
       :value="item.objectCode"
     >
@@ -32,6 +33,10 @@ export default {
     multiple: {
       type: Boolean,
       default: false
+    },
+    disabledCode: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
@@ -52,6 +57,9 @@ export default {
     this.getOptions()
   },
   methods: {
+    getDisabled(item) {
+      return this.disabledCode && this.disabledCode.indexOf(item.objectCode) > -1
+    },
     setMyValue() {
       this.myValue = this.value
     },

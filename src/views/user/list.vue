@@ -217,11 +217,11 @@ export default {
             }
           },
           {
-            prop: 'realAccountManager',
+            type: 'ImSlot',
+            prop: 'realAccountManagerCode',
             label: '客户经理',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+            slots: {
+              realAccountManagerCode: 'EmployeeSelect'
             }
           },
           {

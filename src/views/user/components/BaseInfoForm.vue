@@ -78,9 +78,9 @@ export default {
             prop: 'birthday',
             label: '出生日期',
             attrs: {
-              type: 'date',
+              type: 'datetime',
               style: 'width: 100%',
-              valueFormat: 'yyyy-MM-dd',
+              valueFormat: 'yyyy-MM-dd hh:mm:ss',
               placeholder: '请选择'
             }
           },
@@ -121,7 +121,7 @@ export default {
       checkPhone(value)
         .then((res) => {
           console.log(res)
-          this.$message.success(res.message)
+          // this.$message.success(res.message)
         })
         .catch((res) => {
           console.log(res)
