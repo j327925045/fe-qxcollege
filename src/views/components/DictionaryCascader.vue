@@ -5,6 +5,7 @@
     :options="options"
     :placeholder="placeholder"
     :collapse-tags="collapseTags"
+    clearable
     :show-all-levels="showAllLevels"
     filterable
     @change="handleChange"
@@ -41,6 +42,10 @@ export default {
     showAllLevels: {
       type: Boolean,
       default: false
+    },
+    emitPath: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -51,7 +56,8 @@ export default {
         multiple: this.multiple,
         label: 'name',
         value: 'objectCode',
-        children: 'options'
+        children: 'options',
+        emitPath: this.emitPath
       }
     }
   },

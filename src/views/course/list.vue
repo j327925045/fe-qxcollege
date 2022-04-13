@@ -3,6 +3,14 @@
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig">
         <UserSelect slot="UserSelect" v-model="formConfig.props.author" filterable class="w-full"></UserSelect>
+        <DictionaryCascader
+          slot="DictionaryCascader"
+          v-model="formConfig.props.courseType"
+          sign="courseFirstCategory"
+          style="width: 100%"
+          :emit-path="false"
+          :show-all-levels="true"
+        ></DictionaryCascader>
       </ImForm>
     </ImSearchArea>
 
@@ -26,11 +34,13 @@
 import { getCourseList, deleteCourseItem } from '@/api/course.js'
 import { mapGetters } from 'vuex'
 import UserSelect from '@/views/components/UserSelect'
+import DictionaryCascader from '@/views/components/DictionaryCascader'
 
 export default {
   name: 'CourseList',
   components: {
-    UserSelect
+    UserSelect,
+    DictionaryCascader
   },
   data() {
     return {
@@ -75,13 +85,11 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
+            type: 'ImSlot',
             prop: 'courseType',
             label: '课程分类',
-            attrs: {
-              clearable: true,
-              class: 'w-full',
-              options: []
+            slots: {
+              slot: 'DictionaryCascader'
             }
           },
           {
@@ -225,7 +233,7 @@ export default {
           },
           {
             prop: 'authorName',
-            label: '视频作者',
+            label: '课程作者',
             type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
@@ -238,12 +246,12 @@ export default {
           {
             prop: 'courseType',
             label: '课程分类',
-            type: 'mapList',
+            // type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            },
-            options: this.enums.courseType
+            }
+            // options: this.enums.courseType
           },
           {
             prop: 'courseLevel',
@@ -379,7 +387,7 @@ export default {
   },
   methods: {
     setOptions() {
-      this.setFormPropOptions('courseType', this.enums.courseType)
+      // this.setFormPropOptions('courseType', this.enums.courseType)
       this.setFormPropOptions('courseLevel', this.enums.courseLevel)
       this.setFormPropOptions('userLevel', this.enums.doctorLevel)
       this.setFormPropOptions('paymentType', this.enums.paymentType)
