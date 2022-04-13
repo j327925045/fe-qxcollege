@@ -324,6 +324,12 @@ export default {
           if (res.data.materials && res.data.materials[0]) {
             props.materialCode = res.data.materials[0].objectCode
           }
+          if (res.data.courseType) {
+            const typeArr = res.data.courseType.map(item => {
+              return [item.firCode, item.secCode]
+            })
+            props.courseType = typeArr
+          }
         }
       })
     },

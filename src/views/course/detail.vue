@@ -15,8 +15,8 @@
         <span class="headertext">课程信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="课程时长">{{ details.videoTimeLen || '-' }}</el-descriptions-item>
-        <el-descriptions-item label="视频类型">{{ getLabelByValue('videoType', details.videoType) }}</el-descriptions-item>
+        <el-descriptions-item label="课程时长">{{ getMeterial(details.materials) && getMeterial(details.materials).duration || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="视频类型">{{ getMeterial(details.materials) && getLabelByValue('videoType', details.durationType) }}</el-descriptions-item>
         <el-descriptions-item label="课程作者">{{ details.authorName }}</el-descriptions-item>
         <el-descriptions-item label="上架状态">{{ getLabelByValue('courseShelfStatus', details.shelfStatus) }}</el-descriptions-item>
         <el-descriptions-item label="创建人">{{ details.createBy }}</el-descriptions-item>
@@ -44,9 +44,9 @@
       <div slot="header">
         <span class="headertext">内容属性</span>
       </div>
-      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
+      <el-descriptions size="medium" :column="1" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="课程分类">
-          {{ details.courseType }}
+          {{ getCourseTypeLabel(details.courseType) }}
         </el-descriptions-item>
         <el-descriptions-item label="关联产品">
           {{ getNames(details.courseProducts) }}
@@ -55,16 +55,16 @@
           {{ getNames(details.courseProjects) }}
         </el-descriptions-item>
         <el-descriptions-item label="分区">
-          {{ getLabelByValue('coursePartition', details.partition) }}
+          {{ getLabelsByValues('coursePartition', details.partition) }}
         </el-descriptions-item>
         <el-descriptions-item label="部位">
-          {{ getLabelByValue('coursePosition', details.position) }}
+          {{ getLabelsByValues('coursePosition', details.position) }}
         </el-descriptions-item>
         <el-descriptions-item label="适应症">
-          {{ getLabelByValue('courseIndication', details.indication) }}
+          {{ getLabelsByValues('courseIndication', details.indication) }}
         </el-descriptions-item>
         <el-descriptions-item label="并发症">
-          {{ getLabelByValue('courseComplication', details.complication) }}
+          {{ getLabelsByValues('courseComplication', details.complication) }}
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -216,6 +216,16 @@ export default {
     this.getCommentList()
   },
   methods: {
+    getCourseTypeLabel(courseType) {
+      if (!courseType || courseType.length === 0) {
+        return '-'
+      }
+      const courseTypeLabel = courseType.map(item => {
+        return `${item.firName}-${item.secName}`
+      })
+      return courseTypeLabel.join(',')
+    },
+
     playVideo(record) {
       this.$refs.VideoPlayer.play(record.fileUrl, record.coverUrl)
     },
@@ -239,6 +249,19 @@ export default {
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || '-'
+    },
+
+    getLabelsByValues(key, values) {
+      if (!values) {
+        return '-'
+      }
+      const lables = []
+      for (let i = 0; i < values.length; i++) {
+        const value = values[i]
+        const label = this.getLabelByValue(key, value)
+        lables.push(label)
+      }
+      return lables.join(',')
     },
 
     getDateTime(date) {
@@ -359,7 +382,6 @@ export default {
   //标题
   h1 {
     margin: 0.67em 0;
-    color: red;
     font-size: 2em;
   }
 
