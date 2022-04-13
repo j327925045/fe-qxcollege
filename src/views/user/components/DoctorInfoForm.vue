@@ -133,7 +133,7 @@ export default {
             type: 'ImSelect',
             prop: 'realJobTitle',
             label: '职称',
-            hidden: this.isEdit,
+            // hidden: this.isEdit,
             rules: [{ required: true, message: '请选择职称' }],
             attrs: {
               placeholder: '请选择职称',
@@ -146,7 +146,7 @@ export default {
             type: 'ImInput',
             prop: 'realEmploymentIndustryAssociations',
             label: '行业协会任职信息',
-            hidden: this.isEdit,
+            // hidden: this.isEdit,
             attrs: {
               placeholder: '请输入'
             }

@@ -170,17 +170,17 @@ export default {
                 title: '查看',
                 type: 'text',
                 onClick: this.showDetail
-              },
+              }
               // {
               //   title: '编辑',
               //   type: 'text',
               //   onClick: this.editItem
               // },
-              {
-                title: '删除',
-                type: 'text',
-                onClick: this.deleteItem
-              }
+              // {
+              //   title: '删除',
+              //   type: 'text',
+              //   onClick: this.deleteItem
+              // }
             ]
           }
         ]
