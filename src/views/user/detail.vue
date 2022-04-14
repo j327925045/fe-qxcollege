@@ -132,7 +132,7 @@
           <el-card>
             <div slot="header">账号信息</div>
             <el-descriptions title="" class="mt-4" :column="3" :size="size" label-class-name="descriptionLabelClass">
-              <el-descriptions-item label="注册时间">{{ dataList.registrationTime ? moment(dataList.registrationTime).format('YYYY-MM-DD') : '' }}</el-descriptions-item>
+              <el-descriptions-item label="注册时间">{{ dataList.registrationTime ? moment(dataList.registrationTime).format('YYYY-MM-DD') : '-' }}</el-descriptions-item>
               <el-descriptions-item :span="2" label="注册来源">{{ getLabelByValue('registrationSource', dataList.registrationSource) }}</el-descriptions-item>
               <el-descriptions-item :span="3" label="微信绑定">
                 <div style="width:100%">
@@ -158,7 +158,7 @@
                     </div>
                     <div class="dep-line">
                       <div class="dep-item">
-                        关注时间: {{ dataList.officialAccountTime ? moment(dataList.officialAccountTime).format('YYYY-MM-DD') : '' }}
+                        关注时间: {{ dataList.officialAccountTime ? moment(dataList.officialAccountTime).format('YYYY-MM-DD') : '-' }}
                       </div>
                       <div class="dep-item">
                         关注来源: {{ getLabelByValue('officialAccountSource', dataList.officialAccountSource) }}

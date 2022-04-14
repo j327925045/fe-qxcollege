@@ -2,7 +2,7 @@
   <ImWrapper>
     <div slot="header" class="bg-white rounded p-6 mt-2">
       <div class="header-container">
-        <span class="header-text">产品编号:{{ details.productNum }}</span>
+        <span class="header-text">产品编号: {{ details.productNum }}</span>
         <div>
           <el-button @click="deleteItem">删 除</el-button>
           <el-button type="primary" @click="editItem">编 辑</el-button>

@@ -3,7 +3,7 @@
     <div slot="header" class="bg-white rounded p-6 mt-2">
       <div class="header-container">
         <span class="header-text">审核</span>
-        <div>
+        <div v-if="auditDetail.status!='1'&&auditDetail.status!='2'">
           <el-button type="" @click="submit(2)">拒绝</el-button>
           <el-button type="primary" @click="submit(1)">同意</el-button>
         </div>
@@ -12,32 +12,38 @@
 
     <el-card class="box-card">
       <div slot="header">
-        <span class="headertext">专栏信息</span>
+        <span class="headertext">审核信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="医生编号">{{ auditDetail.doctorNumber }}</el-descriptions-item>
-        <el-descriptions-item label="创建人">{{ auditDetail.createName }}</el-descriptions-item>
-        <el-descriptions-item label="创建时间"> {{ getDateTime(auditDetail.createTime) }}</el-descriptions-item>
-        <el-descriptions-item label="审批编号">{{ auditDetail.objectCode }}</el-descriptions-item>
-        <el-descriptions-item label="申请人名字">{{ auditDetail.userName }}</el-descriptions-item>
-        <el-descriptions-item label="身份证号">{{ auditDetail.realIdNumber }}</el-descriptions-item>
-        <el-descriptions-item label="医生手机号">{{ auditDetail.phone }}</el-descriptions-item>
-        <el-descriptions-item label="执业地点">{{ auditDetail.realAddress }}</el-descriptions-item>
-        <el-descriptions-item label="执业类别">{{ auditDetail.realPracticeCategory != '0' ? auditDetail.realPracticeCategory : '' }}</el-descriptions-item>
-        <el-descriptions-item label="执业范围">{{ auditDetail.realPracticeArea != '0' ? auditDetail.realPracticeArea : '' }}</el-descriptions-item>
-        <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode }}</el-descriptions-item>
-        <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode }}</el-descriptions-item>
-        <el-descriptions-item label="学历">{{ auditDetail.realEducation != '0' ? auditDetail.realEducation : '' }}</el-descriptions-item>
-        <el-descriptions-item label="毕业学校">{{ auditDetail.realGraduationSchool }}</el-descriptions-item>
-        <el-descriptions-item label="类别">{{ auditDetail.realCategory }}</el-descriptions-item>
-        <el-descriptions-item label="专业">{{ auditDetail.realMajor }}</el-descriptions-item>
+        <el-descriptions-item label="医生编号">{{ auditDetail.doctorNumber||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="创建人">{{ auditDetail.createName ||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="创建时间"> {{ getDateTime(auditDetail.createTime)||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="审批编号">{{ auditDetail.objectCode||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="申请人名字">{{ auditDetail.userName||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="身份证号">{{ auditDetail.realIdNumber||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="医生手机号">{{ auditDetail.phone||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="执业地点">{{ auditDetail.realAddress||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="执业类别">{{ auditDetail.realPracticeCategory != '0' ? auditDetail.realPracticeCategory : '-' }}</el-descriptions-item>
+        <el-descriptions-item label="执业范围">{{ auditDetail.realPracticeArea != '0' ? auditDetail.realPracticeArea : '-' }}</el-descriptions-item>
+        <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="学历">{{ auditDetail.realEducation != '0' ? auditDetail.realEducation : '-' }}</el-descriptions-item>
+        <el-descriptions-item label="毕业学校">{{ auditDetail.realGraduationSchool||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="类别">{{ auditDetail.realCategory||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="专业">{{ auditDetail.realMajor||'-' }}</el-descriptions-item>
       </el-descriptions>
 
       <el-descriptions size="medium" :column="2" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode }}</el-descriptions-item>
-        <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode }}</el-descriptions-item>
-        <el-descriptions-item label="医师执业证书"><img class="imageClass" :src=" auditDetail.realDoctorPracticeCertificate" alt="" srcset=""></el-descriptions-item>
-        <el-descriptions-item label="医师资格证书"><img class="imageClass" :src=" auditDetail.realDoctorQualificationCertificate" alt="" srcset=""></el-descriptions-item>
+        <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode||'-' }}</el-descriptions-item>
+        <el-descriptions-item label="医师执业证书">
+          <img v-if="auditDetail.realDoctorPracticeCertificate" class="imageClass" :src="auditDetail.realDoctorPracticeCertificate" alt="" srcset="">
+          <span v-else>-</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="医师资格证书">
+          <img v-if="auditDetail.realDoctorQualificationCertificate" class="imageClass" :src="auditDetail.realDoctorQualificationCertificate" alt="" srcset="">
+          <span v-else>-</span>
+        </el-descriptions-item>
       </el-descriptions>
     </el-card>
 

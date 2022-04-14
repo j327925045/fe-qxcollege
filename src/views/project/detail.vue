@@ -2,7 +2,7 @@
   <ImWrapper>
     <div slot="header" class="bg-white rounded p-6 mt-2">
       <div class="header-container">
-        <span class="header-text">项目编号:{{ productDetail.projectCode }}</span>
+        <span class="header-text">项目编号: {{ productDetail.projectCode }}</span>
         <div>
           <el-button @click="deleteItem">删 除</el-button>
           <el-button type="primary" @click="editItem">编 辑</el-button>
@@ -30,14 +30,18 @@
           <span class="projectText">{{ productDetail.foundingName||'-' }}</span>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="共识医生">
-          <div>
+          <div v-if="productDetail.projectConsensusNameList">
             <span v-for="item,index in productDetail.projectConsensusNameList" :key="index">
               <el-tag :key="index" size="small">{{ item }}</el-tag>
             </span>
           </div>
+          <div v-else>
+            -
+          </div>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="项目图片">
           <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="">
+          <span v-else>-</span>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="项目介绍">
           <div v-if="productDetail.projectIntroduce">
