@@ -23,7 +23,7 @@
         <el-descriptions-item label="创建时间">{{ getDateTime(details.createTime) }}</el-descriptions-item>
         <el-descriptions-item :span="3" label="审核状态">{{ getLabelByValue('courseAuditStatus', details.status) }}</el-descriptions-item>
         <el-descriptions-item :span="3" label="课程封面">
-          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt=""/>
+          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" @click="showImgView(details.coverUrl)"/>
         </el-descriptions-item>
         <el-descriptions-item v-if="getMeterial(details.materials)" :span="3" label="课程视频">
           <img class="imageClass" :src="getMeterial(details.materials).coverUrl" alt="" @click="playVideo(getMeterial(details.materials))"/>
@@ -284,6 +284,12 @@ export default {
     this.getCommentList()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+
     getCourseTypeLabel(courseType) {
       if (!courseType || courseType.length === 0) {
         return '-'

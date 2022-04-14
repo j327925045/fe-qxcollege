@@ -36,7 +36,7 @@
           {{ details.indication || '' }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="产品图片">
-          <img class="imageClass" :src="details.imageUrl" alt="" />
+          <img class="imageClass" :src="details.imageUrl" alt="" @click="showImgView(details.imageUrl)" />
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -132,6 +132,12 @@ export default {
     this.getList()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+
     viewProjectDetail(objectCode) {
       this.$router.push({ name: 'ProjectDetail', query: { objectCode } })
     },
@@ -233,6 +239,7 @@ export default {
     width: 124px;
     height: 124px;
     border: 1px solid #ccc;
+    cursor: pointer;
   }
 }
 

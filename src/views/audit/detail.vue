@@ -37,11 +37,11 @@
         <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode||'-' }}</el-descriptions-item>
         <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode||'-' }}</el-descriptions-item>
         <el-descriptions-item label="医师执业证书">
-          <img v-if="auditDetail.realDoctorPracticeCertificate" class="imageClass" :src="auditDetail.realDoctorPracticeCertificate" alt="" srcset="">
+          <img v-if="auditDetail.realDoctorPracticeCertificate" class="imageClass" :src="auditDetail.realDoctorPracticeCertificate" alt="" srcset="" @click="showImgView(auditDetail.realDoctorPracticeCertificate)">
           <span v-else>-</span>
         </el-descriptions-item>
         <el-descriptions-item label="医师资格证书">
-          <img v-if="auditDetail.realDoctorQualificationCertificate" class="imageClass" :src="auditDetail.realDoctorQualificationCertificate" alt="" srcset="">
+          <img v-if="auditDetail.realDoctorQualificationCertificate" class="imageClass" :src="auditDetail.realDoctorQualificationCertificate" alt="" srcset="" @click="showImgView(auditDetail.realDoctorQualificationCertificate)">
           <span v-else>-</span>
         </el-descriptions-item>
       </el-descriptions>
@@ -74,6 +74,12 @@ export default {
     this.getInfos()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+
     getDateTime(date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
     },
@@ -149,6 +155,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    cursor: pointer;
   }
 }
 

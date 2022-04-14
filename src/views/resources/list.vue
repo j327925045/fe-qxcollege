@@ -9,7 +9,7 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="coverUrl" slot-scope="scope">
-          <img style="width: 120px;height: 120px;object-fit: cover;" :src="scope.row.coverUrl" alt="">
+          <img style="width: 120px;height: 120px;object-fit: cover;cursor: pointer;" :src="scope.row.coverUrl" alt="" @click="showImgView(scope.row.coverUrl)" />
         </template>
         <template slot="videoItem" slot-scope="scope">
           <a href="javascript:;" @click="playVideo(scope.row)">{{ scope.row.fileUrl }}</a>
@@ -216,6 +216,12 @@ export default {
     this.getList()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+    
     playVideo(record) {
       this.$refs.VideoPlayer.play(record.fileUrl, record.coverUrl)
     },

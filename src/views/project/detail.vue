@@ -40,7 +40,7 @@
           </div>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="项目图片">
-          <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="">
+          <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="" @click="showImgView(productDetail.projectPictureUrl)" />
           <span v-else>-</span>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="项目介绍">
@@ -69,6 +69,7 @@ export default {
     return {
       loading: false,
       moment,
+      loading: false,
       objectCode: this.$route.query.objectCode,
       detailDialogVisible: false,
       productDetail: {},
@@ -82,6 +83,12 @@ export default {
     this.getItemDetail()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+
     /**
      * 获取详情
      */
@@ -158,6 +165,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    cursor: pointer;
   }
 
   .projectName{
