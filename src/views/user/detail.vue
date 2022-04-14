@@ -8,8 +8,8 @@
       </div>
       <div class="headContent">
         <div class="headerIcon">
-          <img class="imageClass" v-if="dataList.personalUrl" :src="dataList.personalUrl" alt="" />
-          <img class="imageClass" v-else src="~@/assets/img/framework/img-holder.png" alt="" />
+          <img v-if="dataList.personalUrl" class="imageClass" :src="dataList.personalUrl" alt="" />
+          <img v-else class="imageClass" src="~@/assets/img/framework/img-holder.png" alt="" />
         </div>
         <div class="headerDesc">
           <div class="row">
@@ -32,15 +32,16 @@
         <div class="m-4 mt-0">
           <el-card class="mb-4">
             <div slot="header" class="card-header">医生信息</div>
-            <el-descriptions :size="size" label-class-name="descriptionLabelClass">
-              <el-descriptions-item :span="3" label="医生介绍">
+            <el-descriptions class="mb-4" :size="size" label-class-name="descriptionLabelClass">
+              <el-descriptions-item :span="1" label="医生介绍">
                 <div class="image-container">
                   <img v-if="dataList.doctorIntroduction" class="image-container-img imageClass" :src="dataList.doctorIntroduction" alt="" @click="showImgView(dataList.doctorIntroduction)" />
                   <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
-              <el-descriptions-item :span="3" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
-
+              <el-descriptions-item :span="2" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="医生标签">
                 <div v-if="dataList.tagDTOList">
                   <el-tag v-for="(item, index) in dataList.tagDTOShowList" :key="index" size="medium" style="margin-right: 8px; transform: translate(0, -3px)">{{ item }}</el-tag>
@@ -662,6 +663,7 @@ export default {
 
     .image-container-img {
       height: 100%;
+      cursor: pointer;
     }
   }
 
