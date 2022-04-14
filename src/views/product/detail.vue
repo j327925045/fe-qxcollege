@@ -15,8 +15,13 @@
         <span class="headertext">产品信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
+<<<<<<< HEAD
         <el-descriptions-item :span="1" label="产品名称">{{ details.name || '-' }}</el-descriptions-item>
         <el-descriptions-item :span="2" label="品牌">
+=======
+        <el-descriptions-item label="产品名称">{{ details.name || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="规格">
+>>>>>>> LJZ_bug
           {{ details.skuId || '-' }}
         </el-descriptions-item>
         <el-descriptions-item label="业务类型">
@@ -28,11 +33,19 @@
         <el-descriptions-item label="产品类型">
           {{ getLabelByValue('type', details.type) }}
         </el-descriptions-item>
+      </el-descriptions>
+
+      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
+
         <el-descriptions-item :span="3" label="产品介绍">
           {{ details.indication || '' }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="产品图片">
+<<<<<<< HEAD
           <img class="imageClass" :src="details.imageUrl" alt=""/>
+=======
+          <img class="imageClass" :src="details.imageUrl" alt="" />
+>>>>>>> LJZ_bug
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -177,7 +190,9 @@ export default {
     goListPage() {
       this.$router.replace({name: 'ProductList'})
     },
-
+    onslotClick(objectCode) {
+      this.$router.push({ name: 'ProjectDetail', query: { objectCode: objectCode } })
+    },
     getList() {
       const params = {
         page: this.currentPage,

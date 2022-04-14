@@ -42,8 +42,8 @@
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
         <el-descriptions-item>
           <div slot="label">
-            <div>医疗机构</div>
-            <div>执业许可</div>
+            <div>医疗机构执业</div>
+            <div style="text-align:right">许可证</div>
           </div>
           <span v-if="!details.licencePictureUrl">-</span>
           <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt=""/>

@@ -13,7 +13,7 @@
       <div slot="header">
         <span class="headertext">项目信息</span>
       </div>
-      <el-descriptions size="medium">
+      <el-descriptions size="medium" class="ml-4">
         <el-descriptions-item label="项目名称">
           <span class="projectName">{{ productDetail.name }}</span>
         </el-descriptions-item>
@@ -26,9 +26,12 @@
         <el-descriptions-item :span="3" label="项目明细">
           <span class="projectText">{{ productDetail.projectDeteils||'-' }}</span>
         </el-descriptions-item>
-        <el-descriptions-item :span="3" label="产品集合">
+        <el-descriptions-item :span="3" label="创始医生">
+          <span class="projectText">{{ productDetail.foundingCode||'-' }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item :span="3" label="共识医生">
           <div>
-            <span v-for="item,index in productDetail.projectProductList" :key="index">
+            <span v-for="item,index in productDetail.projectConsensusNameList" :key="index">
               <el-tag :key="index" size="small">{{ item }}</el-tag>
             </span>
           </div>
@@ -37,14 +40,13 @@
           <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="">
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="项目介绍">
-          <div class="__RichTextArea" v-html="productDetail.projectIntroduce"></div>
+          <div v-if="productDetail.projectIntroduce">-</div>
+          <div v-else v-html="productDetail.projectIntroduce"></div>
         </el-descriptions-item>
 
       </el-descriptions>
 
-      <div slot="footer">
-        <el-button type="primary" @click="detailDialogVisible = false">确 定</el-button>
-      </div>
+      <ImTable :loading="loading" :table="tableConfig"></ImTable>
     </el-card>
   </ImWrapper>
 </template>
@@ -56,19 +58,20 @@ import utils from '@/utils/utils'
 
 import { deleteProjectItem, getProjectDetail } from '@/api/project'
 export default {
-  name: 'DetailDialog',
+  name: 'ProjectDetail',
   data() {
     return {
       moment,
       objectCode: this.$route.query.objectCode,
       detailDialogVisible: false,
-      productDetail: {}
+      productDetail: {},
+      projectProductCodeArrLength: ''
     }
   },
   computed: {
     ...mapGetters(['enums'])
   },
-  created() {
+  activated() {
     this.getItemDetail()
   },
   methods: {
@@ -76,10 +79,11 @@ export default {
      * 获取详情
      */
     getItemDetail() {
-      getProjectDetail({ objectCode: this.objectCode }).then(res => {
+      getProjectDetail({ objectCode: this.$route.query.objectCode }).then(res => {
         if (res.code === 200) {
           this.productDetail = res.data
           this.productDetail.projectProductList = res.data.projectProductArr
+          this.projectProductCodeArrLength = this.productDetail.projectProductCodeArr.length
         }
       })
     },

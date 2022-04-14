@@ -93,10 +93,10 @@ export default {
           {
             type: 'ImInput',
             prop: 'skuId',
-            label: '品牌',
+            label: '规格',
+            span: 8,
             attrs: {
               placeholder: '请输入',
-              maxLength: 128,
               class: 'w-full',
               options: []
             }

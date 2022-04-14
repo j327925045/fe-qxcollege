@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import {auditCommit, getDetail} from '@/api/audit'
+import { auditCommit, getDetail } from '@/api/audit'
 import moment from 'moment'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
 
 export default {

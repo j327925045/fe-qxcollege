@@ -13,12 +13,26 @@
           v-model="formConfig.props.organizationCode"
           placeholder="请选择"
         ></OrganizationSelect>
-        <projectProductArr
+        <ProjectProductArr
           slot="projectProductArr"
           v-model="formConfig.props.projectProductArr"
           class="w-full"
           placeholder="请选择产品"
-        ></projectProductArr>
+        ></ProjectProductArr>
+        <DoctorFristArr
+          slot="doctorFristArr"
+          v-model="formConfig.props.foundingCode"
+          class="w-full"
+          placeholder="请选择创始医生"
+        >
+        </DoctorFristArr>
+        <DoctorFristALLArr
+          slot="doctorFristALLArr"
+          v-model="formConfig.props.projectConsensusCodeList"
+          class="w-full"
+          placeholder="请选择共识医生"
+        >
+        </DoctorFristALLArr>
         <RichTextArea slot="RichTextArea" v-model="formConfig.props.projectIntroduce"></RichTextArea>
       </ImForm>
     </div>
@@ -36,10 +50,14 @@ import RichTextArea from '@/views/components/RichTextArea'
 
 import OrganizationSelect from '@/views/components/OrganizationSelect'
 import ProjectProductArr from './components/ProjectProductList'
+import DoctorFristArr from './components/DoctorFristArr'
+import DoctorFristALLArr from './components/DoctorFristALLArr'
 export default {
   name: 'AddOrEdit',
 
   components: {
+    DoctorFristALLArr,
+    DoctorFristArr,
     ProjectProductArr,
     OrganizationSelect,
     RichTextArea
@@ -55,7 +73,9 @@ export default {
           labelPosition: 'right'
         },
         props: {
+          projectConsensusCodeList: [],
           projectProductArr: '',
+          foundingCode: [],
           name: '', // 名称
           remark: '', // 项目介绍
           //
@@ -99,6 +119,29 @@ export default {
               options: []
             }
           },
+          {
+            type: 'ImSlot',
+            prop: 'foundingCode',
+            label: '创始医生',
+            // rules: [{ required: true, message: '请选择机构' }],
+            slots: {
+              multiple: true,
+              doctorFristSlot: 'doctorFristArr',
+              options: []
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'projectConsensusCodeList',
+            label: '共识医生',
+            // rules: [{ required: true, message: '请选择机构' }],
+            slots: {
+              multiple: true,
+              doctorFristALLArrSlot: 'doctorFristALLArr',
+              options: []
+            }
+          },
+
           {
             type: 'ImImgUpload',
             prop: 'projectPictureUrl',
@@ -162,6 +205,7 @@ export default {
     getItemDetail() {
       getProjectDetail({ objectCode: this.editId }).then(res => {
         res.data.projectProductArr = [...new Set(res.data.projectProductCodeArr)]
+        res.data.projectConsensusCodeList = res.data.projectConsensusAddDTOList.map(x => x.consensusCode)
         if (res.code === 200) {
           const props = this.formConfig.props
           const keys = Object.keys(props)
@@ -184,7 +228,14 @@ export default {
           this.$message('请检查表单项！')
           return
         }
-        console.log(this.formConfig.props)
+        console.log(this.formConfig.props.projectConsensusCodeList)
+        if (this.formConfig.props.projectProductArr) {
+          const projectList = []
+          this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
+            projectList.push({ productCode: val + '' })
+          })
+          this.formConfig.props.projectProductList = projectList
+        }
         if (this.formConfig.props.projectProductArr) {
           const projectList = []
           this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
