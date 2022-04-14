@@ -23,14 +23,14 @@
         <el-descriptions-item label="所在城市">{{ details.regionFullName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="机构地址">{{ details.location || '-' }}</el-descriptions-item>
         <el-descriptions-item label="所属集团">
-          <el-button type="text" size="medium" style="padding: 3px" @click="viewOrgItem(details.organizationCode)">{{ details.organizationName || '-' }}</el-button>
+          <a type="text" href="javascript:;" size="medium" style="padding: 3px;color:#005dbe;" @click="viewOrgItem(details.organizationCode)">{{ details.organizationName || '-' }}</a>
         </el-descriptions-item>
         <el-descriptions-item label="联系人姓名">{{ details.contactName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="联系人电话">{{ details.contactPhone || '-' }}</el-descriptions-item>
         <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="机构图片">
           <span v-if="!details.orgPictureUrl">-</span>
-          <img v-if="details.orgPictureUrl" class="imageClass" :src="details.orgPictureUrl" alt="" />
+          <img v-if="details.orgPictureUrl" class="imageClass" :src="details.orgPictureUrl" alt=""/>
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -46,7 +46,7 @@
             <div>执业许可</div>
           </div>
           <span v-if="!details.licencePictureUrl">-</span>
-          <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt="" />
+          <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt=""/>
         </el-descriptions-item>
         <el-descriptions-item label="登记号">
           {{ details.registrationNo === '0' ? '-' : details.registrationNo }}
@@ -63,15 +63,15 @@
           <el-button type="text" size="medium" @click="onslotClick(scope.row.doctorCode)">{{ scope.row.doctorNumber }}</el-button>
         </template>
       </ImTable>
-      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"> </ImPagination>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </el-card>
   </ImWrapper>
 </template>
 
 <script>
-import { getHospitalDetail, deleteHospitalItem, getTabhList } from '@/api/hospital'
+import {getHospitalDetail, deleteHospitalItem, getTabhList} from '@/api/hospital'
 import moment from 'moment'
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import utils from '@/utils/utils'
 
 export default {
@@ -140,11 +140,11 @@ export default {
   },
   methods: {
     viewOrgItem(objectCode) {
-      this.$router.push({ name: 'OrganizationDetail', query: { objectCode } })
+      this.$router.push({name: 'OrganizationDetail', query: {objectCode}})
     },
 
     onslotClick(objectCode) {
-      this.$router.push({ name: 'UserDetail', query: { objectCode: objectCode } })
+      this.$router.push({name: 'UserDetail', query: {objectCode: objectCode}})
     },
 
     getLabelByValue(key, value) {
@@ -157,7 +157,7 @@ export default {
     },
 
     getItemDetail() {
-      getHospitalDetail({ objectCode: this.objectCode }).then((res) => {
+      getHospitalDetail({objectCode: this.objectCode}).then((res) => {
         if (res.code === 200) {
           this.details = res.data || {}
         }
@@ -165,7 +165,7 @@ export default {
     },
 
     editItem() {
-      this.$router.push({ name: 'HospitalAddOrEdit', query: { objectCode: this.objectCode } })
+      this.$router.push({name: 'HospitalAddOrEdit', query: {objectCode: this.objectCode}})
     },
 
     deleteItem($index, record) {
@@ -180,7 +180,7 @@ export default {
           if (this.tableConfig.data.length > 0) {
             this.$message.error('该机构下有医生 ，不允许删除。')
           } else {
-            deleteHospitalItem({ objectCode: this.objectCode }).then((res) => {
+            deleteHospitalItem({objectCode: this.objectCode}).then((res) => {
               if (res.code === 200) {
                 this.$message.success('操作成功！')
                 this.goListPage()
@@ -190,11 +190,12 @@ export default {
             })
           }
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     goListPage() {
-      this.$router.replace({ name: 'HospitalList' })
+      this.$router.replace({name: 'HospitalList'})
     },
 
     getList() {
