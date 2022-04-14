@@ -51,6 +51,15 @@ export default {
 }
 </script>
 
+<style>
+#VideoPlayer .prism-big-play-btn {
+  left: 50% !important;
+  top: 50% !important;
+  display: block !important;
+  margin-top: -32px !important;
+  margin-left: -32px !important;
+}
+</style>
 <style lang="scss" scoped>
 #VideoPlayer {
   width: 100%;
