@@ -8,7 +8,11 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建员工</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="gender" slot-scope="scope">
+          <GenderShow :gender="scope.row.gender"></GenderShow>
+        </template>
+      </ImTable>
       <ImPagination
         ref="ImPagination"
         :page-size.sync="pageSize"
@@ -29,13 +33,15 @@ import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import SetRoleDrower from './components/SetRoleDrower'
 import { mapGetters } from 'vuex'
+import GenderShow from '@/views/components/GenderShow'
 
 export default {
   name: 'EmployeesList',
   components: {
     DetailDialog,
     AddOrEdit,
-    SetRoleDrower
+    SetRoleDrower,
+    GenderShow
   },
   data() {
     return {
@@ -118,12 +124,12 @@ export default {
           {
             prop: 'gender',
             label: '员工性别',
-            type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             },
-            options: this?.enums?.gender ?? []
+            type: 'slot',
+            slot: 'gender'
           },
           {
             prop: 'nature',
@@ -231,11 +237,13 @@ export default {
      */
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteEmployeesItem({ objectCode: record.objectCode }).then((res) => {
+          deleteEmployeesItem({objectCode: record.objectCode}).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -244,7 +252,8 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     /**

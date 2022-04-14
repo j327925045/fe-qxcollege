@@ -18,17 +18,17 @@
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="医生编号">{{ auditDetail.doctorNumber }}</el-descriptions-item>
         <el-descriptions-item label="创建人">{{ auditDetail.createName }}</el-descriptions-item>
-        <el-descriptions-item label="创建时间">  {{ getDateTime(auditDetail.createTime) }}</el-descriptions-item>
+        <el-descriptions-item label="创建时间"> {{ getDateTime(auditDetail.createTime) }}</el-descriptions-item>
         <el-descriptions-item label="审批编号">{{ auditDetail.objectCode }}</el-descriptions-item>
         <el-descriptions-item label="申请人名字">{{ auditDetail.userName }}</el-descriptions-item>
         <el-descriptions-item label="身份证号">{{ auditDetail.realIdNumber }}</el-descriptions-item>
         <el-descriptions-item label="医生手机号">{{ auditDetail.phone }}</el-descriptions-item>
         <el-descriptions-item label="执业地点">{{ auditDetail.realAddress }}</el-descriptions-item>
-        <el-descriptions-item label="执业类别">{{ auditDetail.realPracticeCategory!='0'?auditDetail.realPracticeCategory:'' }}</el-descriptions-item>
-        <el-descriptions-item label="执业范围">{{ auditDetail.realPracticeArea!='0'?auditDetail.realPracticeArea:'' }}</el-descriptions-item>
+        <el-descriptions-item label="执业类别">{{ auditDetail.realPracticeCategory != '0' ? auditDetail.realPracticeCategory : '' }}</el-descriptions-item>
+        <el-descriptions-item label="执业范围">{{ auditDetail.realPracticeArea != '0' ? auditDetail.realPracticeArea : '' }}</el-descriptions-item>
         <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode }}</el-descriptions-item>
         <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode }}</el-descriptions-item>
-        <el-descriptions-item label="学历">{{ auditDetail.realEducation!='0'?auditDetail.realEducation:'' }}</el-descriptions-item>
+        <el-descriptions-item label="学历">{{ auditDetail.realEducation != '0' ? auditDetail.realEducation : '' }}</el-descriptions-item>
         <el-descriptions-item label="毕业学校">{{ auditDetail.realGraduationSchool }}</el-descriptions-item>
         <el-descriptions-item label="类别">{{ auditDetail.realCategory }}</el-descriptions-item>
         <el-descriptions-item label="专业">{{ auditDetail.realMajor }}</el-descriptions-item>
@@ -74,19 +74,27 @@ export default {
     },
     // 审批
     submit(statucs) {
-      const examineDTO = {
-        applyCode: this.objectCode,
-        comment: '',
-        status: statucs
-      }
-      this.loading = true
-      auditCommit(examineDTO).then((res) => {
-        this.loading = false
-        this.detailDialogVisible = false
-        this.$emit('update')
-        this.visibleFn()
-        this.$message.success('更新成功')
+      this.$confirm('确定' + (statucs === 2 ? '拒绝' : '同意') + '该审批吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
       })
+        .then(() => {
+          const examineDTO = {
+            applyCode: this.objectCode,
+            comment: '',
+            status: statucs
+          }
+          this.loading = true
+          auditCommit(examineDTO).then((res) => {
+            this.loading = false
+            this.detailDialogVisible = false
+            this.$emit('update')
+            this.visibleFn()
+            this.$message.success('更新成功')
+          })
+        })
+        .catch(() => {
+        })
     },
 
     getInfos() {

@@ -39,6 +39,7 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="orgCodeSlot" slot-scope="scope">
+          <span v-if="!scope.row.orgCode">-</span>
           <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.orgCode }}</el-button>
         </template>
       </ImTable>
@@ -131,6 +132,8 @@ export default {
 
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })

@@ -6,7 +6,7 @@
       <div class="tabs-wrt">
         <div class="content-tabs">
           <el-tabs v-if="showCommonView" ref="topTabs" v-model="editableTabsValue" @tab-click="tabClick" @tab-remove="removeTab">
-            <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name" :closable="item.name !== 'home'" />
+            <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name" :closable="item.name !== 'UserList'" />
           </el-tabs>
         </div>
         <!-- <RouterBreadcrumb style="margin-bottom: 10px;"></RouterBreadcrumb> -->

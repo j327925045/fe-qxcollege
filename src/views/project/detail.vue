@@ -13,25 +13,31 @@
       <div slot="header">
         <span class="headertext">项目信息</span>
       </div>
-      <el-descriptions :column="1" size="medium">
-
-        <el-descriptions-item label="项目名称"><span class="projectName">{{ productDetail.name }}</span></el-descriptions-item>
-        <el-descriptions-item label="项目编号"><span class="projectText">{{ productDetail.projectCode }}</span></el-descriptions-item>
-        <el-descriptions-item label="产品数量"><span class="projectText">{{ projectProductCodeArrLength }}</span></el-descriptions-item>
-        <el-descriptions-item label="项目明细"><span class="projectText">{{ productDetail.projectDeteils }}</span></el-descriptions-item>
-
-        <el-descriptions-item label="产品集合">
+      <el-descriptions size="medium">
+        <el-descriptions-item label="项目名称">
+          <span class="projectName">{{ productDetail.name }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="项目编号">
+          <span class="projectText">{{ productDetail.projectCode }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="产品数量">
+          <span class="projectText">{{ productDetail.projectProductCodeArr && productDetail.projectProductCodeArr.length }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item :span="3" label="项目明细">
+          <span class="projectText">{{ productDetail.projectDeteils||'-' }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item :span="3" label="产品集合">
           <div>
             <span v-for="item,index in productDetail.projectProductList" :key="index">
               <el-tag :key="index" size="small">{{ item }}</el-tag>
             </span>
           </div>
         </el-descriptions-item>
-        <el-descriptions-item label="项目图片">
+        <el-descriptions-item :span="3" label="项目图片">
           <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="">
         </el-descriptions-item>
-        <el-descriptions-item label="项目介绍">
-          <div v-html="productDetail.projectIntroduce"></div>
+        <el-descriptions-item :span="3" label="项目介绍">
+          <div class="__RichTextArea" v-html="productDetail.projectIntroduce"></div>
         </el-descriptions-item>
 
       </el-descriptions>
@@ -86,6 +92,8 @@ export default {
     deleteItem($index, record) {
       console.log(record)
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
@@ -153,12 +161,76 @@ export default {
 }
 
 /deep/.el-descriptions-item__label{
-  font-weight: bold;
   padding-bottom: 10px;
+  font-weight: bold;
 }
 
 /deep/.el-tag{
   margin-right: 5px;
 }
 
+/deep/ .__RichTextArea {
+  width: 100%;
+  max-height: 300px;
+  padding: 16px;
+  overflow: auto;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+
+  //标题
+  h1 {
+    margin: 0.67em 0;
+    font-size: 2em;
+  }
+
+  h2 {
+    margin: 0.75em 0;
+    font-size: 1.5em;
+  }
+
+  h3 {
+    margin: 0.83em 0;
+    font-size: 1.17em;
+  }
+
+  h4 {
+    margin: 1.12em 0;
+  }
+
+  h5 {
+    margin: 1.5em 0;
+    font-size: 0.83em;
+  }
+
+  h6 {
+    margin: 1.67em 0;
+    font-size: 0.75em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  b,
+  strong {
+    font-weight: bolder;
+  }
+
+  ul,
+  ul li {
+    list-style-position: inside;
+    list-style-type: disc;
+  }
+
+  ol,
+  ol li {
+    list-style-position: inside;
+    list-style-type: decimal;
+  }
+
+  em {
+    font-style: italic;
+  }
+}
 </style>

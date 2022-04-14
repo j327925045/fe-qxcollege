@@ -1,0 +1,31 @@
+// 覆盖elementui自带组件样式
+
+.el-form-item__label {
+  color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.el-tooltip__popper {
+  max-width: 700px !important;
+}
+
+.el-descriptions-item__label {
+  color: rgba(0, 0, 0, 1);
+  font-weight: 500;
+}
+
+.el-descriptions-item__content {
+  padding-right: 24px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 400;
+}
+
+.deleteConfirm {
+  .el-icon-warning {
+    color: #f56c6c !important;
+    font-size: 20px !important;
+  }
+
+  .el-message-box__message {
+    padding-left: 28px !important;
+  }
+}

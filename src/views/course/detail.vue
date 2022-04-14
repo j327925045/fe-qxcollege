@@ -351,6 +351,8 @@ export default {
 
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
@@ -449,7 +451,7 @@ export default {
   max-height: 300px;
   padding: 16px;
   overflow: auto;
-  border: 2px solid gray;
+  border: 2px solid rgba(0, 0, 0, 0.1);
 
   //标题
   h1 {

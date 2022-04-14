@@ -10,7 +10,23 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建机构</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="location" slot-scope="scope">
+          {{ scope.row.location||'-' }}
+        </template>
+        <template slot="organizationName" slot-scope="scope">
+          {{ scope.row.organizationName||'-' }}
+        </template>
+        <template slot="contactName" slot-scope="scope">
+          {{ scope.row.contactName||'-' }}
+        </template>
+        <template slot="contactPhone" slot-scope="scope">
+          {{ scope.row.contactPhone||'-' }}
+        </template>
+        <template slot="salesCounterpartName" slot-scope="scope">
+          {{ scope.row.salesCounterpartName||'-' }}
+        </template>
+      </ImTable>
       <ImPagination
         ref="ImPagination"
         :page-size.sync="pageSize"
@@ -147,10 +163,14 @@ export default {
           {
             prop: 'orgCode',
             label: '机构编号',
+            type: 'customFilter',
             attrs: {
               fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
+            },
+            filter(val) {
+              return val || '-'
             }
           },
           {
@@ -189,55 +209,69 @@ export default {
             label: '所在城市',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             }
           },
           {
             prop: 'location',
             label: '机构地址',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '180'
-            }
+            },
+            slot: 'location'
           },
           {
             prop: 'organizationName',
             label: '所属集团',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            slot: 'organizationName'
           },
           {
             prop: 'contactName',
             label: '联系人姓名',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            slot: 'contactName'
           },
           {
             prop: 'contactPhone',
             label: '联系人电话',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            slot: 'contactPhone'
           },
           {
             prop: 'salesCounterpartName',
             label: '销售对接人',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+              'min-width': '100'
+            },
+            slot: 'salesCounterpartName'
           },
           {
             prop: 'doctorCount',
             label: '医生数量',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '80'
+            },
+            filter(val) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
@@ -305,11 +339,13 @@ export default {
 
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
         .then(() => {
-          if (record.doctorCount != 0) {
+          if (record.doctorCount !== '0') {
             this.$message.error('该机构下有医生 ，不允许删除。')
           } else {
             deleteHospitalItem({ objectCode: record.objectCode }).then(res => {

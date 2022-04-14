@@ -22,7 +22,7 @@ export default {
     return {
       formConfig: {
         column: 3,
-        gutter: 42,
+        gutter: 56,
         attrs: {
           labelWidth: '140px',
           labelPosition: 'top'
@@ -108,8 +108,9 @@ export default {
             span: 24,
             attrs: {
               maxLength: 500,
-              style: 'width: 31%',
+              style: 'width: 100%',
               type: 'textarea',
+              rows: 4,
               placeholder: '请输入'
             }
           },

@@ -7,7 +7,17 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建集团</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="contactName" slot-scope="scope">
+          {{ scope.row.contactName || '-' }}
+        </template>
+        <template slot="contactPhone" slot-scope="scope">
+          {{ scope.row.contactPhone || '-' }}
+        </template>
+        <template slot="salesCounterpartName" slot-scope="scope">
+          {{ scope.row.salesCounterpartName || '-' }}
+        </template>
+      </ImTable>
       <ImPagination
         ref="ImPagination"
         :page-size.sync="pageSize"
@@ -159,7 +169,7 @@ export default {
             label: '集团名称',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '180'
             }
           },
           {
@@ -168,7 +178,7 @@ export default {
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             },
             options: this.enums.organizationScale
           },
@@ -178,7 +188,7 @@ export default {
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             },
             options: this.enums.organizationCooperatType
           },
@@ -188,33 +198,39 @@ export default {
             type: 'mapList',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             },
             options: this.enums.organizationIsPrepareAccount
           },
           {
             prop: 'contactName',
             label: '联系人姓名',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            slot: 'contactName'
           },
           {
             prop: 'contactPhone',
             label: '联系人电话',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            slot: 'contactPhone'
           },
           {
             prop: 'salesCounterpartName',
             label: '销售对接人',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+              'min-width': '100'
+            },
+            slot: 'salesCounterpartName'
           },
           {
             prop: 'mechanismCount',
@@ -222,10 +238,10 @@ export default {
             type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '80'
             },
             filter(val, row) {
-              return val || 0
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
@@ -295,6 +311,8 @@ export default {
 
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })

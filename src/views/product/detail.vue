@@ -42,11 +42,11 @@
         <span class="headertext">关联项目</span>
       </div>
       <ImTable :loading="loading" :table="tableConfig">
-        <template slot="projectCodeSlot" slot-scope="scope">
-          <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.projectCode }}</el-button>
+        <template slot="projectCode" slot-scope="scope">
+          <el-button type="text" style="font-size:14px" @click="viewProjectDetail(scope.row.objectCode)">{{ scope.row.projectCode }}</el-button>
         </template>
       </ImTable>
-      <!-- <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination> -->
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </el-card>
   </ImWrapper>
 </template>
@@ -76,23 +76,49 @@ export default {
     tableConfig() {
       return {
         data: [],
-        tableItems: [{
-          type: 'slot',
-          label: '项目编号',
-          attrs: {
-            fixed: 'left',
-            minWidth: '120'
+        tableItems: [
+          {
+            prop: 'projectCode',
+            label: '项目编号',
+            type: 'slot',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            slot: 'projectCode'
           },
-          slot: 'projectCodeSlot'
-        },
-        {
-          prop: 'name',
-          label: '项目名称',
-          attrs: {
-            'show-overflow-tooltip': true,
-            'min-width': '120'
+          {
+            prop: 'name',
+            label: '项目名称',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            }
+          },
+          {
+            prop: 'createTime',
+            label: '创建时间',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val) {
+              return moment(val).format('YYYY-MM-DD HH:mm:ss')
+            }
+          },
+          {
+            prop: 'updateTime',
+            label: '更新时间',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val) {
+              return moment(val).format('YYYY-MM-DD HH:mm:ss')
+            }
           }
-        }
         ]
       }
     }
@@ -102,6 +128,10 @@ export default {
     this.getList()
   },
   methods: {
+    viewProjectDetail(objectCode) {
+      this.$router.push({ name: 'ProjectDetail', query: { objectCode } })
+    },
+
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || ''
@@ -125,6 +155,8 @@ export default {
 
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
@@ -149,7 +181,9 @@ export default {
     },
     getList() {
       const params = {
-        productCode: this.objectCode
+        page: this.currentPage,
+        limit: this.pageSize,
+        objectCode: this.objectCode
       }
       this.loading = true
       getProjectList(params)
