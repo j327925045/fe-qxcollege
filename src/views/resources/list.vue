@@ -9,7 +9,7 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="coverUrl" slot-scope="scope">
-          <img style="max-width: 120px;max-height: 120px;" :src="scope.row.coverUrl" alt="">
+          <img style="width: 120px;height: 120px;object-fit: cover;" :src="scope.row.coverUrl" alt="">
         </template>
         <template slot="videoItem" slot-scope="scope">
           <a href="javascript:;" @click="playVideo(scope.row)">{{ scope.row.fileUrl }}</a>
