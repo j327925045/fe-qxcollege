@@ -13,15 +13,30 @@
         </div>
         <div class="headerDesc">
           <div class="row">
-            <div class="col">昵称: {{ dataList.nickname }}</div>
-            <div class="col">姓名: {{ dataList.realName }}</div>
+            <div class="col">
+              <span class="label">昵称:</span>
+              <span class="content">{{ dataList.nickname }}</span>
+            </div>
+            <div class="col">
+              <span class="label">姓名:</span>
+              <span class="content">{{ dataList.realName }}</span>
+            </div>
           </div>
           <div class="row">
-            <div class="col">生日: {{ dataList.birthday ? moment(dataList.birthday).format('YYYY-MM-DD') : '-' }}</div>
-            <div class="col">性别: {{ getLabelByValue('gender', dataList.gender) }}</div>
+            <div class="col">
+              <span class="label">生日:</span>
+              <span class="content">{{ dataList.birthday ? moment(dataList.birthday).format('YYYY-MM-DD') : '-' }}</span>
+            </div>
+            <div class="col">
+              <span class="label">性别:</span>
+              <span class="content">{{ getLabelByValue('gender', dataList.gender) }}</span>
+            </div>
           </div>
           <div class="row">
-            <div class="col">手机号: {{ dataList.phone }}</div>
+            <div class="col">
+              <span class="label">手机号:</span>
+              <span class="content">{{ dataList.phone }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -654,7 +669,14 @@ export default {
         line-height: 16px;
 
         .col {
+          display: flex;
           min-width: 263px;
+
+          .label {
+            min-width: 80px;
+            margin-right: 8px;
+            text-align: right;
+          }
         }
       }
     }
