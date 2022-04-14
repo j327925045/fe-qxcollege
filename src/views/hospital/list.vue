@@ -200,8 +200,8 @@ export default {
               'min-width': '120'
             },
             filter(val) {
-              const date = new Date(val)
-              return moment(date.getTime()).format('YYYY-MM-DD')
+              // const date = new Date(val)
+              return val ? moment(val).format('YYYY-MM-DD') : '-'
             }
           },
           {

@@ -91,6 +91,7 @@ export default {
             prop: 'name',
             label: '项目名称',
             rules: [{ required: true, message: '请输入项目名称' }],
+            span: 8,
             attrs: {
               type: 'text',
               placeholder: '请输入项目名称'
@@ -101,9 +102,11 @@ export default {
             prop: 'projectDeteils',
             label: '项目明细',
             // rules: [{ required: true, message: '请输入' }],
+            span: 24,
             attrs: {
-              maxLength: 1000,
-              type: 'text',
+              maxLength: 500,
+              type: 'textarea',
+              rows: 4,
               placeholder: '请输入项目明细'
             }
           },

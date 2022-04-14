@@ -13,7 +13,7 @@
       <div slot="header">
         <span class="headertext">项目信息</span>
       </div>
-      <el-descriptions size="medium" class="ml-4">
+      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="项目名称">
           <span class="projectName">{{ productDetail.name }}</span>
         </el-descriptions-item>
@@ -162,6 +162,12 @@ export default {
   .projectText{
     font-size: 14px;
   }
+}
+
+/deep/ .descriptionLabelClass {
+  justify-content: right;
+  width: 120px;
+  margin-bottom: 24px;
 }
 
 /deep/.el-descriptions-item__label{
