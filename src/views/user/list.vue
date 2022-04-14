@@ -577,7 +577,7 @@ export default {
 <style lang="scss" scoped>
 .single-line {
   display: inline-block;
-  width: 230px;
+  width: 100%;
   margin-right: 3px;
   overflow: hidden;
   white-space: nowrap;
