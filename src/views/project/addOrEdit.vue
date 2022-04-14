@@ -93,9 +93,56 @@ export default {
             rules: [{ required: true, message: '请输入项目名称' }],
             span: 8,
             attrs: {
+              maxLength: 128,
               type: 'text',
               placeholder: '请输入项目名称'
             }
+          },
+
+          {
+            type: 'ImSlot',
+            prop: 'projectProductArr',
+            label: '产品列表',
+            // rules: [{ required: true, message: '请选择机构' }],
+            span: 24,
+            style: 'width:33%',
+            slots: {
+              multiple: true,
+              projectProductListSlot: 'projectProductArr',
+              options: []
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'foundingCode',
+            label: '创始医生',
+            span: 24,
+            style: 'width:33%',
+            // rules: [{ required: true, message: '请选择机构' }],
+            slots: {
+              multiple: true,
+              doctorFristSlot: 'doctorFristArr',
+              options: []
+            }
+          },
+          {
+            type: 'ImSlot',
+            prop: 'projectConsensusCodeList',
+            label: '共识医生',
+            span: 24,
+            style: 'width:33%',
+            // rules: [{ required: true, message: '请选择机构' }],
+            slots: {
+              multiple: true,
+              doctorFristALLArrSlot: 'doctorFristALLArr',
+              options: []
+            }
+          },
+
+          {
+            type: 'ImImgUpload',
+            prop: 'projectPictureUrl',
+            label: '项目图片'
           },
           {
             type: 'ImInput',
@@ -110,56 +157,6 @@ export default {
               placeholder: '请输入项目明细'
             }
           },
-
-          {
-            type: 'ImSlot',
-            prop: 'projectProductArr',
-            label: '产品列表',
-            // rules: [{ required: true, message: '请选择机构' }],
-            slots: {
-              multiple: true,
-              projectProductListSlot: 'projectProductArr',
-              options: []
-            }
-          },
-          {
-            type: 'ImSlot',
-            prop: 'foundingCode',
-            label: '创始医生',
-            // rules: [{ required: true, message: '请选择机构' }],
-            slots: {
-              multiple: true,
-              doctorFristSlot: 'doctorFristArr',
-              options: []
-            }
-          },
-          {
-            type: 'ImSlot',
-            prop: 'projectConsensusCodeList',
-            label: '共识医生',
-            // rules: [{ required: true, message: '请选择机构' }],
-            slots: {
-              multiple: true,
-              doctorFristALLArrSlot: 'doctorFristALLArr',
-              options: []
-            }
-          },
-
-          {
-            type: 'ImImgUpload',
-            prop: 'projectPictureUrl',
-            label: '项目图片'
-          },
-          // {
-          //   type: 'ImInput',
-          //   prop: 'projectIntroduce',
-          //   label: '项目介绍',
-          //   // rules: [{ required: true, message: '请输入' }],
-          //   attrs: {
-          //     type: 'text',
-          //     placeholder: '请输入项目介绍'
-          //   }
-          // },
           {
             type: 'ImSlot',
             prop: 'projectIntroduce',
