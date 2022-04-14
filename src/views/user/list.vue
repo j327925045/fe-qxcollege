@@ -350,19 +350,6 @@ export default {
               'min-width': '140'
             }
           },
-          // {
-          //   prop: 'doctorLevel',
-          //   label: '医生等级',
-          //   type: 'customFilter',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120',
-          //     'text-align': 'center'
-          //   },
-          //   filter(val, row) {
-          //     return `<h3 style="text-align: center;">V${val}</h3>`
-          //   }
-          // },
           {
             prop: 'doctorLevel',
             label: '医生等级',

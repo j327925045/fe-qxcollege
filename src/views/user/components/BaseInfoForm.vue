@@ -82,7 +82,12 @@ export default {
               type: 'date',
               style: 'width: 100%',
               valueFormat: 'yyyy-MM-dd',
-              placeholder: '请选择'
+              placeholder: '请选择',
+              pickerOptions: {
+                disabledDate(time) {
+                  return time.getTime() > Date.now()
+                }
+              }
             }
           },
           {
@@ -119,7 +124,7 @@ export default {
 
   methods: {
     getPhone(value) {
-      if (value.length == 11) {
+      if (value.length === 11) {
         const phoneData = {
           objectCode: this.$route.query.objectCode,
           phone: value

@@ -10,7 +10,7 @@
       <el-descriptions class="doctorMsg" :column="2" :size="size">
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
-        <el-descriptions-item label="生日">{{ dataList.birthday? moment(dataList.birthday).format('YYYY-MM-DD'):"" }} </el-descriptions-item>
+        <el-descriptions-item label="生日">{{ dataList.birthday ? moment(dataList.birthday).format('YYYY-MM-DD') : '' }} </el-descriptions-item>
         <el-descriptions-item label="性别">{{ getLabelByValue('gender', dataList.gender) }}</el-descriptions-item>
         <el-descriptions-item label="手机号">{{ dataList.phone }} </el-descriptions-item>
       </el-descriptions>
@@ -27,21 +27,21 @@
             <el-descriptions class="margin-top" :column="1" :size="size">
               <el-descriptions-item label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
               <el-descriptions-item label="医生介绍">
-                <img :src="dataList.doctorIntroduction" alt="">
+                <img style="max-height: 320px" :src="dataList.doctorIntroduction" alt="" />
                 {{ dataList.personalIntroduction }}
               </el-descriptions-item>
 
               <el-descriptions-item label="医生标签">
                 <div v-if="dataList.tagDTOList">
-                  <el-tag v-for="item,index in dataList.tagDTOShowList" :key="index" size="small">{{ item }}</el-tag>
+                  <el-tag v-for="(item, index) in dataList.tagDTOShowList" :key="index" style="margin-right: 8px" size="small">{{ item }}</el-tag>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="客户经理">
-                <el-tag v-if="dataList.realAccountManager" size="small">{{ dataList.realAccountManager }}</el-tag>
+                <el-tag v-if="dataList.realAccountManager" style="margin-right: 8px" size="small">{{ dataList.realAccountManager }}</el-tag>
               </el-descriptions-item>
 
               <el-descriptions-item label="对接人">
-                <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" size="small">{{ item }}</el-tag>
+                <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" style="margin-right: 8px" size="small">{{ item }}</el-tag>
               </el-descriptions-item>
               <el-descriptions-item label="职称">{{ getLabelByValue('jobTitle', dataList.realJobTitle) }}</el-descriptions-item>
               <el-descriptions-item label="执业分类">{{ getLabelByValue('realPracticeCategory', dataList.occupationalClassification) }}</el-descriptions-item>
@@ -51,9 +51,8 @@
             <div class="pt-4" style="font-weight: bold; font-size: 16px">
               <span>所在机构</span>
             </div>
-            <el-descriptions v-for="item,index in dataList.userOrgInfoDTOList" :key="index" class="mt-4" :column="2" :size="size">
+            <el-descriptions v-for="(item, index) in dataList.userOrgInfoDTOList" :key="index" class="mt-4" :size="size">
               <el-descriptions-item label="机构名称">{{ item.hospital }}</el-descriptions-item>
-              <!-- <el-descriptions-item label="机构性质">{{ getLabelByValue('hospitalNature', item.nature) }}</el-descriptions-item> -->
               <el-descriptions-item label="科室">{{ getLabelByValue('realDepartment', item.orgDepartment) }}</el-descriptions-item>
               <el-descriptions-item label="机构关系">{{ getLabelByValue('relationship', item.relationship) }}</el-descriptions-item>
               <el-descriptions-item label="机构职务">{{ getLabelByValue('position', item.post) }}</el-descriptions-item>
@@ -62,35 +61,34 @@
           <div class="divCrad">
             <div class="pt-4 titleDiv">
               <span class="fl mr-4">资质信息</span>
-              <span v-if="dataList.realAuditStatus==1||dataList.realAuditStatus==2" class="fr auditStatus" @click="qualification">上传资质</span>
+              <span v-if="dataList.realAuditStatus == 1 || dataList.realAuditStatus == 2" class="fr auditStatus" @click="qualification">上传资质</span>
             </div>
-            <el-descriptions title="执业信息" class="mt-4" :column="1" :size="size">
-              <el-descriptions-item label="医师执业证书">
+            <el-descriptions title="执业信息" class="mt-4" :size="size">
+              <el-descriptions-item :span="3" label="医师执业证书">
+                <span v-if="!dataList.realDoctorPracticeCertificate">-</span>
                 <img v-if="dataList.realDoctorPracticeCertificate" width="160px" height="80px" :src="dataList.realDoctorPracticeCertificate" alt="" />
               </el-descriptions-item>
-            </el-descriptions>
-            <el-descriptions title="" class="mt-4" :column="3" :size="size">
-              <el-descriptions-item label="医师执业证书编码">{{ dataList.realPracticeCertificateCode }}</el-descriptions-item>
-              <el-descriptions-item label="执业地点">{{ dataList.realAddress }}</el-descriptions-item>
-              <el-descriptions-item label="执业类别">{{ dataList.realPracticeCategory }}</el-descriptions-item>
-              <el-descriptions-item label="执业范围">{{ dataList.realPracticeArea }}</el-descriptions-item>
+              <el-descriptions-item label="医师执业证书编码">{{ dataList.realPracticeCertificateCode || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="执业地点">{{ dataList.realAddress || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="执业类别">{{ dataList.realPracticeCategory || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="执业范围">{{ dataList.realPracticeArea || '-' }}</el-descriptions-item>
             </el-descriptions>
 
-            <el-descriptions title="医师资格信息" class="mt-4" :column="1" :size="size">
-              <el-descriptions-item label="医师资格证书">
+            <el-descriptions title="医师资格信息" class="mt-4" :size="size">
+              <el-descriptions-item :span="3" label="医师资格证书">
                 <img v-if="dataList.realDoctorQualificationCertificate" width="160px" height="80px" :src="dataList.realDoctorQualificationCertificate" alt="" />
               </el-descriptions-item>
+              <el-descriptions-item label="医师资格证书编码">{{ dataList.realQualificationCode || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="身份证号">{{ dataList.realIdNumber || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="学历">{{ dataList.realEducation || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="毕业学校">{{ dataList.realGraduationSchool || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="类别">{{ dataList.realCategory || '-' }}</el-descriptions-item>
+              <el-descriptions-item label="专业">{{ dataList.realMajor || '-' }}</el-descriptions-item>
             </el-descriptions>
-            <el-descriptions title="" class="mt-4" :column="3" :size="size">
-              <el-descriptions-item label="医师资格证书编码">{{ dataList.realQualificationCode }}</el-descriptions-item>
-              <el-descriptions-item label="身份证号">{{ dataList.realIdNumber }}</el-descriptions-item>
-              <el-descriptions-item label="学历">{{ dataList.realEducation }}</el-descriptions-item>
-              <el-descriptions-item label="毕业学校">{{ dataList.realGraduationSchool }}</el-descriptions-item>
-              <el-descriptions-item label="类别">{{ dataList.realCategory }}</el-descriptions-item>
-              <el-descriptions-item label="专业">{{ dataList.realMajor }}</el-descriptions-item>
-            </el-descriptions>
-            <el-descriptions title="最近审核信息" class="mt-4" :column="2" :size="size">
-              <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '审核通过' :dataList.realAuditStatus == 2 ? '审核驳回':dataList.realAuditStatus == 3 ? '审核中':"" }}</el-descriptions-item>
+            <el-descriptions title="最近审核信息" class="mt-4" :size="size">
+              <el-descriptions-item label="审核状态">{{
+                dataList.realAuditStatus == 1 ? '审核通过' : dataList.realAuditStatus == 2 ? '审核驳回' : dataList.realAuditStatus == 3 ? '审核中' : ''
+              }}</el-descriptions-item>
               <el-descriptions-item label="审核编码">
                 {{ dataList.userRealApprovalRecordList && dataList.userRealApprovalRecordList[0] && dataList.userRealApprovalRecordList[0].applyCode }}
               </el-descriptions-item>
@@ -103,25 +101,28 @@
             <span class="fl mr-4">账号信息</span>
           </div>
           <el-descriptions title="" class="mt-4" :column="2" :size="size">
-            <el-descriptions-item label="注册时间">{{ dataList.registrationTime? moment(dataList.registrationTime).format('YYYY-MM-DD'):'' }}</el-descriptions-item>
+            <el-descriptions-item label="注册时间">{{ dataList.registrationTime ? moment(dataList.registrationTime).format('YYYY-MM-DD') : '' }}</el-descriptions-item>
             <el-descriptions-item label="注册来源">{{ getLabelByValue('registrationSource', dataList.registrationSource) }}</el-descriptions-item>
           </el-descriptions>
           <el-descriptions title="微信绑定" class="mt-4" :column="1" :size="size">
             <el-descriptions-item label="是否绑定微信">
               {{ getLabelByValue('bindingWechat', dataList.bindingWechat) }}
-              <img v-if="dataList.bindingWechat == 1" width="18px" height="18px" src="~@/assets/img/level/WeChat.png" alt="" />
+              <BindWeChatShow style="margin-left: 8px;" :binding-wechat="dataList.bindingWechat"></BindWeChatShow>
+              <!-- <img v-if="dataList.bindingWechat == 1" width="18px" height="18px" src="~@/assets/img/level/WeChat.png" alt="" /> -->
             </el-descriptions-item>
           </el-descriptions>
           <el-descriptions :column="3" :size="size">
-            <el-descriptions-item label="OpenID">{{ dataList.OpenID }}</el-descriptions-item>
-            <el-descriptions-item label="UnionID">{{ dataList.UnionID }}</el-descriptions-item>
+            <el-descriptions-item label="OpenID">{{ dataList.OpenID || '-' }}</el-descriptions-item>
+            <el-descriptions-item label="UnionID">{{ dataList.UnionID || '-' }}</el-descriptions-item>
           </el-descriptions>
 
           <el-descriptions :column="1" :size="size">
-            <el-descriptions-item label="是否关注公众号">{{ getLabelByValue('officialAccount', dataList.officialAccount) }}</el-descriptions-item>
+            <el-descriptions-item label="是否关注公众号">
+              {{ getLabelByValue('officialAccount', dataList.officialAccount) }}
+            </el-descriptions-item>
           </el-descriptions>
           <el-descriptions :column="3" :size="size">
-            <el-descriptions-item label="关注时间"> {{ dataList.officialAccountTime?moment(dataList.officialAccountTime).format('YYYY-MM-DD'):'' }}</el-descriptions-item>
+            <el-descriptions-item label="关注时间"> {{ dataList.officialAccountTime ? moment(dataList.officialAccountTime).format('YYYY-MM-DD') : '' }}</el-descriptions-item>
             <el-descriptions-item label="关注来源">{{ getLabelByValue('officialAccountSource', dataList.officialAccountSource) }}</el-descriptions-item>
           </el-descriptions>
         </div>
@@ -138,10 +139,10 @@
             <el-descriptions-item label="消毒剂偏好">{{ getLabelByValue('expertDisinfectantPreference', dataList.expertDisinfectantPreference + '') }}</el-descriptions-item>
           </el-descriptions>
           <div>
-            <div style="padding-bottom:10px;color: #606266; font-size: 14px">针头习惯：</div>
-            <el-descriptions v-for="item,index in dataList.userHabitAddDTOList" :key="index" style="font-size: 14px" direction="vertical" :column="3">
+            <div style="padding-bottom: 10px; color: #606266; font-size: 14px">针头习惯：</div>
+            <el-descriptions v-for="(item, index) in dataList.userHabitAddDTOList" :key="index" style="font-size: 14px" direction="vertical" :column="3">
               <el-descriptions-item label-class-name="my-label" label="针头">{{ item.name }}</el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="规格">{{ getLabelByValue('zhen',item.details) }}</el-descriptions-item>
+              <el-descriptions-item label-class-name="my-label" label="规格">{{ getLabelByValue('zhen', item.details) }}</el-descriptions-item>
             </el-descriptions>
           </div>
           <el-descriptions title="出行相关" class="mt-4" :column="2" :size="size">
@@ -228,8 +229,12 @@
 import moment from 'moment'
 import utils from '@/utils/utils'
 import { getUserList, getUserDetail } from '@/api/user'
+import BindWeChatShow from '@/views/components/BindWeChatShow'
 export default {
   name: 'UserDetail',
+  components: {
+    BindWeChatShow
+  },
   data() {
     return {
       // 表格数据
@@ -444,7 +449,7 @@ export default {
     // 获取select默认值
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
-      return item.label || ''
+      return item.label || '-'
     },
     /**
      * 重置表单
@@ -633,8 +638,8 @@ export default {
   }
 }
 
-/deep/.el-descriptions-row{
-font-size: 14px;
+/deep/.el-descriptions-row {
+  font-size: 14px;
 }
 
 /deep/ .el-tabs__nav-scroll {

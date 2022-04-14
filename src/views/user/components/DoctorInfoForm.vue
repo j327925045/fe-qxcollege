@@ -154,7 +154,7 @@ export default {
           {
             type: 'ImSlot',
             notInForm: true,
-            hidden: this.isEdit,
+            // hidden: this.isEdit,
             slots: {
               slot: 'orgInfoSlot'
             }
@@ -163,9 +163,8 @@ export default {
             type: 'ImSlot',
             span: 24,
             lebel: '所在机构信息',
-            props: 'userOrgInfoDtoList',
-            // hidden: this.isEdit,
-            rules: [{ required: true, message: '请选择所在机构信息' }],
+            prop: 'userOrgInfoDtoList',
+            rules: [{ validator: this.userOrgInfoValidator }],
             slots: {
               sort: 'OrgInfoList'
             }
@@ -308,15 +307,34 @@ export default {
     this.setOptions()
   },
   methods: {
+    userOrgInfoValidator(rule, value, callback) {
+      value = this.formConfig.props.userOrgInfoDTOList
+      if (!value) {
+        callback(new Error('所属机构不能为空!'))
+        return
+      }
+      const validValues = value.filter(item => {
+        return item.hospitalCode && item.orgDepartment && item.relationship && item.post
+      })
+      console.log('validValues', validValues)
+      if (validValues.length === 0) {
+        callback(new Error('所属机构不能为空!'))
+      } else {
+        return callback()
+      }
+    },
+
     setOptions() {
       this.setFormPropOptions('occupationalClassification', this.enums.realPracticeCategory) // 执业类别
       this.setFormPropOptions('realJobTitle', this.enums.jobTitle) // 职称
     },
+
     setFormPropOptions(prop, options) {
       const formItems = this.formConfig.formItems
       const item = formItems.find((item) => item.prop === prop)
       item.attrs.options = options
     },
+
     validate() {
       return new Promise((resolve) => {
         this.$refs.ImForm.validate((valid) => {
