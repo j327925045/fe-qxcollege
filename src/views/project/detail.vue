@@ -71,8 +71,7 @@ export default {
      * 获取详情
      */
     getItemDetail() {
-      console.log(this.objectCode)
-      getProjectDetail({ objectCode: this.objectCode }).then(res => {
+      getProjectDetail({ objectCode: this.$route.query.objectCode }).then(res => {
         if (res.code === 200) {
           this.productDetail = res.data
           this.productDetail.projectProductList = res.data.projectProductArr

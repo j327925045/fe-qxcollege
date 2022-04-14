@@ -168,6 +168,7 @@ export default {
   },
   methods: {
     showDetail($index, record) {
+      console.log(record.objectCode)
       this.$router.push({ name: 'ProjectDetail', query: { objectCode: record.objectCode } })
     },
 

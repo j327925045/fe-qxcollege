@@ -92,6 +92,17 @@ export default {
           },
           {
             type: 'ImInput',
+            prop: 'skuId',
+            label: '规格',
+            span: 8,
+            attrs: {
+              placeholder: '请输入',
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
             prop: 'indication',
             label: '产品介绍',
             span: 24,
@@ -107,19 +118,6 @@ export default {
             prop: 'imageUrl',
             span: 24,
             label: '产品图片'
-          },
-          {
-            type: 'ImInput',
-            prop: 'skuId',
-            label: 'SKU',
-            span: 24,
-            attrs: {
-              placeholder: '请输入',
-              maxLength: 128,
-              style: 'width: 31%',
-              class: 'w-full',
-              options: []
-            }
           }
         ]
       },

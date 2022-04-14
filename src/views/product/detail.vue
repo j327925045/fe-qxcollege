@@ -31,7 +31,7 @@
         <el-descriptions-item :span="3" label="产品图片">
           <img class="imageClass" :src="details.imageUrl" alt="" />
         </el-descriptions-item>
-        <el-descriptions-item :span="3" label="SKU">
+        <el-descriptions-item :span="3" label="规格">
           {{ details.skuId || '-' }}
         </el-descriptions-item>
       </el-descriptions>
@@ -39,14 +39,14 @@
 
     <el-card class="box-card">
       <div slot="header">
-        <span class="headertext">关联项目(todo列表需支持筛选)</span>
+        <span class="headertext">关联项目</span>
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="projectCodeSlot" slot-scope="scope">
           <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.projectCode }}</el-button>
         </template>
       </ImTable>
-      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
+      <!-- <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination> -->
     </el-card>
   </ImWrapper>
 </template>
