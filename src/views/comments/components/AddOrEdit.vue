@@ -74,7 +74,7 @@ export default {
     },
     edit(data) {
       this.detail = data
-      this.formConfig.props.courseCommentCode = data.courseCode
+      this.formConfig.props.courseCommentCode = data.objectCode
       this.drawerVisible = true
     },
 
