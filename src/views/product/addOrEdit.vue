@@ -111,7 +111,7 @@ export default {
           {
             type: 'ImInput',
             prop: 'skuId',
-            label: 'SKU',
+            label: '品牌',
             span: 24,
             attrs: {
               placeholder: '请输入',

@@ -73,7 +73,7 @@ export default {
     },
     // 审批
     submit(statucs) {
-      this.$confirm('确定该' + (statucs === 2 ? '拒绝' : '同意') + '审批吗？', '提示', {
+      this.$confirm('确定' + (statucs === 2 ? '拒绝' : '同意') + '该审批吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
@@ -89,7 +89,7 @@ export default {
             this.detailDialogVisible = false
             this.$emit('update')
             this.visibleFn()
-            this.$message.success(res.message)
+            this.$message.success('更新成功')
           })
         })
         .catch(() => {

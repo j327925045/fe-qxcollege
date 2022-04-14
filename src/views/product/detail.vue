@@ -31,7 +31,7 @@
         <el-descriptions-item :span="3" label="产品图片">
           <img class="imageClass" :src="details.imageUrl" alt="" />
         </el-descriptions-item>
-        <el-descriptions-item :span="3" label="SKU">
+        <el-descriptions-item :span="3" label="品牌">
           {{ details.skuId || '-' }}
         </el-descriptions-item>
       </el-descriptions>
@@ -39,9 +39,13 @@
 
     <el-card class="box-card">
       <div slot="header">
-        <span class="headertext">关联项目(todo列表需支持筛选)</span>
+        <span class="headertext">关联项目</span>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="projectCode" slot-scope="scope">
+          <el-button type="text" style="font-size:14px" @click="viewProjectDetail(scope.row.objectCode)">{{ scope.row.projectCode }}</el-button>
+        </template>
+      </ImTable>
       <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </el-card>
   </ImWrapper>
@@ -76,10 +80,12 @@ export default {
           {
             prop: 'projectCode',
             label: '项目编号',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            slot: 'projectCode'
           },
           {
             prop: 'name',
@@ -87,6 +93,30 @@ export default {
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
+            }
+          },
+          {
+            prop: 'createTime',
+            label: '创建时间',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val) {
+              return moment(val).format('YYYY-MM-DD HH:mm:ss')
+            }
+          },
+          {
+            prop: 'updateTime',
+            label: '更新时间',
+            type: 'customFilter',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            filter(val) {
+              return moment(val).format('YYYY-MM-DD HH:mm:ss')
             }
           }
         ]
@@ -98,6 +128,10 @@ export default {
     this.getList()
   },
   methods: {
+    viewProjectDetail(objectCode) {
+      this.$router.push({ name: 'ProjectDetail', query: { objectCode } })
+    },
+
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || ''
@@ -121,6 +155,7 @@ export default {
 
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
@@ -143,6 +178,8 @@ export default {
 
     getList() {
       const params = {
+        page: this.currentPage,
+        limit: this.pageSize,
         objectCode: this.objectCode
       }
       this.loading = true

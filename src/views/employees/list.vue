@@ -10,11 +10,7 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="gender" slot-scope="scope">
-          <div>
-            <svg-icon v-if="scope.row.gender==='1'" style="color: red;font-size: 18px;" icon-class="boy"></svg-icon>
-            <svg-icon v-else-if="scope.row.gender==='2'" style="color: blue;font-size: 18px;" icon-class="girl"></svg-icon>
-            <span v-else>未知</span>
-          </div>
+          <GenderShow :gender="scope.row.gender"></GenderShow>
         </template>
       </ImTable>
       <ImPagination
@@ -37,13 +33,15 @@ import DetailDialog from './components/DetailDialog'
 import AddOrEdit from './components/AddOrEdit'
 import SetRoleDrower from './components/SetRoleDrower'
 import { mapGetters } from 'vuex'
+import GenderShow from '@/views/components/GenderShow'
 
 export default {
   name: 'EmployeesList',
   components: {
     DetailDialog,
     AddOrEdit,
-    SetRoleDrower
+    SetRoleDrower,
+    GenderShow
   },
   data() {
     return {
@@ -126,11 +124,9 @@ export default {
           {
             prop: 'gender',
             label: '员工性别',
-            // type: 'mapList',
-            // options: this?.enums?.gender ?? []
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             },
             type: 'slot',
             slot: 'gender'
@@ -241,11 +237,12 @@ export default {
      */
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteEmployeesItem({ objectCode: record.objectCode }).then((res) => {
+          deleteEmployeesItem({objectCode: record.objectCode}).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -254,7 +251,8 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     /**
