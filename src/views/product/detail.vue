@@ -15,8 +15,8 @@
         <span class="headertext">产品信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item :span="1" label="产品名称">{{ details.name || '-' }}</el-descriptions-item>
-        <el-descriptions-item :span="2" label="品牌">
+        <el-descriptions-item label="产品名称">{{ details.name || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="规格">
           {{ details.skuId || '-' }}
         </el-descriptions-item>
         <el-descriptions-item label="业务类型">
@@ -28,11 +28,15 @@
         <el-descriptions-item label="产品类型">
           {{ getLabelByValue('type', details.type) }}
         </el-descriptions-item>
+      </el-descriptions>
+
+      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
+
         <el-descriptions-item :span="3" label="产品介绍">
           {{ details.indication || '' }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="产品图片">
-          <img class="imageClass" :src="details.imageUrl" alt=""/>
+          <img class="imageClass" :src="details.imageUrl" alt="" />
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -52,10 +56,10 @@
 </template>
 
 <script>
-import {getProductDetail, deleteProductItem} from '@/api/product'
-import {getProjectList} from '@/api/project'
+import { getProductDetail, deleteProductItem } from '@/api/product'
+import { getProdoutProjectList } from '@/api/project'
 import moment from 'moment'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
 
 export default {
@@ -129,7 +133,7 @@ export default {
   },
   methods: {
     viewProjectDetail(objectCode) {
-      this.$router.push({name: 'ProjectDetail', query: {objectCode}})
+      this.$router.push({ name: 'ProjectDetail', query: { objectCode } })
     },
 
     getLabelByValue(key, value) {
@@ -142,7 +146,7 @@ export default {
     },
 
     getItemDetail() {
-      getProductDetail({objectCode: this.objectCode}).then((res) => {
+      getProductDetail({ objectCode: this.objectCode }).then((res) => {
         if (res.code === 200) {
           this.details = res.data || {}
         }
@@ -150,7 +154,7 @@ export default {
     },
 
     editItem() {
-      this.$router.push({name: 'ProductAddOrEdit', query: {objectCode: this.objectCode}})
+      this.$router.push({ name: 'ProductAddOrEdit', query: { objectCode: this.objectCode } })
     },
 
     deleteItem($index, record) {
@@ -161,7 +165,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteProductItem({objectCode: this.objectCode}).then((res) => {
+          deleteProductItem({ objectCode: this.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.goListPage()
@@ -175,17 +179,19 @@ export default {
     },
 
     goListPage() {
-      this.$router.replace({name: 'ProductList'})
+      this.$router.replace({ name: 'ProductList' })
     },
-
+    onslotClick(objectCode) {
+      this.$router.push({ name: 'ProjectDetail', query: { objectCode: objectCode } })
+    },
     getList() {
       const params = {
         page: this.currentPage,
         limit: this.pageSize,
-        objectCode: this.objectCode
+        productCode: this.objectCode
       }
       this.loading = true
-      getProjectList(params)
+      getProdoutProjectList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {

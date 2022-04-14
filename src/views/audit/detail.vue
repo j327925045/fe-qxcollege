@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import {auditCommit, getDetail} from '@/api/audit'
+import { auditCommit, getDetail } from '@/api/audit'
 import moment from 'moment'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
 
 export default {
@@ -150,5 +150,10 @@ export default {
   justify-content: right;
   width: 120px;
   margin-bottom: 24px;
+}
+
+/deep/ .el-descriptions-item__label {
+  padding-bottom: 10px;
+  font-weight: bold;
 }
 </style>

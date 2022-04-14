@@ -106,7 +106,7 @@ export default {
             label: '项目编号',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '260'
             }
           },
           {
@@ -114,7 +114,7 @@ export default {
             label: '项目名称',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '260'
             }
           },
           {
@@ -128,9 +128,14 @@ export default {
           {
             prop: 'productCount',
             label: '产品数量',
+            type: 'customFilter',
+
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '80',
+              'show-overflow-tooltip': true
+            },
+            filter(val) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
@@ -171,6 +176,7 @@ export default {
   },
   methods: {
     showDetail($index, record) {
+      console.log(record.objectCode)
       this.$router.push({ name: 'ProjectDetail', query: { objectCode: record.objectCode } })
     },
 

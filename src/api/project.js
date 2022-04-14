@@ -1,7 +1,18 @@
 import request from '@/utils/request.js'
 
 /**
- * 获取用户列表
+ * 获取项目列表
+ */
+export function getProdoutProjectList(params) {
+  return request({
+    url: '/qxcollege/admin/product/projectList',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 获取项目列表
  */
 export function getProjectList(params) {
   return request({

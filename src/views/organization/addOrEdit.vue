@@ -187,12 +187,18 @@ export default {
           if (res.data.salesCounterpart === '0') {
             res.data.salesCounterpart = undefined
           }
+
+          const dataObj = { }
+          for (const key in res.data) {
+            // console.log(key + ':' + res.data[key] == '0' ? undefined : res.data[key])
+            dataObj[key] = res.data[key] == '0' ? undefined : res.data[key]
+          }
           const props = this.formConfig.props
           const keys = Object.keys(props)
           // 直接遍历进行赋值，特殊属性需要单独拿出来处理
           for (let i = 0; i < keys.length; i++) {
             const key = keys[i]
-            props[key] = res.data[key] || undefined
+            props[key] = dataObj[key] || undefined
           }
         }
       })

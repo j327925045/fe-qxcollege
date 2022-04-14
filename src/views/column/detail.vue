@@ -22,7 +22,7 @@
           {{ getLabelByValue('columnStatus', details.status) }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="专栏封面">
-          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" />
+          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt=""/>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="专栏标题">{{ details.title || '-' }}</el-descriptions-item>
         <el-descriptions-item :span="3" label="专栏简介">{{ details.introduction || '-' }}</el-descriptions-item>
@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { getColumnDetail, deleteColumnItem, getColumnCourseList } from '@/api/column'
+import {getColumnDetail, deleteColumnItem, getColumnCourseList} from '@/api/column'
 import moment from 'moment'
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import utils from '@/utils/utils'
 
 export default {
@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     onslotClick(objectCode) {
-      this.$router.push({ name: 'UserDetail', query: { objectCode: objectCode } })
+      this.$router.push({name: 'UserDetail', query: {objectCode: objectCode}})
     },
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
@@ -139,7 +139,7 @@ export default {
     },
 
     getItemDetail() {
-      getColumnDetail({ objectCode: this.objectCode }).then((res) => {
+      getColumnDetail({objectCode: this.objectCode}).then((res) => {
         if (res.code === 200) {
           this.details = res.data || {}
         }
@@ -147,7 +147,7 @@ export default {
     },
 
     editItem() {
-      this.$router.push({ name: 'ColumnAddOrEdit', query: { objectCode: this.objectCode } })
+      this.$router.push({name: 'ColumnAddOrEdit', query: {objectCode: this.objectCode}})
     },
 
     deleteItem($index, record) {
@@ -158,7 +158,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteColumnItem({ objectCode: this.objectCode }).then((res) => {
+          deleteColumnItem({objectCode: this.objectCode}).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.goListPage()
@@ -167,11 +167,12 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     goListPage() {
-      this.$router.replace({ name: 'ColumnList' })
+      this.$router.replace({name: 'ColumnList'})
     },
 
     getList() {
@@ -226,5 +227,10 @@ export default {
   justify-content: right;
   width: 120px;
   margin-bottom: 24px;
+}
+
+/deep/ .el-descriptions-item__label {
+  padding-bottom: 10px;
+  font-weight: bold;
 }
 </style>
