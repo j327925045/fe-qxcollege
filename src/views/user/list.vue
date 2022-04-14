@@ -19,17 +19,17 @@
           <span> {{ scope.row.realName || '-' }}</span>
         </template>
         <template slot="realAuditSlot" slot-scope="scope">
-          <div style="position:relative">
-            <span v-if="scope.row.realAuditStatus==1" style="position: absolute;top:-2px;color:#52C41A;font-size: 50px">·</span>
-            <span v-if="scope.row.realAuditStatus==2" style="position: absolute;top:-2px;color:#E1251B;font-size: 50px">·</span>
-            <span v-if="scope.row.realAuditStatus==3" style="position: absolute;top:-2px;color:#0093FF;font-size: 50px">·</span>
-            <span style="margin-left:13px"> {{ scope.row.realAuditStatus == 1 ? "审核通过" : scope.row.realAuditStatus == 2 ? "审核驳回" : scope.row.realAuditStatus == 3 ? "审核中" : "-" }}</span>
+          <div style="position: relative">
+            <span v-if="scope.row.realAuditStatus == 1" style="position: absolute; top: -2px; color: #52c41a; font-size: 50px">·</span>
+            <span v-if="scope.row.realAuditStatus == 2" style="position: absolute; top: -2px; color: #e1251b; font-size: 50px">·</span>
+            <span v-if="scope.row.realAuditStatus == 3" style="position: absolute; top: -2px; color: #0093ff; font-size: 50px">·</span>
+            <span style="margin-left: 13px"> {{ scope.row.realAuditStatus == 1 ? '审核通过' : scope.row.realAuditStatus == 2 ? '审核驳回' : scope.row.realAuditStatus == 3 ? '审核中' : '-' }}</span>
           </div>
         </template>
         <template slot="regionFullNameSlot" slot-scope="scope">
           <span v-if="scope.row.userOrgInfoShowDTOList">
             <span v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
-              <span>{{ item.region }}</span><br>
+              <span>{{ item.region }}</span><br />
             </span>
           </span>
           <div v-else>-</div>
@@ -37,7 +37,7 @@
         <template slot="realHospitalNameSlot" slot-scope="scope">
           <div v-if="!scope.row.userOrgInfoShowDTOList">-</div>
           <div v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
-            <span> {{ item.hospital }}</span>
+            <span class="single-line" :title="item.hospital"> {{ item.hospital }}</span>
           </div>
         </template>
         <template slot="realDepartmentSlot" slot-scope="scope">
@@ -357,8 +357,7 @@ export default {
             type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              'text-align': 'center'
+              'min-width': '100'
             },
             slot: 'doctorLevel'
           },
@@ -529,8 +528,7 @@ export default {
             }
           })
         })
-        .catch(() => {
-        })
+        .catch(() => {})
     },
 
     /**
@@ -575,3 +573,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.single-line {
+  display: inline-block;
+  width: 100%;
+  margin-right: 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+</style>
