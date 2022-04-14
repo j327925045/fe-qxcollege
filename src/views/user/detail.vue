@@ -8,8 +8,8 @@
       </div>
       <div class="headContent">
         <div class="headerIcon">
-          <img class="imageClass" v-if="dataList.personalUrl" :src="dataList.personalUrl" alt="" />
-          <img class="imageClass" v-else src="~@/assets/img/framework/img-holder.png" alt="" />
+          <img v-if="dataList.personalUrl" class="imageClass" :src="dataList.personalUrl" alt="" />
+          <img v-else class="imageClass" src="~@/assets/img/framework/img-holder.png" alt="" />
         </div>
         <div class="headerDesc">
           <div class="row">
