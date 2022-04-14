@@ -2,9 +2,9 @@ import { getAllDictionaryItems } from '@/api/dictionary'
 import { Message } from 'element-ui'
 
 const HomePage = {
-  title: '工作台',
-  name: 'home',
-  content: '/'
+  title: '医生列表',
+  name: 'UserList',
+  content: '/user/list'
 }
 
 const state = {
@@ -264,7 +264,7 @@ const actions = {
     const oldName = state.editableTabs[index].name
     const newTabs = []
     newTabs.push(state.editableTabs[index])
-    if (newTabs[0].name !== 'home') {
+    if (newTabs[0].name !== 'UserList') {
       newTabs.unshift(state.homePage)
     }
     commit('SET_EDITABLETABSVALUE', oldName)

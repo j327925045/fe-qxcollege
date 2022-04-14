@@ -91,7 +91,9 @@
             </el-descriptions>
             <el-descriptions title="最近审核信息" class="mt-4" :column="2" :size="size">
               <el-descriptions-item label="审核状态">{{ dataList.realAuditStatus == 1 ? '审核通过' :dataList.realAuditStatus == 2 ? '审核驳回':dataList.realAuditStatus == 3 ? '审核中':"" }}</el-descriptions-item>
-              <el-descriptions-item label="审核编码">{{ dataList.userRealApprovalRecordList[0].applyCode }}</el-descriptions-item>
+              <el-descriptions-item label="审核编码">
+                {{ dataList.userRealApprovalRecordList && dataList.userRealApprovalRecordList[0] && dataList.userRealApprovalRecordList[0].applyCode }}
+              </el-descriptions-item>
             </el-descriptions>
           </div>
         </div>

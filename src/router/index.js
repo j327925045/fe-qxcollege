@@ -42,18 +42,26 @@ const originRoutes = [
       }
     ]
   },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   meta: { title: '工作台', icon: 'menu-icon-dashboard' },
+  //   children: [
+  //     {
+  //       path: '/',
+  //       name: 'home',
+  //       component: () => import('@/views/home/index'),
+  //       meta: { title: '工作台', onlyShow: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/',
     component: Layout,
+    redirect: '/user/list',
+    hidden: true,
     meta: { title: '工作台', icon: 'menu-icon-dashboard' },
-    children: [
-      {
-        path: '/',
-        name: 'home',
-        component: () => import('@/views/home/index'),
-        meta: { title: '工作台', onlyShow: true }
-      }
-    ]
+    children: []
   },
   {
     path: '/login',

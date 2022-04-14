@@ -53,21 +53,14 @@
         </template>
         <template slot="doctorLevel" slot-scope="scope">
           <div class="text-center">
-            <svg-icon style="font-size: 24px;" :icon-class="`v${scope.row.doctorLevel}`"></svg-icon>
+            <DoctorLevelShow :doctor-level="scope.row.doctorLevel"></DoctorLevelShow>
           </div>
         </template>
         <template slot="gender" slot-scope="scope">
-          <div>
-            <span v-if="scope.row.gender==='0'">未知</span>
-            <svg-icon v-if="scope.row.gender==='1'" style="color: red;font-size: 18px;" icon-class="boy"></svg-icon>
-            <svg-icon v-if="scope.row.gender==='2'" style="color: blue;font-size: 18px;" icon-class="girl"></svg-icon>
-          </div>
+          <GenderShow :gender="scope.row.gender"></GenderShow>
         </template>
         <template slot="bindingWechat" slot-scope="scope">
-          <div class="text-center">
-            <svg-icon v-if="scope.row.bindingWechat==='1'" style="color: red;font-size: 18px;" icon-class="wechat-bind"></svg-icon>
-            <svg-icon v-if="scope.row.bindingWechat==='2'" style="color: blue;font-size: 18px;" icon-class="wechat-unbind"></svg-icon>
-          </div>
+          <BindWeChatShow :binding-wechat="scope.row.bindingWechat"></BindWeChatShow>
         </template>
       </ImTable>
 
@@ -85,12 +78,18 @@ import utils from '@/utils/utils'
 import HospitalSelect from '@/views/components/HospitalSelect'
 import RegionCascader from '@/views/components/RegionCascader'
 import EmployeeSelect from '@/views/components/EmployeeSelect'
+import GenderShow from '@/views/components/GenderShow'
+import DoctorLevelShow from '@/views/components/DoctorLevelShow'
+import BindWeChatShow from '@/views/components/BindWeChatShow'
 export default {
   name: 'UserList',
   components: {
+    DoctorLevelShow,
+    GenderShow,
     HospitalSelect,
     RegionCascader,
-    EmployeeSelect
+    EmployeeSelect,
+    BindWeChatShow
   },
   data() {
     return {
