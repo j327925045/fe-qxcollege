@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import {getColumnList, deleteColumnItem, operateColumnItem} from '@/api/column.js'
-import {mapGetters} from 'vuex'
+import { getColumnList, deleteColumnItem, operateColumnItem } from '@/api/column.js'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ColumnList',
@@ -122,11 +122,10 @@ export default {
             type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '80'
             },
-            filter(value, row) {
-              return value || 0
+            filter(val, row) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
@@ -297,21 +296,21 @@ export default {
      * 展示详情
      */
     viewItem($index, record) {
-      this.$router.push({name: 'ColumnDetail', query: {objectCode: record.objectCode}})
+      this.$router.push({ name: 'ColumnDetail', query: { objectCode: record.objectCode } })
     },
 
     /**
      * 编辑
      */
     editItem($index, record) {
-      this.$router.push({name: 'ColumnAddOrEdit', query: {objectCode: record.objectCode}})
+      this.$router.push({ name: 'ColumnAddOrEdit', query: { objectCode: record.objectCode } })
     },
 
     /**
      * 添加
      */
     addItem() {
-      this.$router.push({name: 'ColumnAddOrEdit'})
+      this.$router.push({ name: 'ColumnAddOrEdit' })
     },
 
     /**
@@ -325,7 +324,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteColumnItem({objectCode: record.objectCode}).then((res) => {
+          deleteColumnItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

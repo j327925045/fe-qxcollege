@@ -1,5 +1,8 @@
 <template>
   <AffixedTable v-loading="loading" :sticky-top="88" selector=".app-scrollbar-wrapper" size="medium" :data="table.data" v-bind="table.attrs" stripe border v-on="table.listeners">
+    <div slot="empty">
+      <el-empty :description="emptyDesc"></el-empty>
+    </div>
     <template v-for="item in tableList">
       <el-table-column v-if="item.type === 'selection'" :key="item.label" type="selection" :prop="item.prop" :label="item.label" v-bind="item.attrs"></el-table-column>
       <el-table-column v-else :key="item.label" :prop="item.prop" :label="item.label" v-bind="item.attrs">
@@ -150,6 +153,10 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    emptyDesc: {
+      type: String,
+      default: '暂无数据'
     }
   },
 
