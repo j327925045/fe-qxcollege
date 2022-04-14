@@ -8,8 +8,8 @@
   >
     <el-option
       v-for="item in options"
-      :disabled="getDisabled(item)"
       :key="item.objectCode"
+      :disabled="getDisabled(item)"
       :label="item.name"
       :value="item.objectCode"
     >

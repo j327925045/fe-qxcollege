@@ -1,5 +1,14 @@
 <template>
-  <el-select v-model="myValue" :placeholder="placeholder" :multiple="multiple" :filterable="filterable" :allow-create="allowCreate" clearable @change="onChange">
+  <el-select
+    v-model="myValue"
+    :placeholder="placeholder"
+    :multiple="multiple"
+    :filterable="filterable"
+    :allow-create="allowCreate"
+    clearable
+    :collapse-tags="collapseTags"
+    @change="onChange"
+  >
     <el-option
       v-for="item in options"
       :key="item.objectCode"
@@ -32,6 +41,10 @@ export default {
       default: false
     },
     allowCreate: {
+      type: Boolean,
+      default: false
+    },
+    collapseTags: {
       type: Boolean,
       default: false
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div slot="header" class="information">
+    <div slot="header" class="information mt-2">
       <div class="doctorNumber pb-4">
         医生编号: {{ dataList.doctorNumber }}
         <img width="24px" height="24px" :src="getIcon(dataList.doctorLevel)" alt="" />
@@ -9,7 +9,7 @@
       <div class="headContent">
         <div class="headerIcon">
           <img v-if="dataList.personalUrl" :src="dataList.personalUrl" alt="" />
-          <img v-else src="~@/assets/img/framework/avatar.svg" alt="" />
+          <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
         </div>
         <div class="headerDesc">
           <div class="row">
@@ -31,11 +31,12 @@
       <el-tab-pane label="医生信息" name="doctor">
         <div class="m-4 mt-0">
           <el-card class="mb-4">
-            <div slot="header">医生信息</div>
+            <div slot="header" class="card-header">医生信息</div>
             <el-descriptions :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item :span="3" label="医生介绍">
                 <div class="image-container">
-                  <img class="image-container-img" :src="dataList.doctorIntroduction" alt="" />
+                  <img v-if="dataList.doctorIntroduction" class="image-container-img" :src="dataList.doctorIntroduction" alt="" @click="showImgView(dataList.doctorIntroduction)" />
+                  <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
               <el-descriptions-item :span="3" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
@@ -61,14 +62,23 @@
                   <div v-for="(item, index) in dataList.userOrgInfoDTOList" :key="index" class="dep-area">
                     <div class="dep-line">
                       <div class="dep-item">
-                        机构名称:
+                        <span style="min-width: 70px;">机构名称:</span>
                         <a style="color: #005dbe" href="JavaScript:;" @click="onHospitalClicked(item)">{{ item.hospital }}</a>
                       </div>
-                      <div class="dep-item">科室: {{ getLabelByValue('realDepartment', item.orgDepartment) }}</div>
-                      <div class="dep-item">机构关系: {{ getLabelByValue('relationship', item.relationship) }}</div>
+                      <div class="dep-item">
+                        <span style="min-width: 40px;">科室: </span>
+                        <span>{{ getLabelByValue('realDepartment', item.orgDepartment) }}</span>
+                      </div>
+                      <div class="dep-item">
+                        <span style="min-width: 70px;">机构关系: </span>
+                        <span>{{ getLabelByValue('relationship', item.relationship) }}</span>
+                      </div>
                     </div>
                     <div class="dep-line">
-                      <div class="dep-item">机构职务: {{ getLabelByValue('position', item.post) }}</div>
+                      <div class="dep-item">
+                        <span style="min-width: 70px;">机构职务:</span>
+                        <span>{{ getLabelByValue('position', item.post) }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -78,7 +88,7 @@
 
           <el-card class="mb-4">
             <div slot="header">
-              资质信息
+              <span class="card-header">资质信息</span>
               <span v-if="dataList.realAuditStatus == 1 || dataList.realAuditStatus == 2" class="fr auditStatus" @click="qualification">上传资质</span>
             </div>
             <el-descriptions title="执业信息" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
@@ -91,6 +101,7 @@
                     alt=""
                     @click="showImgView(dataList.realDoctorPracticeCertificate)"
                   />
+                  <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="医师执业证书编码">{{ dataList.realPracticeCertificateCode || '-' }}</el-descriptions-item>
@@ -109,6 +120,7 @@
                     alt=""
                     @click="showImgView(dataList.realDoctorQualificationCertificate)"
                   />
+                  <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="医师资格证书编码">{{ dataList.realQualificationCode || '-' }}</el-descriptions-item>
@@ -130,31 +142,25 @@
           </el-card>
 
           <el-card>
-            <div slot="header">账号信息</div>
+            <div slot="header" class="card-header">账号信息</div>
             <el-descriptions title="" class="mt-4" :column="3" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="注册时间">{{ dataList.registrationTime ? moment(dataList.registrationTime).format('YYYY-MM-DD') : '-' }}</el-descriptions-item>
               <el-descriptions-item :span="2" label="注册来源">{{ getLabelByValue('registrationSource', dataList.registrationSource) }}</el-descriptions-item>
               <el-descriptions-item :span="3" label="微信绑定">
-                <div style="width:100%">
+                <div style="width: 100%">
                   <div class="dep-area">
                     <div class="dep-line">
-                      <div class="dep-item" style="display: flex;">
+                      <div class="dep-item" style="display: flex">
                         <span>是否绑定微信: </span>
                         <BindWeChatShow style="margin-left: 8px" :binding-wechat="dataList.bindingWechat"></BindWeChatShow>
                       </div>
                     </div>
                     <div class="dep-line">
-                      <div class="dep-item">
-                        OpenID: {{ dataList.OpenID || '-' }}
-                      </div>
-                      <div class="dep-item">
-                        UnionID: {{ dataList.UnionID || '-' }}
-                      </div>
+                      <div class="dep-item">OpenID: {{ dataList.OpenID || '-' }}</div>
+                      <div class="dep-item">UnionID: {{ dataList.UnionID || '-' }}</div>
                     </div>
                     <div class="dep-line">
-                      <div class="dep-item">
-                        是否关注公众号: {{ getLabelByValue('officialAccount', dataList.officialAccount) }}
-                      </div>
+                      <div class="dep-item">是否关注公众号: {{ getLabelByValue('officialAccount', dataList.officialAccount) }}</div>
                     </div>
                     <div class="dep-line">
                       <div class="dep-item">
@@ -637,6 +643,13 @@ export default {
 }
 
 .detail-area {
+  .card-header {
+    color: #000;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
   .image-container {
     width: 160px;
     height: 160px;
@@ -664,6 +677,7 @@ export default {
       }
 
       .dep-item {
+        display: flex;
         flex: 1;
         color: #000;
         font-weight: 400;
