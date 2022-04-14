@@ -32,6 +32,7 @@ export default {
         label: 'name',
         value: 'numberCode',
         children: 'subRegin',
+        expandTrigger: 'hover',
         emitPath: false
       }
     }

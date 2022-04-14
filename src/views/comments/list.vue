@@ -256,6 +256,7 @@ export default {
     // 批量删除
     allDelet() {
       this.$confirm('确定要删除这些数据吗？', '提示', {
+        type: 'warning',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
@@ -302,6 +303,7 @@ export default {
     },
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
+        type: 'warning',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })
