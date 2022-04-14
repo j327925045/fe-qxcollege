@@ -118,9 +118,13 @@ export default {
           const baseKeys = Object.keys(baseInfoFormProps)
           const doctorKeys = Object.keys(doctorInfoFormProps)
           const expertKeys = Object.keys(expertInfoFormProps)
-          const resData = res.data || {}
+          const dataObj = { }
+          for (const key in res.data) {
+            // console.log(key + ':' + res.data[key] == '0' ? undefined : res.data[key])
+            dataObj[key] = res.data[key] == '0' ? undefined : res.data[key]
+          }
+          const resData = dataObj || {}
           this.doctorLevel = resData.doctorLevel
-          console.log('this.doctorLevel', this.doctorLevel)
           // 直接遍历进行赋值，特殊属性需要单独拿出来处理
           for (let i = 0; i < baseKeys.length; i++) {
             const key = baseKeys[i]

@@ -163,9 +163,9 @@ export default {
             type: 'ImSlot',
             span: 24,
             lebel: '所在机构信息',
-            props: 'userOrgInfoDtoList',
+            // props: 'userOrgInfoDtoList',
             // hidden: this.isEdit,
-            rules: [{ required: true, message: '请选择所在机构信息' }],
+            // rules: [{ required: true, message: '请选择所在机构信息' }],
             slots: {
               sort: 'OrgInfoList'
             }
