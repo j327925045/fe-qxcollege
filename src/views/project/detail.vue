@@ -67,6 +67,7 @@ export default {
   name: 'ProjectDetail',
   data() {
     return {
+      loading: false,
       moment,
       objectCode: this.$route.query.objectCode,
       detailDialogVisible: false,

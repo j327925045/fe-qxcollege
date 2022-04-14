@@ -268,7 +268,7 @@ export default {
             type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '80'
+              width: '80'
             },
             filter(val) {
               return `<div style="text-align: right;">${val}</div>`
