@@ -3,9 +3,20 @@ import request from '@/utils/request.js'
 /**
  * 获取项目列表
  */
-export function getProjectList(params) {
+export function getProdoutProjectList(params) {
   return request({
     url: '/qxcollege/admin/product/projectList',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 获取项目列表
+ */
+export function getProjectList(params) {
+  return request({
+    url: '/qxcollege/admin/project/list',
     method: 'get',
     params
   })

@@ -57,7 +57,7 @@
 
 <script>
 import { getProductDetail, deleteProductItem } from '@/api/product'
-import { getProjectList } from '@/api/project'
+import { getProdoutProjectList } from '@/api/project'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
@@ -191,7 +191,7 @@ export default {
         productCode: this.objectCode
       }
       this.loading = true
-      getProjectList(params)
+      getProdoutProjectList(params)
         .then((res) => {
           this.loading = false
           if (res.code === 200) {
