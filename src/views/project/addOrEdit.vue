@@ -205,6 +205,7 @@ export default {
     getItemDetail() {
       getProjectDetail({ objectCode: this.editId }).then(res => {
         res.data.projectProductArr = [...new Set(res.data.projectProductCodeArr)]
+        res.data.projectConsensusCodeList = res.data.projectConsensusAddDTOList.map(x => x.consensusCode)
         if (res.code === 200) {
           const props = this.formConfig.props
           const keys = Object.keys(props)
@@ -227,7 +228,14 @@ export default {
           this.$message('请检查表单项！')
           return
         }
-        console.log(this.formConfig.props)
+        console.log(this.formConfig.props.projectConsensusCodeList)
+        if (this.formConfig.props.projectProductArr) {
+          const projectList = []
+          this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {
+            projectList.push({ productCode: val + '' })
+          })
+          this.formConfig.props.projectProductList = projectList
+        }
         if (this.formConfig.props.projectProductArr) {
           const projectList = []
           this.formConfig.props.projectProductArr.forEach(function(val, key, arr) {

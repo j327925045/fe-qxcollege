@@ -15,7 +15,10 @@
         <span class="headertext">产品信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item :span="3" label="产品名称">{{ details.name || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="产品名称">{{ details.name || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="规格">
+          {{ details.skuId || '-' }}
+        </el-descriptions-item>
         <el-descriptions-item label="业务类型">
           {{ getLabelByValue('businessType', details.businessType) }}
         </el-descriptions-item>
@@ -25,14 +28,15 @@
         <el-descriptions-item label="产品类型">
           {{ getLabelByValue('type', details.type) }}
         </el-descriptions-item>
+      </el-descriptions>
+
+      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
+
         <el-descriptions-item :span="3" label="产品介绍">
           {{ details.indication || '' }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="产品图片">
           <img class="imageClass" :src="details.imageUrl" alt="" />
-        </el-descriptions-item>
-        <el-descriptions-item :span="3" label="规格">
-          {{ details.skuId || '-' }}
         </el-descriptions-item>
       </el-descriptions>
     </el-card>

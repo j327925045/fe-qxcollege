@@ -4,8 +4,7 @@
       <div class="header-container">
         <span class="header-text">审核</span>
         <div>
-
-          <el-button @click="submit(2)">拒绝</el-button>
+          <el-button type="" @click="submit(2)">拒绝</el-button>
           <el-button type="primary" @click="submit(1)">同意</el-button>
         </div>
       </div>

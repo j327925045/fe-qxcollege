@@ -5,7 +5,7 @@ import request from '@/utils/request.js'
  */
 export function getProjectList(params) {
   return request({
-    url: '/qxcollege/admin/product/projectList',
+    url: '/qxcollege/admin/project/list',
     method: 'get',
     params
   })

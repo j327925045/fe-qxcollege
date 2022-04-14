@@ -106,7 +106,7 @@ export default {
             label: '项目编号',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             }
           },
           {
@@ -114,20 +114,21 @@ export default {
             label: '项目名称',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'projectDeteils',
-            label: '项目明细',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '160'
             }
           },
           {
             prop: 'productCount',
             label: '产品数量',
+            attrs: {
+              'show-overflow-tooltip': true,
+              align: 'right',
+              width: '160'
+            }
+          },
+          {
+            prop: 'projectDeteils',
+            label: '项目明细',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
