@@ -95,11 +95,15 @@ export default {
               clearable: true,
               class: 'w-full',
               options: []
+            },
+            listeners: {
+              change: this.changeCooperateMode
             }
           },
           {
             type: 'ImInput',
             prop: 'dealer',
+            hidden: true,
             label: '所属经销商',
             rules: [{ required: true, message: '请输入所属经销商' }],
             attrs: {
@@ -162,12 +166,28 @@ export default {
   },
   methods: {
     /**
+     * 选择合作方式
+     */
+    changeCooperateMode (val) {
+      this.setFormPropHidden('dealer', val + '' === '1')
+    },
+
+    /**
      * 统一处理options
      */
     setOptions() {
       this.setFormPropOptions('groupSize', this.enums.organizationScale)
       this.setFormPropOptions('cooperationMode', this.enums.organizationCooperatType)
       this.setFormPropOptions('whetherAccounts', this.enums.organizationIsPrepareAccount)
+    },
+
+    /**
+     * 统一处理hidden
+     */
+    setFormPropHidden (prop, hidden) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      this.$set(item, 'hidden', hidden)
     },
 
     /**
@@ -200,6 +220,8 @@ export default {
             const key = keys[i]
             props[key] = dataObj[key] || undefined
           }
+          // 回填合作方式
+          this.changeCooperateMode(dataObj.cooperationMode)
         }
       })
     },
