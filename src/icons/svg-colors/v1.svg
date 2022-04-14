@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <linearGradient x1="37.4731782%" y1="3.53440573%" x2="50%" y2="94.5987654%" id="linearGradient-1">
+            <stop stop-color="#C8D5E2" offset="0%"></stop>
+            <stop stop-color="#657C92" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0.1953125%" y1="49.8482403%" x2="100%" y2="78.2847731%" id="linearGradient-2">
+            <stop stop-color="#C8D5E2" offset="0%"></stop>
+            <stop stop-color="#7B91A6" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="85.8269544%" x2="2.5473989%" y2="14.7577448%" id="linearGradient-3">
+            <stop stop-color="#3F658A" offset="0%"></stop>
+            <stop stop-color="#BED5ED" offset="23.560424%"></stop>
+            <stop stop-color="#7796B4" offset="54.3706294%"></stop>
+            <stop stop-color="#A1BAD2" offset="70.0517216%"></stop>
+            <stop stop-color="#557796" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="98.3255566%" y1="85.8626718%" x2="6.13512186%" y2="17.5335855%" id="linearGradient-4">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.499863418" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-5" font-family="Helvetica-Bold, Helvetica" font-size="12.1" font-weight="bold" fill="#FFFFFF">
+            <tspan x="9" y="12.3454545">1</tspan>
+        </text>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.4   0 0 0 0 0.490196078   0 0 0 0 0.576470588  0 0 0 0.673923733 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <text id="text-7" font-family="Helvetica-Bold, Helvetica" font-size="9.9" font-weight="bold" fill="#FFFFFF">
+            <tspan x="3.375" y="12.4484848">v</tspan>
+        </text>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.4   0 0 0 0 0.490196078   0 0 0 0 0.576470588  0 0 0 0.673923733 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="20220402确定版本" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="0图标补充" transform="translate(-41.000000, -32.000000)">
+            <g id="v1" transform="translate(41.000000, 32.000000)">
+                <g id="编组-4" transform="translate(3.000000, 3.000000)">
+                    <path d="M3.3,0 L14.7,0 C16.5225397,-3.34795107e-16 18,1.47746033 18,3.3 L18,13.7 C18,15.5225397 16.5225397,17 14.7,17 L3.3,17 C1.47746033,17 1.47665615e-15,15.5225397 0,13.7 L0,3.3 C-2.23196738e-16,1.47746033 1.47746033,3.34795107e-16 3.3,0 Z" id="矩形" fill="url(#linearGradient-1)"></path>
+                    <path d="M3.3,0 L14.7,0 C16.5225397,-3.34795107e-16 18,1.47746033 18,3.3 L18,12.5666667 C18,14.3892063 16.5225397,15.8666667 14.7,15.8666667 L3.3,15.8666667 C1.47746033,15.8666667 6.67285948e-16,14.3892063 0,12.5666667 L0,3.3 C-2.23196738e-16,1.47746033 1.47746033,3.34795107e-16 3.3,0 Z" id="矩形备份-2" fill="url(#linearGradient-2)"></path>
+                    <path d="M13.575,0.883333333 C14.5553054,0.883333333 15.4428054,1.28068062 16.0852291,1.92310426 C16.7276527,2.5655279 17.125,3.4530279 17.125,4.43333333 L17.125,4.43333333 L17.125,11.4333333 C17.125,12.4136388 16.7276527,13.3011388 16.0852291,13.9435624 C15.4428054,14.585986 14.5553054,14.9833333 13.575,14.9833333 L13.575,14.9833333 L4.425,14.9833333 C3.44469457,14.9833333 2.55719457,14.585986 1.91477093,13.9435624 C1.27234728,13.3011388 0.875,12.4136388 0.875,11.4333333 L0.875,11.4333333 L0.875,4.43333333 C0.875,3.4530279 1.27234728,2.5655279 1.91477093,1.92310426 C2.55719457,1.28068062 3.44469457,0.883333333 4.425,0.883333333 L4.425,0.883333333 Z" id="矩形备份" stroke="url(#linearGradient-4)" stroke-width="0.5" fill="url(#linearGradient-3)"></path>
+                    <g id="1" fill="#FFFFFF" fill-opacity="1">
+                        <use filter="url(#filter-6)" xlink:href="#text-5"></use>
+                        <use xlink:href="#text-5"></use>
+                    </g>
+                    <g id="v" fill="#FFFFFF" fill-opacity="1">
+                        <use filter="url(#filter-8)" xlink:href="#text-7"></use>
+                        <use xlink:href="#text-7"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
