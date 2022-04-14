@@ -75,7 +75,7 @@ export default {
         props: {
           projectConsensusCodeList: [],
           projectProductArr: '',
-          foundingCode: [],
+          foundingCode: '',
           name: '', // 名称
           remark: '', // 项目介绍
           //
