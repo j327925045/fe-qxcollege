@@ -12,7 +12,7 @@ export default {
   name: 'BaseInfoForm',
   data() {
     return {
-      phoneNum: '',
+      phoneStaus: true,
       formConfig: {
         column: 3,
         gutter: 42,
@@ -119,14 +119,20 @@ export default {
 
   methods: {
     getPhone(value) {
-      checkPhone(value)
-        .then((res) => {
-          this.phoneNum = res.data
-        })
-        .catch((res) => {
-          this.phoneNum = res.data
-          this.$message.error('手机号已经被注册')
-        })
+      if (value.length == 11) {
+        const phoneData = {
+          objectCode: this.$route.query.objectCode,
+          phone: value
+        }
+        checkPhone(phoneData)
+          .then((res) => {
+            this.phoneStaus = res.data
+          })
+          .catch((res) => {
+            this.phoneStaus = res.data
+            this.$message.error('手机号已经被注册')
+          })
+      }
     },
 
     onLevelChanged(val) {
@@ -152,16 +158,15 @@ export default {
     },
 
     validate() {
-      return new Promise((resolve) => {
-        console.log(this.phoneNum)
-        if (this.phoneNum) {
+      if (this.phoneStaus) {
+        return new Promise((resolve) => {
           this.$refs.ImForm.validate((valid) => {
             resolve({ valid: valid, data: this.formConfig.props })
           })
-        } else {
-          this.$message.error('请输入正确手机号')
-        }
-      })
+        })
+      } else {
+        this.$message.error('手机号已经被注册')
+      }
     }
   }
 }

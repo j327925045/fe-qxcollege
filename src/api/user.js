@@ -78,12 +78,13 @@ export function getUserDetail(params) {
 
 /**
  * 校验手机号
- * @param params
+ * @param data
  * @returns {*}
  */
-export function checkPhone(params) {
+export function checkPhone(data) {
   return request({
-    url: `/qxcollege/admin/user/check/phone/${params}`,
-    method: 'get'
+    url: '/qxcollege/admin/user/checkPhone',
+    method: 'post',
+    data: data
   })
 }

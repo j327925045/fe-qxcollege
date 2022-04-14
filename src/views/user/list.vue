@@ -19,11 +19,11 @@
           <span> {{ scope.row.realName || '-' }}</span>
         </template>
         <template slot="realAuditSlot" slot-scope="scope">
-          <div style="display: flex; align-items: center">
-            <span v-if="scope.row.realAuditStatus == 1" style="width: 4px; height: 4px; background-color: #0093ff; border-radius: 100%"></span>
-            <span v-if="scope.row.realAuditStatus == 2" style="width: 4px; height: 4px; background-color: #e1251b; border-radius: 100%"></span>
-            <span v-if="scope.row.realAuditStatus == 3" style="width: 4px; height: 4px; background-color: #0093ff; border-radius: 100%"></span>
-            <span style="margin-left: 8px"> {{ scope.row.realAuditStatus == 1 ? '审核通过' : scope.row.realAuditStatus == 2 ? '审核驳回' : scope.row.realAuditStatus == 3 ? '审核中' : '-' }}</span>
+          <div style="position:relative">
+            <span v-if="scope.row.realAuditStatus==1" style="position: absolute;top:-2px;color:#52C41A;font-size: 50px">·</span>
+            <span v-if="scope.row.realAuditStatus==2" style="position: absolute;top:-2px;color:#E1251B;font-size: 50px">·</span>
+            <span v-if="scope.row.realAuditStatus==3" style="position: absolute;top:-2px;color:#0093FF;font-size: 50px">·</span>
+            <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
           </div>
         </template>
         <template slot="regionFullNameSlot" slot-scope="scope">

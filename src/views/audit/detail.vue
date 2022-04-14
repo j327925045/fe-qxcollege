@@ -84,7 +84,7 @@ export default {
         this.detailDialogVisible = false
         this.$emit('update')
         this.visibleFn()
-        this.$message.success(res.message)
+        this.$message.success('更新成功')
       })
     },
 
