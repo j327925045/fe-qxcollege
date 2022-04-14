@@ -5,7 +5,7 @@
         <el-option v-for="opt in options" :key="opt.objectCode" :label="opt.name" :value="opt.objectCode"> </el-option>
       </el-select>
       <el-select v-model="item.details" class="ml-4 mr-4" placeholder="请选择针头" @change="onChange">
-        <el-option v-for="opt in enums.zhen" :key="opt.value" :label="opt.label" :value="opt.value"> </el-option>
+        <el-option v-for="opt in enums.pinheadHabit" :key="opt.value" :label="opt.label" :value="opt.value"> </el-option>
       </el-select>
       <el-button class="ml-4" size="mini" type="primary" icon="el-icon-plus" round @click="addItem"></el-button>
       <el-button class="ml-4" size="mini" :disabled="myValue.length === 1" type="danger" icon="el-icon-delete" round @click="deleteItem(idx)"></el-button>

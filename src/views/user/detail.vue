@@ -3,10 +3,10 @@
     <div slot="header" class="information">
       <div class="doctorNumber pb-4">
         {{ dataList.doctorNumber || '医生编号' }}
-        <img width="24px" height="24px" :src="getIcon(dataList.doctorLevel)" alt=""/>
+        <img width="24px" height="24px" :src="getIcon(dataList.doctorLevel)" alt="" />
         <span class="fr auditStatus" @click="goEdit">编辑</span>
       </div>
-      <div class="headerIcon"><img src="~@/assets/img/framework/avatar.svg" alt=""/></div>
+      <div class="headerIcon"><img src="~@/assets/img/framework/avatar.svg" alt="" /></div>
       <el-descriptions class="doctorMsg" :column="2" :size="size" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
         <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
@@ -27,7 +27,7 @@
             <el-descriptions class="margin-top" :column="1" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
               <el-descriptions-item label="医生介绍">
-                <img style="max-height: 320px" :src="dataList.doctorIntroduction" alt=""/>
+                <img style="max-height: 320px" :src="dataList.doctorIntroduction" alt="" />
                 {{ dataList.personalIntroduction }}
               </el-descriptions-item>
 
@@ -66,7 +66,7 @@
             <el-descriptions title="执业信息" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item :span="3" label="医师执业证书">
                 <span v-if="!dataList.realDoctorPracticeCertificate">-</span>
-                <img v-if="dataList.realDoctorPracticeCertificate" width="160px" height="80px" :src="dataList.realDoctorPracticeCertificate" alt=""/>
+                <img v-if="dataList.realDoctorPracticeCertificate" width="160px" height="80px" :src="dataList.realDoctorPracticeCertificate" alt="" />
               </el-descriptions-item>
               <el-descriptions-item label="医师执业证书编码">{{ dataList.realPracticeCertificateCode || '-' }}</el-descriptions-item>
               <el-descriptions-item label="执业地点">{{ dataList.realAddress || '-' }}</el-descriptions-item>
@@ -76,7 +76,7 @@
 
             <el-descriptions title="医师资格信息" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item :span="3" label="医师资格证书">
-                <img v-if="dataList.realDoctorQualificationCertificate" width="160px" height="80px" :src="dataList.realDoctorQualificationCertificate" alt=""/>
+                <img v-if="dataList.realDoctorQualificationCertificate" width="160px" height="80px" :src="dataList.realDoctorQualificationCertificate" alt="" />
               </el-descriptions-item>
               <el-descriptions-item label="医师资格证书编码">{{ dataList.realQualificationCode || '-' }}</el-descriptions-item>
               <el-descriptions-item label="身份证号">{{ dataList.realIdNumber || '-' }}</el-descriptions-item>
@@ -87,8 +87,8 @@
             </el-descriptions>
             <el-descriptions title="最近审核信息" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="审核状态">{{
-                  dataList.realAuditStatus == 1 ? '审核通过' : dataList.realAuditStatus == 2 ? '审核驳回' : dataList.realAuditStatus == 3 ? '审核中' : ''
-                }}
+                dataList.realAuditStatus == 1 ? '审核通过' : dataList.realAuditStatus == 2 ? '审核驳回' : dataList.realAuditStatus == 3 ? '审核中' : ''
+              }}
               </el-descriptions-item>
               <el-descriptions-item label="审核编码">
                 {{ dataList.userRealApprovalRecordList && dataList.userRealApprovalRecordList[0] && dataList.userRealApprovalRecordList[0].applyCode }}
@@ -140,7 +140,7 @@
           <el-descriptions :colon="false" class="mt-4" title="针头习惯" label-class-name="descriptionLabelClass">
             <template v-for="(item, index) in dataList.userHabitAddDTOList">
               <el-descriptions-item :key="index+1" label="针头">{{ item.name }}</el-descriptions-item>
-              <el-descriptions-item :key="index+2" label="规格">{{ getLabelByValue('zhen', item.details) }}</el-descriptions-item>
+              <el-descriptions-item :key="index+2" label="规格">{{ getLabelByValue('pinheadHabit', item.details) }}</el-descriptions-item>
               <el-descriptions-item :key="index+3"></el-descriptions-item>
             </template>
           </el-descriptions>
@@ -227,7 +227,7 @@
 <script>
 import moment from 'moment'
 import utils from '@/utils/utils'
-import {getUserList, getUserDetail} from '@/api/user'
+import { getUserList, getUserDetail } from '@/api/user'
 import BindWeChatShow from '@/views/components/BindWeChatShow'
 
 export default {
@@ -313,7 +313,7 @@ export default {
       loading: false,
       // 表格数据结束
       objectCode: this.$route.query.objectCode,
-      list: [{name: 1}, {name: 2}],
+      list: [{ name: 1 }, { name: 2 }],
       dataList: '',
       // tab切换属性名
       activeName: 'doctor',
@@ -355,9 +355,9 @@ export default {
       ],
       // 客户经理多标签
       tags: [
-        {name: '标签一', type: ''},
-        {name: '标签二', type: 'success'},
-        {name: '标签三', type: 'info'}
+        { name: '标签一', type: '' },
+        { name: '标签二', type: 'success' },
+        { name: '标签三', type: 'info' }
       ]
     }
   },
@@ -419,7 +419,7 @@ export default {
   },
   watch: {
     '$route.query.objectCode': {
-      handler: function (val) {
+      handler: function(val) {
         if (val) {
           this.activeName = 'doctor'
           this.getdata()
