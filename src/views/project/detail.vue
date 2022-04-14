@@ -52,7 +52,16 @@
 
       </el-descriptions>
 
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+    </el-card>
+    <el-card class="box-card">
+      <div slot="header">
+        <span class="headertext">关联产品</span>
+      </div>
+      <ImTable :table="tableConfig">
+        <template slot="productNum" slot-scope="scope">
+          <el-button type="text" style="font-size:14px" @click="viewProjectDetail(scope.row.objectCode)">{{ scope.row.productNum }}</el-button>
+        </template>
+      </ImTable>
     </el-card>
   </ImWrapper>
 </template>
@@ -67,22 +76,103 @@ export default {
   name: 'ProjectDetail',
   data() {
     return {
-      loading: false,
       moment,
-      loading: false,
       objectCode: this.$route.query.objectCode,
       detailDialogVisible: false,
       productDetail: {},
-      projectProductCodeArrLength: ''
+      tableConfig: {
+        data: [],
+        tableItems: [
+
+          {
+            prop: 'productNum',
+            label: '产品编号',
+            type: 'slot',
+            attrs: {
+              'show-overflow-tooltip': true
+            },
+            slot: 'productNum'
+          },
+          {
+            prop: 'name',
+            label: '产品名称',
+            attrs: {
+              'show-overflow-tooltip': true
+            }
+          },
+          {
+            prop: 'indication',
+            label: '产品介绍',
+            attrs: {
+              'show-overflow-tooltip': true
+            }
+          },
+          {
+            prop: 'businessType',
+            label: '业务类型',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true
+            },
+            options: []
+          },
+          {
+            prop: 'category',
+            label: '材料类别',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true
+            },
+            options: []
+          },
+          {
+            prop: 'type',
+            label: '产品类型',
+            type: 'mapList',
+            attrs: {
+              'show-overflow-tooltip': true
+            },
+            options: []
+          }
+
+        ]
+
+      }
     }
   },
   computed: {
     ...mapGetters(['enums'])
+
   },
   activated() {
     this.getItemDetail()
+    this.setOptions()
   },
   methods: {
+
+    viewProjectDetail(objectCode) {
+      this.$router.push({ name: 'ProductDetail', query: { objectCode } })
+    },
+    setOptions() {
+      this.setFormPropOptions('businessType', this.enums.businessType)
+      this.setFormPropOptions('category', this.enums.category)
+      this.setFormPropOptions('type', this.enums.type)
+    },
+
+    /**
+     * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
+     * 放到计算属性会有prop绑定失效的问题
+     */
+    setFormPropOptions(prop, options) {
+      console.log(prop, options)
+      const formItems = this.tableConfig.tableItems
+      const item = formItems.find(x => {
+        console.log(x)
+        return x.prop === prop
+      })
+      console.log(options)
+      this.$set(item, 'options', options)
+    },
     showImgView(url) {
       this.$viewerApi({
         images: [url]
@@ -97,7 +187,9 @@ export default {
         if (res.code === 200) {
           this.productDetail = res.data
           this.productDetail.projectProductList = res.data.projectProductArr
-          this.projectProductCodeArrLength = this.productDetail.projectProductCodeArr.length
+
+          this.tableConfig.data = res.data.productList || []
+          // console.log(this.tableConfig)
         }
       })
     },

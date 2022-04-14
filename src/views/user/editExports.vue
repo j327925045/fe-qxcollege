@@ -217,7 +217,8 @@ export default {
       })
     },
     closeCurrent() {
-      this.$router.replace({ name: 'UserList' })
+      // this.$router.replace({ name: 'UserList' })
+      this.$router.back(-1)
     }
   }
 }
