@@ -254,4 +254,9 @@ export default {
   width: 120px;
   margin-bottom: 24px;
 }
+
+/deep/ .el-descriptions-item__label {
+  padding-bottom: 10px;
+  font-weight: bold;
+}
 </style>

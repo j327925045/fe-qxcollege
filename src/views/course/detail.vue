@@ -23,10 +23,10 @@
         <el-descriptions-item label="创建时间">{{ getDateTime(details.createTime) }}</el-descriptions-item>
         <el-descriptions-item :span="3" label="审核状态">{{ getLabelByValue('courseAuditStatus', details.status) }}</el-descriptions-item>
         <el-descriptions-item :span="3" label="课程封面">
-          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" />
+          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt=""/>
         </el-descriptions-item>
         <el-descriptions-item v-if="getMeterial(details.materials)" :span="3" label="课程视频">
-          <img class="imageClass" :src="getMeterial(details.materials).coverUrl" alt="" @click="playVideo(getMeterial(details.materials))" />
+          <img class="imageClass" :src="getMeterial(details.materials).coverUrl" alt="" @click="playVideo(getMeterial(details.materials))"/>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="课程标题">
           {{ details.title }}
@@ -127,10 +127,10 @@
 </template>
 
 <script>
-import { getCourseDetail, deleteCourseItem, getCourseColumnList } from '@/api/course'
-import { getCommentList } from '@/api/coursecomment'
+import {getCourseDetail, deleteCourseItem, getCourseColumnList} from '@/api/course'
+import {getCommentList} from '@/api/coursecomment'
 import moment from 'moment'
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import utils from '@/utils/utils'
 import VideoPlayer from '@/views/components/VideoPlayer'
 
@@ -337,7 +337,7 @@ export default {
     },
 
     getItemDetail() {
-      getCourseDetail({ objectCode: this.objectCode }).then((res) => {
+      getCourseDetail({objectCode: this.objectCode}).then((res) => {
         if (res.code === 200) {
           console.log('res', res)
           this.details = res.data || {}
@@ -346,7 +346,7 @@ export default {
     },
 
     editItem() {
-      this.$router.push({ name: 'CourseAddOrEdit', query: { objectCode: this.objectCode } })
+      this.$router.push({name: 'CourseAddOrEdit', query: {objectCode: this.objectCode}})
     },
 
     deleteItem($index, record) {
@@ -357,7 +357,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteCourseItem({ objectCode: this.objectCode }).then((res) => {
+          deleteCourseItem({objectCode: this.objectCode}).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.goListPage()
@@ -366,11 +366,12 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     goListPage() {
-      this.$router.replace({ name: 'CourseList' })
+      this.$router.replace({name: 'CourseList'})
     },
 
     getColumnList() {
@@ -444,6 +445,11 @@ export default {
   justify-content: right;
   width: 120px;
   margin-bottom: 24px;
+}
+
+/deep/ .el-descriptions-item__label {
+  padding-bottom: 10px;
+  font-weight: bold;
 }
 
 /deep/ .__RichTextArea {

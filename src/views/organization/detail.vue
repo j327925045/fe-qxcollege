@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import { getOrganizationDetail, deleteOrganizationItem, getHospitalsInOrg } from '@/api/organization'
+import {getOrganizationDetail, deleteOrganizationItem, getHospitalsInOrg} from '@/api/organization'
 import moment from 'moment'
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import utils from '@/utils/utils'
 
 export default {
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     onslotClick(objectCode) {
-      this.$router.push({ name: 'HospitalDetail', query: { objectCode: objectCode } })
+      this.$router.push({name: 'HospitalDetail', query: {objectCode: objectCode}})
     },
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
@@ -119,7 +119,7 @@ export default {
     },
 
     getItemDetail() {
-      getOrganizationDetail({ objectCode: this.objectCode }).then((res) => {
+      getOrganizationDetail({objectCode: this.objectCode}).then((res) => {
         if (res.code === 200) {
           this.details = res.data || {}
         }
@@ -127,7 +127,7 @@ export default {
     },
 
     editItem() {
-      this.$router.push({ name: 'OrganizationAddOrEdit', query: { objectCode: this.objectCode } })
+      this.$router.push({name: 'OrganizationAddOrEdit', query: {objectCode: this.objectCode}})
     },
 
     deleteItem($index, record) {
@@ -141,7 +141,7 @@ export default {
           if (this.tableConfig.data.length > 0) {
             this.$message.error('该机构下有医生 ，不允许删除。')
           } else {
-            deleteOrganizationItem({ objectCode: this.objectCode }).then((res) => {
+            deleteOrganizationItem({objectCode: this.objectCode}).then((res) => {
               if (res.code === 200) {
                 this.$message.success('操作成功！')
                 this.goListPage()
@@ -151,11 +151,12 @@ export default {
             })
           }
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     goListPage() {
-      this.$router.replace({ name: 'OrganizationList' })
+      this.$router.replace({name: 'OrganizationList'})
     },
 
     getList() {
@@ -211,5 +212,10 @@ export default {
   justify-content: right;
   width: 120px;
   margin-bottom: 24px;
+}
+
+/deep/ .el-descriptions-item__label {
+  padding-bottom: 10px;
+  font-weight: bold;
 }
 </style>
