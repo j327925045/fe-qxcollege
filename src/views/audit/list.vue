@@ -107,27 +107,14 @@ export default {
             prop: 'createName',
             label: '创建人',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'createTime',
-            label: '创建时间',
-            type: 'customFilter',
-            attrs: {
-              width: '110'
-            },
-            filter(val, row) {
-              return moment(val).format('YYYY-MM-DD')
+              'show-overflow-tooltip': true
             }
           },
           {
             prop: 'objectCode',
             label: '审核编号',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '100'
+              'show-overflow-tooltip': true
             }
           },
           {
@@ -135,8 +122,7 @@ export default {
             label: '审核状态',
             type: 'mapList',
             attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
+              'show-overflow-tooltip': true
             },
             options: [
               {
@@ -157,6 +143,16 @@ export default {
             ]
           },
 
+          {
+            prop: 'createTime',
+            label: '创建时间',
+            type: 'customFilter',
+            attrs: {
+            },
+            filter(val, row) {
+              return moment(val).format('YYYY-MM-DD')
+            }
+          },
           {
             prop: '',
             label: '操作',
@@ -199,7 +195,7 @@ export default {
         record = { objectCode: this.$route.query.objectCode }
       }
       // this.$router.push(`/audit/detail?objectCode=${record.objectCode}`)
-      this.$refs.DetailDialog.show(record)
+      this.$router.push({ name: 'AuditDetail', query: { objectCode: record.objectCode } })
     },
 
     editItem($index, record) {

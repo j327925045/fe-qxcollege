@@ -5,28 +5,32 @@
     </ImSearchArea>
     <ImTableArea>
       <div class="mb-4">
-        <el-button type="primary">批量删除</el-button>
-        <el-button type="primary">批量审核</el-button>
+        <el-button type="primary" @click="allDelet">批量删除</el-button>
+        <el-button type="primary" @click="allAudit">批量审核</el-button>
       </div>
       <ImTable :loading="loading" :table="tableConfig"></ImTable>
       <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </ImTableArea>
-    <AddOrEdit ref="AddOrEdit"></AddOrEdit>
+    <AddOrEdit ref="AddOrEdit" @update="getList"></AddOrEdit>
+    <DetailDialog ref="DetailDialog" @update="getList"></DetailDialog>
   </ImWrapper>
 </template>
 
 <script>
-import { getCommentsList, deleteCommentsItem } from '@/api/comments.js'
+import { getCommentsList, deleteCommentsItem, auditCommentsItem } from '@/api/comments.js'
 import { mapGetters } from 'vuex'
 import AddOrEdit from './components/AddOrEdit'
+import DetailDialog from './components/DetailDialog'
 
 export default {
   name: 'CommentsList',
   components: {
-    AddOrEdit
+    AddOrEdit,
+    DetailDialog
   },
   data() {
     return {
+      dataList: [],
       formConfig: {
         column: 3,
         attrs: {
@@ -96,7 +100,8 @@ export default {
   },
   computed: {
     ...mapGetters(['enums']),
-    tableConfig() {
+    tableConfig: function() {
+      const _this = this
       return {
         data: [],
         listeners: {
@@ -104,7 +109,7 @@ export default {
             console.log('sort-change')
           },
           'selection-change'(selection) {
-            console.log('selection', selection)
+            _this.dataList = selection
           }
         },
         tableItems: [
@@ -162,7 +167,7 @@ export default {
             options: [
               {
                 prop: 'status',
-                value: ['1'],
+                value: [1],
                 label: '审核通过',
                 attrs: {
                   type: 'success'
@@ -170,7 +175,7 @@ export default {
               },
               {
                 prop: 'status',
-                value: ['2'],
+                value: [2],
                 label: '审核驳回',
                 attrs: {
                   type: 'danger'
@@ -178,7 +183,7 @@ export default {
               },
               {
                 prop: 'status',
-                value: ['2'],
+                value: [3],
                 label: '审核中',
                 attrs: {
                   type: ''
@@ -204,6 +209,16 @@ export default {
                   type: 'text'
                 },
                 onClick: this.editItem
+              },
+              {
+                prop: 'status',
+                value: [],
+                isNot: true,
+                label: '审核',
+                attrs: {
+                  type: 'text'
+                },
+                onClick: this.showDetail
               },
               {
                 prop: 'status',
@@ -238,10 +253,42 @@ export default {
       const item = formItems.find(item => item.prop === prop)
       item.attrs.options = options
     },
+    // 批量删除
+    allDelet() {
+      this.$confirm('确定要删除这些数据吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          const arr = []
+          this.dataList.map((x) => {
+            arr.push(x.objectCode)
+            return arr
+          })
+
+          deleteCommentsItem({ courseCommentCodeList: arr }).then((res) => {
+            if (res.code === 200) {
+              this.$message.success('操作成功！')
+              this.getList()
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+        })
+    },
+
+    // 批量审批
+    allAudit() {
+      const arr = []
+      this.dataList.map((x) => {
+        arr.push(x.objectCode)
+        return arr
+      })
+      this.$refs.DetailDialog.show(arr)
+    },
     /**
      * 回复
      */
-
     editItem($index, record) {
       console.log(record)
       this.$refs.AddOrEdit.edit(record)
@@ -249,6 +296,10 @@ export default {
     /**
      * 删除
      */
+    showDetail($index, record) {
+      console.log(record)
+      this.$refs.DetailDialog.show(record)
+    },
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
         confirmButtonText: '确定',
