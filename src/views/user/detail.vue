@@ -208,9 +208,10 @@
       </el-tab-pane>
       <el-tab-pane v-if="dataList.doctorLevel == 4 || dataList.doctorLevel == 5" label="专家信息" name="experts">
         <!-- <el-tab-pane label="专家信息" name="experts"> -->
-        <div class="el-card__header" style="margin-left: 14px;">专家信息</div>
+
         <div class="m-4 mt-0">
           <el-card class="mb-4">
+            <div slot="header" class="card-header">专家信息</div>
             <el-descriptions title="临床相关" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="洗手衣规格">{{ getLabelByValue('expertSpecificationsHandWashingClothes', dataList.expertSpecificationsHandWashingClothes + '')||'-' }}</el-descriptions-item>
               <el-descriptions-item label="手套规格">{{ getLabelByValue('expertGloveSpecification', dataList.expertGloveSpecification + '') ||'-' }}</el-descriptions-item>
