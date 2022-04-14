@@ -8,7 +8,15 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建员工</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="gender" slot-scope="scope">
+          <div>
+            <svg-icon v-if="scope.row.gender==='1'" style="color: red;font-size: 18px;" icon-class="boy"></svg-icon>
+            <svg-icon v-else-if="scope.row.gender==='2'" style="color: blue;font-size: 18px;" icon-class="girl"></svg-icon>
+            <span v-else>未知</span>
+          </div>
+        </template>
+      </ImTable>
       <ImPagination
         ref="ImPagination"
         :page-size.sync="pageSize"
@@ -118,12 +126,14 @@ export default {
           {
             prop: 'gender',
             label: '员工性别',
-            type: 'mapList',
+            // type: 'mapList',
+            // options: this?.enums?.gender ?? []
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.gender ?? []
+            type: 'slot',
+            slot: 'gender'
           },
           {
             prop: 'nature',
