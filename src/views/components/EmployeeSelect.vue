@@ -6,8 +6,8 @@
     :filterable="filterable"
     :allow-create="allowCreate"
     clearable
-    @change="onChange"
     :collapse-tags="collapseTags"
+    @change="onChange"
   >
     <el-option
       v-for="item in options"

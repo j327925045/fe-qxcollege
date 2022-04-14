@@ -9,7 +9,7 @@
       <div class="headContent">
         <div class="headerIcon">
           <img v-if="dataList.personalUrl" :src="dataList.personalUrl" alt="" />
-          <img v-else src="~@/assets/img/framework/avatar.svg" alt="" />
+          <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
         </div>
         <div class="headerDesc">
           <div class="row">
@@ -35,7 +35,8 @@
             <el-descriptions :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="医生介绍">
                 <div class="image-container">
-                  <img class="image-container-img" :src="dataList.doctorIntroduction" alt="" @click="showImgView(dataList.doctorIntroduction)" />
+                  <img v-if="dataList.doctorIntroduction" class="image-container-img" :src="dataList.doctorIntroduction" alt="" @click="showImgView(dataList.doctorIntroduction)" />
+                  <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
               <el-descriptions-item :span="2" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
@@ -61,14 +62,23 @@
                   <div v-for="(item, index) in dataList.userOrgInfoDTOList" :key="index" class="dep-area">
                     <div class="dep-line">
                       <div class="dep-item">
-                        机构名称:
+                        <span style="min-width: 70px;">机构名称:</span>
                         <a style="color: #005dbe" href="JavaScript:;" @click="onHospitalClicked(item)">{{ item.hospital }}</a>
                       </div>
-                      <div class="dep-item">科室: {{ getLabelByValue('realDepartment', item.orgDepartment) }}</div>
-                      <div class="dep-item">机构关系: {{ getLabelByValue('relationship', item.relationship) }}</div>
+                      <div class="dep-item">
+                        <span style="min-width: 40px;">科室: </span>
+                        <span>{{ getLabelByValue('realDepartment', item.orgDepartment) }}</span>
+                      </div>
+                      <div class="dep-item">
+                        <span style="min-width: 70px;">机构关系: </span>
+                        <span>{{ getLabelByValue('relationship', item.relationship) }}</span>
+                      </div>
                     </div>
                     <div class="dep-line">
-                      <div class="dep-item">机构职务: {{ getLabelByValue('position', item.post) }}</div>
+                      <div class="dep-item">
+                        <span style="min-width: 70px;">机构职务:</span>
+                        <span>{{ getLabelByValue('position', item.post) }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -91,6 +101,7 @@
                     alt=""
                     @click="showImgView(dataList.realDoctorPracticeCertificate)"
                   />
+                  <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="医师执业证书编码">{{ dataList.realPracticeCertificateCode || '-' }}</el-descriptions-item>
@@ -109,6 +120,7 @@
                     alt=""
                     @click="showImgView(dataList.realDoctorQualificationCertificate)"
                   />
+                  <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="医师资格证书编码">{{ dataList.realQualificationCode || '-' }}</el-descriptions-item>
@@ -164,17 +176,22 @@
         <div class="m-4 mt-0">
           <el-card>
             <div slot="header" class="card-header">专家偏好</div>
-            <el-descriptions title="临床相关" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
+            <el-descriptions title="临床相关" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="洗手衣规格">{{ getLabelByValue('expertSpecificationsHandWashingClothes', dataList.expertSpecificationsHandWashingClothes + '') }}</el-descriptions-item>
               <el-descriptions-item label="手套规格">{{ getLabelByValue('expertGloveSpecification', dataList.expertGloveSpecification + '') }}</el-descriptions-item>
               <el-descriptions-item label="消毒剂偏好">{{ getLabelByValue('expertDisinfectantPreference', dataList.expertDisinfectantPreference + '') }}</el-descriptions-item>
-            </el-descriptions>
-            <el-descriptions :colon="false" class="mt-4" title="针头习惯" label-class-name="descriptionLabelClass">
-              <template v-for="(item, index) in dataList.userHabitAddDTOList">
-                <el-descriptions-item :key="index + 1" label="针头">{{ item.name }}</el-descriptions-item>
-                <el-descriptions-item :key="index + 2" label="规格">{{ getLabelByValue('pinheadHabit', item.details) }}</el-descriptions-item>
-                <el-descriptions-item :key="index + 3"></el-descriptions-item>
-              </template>
+              <el-descriptions-item :span="3" label="针头习惯">
+                <div style="width:100%">
+                  <div class="dep-area">
+                    <div class="dep-line" style="display: block;">
+                      <div v-for="(item, index) in dataList.userHabitAddDTOList" :key="index" class="dep-item" style="margin-bottom:16px;">
+                        <span style=" min-width: 200px;margin-right: 32px;">针头: {{ item.name }}</span>
+                        <span>规格: {{ getLabelByValue('pinheadHabit', item.details) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </el-descriptions-item>
             </el-descriptions>
             <el-descriptions title="出行相关" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="舱位标准">{{ getLabelByValue('expertStandardAccommodation', dataList.expertStandardAccommodation) }}</el-descriptions-item>
@@ -661,6 +678,7 @@ export default {
       }
 
       .dep-item {
+        display: flex;
         flex: 1;
         color: #000;
         font-weight: 400;
