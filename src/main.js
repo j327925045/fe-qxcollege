@@ -5,12 +5,15 @@ import store from '@/store'
 import Modules from '@/views/modules/index'
 import 'babel-polyfill'
 import ElementUI from 'element-ui'
+import VueViewer from 'v-viewer'
+import 'viewerjs/dist/viewer.css'
 import Vue from 'vue'
 import 'windi.css'
 import './assets/styles/theme/index.css'
 import './permission.js'
 import router from './router'
 
+Vue.use(VueViewer)
 Vue.use(ElementUI, { size: 'small' })
 Vue.use(Modules)
 

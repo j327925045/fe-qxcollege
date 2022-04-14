@@ -2,71 +2,96 @@
   <div>
     <div slot="header" class="information">
       <div class="doctorNumber pb-4">
-        {{ dataList.doctorNumber || '医生编号' }}
+        医生编号: {{ dataList.doctorNumber }}
         <img width="24px" height="24px" :src="getIcon(dataList.doctorLevel)" alt="" />
         <span class="fr auditStatus" @click="goEdit">编辑</span>
       </div>
-      <div class="headerIcon"><img src="~@/assets/img/framework/avatar.svg" alt="" /></div>
-      <el-descriptions class="doctorMsg" :column="2" :size="size" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="昵称">{{ dataList.nickname }}</el-descriptions-item>
-        <el-descriptions-item label="姓名">{{ dataList.realName }}</el-descriptions-item>
-        <el-descriptions-item label="生日">{{ dataList.birthday ? moment(dataList.birthday).format('YYYY-MM-DD') : '' }}</el-descriptions-item>
-        <el-descriptions-item label="性别">{{ getLabelByValue('gender', dataList.gender) }}</el-descriptions-item>
-        <el-descriptions-item label="手机号">{{ dataList.phone }}</el-descriptions-item>
-      </el-descriptions>
+      <div class="headContent">
+        <div class="headerIcon">
+          <img v-if="dataList.personalUrl" :src="dataList.personalUrl" alt="" />
+          <img v-else src="~@/assets/img/framework/avatar.svg" alt="" />
+        </div>
+        <div class="headerDesc">
+          <div class="row">
+            <div class="col">昵称: {{ dataList.nickname }}</div>
+            <div class="col">姓名: {{ dataList.realName }}</div>
+          </div>
+          <div class="row">
+            <div class="col">生日: {{ dataList.birthday ? moment(dataList.birthday).format('YYYY-MM-DD') : '-' }}</div>
+            <div class="col">性别: {{ getLabelByValue('gender', dataList.gender) }}</div>
+          </div>
+          <div class="row">
+            <div class="col">手机号: {{ dataList.phone }}</div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <el-tabs v-model="activeName" class="" @tab-click="handleClick">
+    <el-tabs v-model="activeName" class="detail-area" @tab-click="handleClick">
       <el-tab-pane label="医生信息" name="doctor">
-        <div>
-          <div class="divCrad">
-            <div class="pb-4" style="margin: 0 0 24px 0; overflow: hidden; font-weight: bold; font-size: 16px; border-bottom: 1px solid #d8d8d8">
-              <span class="fl mr-4">医生信息</span>
-              <!-- <span class="fr auditStatus" @click="goDoctorEdit">编辑</span> -->
-            </div>
-            <el-descriptions class="margin-top" :column="1" :size="size" label-class-name="descriptionLabelClass">
-              <el-descriptions-item label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
+        <div class="m-4 mt-0">
+          <el-card class="mb-4">
+            <div slot="header">医生信息</div>
+            <el-descriptions :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="医生介绍">
-                <img style="max-height: 320px" :src="dataList.doctorIntroduction" alt="" />
-                {{ dataList.personalIntroduction }}
+                <div class="image-container">
+                  <img class="image-container-img" :src="dataList.doctorIntroduction" alt="" />
+                </div>
               </el-descriptions-item>
+              <el-descriptions-item :span="2" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
 
-              <el-descriptions-item label="医生标签">
+              <el-descriptions-item :span="3" label="医生标签">
                 <div v-if="dataList.tagDTOList">
-                  <el-tag v-for="(item, index) in dataList.tagDTOShowList" :key="index" style="margin-right: 8px" size="small">{{ item }}</el-tag>
+                  <el-tag v-for="(item, index) in dataList.tagDTOShowList" :key="index" size="medium" style="margin-right: 8px; transform: translate(0, -3px)">{{ item }}</el-tag>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="客户经理">
-                <el-tag v-if="dataList.realAccountManager" style="margin-right: 8px" size="small">{{ dataList.realAccountManager }}</el-tag>
+                <el-tag v-if="dataList.realAccountManager" style="margin-right: 8px; transform: translate(0, -3px)" size="medium">{{ dataList.realAccountManager }}</el-tag>
               </el-descriptions-item>
 
-              <el-descriptions-item label="对接人">
-                <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" style="margin-right: 8px" size="small">{{ item }}</el-tag>
+              <el-descriptions-item :span="2" label="对接人">
+                <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" style="margin-right: 8px; transform: translate(0, -3px)" size="medium">{{ item }}</el-tag>
               </el-descriptions-item>
+
               <el-descriptions-item label="职称">{{ getLabelByValue('jobTitle', dataList.realJobTitle) }}</el-descriptions-item>
               <el-descriptions-item label="执业分类">{{ getLabelByValue('realPracticeCategory', dataList.occupationalClassification) }}</el-descriptions-item>
               <el-descriptions-item label="行业协会">{{ dataList.realEmploymentIndustryAssociations }}</el-descriptions-item>
+              <el-descriptions-item :span="3" label="所在机构">
+                <div style="width: 100%">
+                  <div v-for="(item, index) in dataList.userOrgInfoDTOList" :key="index" class="dep-area">
+                    <div class="dep-line">
+                      <div class="dep-item">
+                        机构名称:
+                        <a style="color: #005dbe" href="JavaScript:;" @click="onHospitalClicked(item)">{{ item.hospital }}</a>
+                      </div>
+                      <div class="dep-item">科室: {{ getLabelByValue('realDepartment', item.orgDepartment) }}</div>
+                      <div class="dep-item">机构关系: {{ getLabelByValue('relationship', item.relationship) }}</div>
+                    </div>
+                    <div class="dep-line">
+                      <div class="dep-item">机构职务: {{ getLabelByValue('position', item.post) }}</div>
+                    </div>
+                  </div>
+                </div>
+              </el-descriptions-item>
             </el-descriptions>
+          </el-card>
 
-            <div class="pt-4" style="font-weight: bold; font-size: 16px">
-              <span>所在机构</span>
-            </div>
-            <el-descriptions v-for="(item, index) in dataList.userOrgInfoDTOList" :key="index" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
-              <el-descriptions-item label="机构名称">{{ item.hospital }}</el-descriptions-item>
-              <el-descriptions-item label="科室">{{ getLabelByValue('realDepartment', item.orgDepartment) }}</el-descriptions-item>
-              <el-descriptions-item label="机构关系">{{ getLabelByValue('relationship', item.relationship) }}</el-descriptions-item>
-              <el-descriptions-item label="机构职务">{{ getLabelByValue('position', item.post) }}</el-descriptions-item>
-            </el-descriptions>
-          </div>
-          <div class="divCrad">
-            <div class="pt-4 titleDiv">
-              <span class="fl mr-4">资质信息</span>
+          <el-card class="mb-4">
+            <div slot="header">
+              资质信息
               <span v-if="dataList.realAuditStatus == 1 || dataList.realAuditStatus == 2" class="fr auditStatus" @click="qualification">上传资质</span>
             </div>
             <el-descriptions title="执业信息" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item :span="3" label="医师执业证书">
-                <span v-if="!dataList.realDoctorPracticeCertificate">-</span>
-                <img v-if="dataList.realDoctorPracticeCertificate" width="160px" height="80px" :src="dataList.realDoctorPracticeCertificate" alt="" />
+                <div class="image-container">
+                  <img
+                    v-if="dataList.realDoctorPracticeCertificate"
+                    class="image-container-img"
+                    :src="dataList.realDoctorPracticeCertificate"
+                    alt=""
+                    @click="showImgView(dataList.realDoctorPracticeCertificate)"
+                  />
+                </div>
               </el-descriptions-item>
               <el-descriptions-item label="医师执业证书编码">{{ dataList.realPracticeCertificateCode || '-' }}</el-descriptions-item>
               <el-descriptions-item label="执业地点">{{ dataList.realAddress || '-' }}</el-descriptions-item>
@@ -76,7 +101,15 @@
 
             <el-descriptions title="医师资格信息" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item :span="3" label="医师资格证书">
-                <img v-if="dataList.realDoctorQualificationCertificate" width="160px" height="80px" :src="dataList.realDoctorQualificationCertificate" alt="" />
+                <div class="image-container">
+                  <img
+                    v-if="dataList.realDoctorQualificationCertificate"
+                    class="image-container-img"
+                    :src="dataList.realDoctorQualificationCertificate"
+                    alt=""
+                    @click="showImgView(dataList.realDoctorQualificationCertificate)"
+                  />
+                </div>
               </el-descriptions-item>
               <el-descriptions-item label="医师资格证书编码">{{ dataList.realQualificationCode || '-' }}</el-descriptions-item>
               <el-descriptions-item label="身份证号">{{ dataList.realIdNumber || '-' }}</el-descriptions-item>
@@ -85,45 +118,56 @@
               <el-descriptions-item label="类别">{{ dataList.realCategory || '-' }}</el-descriptions-item>
               <el-descriptions-item label="专业">{{ dataList.realMajor || '-' }}</el-descriptions-item>
             </el-descriptions>
+
             <el-descriptions title="最近审核信息" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
-              <el-descriptions-item label="审核状态">{{
-                dataList.realAuditStatus == 1 ? '审核通过' : dataList.realAuditStatus == 2 ? '审核驳回' : dataList.realAuditStatus == 3 ? '审核中' : ''
-              }}
+              <el-descriptions-item label="审核状态">
+                {{ dataList.realAuditStatus == 1 ? '审核通过' : dataList.realAuditStatus == 2 ? '审核驳回' : dataList.realAuditStatus == 3 ? '审核中' : '' }}
               </el-descriptions-item>
               <el-descriptions-item label="审核编码">
                 {{ dataList.userRealApprovalRecordList && dataList.userRealApprovalRecordList[0] && dataList.userRealApprovalRecordList[0].applyCode }}
               </el-descriptions-item>
             </el-descriptions>
-          </div>
-        </div>
+          </el-card>
 
-        <div class="divCrad">
-          <div class="pt-4 titleDiv">
-            <span class="fl mr-4">账号信息</span>
-          </div>
-          <el-descriptions title="" class="mt-4" :column="3" :size="size" label-class-name="descriptionLabelClass">
-            <el-descriptions-item label="注册时间">{{ dataList.registrationTime ? moment(dataList.registrationTime).format('YYYY-MM-DD') : '' }}</el-descriptions-item>
-            <el-descriptions-item label="注册来源">{{ getLabelByValue('registrationSource', dataList.registrationSource) }}</el-descriptions-item>
-          </el-descriptions>
-          <el-descriptions title="微信绑定" class="mt-4" :column="1" :size="size" label-class-name="descriptionLabelClass">
-            <el-descriptions-item label="是否绑定微信">
-              <BindWeChatShow style="margin-left: 8px;" :binding-wechat="dataList.bindingWechat"></BindWeChatShow>
-            </el-descriptions-item>
-          </el-descriptions>
-          <el-descriptions :column="3" :size="size" label-class-name="descriptionLabelClass">
-            <el-descriptions-item label="OpenID">{{ dataList.OpenID || '-' }}</el-descriptions-item>
-            <el-descriptions-item label="UnionID">{{ dataList.UnionID || '-' }}</el-descriptions-item>
-          </el-descriptions>
-
-          <el-descriptions :column="1" :size="size" label-class-name="descriptionLabelClass">
-            <el-descriptions-item label="是否关注公众号">
-              {{ getLabelByValue('officialAccount', dataList.officialAccount) }}
-            </el-descriptions-item>
-          </el-descriptions>
-          <el-descriptions :column="3" :size="size" label-class-name="descriptionLabelClass">
-            <el-descriptions-item label="关注时间"> {{ dataList.officialAccountTime ? moment(dataList.officialAccountTime).format('YYYY-MM-DD') : '' }}</el-descriptions-item>
-            <el-descriptions-item label="关注来源">{{ getLabelByValue('officialAccountSource', dataList.officialAccountSource) }}</el-descriptions-item>
-          </el-descriptions>
+          <el-card>
+            <div slot="header">账号信息</div>
+            <el-descriptions title="" class="mt-4" :column="3" :size="size" label-class-name="descriptionLabelClass">
+              <el-descriptions-item label="注册时间">{{ dataList.registrationTime ? moment(dataList.registrationTime).format('YYYY-MM-DD') : '' }}</el-descriptions-item>
+              <el-descriptions-item :span="2" label="注册来源">{{ getLabelByValue('registrationSource', dataList.registrationSource) }}</el-descriptions-item>
+              <el-descriptions-item :span="3" label="微信绑定">
+                <div style="width:100%">
+                  <div class="dep-area">
+                    <div class="dep-line">
+                      <div class="dep-item" style="display: flex;">
+                        <span>是否绑定微信: </span>
+                        <BindWeChatShow style="margin-left: 8px" :binding-wechat="dataList.bindingWechat"></BindWeChatShow>
+                      </div>
+                    </div>
+                    <div class="dep-line">
+                      <div class="dep-item">
+                        OpenID: {{ dataList.OpenID || '-' }}
+                      </div>
+                      <div class="dep-item">
+                        UnionID: {{ dataList.UnionID || '-' }}
+                      </div>
+                    </div>
+                    <div class="dep-line">
+                      <div class="dep-item">
+                        是否关注公众号: {{ getLabelByValue('officialAccount', dataList.officialAccount) }}
+                      </div>
+                    </div>
+                    <div class="dep-line">
+                      <div class="dep-item">
+                        关注时间: {{ dataList.officialAccountTime ? moment(dataList.officialAccountTime).format('YYYY-MM-DD') : '' }}
+                      </div>
+                      <div class="dep-item">
+                        关注来源: {{ getLabelByValue('officialAccountSource', dataList.officialAccountSource) }}
+                      </div>
+                    </div>
+                  </div>
+                </div></el-descriptions-item>
+            </el-descriptions>
+          </el-card>
         </div>
       </el-tab-pane>
       <el-tab-pane v-if="dataList.doctorLevel == 4 || dataList.doctorLevel == 5" label="专家信息" name="experts">
@@ -139,9 +183,9 @@
           </el-descriptions>
           <el-descriptions :colon="false" class="mt-4" title="针头习惯" label-class-name="descriptionLabelClass">
             <template v-for="(item, index) in dataList.userHabitAddDTOList">
-              <el-descriptions-item :key="index+1" label="针头">{{ item.name }}</el-descriptions-item>
-              <el-descriptions-item :key="index+2" label="规格">{{ getLabelByValue('zhen', item.details) }}</el-descriptions-item>
-              <el-descriptions-item :key="index+3"></el-descriptions-item>
+              <el-descriptions-item :key="index + 1" label="针头">{{ item.name }}</el-descriptions-item>
+              <el-descriptions-item :key="index + 2" label="规格">{{ getLabelByValue('zhen', item.details) }}</el-descriptions-item>
+              <el-descriptions-item :key="index + 3"></el-descriptions-item>
             </template>
           </el-descriptions>
           <el-descriptions title="出行相关" class="mt-4" :size="size" label-class-name="descriptionLabelClass">
@@ -156,71 +200,6 @@
           </el-descriptions>
         </div>
       </el-tab-pane>
-      <!-- <el-tab-pane class="productPane" label="产品认证" name="product">
-        <div>
-          <div class="productTitle pb-4">
-            <span>认证证书 </span>
-          </div>
-          <el-row class="elRow">
-            <el-col v-for="(o, index) in 3" :key="index">
-              <el-card class="box-card" :body-style="{ padding: '0px', display: 'flex' }">
-                <img class="imgBox" src="" />
-                <div class="contentTxet">
-                  <div>嗨体产品认证</div>
-                  <div>证书编号：{{ dataList.realQualificationCode }}</div>
-                  <div>认证时间：{{ '接口没有' }}</div>
-                  <div>到期时间：{{ '接口没有' }}</div>
-                  <div class="bottom clearfix">
-                    <el-button type="primary" class="button">查看</el-button>
-                  </div>
-                </div>
-              </el-card>
-            </el-col>
-          </el-row>
-        </div>
-
-        <div>
-          <div class="productTitle pb-4">
-            <span>进行中的认证</span>
-          </div>
-          <el-row>
-            <el-col v-for="(o, index) in 3" :key="index">
-              <el-card class="box-card" :body-style="{ padding: '0px', display: 'flex' }">
-                <img class="imgBox" src="" />
-                <div class="contentTxet">
-                  <el-timeline>
-                    <el-timeline-item
-                      v-for="(activity, inx) in activitiesA"
-                      :key="inx"
-                      :icon="activity.icon"
-                      :type="activity.type"
-                      :color="activity.color"
-                      :size="activity.size"
-                      :timestamp="activity.timestamp"
-                    >
-                      {{ activity.content }}
-                    </el-timeline-item>
-                  </el-timeline>
-                </div>
-              </el-card>
-            </el-col>
-          </el-row>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="沟通记录" name="communication">
-        <div>
-          <ImSearchArea>
-            <ImForm ref="ImForm" :form="formConfig"></ImForm>
-          </ImSearchArea>
-          <ImTableArea>
-            <ImTable :loading="loading" :table="tableConfig"></ImTable>
-            <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
-          </ImTableArea>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane label="活动记录" name="activity">活动记录</el-tab-pane>
-      <el-tab-pane label="课程记录" name="course">课程记录</el-tab-pane>
-      <el-tab-pane label="操作日志" name="operation">操作日志</el-tab-pane> -->
     </el-tabs>
   </div>
 </template>
@@ -231,7 +210,7 @@ import { getUserList, getUserDetail } from '@/api/user'
 import BindWeChatShow from '@/views/components/BindWeChatShow'
 
 export default {
-  name: 'UserDetail',
+  name: 'UserDetail-nocache',
   components: {
     BindWeChatShow
   },
@@ -314,7 +293,7 @@ export default {
       // 表格数据结束
       objectCode: this.$route.query.objectCode,
       list: [{ name: 1 }, { name: 2 }],
-      dataList: '',
+      dataList: {},
       // tab切换属性名
       activeName: 'doctor',
       // 信息样式
@@ -422,17 +401,23 @@ export default {
   },
 
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+
+    onHospitalClicked(item) {
+      this.$router.push({ name: 'HospitalDetail', query: { objectCode: item.hospitalCode } })
+    },
+
     // 编辑
     goEdit() {
-      console.log('goEdit')
-      console.log(this.dataList.objectCode)
       this.$router.push(`/user/addOrEdit?objectCode=${this.dataList.objectCode}`)
     },
     // 上传资质
     qualification() {
-      console.log('qualification')
       this.$router.push(`/user/editExports?objectCode=${this.dataList.objectCode}`)
-      console.log(this.dataList.objectCode)
     },
     // level动态展示
     getIcon(code) {
@@ -441,10 +426,6 @@ export default {
         return iconList
       }
     },
-    // 查看审核信息
-    // goAudit() {
-    //   this.$router.push(`/audit/list?objectCode=${this.dataList.objectCode}`)
-    // },
     // 获取select默认值
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
@@ -556,13 +537,6 @@ export default {
   width: 50%;
 }
 
-.el-card {
-  display: inline-block;
-  width: 450px;
-  height: 240px;
-  margin: 10px;
-}
-
 .productPane {
   display: inline-block;
   text-align: center;
@@ -610,6 +584,7 @@ export default {
 
 .information {
   padding: 30px;
+  padding-bottom: 0;
   overflow: hidden;
   background: white;
 
@@ -624,16 +599,77 @@ export default {
     font-size: 14px;
   }
 
-  .headerIcon {
-    float: left;
-    margin-right: 24px;
-    overflow: hidden;
-    border-radius: 50px;
+  .headContent {
+    display: flex;
+    align-items: center;
 
-    img {
+    .headerIcon {
       width: 96px;
       height: 96px;
-      background: #a6dbff;
+      margin-right: 24px;
+      overflow: hidden;
+      border-radius: 50%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        background: #a6dbff;
+      }
+    }
+
+    .headerDesc {
+      padding: 8px;
+      padding-top: 12px;
+      font-size: 14px;
+
+      .row {
+        display: flex;
+        margin-bottom: 16px;
+        color: #000;
+        font-weight: 400;
+        line-height: 16px;
+
+        .col {
+          min-width: 263px;
+        }
+      }
+    }
+  }
+}
+
+.detail-area {
+  .image-container {
+    width: 160px;
+    height: 160px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.02);
+
+    .image-container-img {
+      height: 100%;
+    }
+  }
+
+  .dep-area {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 27px 54px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+
+    .dep-line {
+      display: flex;
+      margin-bottom: 19px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .dep-item {
+        flex: 1;
+        color: #000;
+        font-weight: 400;
+        line-height: 16px;
+      }
     }
   }
 }
