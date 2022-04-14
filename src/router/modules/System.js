@@ -27,6 +27,13 @@ export const System = [
         meta: { title: '审批列表' }
       },
       {
+        path: '/audit/detail',
+        name: 'AuditDetail',
+        hidden: true,
+        component: () => import('@/views/audit/detail'),
+        meta: { title: '审批详情' }
+      },
+      {
         path: '/role/list',
         name: 'RoleList',
         component: () => import('@/views/role/list'),

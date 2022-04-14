@@ -12,6 +12,7 @@ export default {
   name: 'BaseInfoForm',
   data() {
     return {
+      phoneNum: '',
       formConfig: {
         column: 3,
         gutter: 42,
@@ -44,7 +45,7 @@ export default {
             type: 'ImInput',
             prop: 'phone',
             label: '手机号',
-            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            rules: [{ required: true, message: '请输入手机号', min: 11 }, 'phone'],
             attrs: {
               placeholder: '请输入手机号码',
               maxLength: 11
@@ -78,9 +79,9 @@ export default {
             prop: 'birthday',
             label: '出生日期',
             attrs: {
-              type: 'datetime',
+              type: 'date',
               style: 'width: 100%',
-              valueFormat: 'yyyy-MM-dd hh:mm:ss',
+              valueFormat: 'yyyy-MM-dd',
               placeholder: '请选择'
             }
           },
@@ -120,11 +121,10 @@ export default {
     getPhone(value) {
       checkPhone(value)
         .then((res) => {
-          console.log(res)
-          // this.$message.success(res.message)
+          this.phoneNum = res.data
         })
         .catch((res) => {
-          console.log(res)
+          this.phoneNum = res.data
           this.$message.error('手机号已经被注册')
         })
     },
@@ -153,9 +153,14 @@ export default {
 
     validate() {
       return new Promise((resolve) => {
-        this.$refs.ImForm.validate((valid) => {
-          resolve({ valid: valid, data: this.formConfig.props })
-        })
+        console.log(this.phoneNum)
+        if (this.phoneNum) {
+          this.$refs.ImForm.validate((valid) => {
+            resolve({ valid: valid, data: this.formConfig.props })
+          })
+        } else {
+          this.$message.error('请输入正确手机号')
+        }
       })
     }
   }
