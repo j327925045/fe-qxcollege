@@ -3,13 +3,13 @@
     <div slot="header" class="information">
       <div class="doctorNumber pb-4">
         医生编号: {{ dataList.doctorNumber }}
-        <img width="24px" height="24px" :src="getIcon(dataList.doctorLevel)" alt="" />
+        <img width="24px" height="24px" class="imageClass" :src="getIcon(dataList.doctorLevel)" alt="" />
         <span class="fr auditStatus" @click="goEdit">编辑</span>
       </div>
       <div class="headContent">
         <div class="headerIcon">
-          <img v-if="dataList.personalUrl" :src="dataList.personalUrl" alt="" />
-          <img v-else src="~@/assets/img/framework/avatar.svg" alt="" />
+          <img class="imageClass" v-if="dataList.personalUrl" :src="dataList.personalUrl" alt="" />
+          <img class="imageClass" v-else src="~@/assets/img/framework/avatar.svg" alt="" />
         </div>
         <div class="headerDesc">
           <div class="row">
@@ -35,7 +35,7 @@
             <el-descriptions :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="医生介绍">
                 <div class="image-container">
-                  <img class="image-container-img" :src="dataList.doctorIntroduction" alt="" />
+                  <img class="image-container-img imageClass" :src="dataList.doctorIntroduction" alt="" @click="showImgView(dataList.doctorIntroduction)"/>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item :span="2" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
@@ -497,6 +497,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.imageClass {
+  cursor: pointer;
+}
+
 .statusT {
   width: 74px;
   height: 28px;

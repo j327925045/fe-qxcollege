@@ -22,7 +22,7 @@
           {{ getLabelByValue('columnStatus', details.status) }}
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="专栏封面">
-          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt=""/>
+          <img v-if="details.coverUrl" class="imageClass" :src="details.coverUrl" alt="" @click="showImgView(details.coverUrl)" />
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="专栏标题">{{ details.title || '-' }}</el-descriptions-item>
         <el-descriptions-item :span="3" label="专栏简介">{{ details.introduction || '-' }}</el-descriptions-item>
@@ -126,6 +126,12 @@ export default {
     this.getList()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+
     onslotClick(objectCode) {
       this.$router.push({name: 'UserDetail', query: {objectCode: objectCode}})
     },
@@ -220,6 +226,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    cursor: pointer;
   }
 }
 

@@ -36,8 +36,8 @@
       <el-descriptions size="medium" :column="2" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="医师执业证书编码">{{ auditDetail.realPracticeCertificateCode }}</el-descriptions-item>
         <el-descriptions-item label="医师资格证书编码">{{ auditDetail.realQualificationCode }}</el-descriptions-item>
-        <el-descriptions-item label="医师执业证书"><img class="imageClass" :src=" auditDetail.realDoctorPracticeCertificate" alt="" srcset=""></el-descriptions-item>
-        <el-descriptions-item label="医师资格证书"><img class="imageClass" :src=" auditDetail.realDoctorQualificationCertificate" alt="" srcset=""></el-descriptions-item>
+        <el-descriptions-item label="医师执业证书"><img class="imageClass" :src="auditDetail.realDoctorPracticeCertificate" alt="" srcset="" @click="showImgView(auditDetail.realDoctorPracticeCertificate)"></el-descriptions-item>
+        <el-descriptions-item label="医师资格证书"><img class="imageClass" :src="auditDetail.realDoctorQualificationCertificate" alt="" srcset="" @click="showImgView(auditDetail.realDoctorQualificationCertificate)"></el-descriptions-item>
       </el-descriptions>
     </el-card>
 
@@ -68,6 +68,12 @@ export default {
     this.getInfos()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+    
     getDateTime(date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
     },
@@ -143,6 +149,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    cursor: pointer;
   }
 }
 

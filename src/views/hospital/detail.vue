@@ -30,7 +30,7 @@
         <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="机构图片">
           <span v-if="!details.orgPictureUrl">-</span>
-          <img v-if="details.orgPictureUrl" class="imageClass" :src="details.orgPictureUrl" alt="" />
+          <img v-if="details.orgPictureUrl" class="imageClass" :src="details.orgPictureUrl" alt="" @click="showImgView(details.orgPictureUrl)" />
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -46,7 +46,7 @@
             <div style="text-align:right">许可证</div>
           </div>
           <span v-if="!details.licencePictureUrl">-</span>
-          <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt="" />
+          <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt="" @click="showImgView(details.licencePictureUrl)" />
         </el-descriptions-item>
         <el-descriptions-item label="登记号">
           {{ details.registrationNo === '0' ? '-' : details.registrationNo }}
@@ -139,6 +139,12 @@ export default {
     this.getList()
   },
   methods: {
+    showImgView(url) {
+      this.$viewerApi({
+        images: [url]
+      })
+    },
+
     viewOrgItem(objectCode) {
       this.$router.push({ name: 'OrganizationDetail', query: { objectCode } })
     },
@@ -246,6 +252,7 @@ export default {
   .imageClass {
     width: 124px;
     height: 124px;
+    cursor: pointer;
   }
 }
 
