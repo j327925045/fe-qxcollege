@@ -24,13 +24,14 @@
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
       <el-button @click="closeCurrent">取 消</el-button>
       <el-button type="primary" @click="submitForm">保 存</el-button>
+      <el-button type="primary" @click="submitAndAudit">提交审核</el-button>
     </div>
   </ImWrapper>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { addCourseItem, getCourseDetail, updateCourseItem } from '@/api/course'
+import { addCourseItem, getCourseDetail, updateCourseItem, changeCourseStatus } from '@/api/course'
 import RichTextArea from '@/views/components/RichTextArea'
 import ResourceSelect from '@/views/components/ResourceSelect'
 import UserSelect from '@/views/components/UserSelect'
@@ -324,11 +325,17 @@ export default {
           if (res.data.materials && res.data.materials[0]) {
             props.materialCode = res.data.materials[0].objectCode
           }
+          if (res.data.courseType) {
+            const typeArr = res.data.courseType.map(item => {
+              return [item.firCode, item.secCode]
+            })
+            props.courseType = typeArr
+          }
         }
       })
     },
 
-    submitForm() {
+    submitForm(callback) {
       this.$refs.ImForm.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')
@@ -342,9 +349,12 @@ export default {
           data.courseNum = this.courseNum
           updateCourseItem(data).then(res => {
             if (res.code === 200) {
-              this.$message.success('更新成功！')
-              this.$emit('update')
-              this.closeCurrent()
+              if (callback) {
+                callback(this.editId)
+              } else {
+                this.$message.success('更新成功！')
+                this.closeCurrent()
+              }
             } else {
               this.$message.error(res.message)
             }
@@ -352,14 +362,35 @@ export default {
         } else {
           addCourseItem(data).then(res => {
             if (res.code === 200) {
-              this.$message.success('操作成功！')
-              this.$emit('add')
-              this.closeCurrent()
+              if (callback) {
+                callback(res.data)
+              } else {
+                this.$message.success('操作成功！')
+                this.closeCurrent()
+              }
             } else {
               this.$message.error(res.message)
             }
           })
         }
+      })
+    },
+
+    /**
+     * 提交审核
+     */
+    submitAndAudit() {
+      this.submitForm((objectCode) => {
+        const params = {
+          courseCode: objectCode,
+          status: 1
+        }
+        changeCourseStatus(params).then(res => {
+          if (res.code === 200) {
+            this.$message.success('操作成功！')
+            this.closeCurrent()
+          }
+        })
       })
     },
 

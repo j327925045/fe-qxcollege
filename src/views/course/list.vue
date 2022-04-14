@@ -3,6 +3,14 @@
     <ImSearchArea>
       <ImForm ref="ImForm" :form="formConfig">
         <UserSelect slot="UserSelect" v-model="formConfig.props.author" filterable class="w-full"></UserSelect>
+        <DictionaryCascader
+          slot="DictionaryCascader"
+          v-model="formConfig.props.secCourseType"
+          sign="courseFirstCategory"
+          style="width: 100%"
+          :emit-path="false"
+          :show-all-levels="true"
+        ></DictionaryCascader>
       </ImForm>
     </ImSearchArea>
 
@@ -10,27 +18,47 @@
       <div class="mb-4">
         <el-button type="primary" @click="addItem">新建课程</el-button>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
-      <ImPagination
-        ref="ImPagination"
-        :page-size.sync="pageSize"
-        :current-page.sync="currentPage"
-        :total="total"
-        @change="getList"
-      ></ImPagination>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="courseType" slot-scope="scope">
+          <span v-if="!scope.row.courseType || scope.row.courseType.length === 0">-</span>
+          <template v-else>
+            <div v-for="(item, idx) in scope.row.courseType" :key="idx">{{ item.firName }}-{{ item.secName }}</div>
+          </template>
+        </template>
+        <template slot="duration" slot-scope="scope">
+          <span v-if="!getMeterial(scope.row.materials)">-</span>
+          <span v-else>{{ getMeterial(scope.row.materials).duration || '-' }}</span>
+        </template>
+        <template slot="videoType" slot-scope="scope">
+          <span v-if="!getMeterial(scope.row.materials)">-</span>
+          <span v-else>{{ getVideoType(getMeterial(scope.row.materials).durationType) }}</span>
+        </template>
+        <template slot="operation" slot-scope="scope">
+          <el-button v-if="['1', '2', '3'].includes(scope.row.status)" size="medium" type="text" @click="viewItem(scope.$index, scope.row)">查看</el-button>
+          <el-button v-if="scope.row.status===2 && scope.row.shelfStatus==='1'" size="medium" type="text" @click="downItem(scope.$index, scope.row)">下架</el-button>
+          <el-button v-if="scope.row.status===2 && scope.row.shelfStatus==='2'" size="medium" type="text" @click="upItem(scope.$index, scope.row)">上架</el-button>
+          <el-button v-if="scope.row.status==='0'" size="medium" type="text" @click="editItem(scope.$index, scope.row)">编辑</el-button>
+          <el-button v-if="scope.row.status==='0'" size="medium" type="text" @click="submitAudit(scope.$index, scope.row)">提交审核</el-button>
+          <el-button v-if="scope.row.status==='1'" size="medium" type="text" @click="startAudit(scope.$index, scope.row)">审核</el-button>
+          <el-button size="medium" type="text" @click="deleteItem(scope.$index, scope.row)">删除</el-button>
+        </template>
+      </ImTable>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </ImTableArea>
   </ImWrapper>
 </template>
 
 <script>
-import { getCourseList, deleteCourseItem } from '@/api/course.js'
+import { getCourseList, deleteCourseItem, operateCourseShelfStatus, changeCourseStatus } from '@/api/course.js'
 import { mapGetters } from 'vuex'
 import UserSelect from '@/views/components/UserSelect'
+import DictionaryCascader from '@/views/components/DictionaryCascader'
 
 export default {
   name: 'CourseList',
   components: {
-    UserSelect
+    UserSelect,
+    DictionaryCascader
   },
   data() {
     return {
@@ -43,7 +71,7 @@ export default {
           courseNum: undefined,
           title: undefined,
           author: undefined,
-          courseType: undefined,
+          secCourseType: undefined,
           courseLevel: undefined,
           userLevel: undefined,
           paymentType: undefined,
@@ -56,15 +84,13 @@ export default {
             type: 'ImInput',
             prop: 'courseNum',
             label: '课程编号',
-            attrs: {
-            }
+            attrs: {}
           },
           {
             type: 'ImInput',
             prop: 'title',
             label: '课程标题',
-            attrs: {
-            }
+            attrs: {}
           },
           {
             type: 'ImSlot',
@@ -75,13 +101,11 @@ export default {
             }
           },
           {
-            type: 'ImSelect',
-            prop: 'courseType',
+            type: 'ImSlot',
+            prop: 'secCourseType',
             label: '课程分类',
-            attrs: {
-              clearable: true,
-              class: 'w-full',
-              options: []
+            slots: {
+              slot: 'DictionaryCascader'
             }
           },
           {
@@ -204,28 +228,26 @@ export default {
           {
             prop: 'videoType',
             label: '视频类型',
-            type: 'mapList',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this.enums.videoType
+            slot: 'videoType'
           },
           {
-            prop: 'videoTimeLen',
+            prop: 'meterials',
             label: '视频时长',
-            type: 'customFilter',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            filter(val, row) {
-              return val || '-'
-            }
+            slot: 'duration'
           },
           {
             prop: 'authorName',
-            label: '视频作者',
+            label: '课程作者',
             type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
@@ -238,12 +260,12 @@ export default {
           {
             prop: 'courseType',
             label: '课程分类',
-            type: 'mapList',
+            type: 'slot',
+            slot: 'courseType',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
-            },
-            options: this.enums.courseType
+              'min-width': '200'
+            }
           },
           {
             prop: 'courseLevel',
@@ -331,7 +353,7 @@ export default {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this.enums.courseAuditStatus
+            options: this?.enums?.courseAuditStatus ?? []
           },
           {
             prop: 'shelfStatus',
@@ -341,33 +363,17 @@ export default {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this.enums.courseShelfStatus
+            options: this?.enums?.courseShelfStatus ?? []
           },
           {
             prop: '',
             label: '操作',
-            type: 'buttons',
+            type: 'slot',
             attrs: {
               fixed: 'right',
-              width: '150'
+              width: '200'
             },
-            options: [
-              {
-                title: '查看',
-                type: 'text',
-                onClick: this.viewItem
-              },
-              {
-                title: '编辑',
-                type: 'text',
-                onClick: this.editItem
-              },
-              {
-                title: '删除',
-                type: 'text',
-                onClick: this.deleteItem
-              }
-            ]
+            slot: 'operation'
           }
         ]
       }
@@ -378,8 +384,104 @@ export default {
     this.setOptions()
   },
   methods: {
+    getMeterial(meterials) {
+      if (!meterials || meterials.length === 0) {
+        return null
+      } else {
+        return meterials[0]
+      }
+    },
+
+    changeStatus(params) {
+      changeCourseStatus(params).then((res) => {
+        if (res.code === 200) {
+          this.$message.success('操作成功')
+          this.getList()
+        }
+      })
+    },
+
+    /**
+     * 提交审核
+     */
+    submitAudit($index, record) {
+      this.$confirm('确定要提交审核吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          const params = {
+            courseCode: record.objectCode,
+            status: 1
+          }
+          this.changeStatus(params)
+        })
+        .catch(() => {})
+    },
+
+    startAudit($index, record) {
+      this.$confirm('是否审核通过该课程?', '提示', {
+        confirmButtonText: '审核通过',
+        cancelButtonText: '审核驳回',
+        type: 'warning'
+      })
+        .then(() => {
+          const params = {
+            courseCode: record.objectCode,
+            status: 2
+          }
+          this.changeStatus(params)
+        })
+        .catch(() => {
+          const params = {
+            courseCode: record.objectCode,
+            status: 3
+          }
+          this.changeStatus(params)
+        })
+    },
+
+    upItem($index, record) {
+      this.$confirm('确定要上架该课程吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          const params = {
+            courseCode: record.objectCode,
+            shelfStatus: 1
+          }
+          this.operateCourseShelf(params)
+        })
+        .catch(() => {})
+    },
+
+    downItem($index, record) {
+      this.$confirm('确定要下架该课程吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      })
+        .then(() => {
+          const params = {
+            courseCode: record.objectCode,
+            shelfStatus: 2
+          }
+          this.operateCourseShelf(params)
+        })
+        .catch(() => {})
+    },
+
+    operateCourseShelf(params) {
+      operateCourseShelfStatus(params).then((res) => {
+        if (res.code === 200) {
+          this.$message.success('操作成功!')
+          this.getList()
+        }
+      })
+    },
+
     setOptions() {
-      this.setFormPropOptions('courseType', this.enums.courseType)
+      // this.setFormPropOptions('courseType', this.enums.courseType)
       this.setFormPropOptions('courseLevel', this.enums.courseLevel)
       this.setFormPropOptions('userLevel', this.enums.doctorLevel)
       this.setFormPropOptions('paymentType', this.enums.paymentType)
@@ -387,15 +489,27 @@ export default {
       this.setFormPropOptions('shelfStatus', this.enums.courseShelfStatus)
       this.setFormPropOptions('videoType', this.enums.videoType)
     },
+
+    getVideoType(type) {
+      for (let i = 0; i < this.enums.videoType.length; i++) {
+        const item = this.enums.videoType[i]
+        if (item.value === type) {
+          return item.label
+        }
+      }
+      return '-'
+    },
+
     /**
      * 设置form标单项的options，因为enums异步获取，因此这里需要手动指定一下
      * 放到计算属性会有prop绑定失效的问题
      */
     setFormPropOptions(prop, options) {
       const formItems = this.formConfig.formItems
-      const item = formItems.find(item => item.prop === prop)
+      const item = formItems.find((item) => item.prop === prop)
       item.attrs.options = options
     },
+
     /**
      * 展示详情
      */
@@ -464,15 +578,16 @@ export default {
         ...this.formConfig.props
       }
       this.loading = true
-      getCourseList(params).then((res) => {
-        this.loading = false
-        if (res.code === 200) {
-          this.total = res.data.totalCount
-          this.tableConfig.data = res.data.list || []
-        } else {
-          this.$message.error(res.message)
-        }
-      })
+      getCourseList(params)
+        .then((res) => {
+          this.loading = false
+          if (res.code === 200) {
+            this.total = res.data.totalCount
+            this.tableConfig.data = res.data.list || []
+          } else {
+            this.$message.error(res.message)
+          }
+        })
         .catch((_) => {
           this.loading = false
         })
