@@ -6,7 +6,9 @@
     </span>
     <!-- <h3 class="common-form-title"><i class="el-icon-s-order" />{{ title || $route.meta.title }}</h3> -->
     <transition name="fade">
-      <slot v-if="isShow"></slot>
+      <keep-alive>
+        <slot v-if="isShow"></slot>
+      </keep-alive>
     </transition>
   </div>
 </template>
