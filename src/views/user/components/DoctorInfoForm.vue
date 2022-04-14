@@ -5,6 +5,7 @@
       <EmployeeSelect slot="EmployeeSelect" v-model="formConfig.props.realAccountManagerCode" class="w-full" placeholder="请选择"></EmployeeSelect>
       <EmployeeSelect slot="EmployeeSelect1" v-model="formConfig.props.userOppositeDTOList" filterable multiple collapse-tags class="w-full" placeholder="请选择"></EmployeeSelect>
       <OrgInfoList slot="OrgInfoList" v-model="formConfig.props.userOrgInfoDTOList" class="w-full"></OrgInfoList>
+      <div slot="emptySlot"></div>
       <h3 slot="baseInfoSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />医生基本信息</h3>
       <h3 slot="orgInfoSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />所在机构信息</h3>
       <h3 slot="hospitalzizhiSlot" style="width: 100%" class="gyl-title"><i class="el-icon-s-order" />医生资质信息</h3>
@@ -71,14 +72,22 @@ export default {
             }
           },
           {
+            type: 'ImImgUpload',
+            prop: 'doctorIntroduction',
+            label: '医生介绍',
+            span: 8,
+            attrs: {
+              placeholder: '请输入'
+            }
+          },
+          {
             type: 'ImInput',
             prop: 'doctorProfile',
             label: '医生简介',
-            span: 24,
+            span: 16,
             attrs: {
               type: 'textarea',
-              style: 'width: 50%',
-              rows: 4,
+              rows: 6,
               placeholder: '请输入',
               size: 'medium',
               maxLength: 500,
@@ -86,13 +95,10 @@ export default {
             }
           },
           {
-            type: 'ImImgUpload',
-            prop: 'doctorIntroduction',
-            label: '医生介绍',
-            span: 24,
-            attrs: {
-              style: 'width: 50%',
-              placeholder: '请输入'
+            type: 'ImSlot',
+            notInForm: true,
+            slots: {
+              slot: 'emptySlot'
             }
           },
           {

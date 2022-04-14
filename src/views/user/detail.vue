@@ -32,26 +32,41 @@
         <div class="m-4 mt-0">
           <el-card class="mb-4">
             <div slot="header" class="card-header">医生信息</div>
-            <el-descriptions :size="size" label-class-name="descriptionLabelClass">
-              <el-descriptions-item :span="3" label="医生介绍">
+            <el-descriptions class="mb-4" :size="size" label-class-name="descriptionLabelClass">
+              <el-descriptions-item :span="1" label="医生介绍">
                 <div class="image-container">
                   <img v-if="dataList.doctorIntroduction" class="image-container-img imageClass" :src="dataList.doctorIntroduction" alt="" @click="showImgView(dataList.doctorIntroduction)" />
                   <img v-else src="~@/assets/img/framework/img-holder.png" alt="" />
                 </div>
               </el-descriptions-item>
-              <el-descriptions-item :span="3" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
-
+              <el-descriptions-item :span="2" label="医生简介">{{ dataList.doctorProfile }}</el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :size="size" label-class-name="descriptionLabelClass">
               <el-descriptions-item label="医生标签">
                 <div v-if="dataList.tagDTOList">
-                  <el-tag v-for="(item, index) in dataList.tagDTOShowList" :key="index" size="medium" style="margin-right: 8px; transform: translate(0, -3px)">{{ item }}</el-tag>
+                  <el-tag
+                    v-for="(item, index) in dataList.tagDTOShowList"
+                    :key="index"
+                    size="medium"
+                    style="margin-right: 8px;margin-bottom: 4px; transform: translate(0, -3px);"
+                  >{{ item }}</el-tag>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="客户经理">
-                <el-tag v-if="dataList.realAccountManager" style="margin-right: 8px; transform: translate(0, -3px)" size="medium">{{ dataList.realAccountManager }}</el-tag>
+                <el-tag
+                  v-if="dataList.realAccountManager"
+                  style="margin-right: 8px;margin-bottom: 4px; transform: translate(0, -3px);"
+                  size="medium"
+                >{{ dataList.realAccountManager }}</el-tag>
               </el-descriptions-item>
 
               <el-descriptions-item :span="2" label="对接人">
-                <el-tag v-for="(item, index) in dataList.userOppositeDTOShowList" :key="index" style="margin-right: 8px; transform: translate(0, -3px)" size="medium">{{ item }}</el-tag>
+                <el-tag
+                  v-for="(item, index) in dataList.userOppositeDTOShowList"
+                  :key="index"
+                  style="margin-right: 8px;margin-bottom: 4px; transform: translate(0, -3px);"
+                  size="medium"
+                >{{ item }}</el-tag>
               </el-descriptions-item>
 
               <el-descriptions-item label="职称">{{ getLabelByValue('jobTitle', dataList.realJobTitle) }}</el-descriptions-item>
@@ -662,6 +677,7 @@ export default {
 
     .image-container-img {
       height: 100%;
+      cursor: pointer;
     }
   }
 

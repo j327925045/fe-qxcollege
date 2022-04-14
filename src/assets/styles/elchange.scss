@@ -29,3 +29,10 @@
     padding-left: 28px !important;
   }
 }
+
+.el-textarea .el-input__count {
+  color: black !important;
+  text-shadow: 1px 0 black !important;
+  background: transparent !important;
+  transform: translate(0, 11px);
+}

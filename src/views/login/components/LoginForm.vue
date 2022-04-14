@@ -6,7 +6,10 @@
         <el-input v-model="formData.account" size="medium" placeholder="手机号" auto-complete="new-password" class="fix-auto-fill"></el-input>
       </el-form-item>
       <el-form-item label="" class="" prop="password">
-        <el-input v-model="formData.password" size="medium" placeholder="密码" auto-complete="new-password" class="fix-auto-fill" show-password></el-input>
+        <el-input v-model="formData.password" :type="showPassword?'text':'password'" size="medium" placeholder="密码" auto-complete="new-password" class="fix-auto-fill">
+          <svg-icon v-if="showPassword" slot="suffix" style="font-size: 18px;transform: translate(-8px, 10px);cursor: pointer" icon-class="eye-open" @click="togglePassword"></svg-icon>
+          <svg-icon v-else slot="suffix" style="font-size: 18px;transform: translate(-8px, 10px);cursor: pointer" icon-class="eye-close" @click="togglePassword"></svg-icon>
+        </el-input>
       </el-form-item>
       <el-row class="enter-x">
         <el-col :span="12">
@@ -44,7 +47,8 @@ export default {
         account: [{ required: true, message: '请输入账号' }],
         password: [{ required: true, message: '请输入密码' }]
       },
-      loading: false
+      loading: false,
+      showPassword: false
     }
   },
   watch: {
@@ -56,6 +60,10 @@ export default {
     }
   },
   methods: {
+    togglePassword() {
+      this.showPassword = !this.showPassword
+    },
+
     handleLogin() {
       this.$refs.formRef.validate(valid => {
         if (!valid) {

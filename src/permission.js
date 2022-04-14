@@ -37,3 +37,10 @@ router.beforeEach(async(to, from, next) => {
     }
   }
 })
+
+router.afterEach(() => {
+  if (document.querySelector('.app-scrollbar-wrapper')) {
+    console.log(document.querySelector('.app-scrollbar-wrapper').scrollTop)
+    document.querySelector('.app-scrollbar-wrapper').scrollTop = 0
+  }
+})

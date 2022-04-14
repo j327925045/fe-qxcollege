@@ -90,6 +90,7 @@ const router = new Router({
   mode: 'history',
   routes,
   scrollBehavior(to, from, savedPosition) {
+    console.log('savedPosition', savedPosition)
     if (savedPosition) {
       return savedPosition
     } else {

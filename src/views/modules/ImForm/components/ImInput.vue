@@ -5,7 +5,7 @@
     v-bind="attrs"
     :placeholder="attrs.placeholder||'请输入'"
     :maxlength="attrs.maxLength"
-    show-word-limit
+    :show-word-limit="attrs.showWordLimit"
     v-on="listeners"
     @input="onInput"
   >
