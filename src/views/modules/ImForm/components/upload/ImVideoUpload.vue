@@ -76,7 +76,7 @@ export default {
 
     beforeUpload(file) {
       if (file) {
-        if (file.size > 1024 * 1024 * 1024) {
+        if (file.size > 3 * 1024 * 1024 * 1024) {
           this.$message.error('上传文件大小不能超过3GB!')
           return false
         }

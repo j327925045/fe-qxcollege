@@ -13,49 +13,65 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="someSlot" slot-scope="scope">
-          <span> {{ scope.row.nickname }}</span>
-          <!-- <img v-if="scope.row.nickname" width="24px" height="24px" :src="getIcon(scope.row.doctorLevel)" alt=""> -->
+          <span> {{ scope.row.nickname || '-' }}</span>
+        </template>
+        <template slot="realName" slot-scope="scope">
+          <span> {{ scope.row.realName || '-' }}</span>
         </template>
         <template slot="realAuditSlot" slot-scope="scope">
-          <div style="position:relative">
-            <span v-if="scope.row.realAuditStatus==1" style="position: absolute;top:-2px;color:#0093FF;font-size: 50px">·</span>
-            <span v-if="scope.row.realAuditStatus==2" style="position: absolute;top:-2px;color:#E1251B;font-size: 50px">·</span>
-            <span v-if="scope.row.realAuditStatus==3" style="position: absolute;top:-2px;color:#0093FF;font-size: 50px">·</span>
-            <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
+          <div style="display: flex; align-items: center">
+            <span v-if="scope.row.realAuditStatus == 1" style="width: 4px; height: 4px; background-color: #0093ff; border-radius: 100%"></span>
+            <span v-if="scope.row.realAuditStatus == 2" style="width: 4px; height: 4px; background-color: #e1251b; border-radius: 100%"></span>
+            <span v-if="scope.row.realAuditStatus == 3" style="width: 4px; height: 4px; background-color: #0093ff; border-radius: 100%"></span>
+            <span style="margin-left: 8px"> {{ scope.row.realAuditStatus == 1 ? '审核通过' : scope.row.realAuditStatus == 2 ? '审核驳回' : scope.row.realAuditStatus == 3 ? '审核中' : '-' }}</span>
           </div>
         </template>
         <template slot="regionFullNameSlot" slot-scope="scope">
           <div v-if="scope.row.userOrgInfoShowDTOList">
-            <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+            <div v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
               <span>{{ item.region }}</span>
-            </div></div>
+            </div>
+          </div>
+          <div v-else>-</div>
         </template>
         <template slot="realHospitalNameSlot" slot-scope="scope">
-
-          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+          <div v-if="!scope.row.userOrgInfoShowDTOList">-</div>
+          <div v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
             <span> {{ item.hospital }}</span>
           </div>
         </template>
         <template slot="realDepartmentSlot" slot-scope="scope">
-          <div v-for="item,index in scope.row.userOrgInfoShowDTOList" :key="index">
+          <div v-if="!scope.row.userOrgInfoShowDTOList">-</div>
+          <div v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
             <span> {{ getLabelByValue('realDepartment', item.orgDepartment) }}</span>
           </div>
         </template>
         <template slot="realJobTitleSlot" slot-scope="scope">
           <div>
-            <span> {{ getLabelByValue('jobTitle',scope.row.realJobTitle) }}</span>
+            <span> {{ getLabelByValue('jobTitle', scope.row.realJobTitle) }}</span>
           </div>
         </template>
-
+        <template slot="doctorLevel" slot-scope="scope">
+          <div class="text-center">
+            <svg-icon style="font-size: 24px;" :icon-class="`v${scope.row.doctorLevel}`"></svg-icon>
+          </div>
+        </template>
+        <template slot="gender" slot-scope="scope">
+          <div>
+            <span v-if="scope.row.gender==='0'">未知</span>
+            <svg-icon v-if="scope.row.gender==='1'" style="color: red;font-size: 18px;" icon-class="boy"></svg-icon>
+            <svg-icon v-if="scope.row.gender==='2'" style="color: blue;font-size: 18px;" icon-class="girl"></svg-icon>
+          </div>
+        </template>
+        <template slot="bindingWechat" slot-scope="scope">
+          <div class="text-center">
+            <svg-icon v-if="scope.row.bindingWechat==='1'" style="color: red;font-size: 18px;" icon-class="wechat-bind"></svg-icon>
+            <svg-icon v-if="scope.row.bindingWechat==='2'" style="color: blue;font-size: 18px;" icon-class="wechat-unbind"></svg-icon>
+          </div>
+        </template>
       </ImTable>
 
-      <ImPagination
-        ref="ImPagination"
-        :page-size.sync="pageSize"
-        :current-page.sync="currentPage"
-        :total="total"
-        @change="getList"
-      ></ImPagination>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </ImTableArea>
   </ImWrapper>
 </template>
@@ -97,7 +113,7 @@ export default {
           realDepartment: undefined, // 科室
           realJobTitle: undefined, // 职称
           realAccountManagerCode: undefined, // 客户经理名字
-          bindingWechat: undefined// 是否绑定微信
+          bindingWechat: undefined // 是否绑定微信
         },
         formItems: [
           {
@@ -152,7 +168,6 @@ export default {
               style: 'width: 100%',
               options: []
             }
-
           },
           {
             type: 'ImSelect',
@@ -164,7 +179,6 @@ export default {
               style: 'width: 100%',
               options: []
             }
-
           },
           {
             type: 'ImSelect',
@@ -176,7 +190,6 @@ export default {
               style: 'width: 100%',
               options: []
             }
-
           },
           {
             type: 'ImSlot',
@@ -289,34 +302,38 @@ export default {
             type: 'slot',
             label: '昵称',
             attrs: {
-              width: '100'
+              'show-overflow-tooltip': true,
+              'min-width': '100'
             },
             slot: 'someSlot'
           },
           {
             prop: 'realName',
             label: '姓名',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
-          },
-          {
-            prop: 'gender',
-            label: '性别',
-            type: 'mapList',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.gender ?? []
+            slot: 'realName'
+          },
+          {
+            prop: 'gender',
+            label: '性别',
+            type: 'slot',
+            attrs: {
+              'show-overflow-tooltip': true,
+              'min-width': '120'
+            },
+            slot: 'gender'
+            // options: this?.enums?.gender ?? []
           },
           {
             prop: 'birthday',
             label: '生日',
             type: 'customFilter',
             attrs: {
-              width: '110'
+              'min-width': '120'
             },
             filter(val, row) {
               if (val) {
@@ -331,33 +348,33 @@ export default {
             label: '手机号',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '140'
             }
           },
+          // {
+          //   prop: 'doctorLevel',
+          //   label: '医生等级',
+          //   type: 'customFilter',
+          //   attrs: {
+          //     'show-overflow-tooltip': true,
+          //     'min-width': '120',
+          //     'text-align': 'center'
+          //   },
+          //   filter(val, row) {
+          //     return `<h3 style="text-align: center;">V${val}</h3>`
+          //   }
+          // },
           {
             prop: 'doctorLevel',
             label: '医生等级',
-            type: 'customFilter',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120',
               'text-align': 'center'
             },
-            filter(val, row) {
-              return `<h3 style="text-align: center;">V${val}</h3>`
-            }
+            slot: 'doctorLevel'
           },
-          // {
-          //   prop: 'realAuditStatus',
-          //   label: '审核状态',
-          //   type: 'mapList',
-          //   attrs: {
-          //     'show-overflow-tooltip': true,
-          //     'min-width': '120'
-          //   },
-          //   options: this?.enums?.realAuditStatus ?? []
-          // },
-
           {
             type: 'slot',
             label: '审核状态',
@@ -404,20 +421,24 @@ export default {
           {
             prop: 'realAccountManager',
             label: '客户经理',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
+            },
+            filter(val) {
+              return val || '-'
             }
           },
           {
             prop: 'bindingWechat',
             label: '是否绑定微信',
-            type: 'mapList',
+            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '120'
             },
-            options: this?.enums?.bindingWechat ?? []
+            slot: 'bindingWechat'
           },
 
           {
@@ -450,6 +471,10 @@ export default {
       }
     }
   },
+  created() {
+    this.getList()
+    this.setOptions()
+  },
   activated() {
     this.getList()
     this.setOptions()
@@ -457,7 +482,7 @@ export default {
   methods: {
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
-      return item.label || ''
+      return item.label || '-'
     },
     // level动态展示
     getIcon(code) {
@@ -471,11 +496,11 @@ export default {
      */
     setOptions() {
       this.setFormPropOptions('gender', this.enums.gender) // 男女
-      this.setFormPropOptions('doctorLevel', this.enums.doctorLevel)// 医生等级
+      this.setFormPropOptions('doctorLevel', this.enums.doctorLevel) // 医生等级
       this.setFormPropOptions('realJobTitle', this.enums.jobTitle) // 职称
       this.setFormPropOptions('bindingWechat', this.enums.bindingWechat) // 是否绑定微信
       this.setFormPropOptions('realAuditStatus', this.enums.realAuditStatus) // 审核状态
-      this.setFormPropOptions('realDepartment', this.enums.realDepartment)// 科室
+      this.setFormPropOptions('realDepartment', this.enums.realDepartment) // 科室
     },
 
     /**
@@ -484,7 +509,7 @@ export default {
      */
     setFormPropOptions(prop, options) {
       const formItems = this.formConfig.formItems
-      const item = formItems.find(item => item.prop === prop)
+      const item = formItems.find((item) => item.prop === prop)
       item.attrs.options = options
     },
 
