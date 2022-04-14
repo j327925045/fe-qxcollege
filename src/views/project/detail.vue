@@ -52,7 +52,9 @@
 
       </el-descriptions>
 
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTableArea>
+        <ImTable :table="tableConfig"></ImTable>
+      </ImTableArea>
     </el-card>
   </ImWrapper>
 </template>
@@ -67,9 +69,7 @@ export default {
   name: 'ProjectDetail',
   data() {
     return {
-      loading: false,
       moment,
-      loading: false,
       objectCode: this.$route.query.objectCode,
       detailDialogVisible: false,
       productDetail: {},
@@ -77,7 +77,64 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['enums'])
+    ...mapGetters(['enums']),
+    tableConfig() {
+      return {
+        data: [],
+        tableItems: [
+          {
+            prop: '',
+            label: '序号',
+            type: 'index',
+            attrs: {
+              fixed: 'left',
+              width: 60
+            }
+          },
+          {
+            prop: 'businessType',
+            label: '业务类型',
+            attrs: {
+              'show-overflow-tooltip': true
+            }
+          },
+          {
+            prop: 'category',
+            label: '材料类别',
+            attrs: {
+              'show-overflow-tooltip': true
+            }
+          },
+
+          {
+            prop: '',
+            label: '操作',
+            type: 'buttons',
+            attrs: {
+              fixed: 'right',
+              width: '160'
+            },
+            options: [
+              {
+                title: '查看',
+                type: 'text',
+                onClick: this.showDetail
+              }
+              // {
+              //   title: '编辑',
+              //   type: 'text',
+              //   onClick: this.editItem
+              // },
+              // {
+              //   title: '删除',
+              //   type: 'text',
+              //   onClick: this.deleteItem
+              // }
+            ]
+          }
+        ]
+      }
+    }
   },
   activated() {
     this.getItemDetail()
@@ -98,6 +155,8 @@ export default {
           this.productDetail = res.data
           this.productDetail.projectProductList = res.data.projectProductArr
           this.projectProductCodeArrLength = this.productDetail.projectProductCodeArr.length
+          this.tableConfig.data = res.data.productList || []
+          // console.log(this.tableConfig)
         }
       })
     },
