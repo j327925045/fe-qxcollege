@@ -33,7 +33,7 @@ export default {
     return {
       formConfig: {
         column: 3,
-        gutter: 42,
+        gutter: 56,
         attrs: {
           labelWidth: '140px',
           labelPosition: 'top'

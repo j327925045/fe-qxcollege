@@ -228,7 +228,7 @@ export default {
             type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '100'
             },
             slot: 'salesCounterpartName'
           },
@@ -238,11 +238,10 @@ export default {
             type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '80'
             },
             filter(val, row) {
-              return val || 0
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {

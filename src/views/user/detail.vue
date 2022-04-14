@@ -133,26 +133,26 @@
           <div class="pb-4 titleDiv">
             <span>专家偏好</span>
           </div>
-          <el-descriptions title="临床相关" class="mt-4" :column="2" :size="size">
+          <el-descriptions title="临床相关" class="mt-4" :size="size">
             <el-descriptions-item label="洗手衣规格">{{ getLabelByValue('expertSpecificationsHandWashingClothes', dataList.expertSpecificationsHandWashingClothes + '') }}</el-descriptions-item>
             <el-descriptions-item label="手套规格">{{ getLabelByValue('expertGloveSpecification', dataList.expertGloveSpecification + '') }}</el-descriptions-item>
             <el-descriptions-item label="消毒剂偏好">{{ getLabelByValue('expertDisinfectantPreference', dataList.expertDisinfectantPreference + '') }}</el-descriptions-item>
           </el-descriptions>
-          <div>
-            <div style="padding-bottom: 10px; color: #606266; font-size: 14px">针头习惯：</div>
-            <el-descriptions v-for="(item, index) in dataList.userHabitAddDTOList" :key="index" style="font-size: 14px" direction="vertical" :column="3">
-              <el-descriptions-item label-class-name="my-label" label="针头">{{ item.name }}</el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="规格">{{ getLabelByValue('zhen', item.details) }}</el-descriptions-item>
-            </el-descriptions>
-          </div>
-          <el-descriptions title="出行相关" class="mt-4" :column="2" :size="size">
+          <el-descriptions :colon="false" class="mt-4" title="针头习惯">
+            <template v-for="(item, index) in dataList.userHabitAddDTOList">
+              <el-descriptions-item :key="index+1" label="针头">{{ item.name }}</el-descriptions-item>
+              <el-descriptions-item :key="index+2" label="规格">{{ getLabelByValue('zhen', item.details) }}</el-descriptions-item>
+              <el-descriptions-item :key="index+3"></el-descriptions-item>
+            </template>
+          </el-descriptions>
+          <el-descriptions title="出行相关" class="mt-4" :size="size">
             <el-descriptions-item label="舱位标准">{{ getLabelByValue('expertStandardAccommodation', dataList.expertStandardAccommodation) }}</el-descriptions-item>
             <el-descriptions-item label="航司偏好">{{ dataList.expertAirlinePreference }}</el-descriptions-item>
             <el-descriptions-item label="酒店偏好">{{ dataList.expertHotelPreference }}</el-descriptions-item>
             <el-descriptions-item label="饮食偏好">{{ dataList.expertEatingHabits }}</el-descriptions-item>
             <el-descriptions-item label="饮酒偏好">{{ dataList.expertDrinkingPreference }}</el-descriptions-item>
           </el-descriptions>
-          <el-descriptions title="休闲相关" class="mt-4" :column="2" :size="size">
+          <el-descriptions title="休闲相关" class="mt-4" :size="size">
             <el-descriptions-item label="兴趣爱好">{{ dataList.expertHobby }}</el-descriptions-item>
           </el-descriptions>
         </div>

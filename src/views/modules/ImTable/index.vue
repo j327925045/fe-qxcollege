@@ -236,7 +236,7 @@ export default {
       background: #fafafa;
 
       .cell {
-        padding: 0 15px;
+        // padding: 0 15px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
