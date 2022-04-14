@@ -75,7 +75,7 @@ export default {
         props: {
           projectConsensusCodeList: [],
           projectProductArr: '',
-          foundingCode: [],
+          foundingCode: '',
           name: '', // 名称
           remark: '', // 项目介绍
           //
@@ -154,7 +154,9 @@ export default {
               maxLength: 500,
               type: 'textarea',
               rows: 4,
-              placeholder: '请输入项目明细'
+              placeholder: '请输入',
+              size: 'medium',
+              showWordLimit: true
             }
           },
           {

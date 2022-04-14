@@ -2,7 +2,7 @@
   <ImWrapper>
     <div slot="header" class="bg-white rounded p-6 mt-2">
       <div class="header-container">
-        <span class="header-text">机构编号:{{ details.orgCode }}</span>
+        <span class="header-text">机构编号: {{ details.orgCode }}</span>
         <div>
           <el-button @click="deleteItem">删 除</el-button>
           <el-button type="primary" @click="editItem">编 辑</el-button>

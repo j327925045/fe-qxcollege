@@ -74,7 +74,12 @@ export default {
             rules: [{ required: true, message: '请输入专栏简介' }],
             attrs: {
               type: 'textarea',
-              style: 'width: 33%'
+              style: 'width: 33%',
+              rows: 4,
+              placeholder: '请输入',
+              size: 'medium',
+              maxLength: 500,
+              showWordLimit: true
             }
           },
           {

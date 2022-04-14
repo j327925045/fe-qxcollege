@@ -29,7 +29,7 @@
         <template slot="regionFullNameSlot" slot-scope="scope">
           <span v-if="scope.row.userOrgInfoShowDTOList">
             <span v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
-              <span>{{ item.region }}</span>
+              <span>{{ item.region }}</span><br>
             </span>
           </span>
           <div v-else>-</div>
@@ -70,8 +70,8 @@
 </template>
 
 <script>
-import {getUserList, deleteUserItem} from '@/api/user'
-import {mapGetters} from 'vuex'
+import { getUserList, deleteUserItem } from '@/api/user'
+import { mapGetters } from 'vuex'
 import moment from 'moment'
 import utils from '@/utils/utils'
 
@@ -501,15 +501,15 @@ export default {
     },
 
     showDetail($index, record) {
-      this.$router.push({name: 'UserDetail', query: {objectCode: record.objectCode}})
+      this.$router.push({ name: 'UserDetail', query: { objectCode: record.objectCode } })
     },
 
     addItem() {
-      this.$router.push({name: 'UserAddOrEdit'})
+      this.$router.push({ name: 'UserAddOrEdit' })
     },
 
     editItem($index, record) {
-      this.$router.push({name: 'UserAddOrEdit', query: {objectCode: record.objectCode}})
+      this.$router.push({ name: 'UserAddOrEdit', query: { objectCode: record.objectCode } })
     },
 
     deleteItem($index, record) {
@@ -520,7 +520,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteUserItem({objectCode: record.objectCode}).then((res) => {
+          deleteUserItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
