@@ -13,7 +13,7 @@
       <div slot="header">
         <span class="headertext">项目信息</span>
       </div>
-      <el-descriptions size="medium" class="ml-4">
+      <el-descriptions size="medium" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="项目名称">
           <span class="projectName">{{ productDetail.name }}</span>
         </el-descriptions-item>
@@ -27,7 +27,7 @@
           <span class="projectText">{{ productDetail.projectDeteils||'-' }}</span>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="创始医生">
-          <span class="projectText">{{ productDetail.foundingCode||'-' }}</span>
+          <span class="projectText">{{ productDetail.foundingName||'-' }}</span>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="共识医生">
           <div>
@@ -40,8 +40,10 @@
           <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="">
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="项目介绍">
-          <div v-if="productDetail.projectIntroduce">-</div>
-          <div v-else v-html="productDetail.projectIntroduce"></div>
+          <div v-if="productDetail.projectIntroduce">
+            <div v-html="productDetail.projectIntroduce?productDetail.projectIntroduce:'-'"></div>
+          </div>
+          <div v-else>-</div>
         </el-descriptions-item>
 
       </el-descriptions>
@@ -160,6 +162,12 @@ export default {
   .projectText{
     font-size: 14px;
   }
+}
+
+/deep/ .descriptionLabelClass {
+  justify-content: right;
+  width: 120px;
+  margin-bottom: 24px;
 }
 
 /deep/.el-descriptions-item__label{
