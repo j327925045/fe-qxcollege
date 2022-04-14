@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import {getCourseList, deleteCourseItem, operateCourseShelfStatus, changeCourseStatus} from '@/api/course.js'
-import {mapGetters} from 'vuex'
+import { getCourseList, deleteCourseItem, operateCourseShelfStatus, changeCourseStatus } from '@/api/course.js'
+import { mapGetters } from 'vuex'
 import UserSelect from '@/views/components/UserSelect'
 import DictionaryCascader from '@/views/components/DictionaryCascader'
 
@@ -301,55 +301,73 @@ export default {
           {
             prop: 'price',
             label: '积分数值',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
             prop: 'viewCount',
             label: '观看次数',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
             prop: 'viewUserCnt',
             label: '观看人数',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
             prop: 'collectCount',
             label: '收藏数',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
             prop: 'starCount',
             label: '点赞数',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
             prop: 'commentCount',
             label: '评论数',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
+            },
+            filter(val, row) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {
@@ -539,21 +557,21 @@ export default {
     },
 
     viewItem($index, record) {
-      this.$router.push({name: 'CourseDetail', query: {objectCode: record.objectCode}})
+      this.$router.push({ name: 'CourseDetail', query: { objectCode: record.objectCode } })
     },
 
     /**
      * 编辑
      */
     editItem($index, record) {
-      this.$router.push({name: 'CourseAddOrEdit', query: {objectCode: record.objectCode}})
+      this.$router.push({ name: 'CourseAddOrEdit', query: { objectCode: record.objectCode } })
     },
 
     /**
      * 添加
      */
     addItem() {
-      this.$router.push({name: 'CourseAddOrEdit'})
+      this.$router.push({ name: 'CourseAddOrEdit' })
     },
 
     /**
@@ -567,7 +585,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteCourseItem({objectCode: record.objectCode}).then((res) => {
+          deleteCourseItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
