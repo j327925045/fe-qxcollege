@@ -124,11 +124,11 @@ export default {
           {
             prop: 'gender',
             label: '员工性别',
-            type: 'slot',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '100'
             },
+            type: 'slot',
             slot: 'gender'
           },
           {
@@ -243,7 +243,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteEmployeesItem({ objectCode: record.objectCode }).then((res) => {
+          deleteEmployeesItem({objectCode: record.objectCode}).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -252,7 +252,8 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     /**
