@@ -51,6 +51,17 @@ export default {
             }
           },
           {
+            type: 'ImInput',
+            prop: 'account',
+            label: '账号（手机号）',
+            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
+            attrs: {
+              type: 'text',
+              placeholder: '请输入手机号',
+              maxLength: 11
+            }
+          },
+          {
             type: 'ImSelect',
             prop: 'gender',
             label: '员工性别',
@@ -67,17 +78,6 @@ export default {
             prop: 'avatar',
             label: '员工头像',
             rules: [{ required: true, message: '请上传员工头像' }]
-          },
-          {
-            type: 'ImInput',
-            prop: 'account',
-            label: '账号（手机号）',
-            rules: [{ required: true, message: '请输入手机号' }, 'phone'],
-            attrs: {
-              type: 'text',
-              placeholder: '请输入手机号',
-              maxLength: 11
-            }
           },
           {
             type: 'ImInput',
@@ -149,6 +149,7 @@ export default {
       this.editId = undefined
       this.drawerVisible = true
       this.setPasswordVisible(true)
+      this.setAccountDisable(false)
     },
 
     edit(editId) {
@@ -156,12 +157,19 @@ export default {
       this.drawerVisible = true
       this.getItemDetail()
       this.setPasswordVisible(false)
+      this.setAccountDisable(true)
     },
 
     setPasswordVisible(visible) {
       const formItems = this.formConfig.formItems
       const item = formItems.find(item => item.prop === 'password')
       item.hidden = !visible
+    },
+
+    setAccountDisable(disabled) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === 'account')
+      item.attrs.disabled = disabled
     },
 
     getItemDetail() {
