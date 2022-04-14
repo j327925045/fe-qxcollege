@@ -142,6 +142,9 @@ export default {
       total: 0
     }
   },
+  created() {
+    this.getList()
+  },
   activated() {
     this.getList()
   },

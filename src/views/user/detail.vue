@@ -417,8 +417,7 @@ export default {
       }
     }
   },
-  activated() {
-    console.log('进入详情')
+  created() {
     this.getdata()
   },
 

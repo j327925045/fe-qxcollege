@@ -183,6 +183,12 @@ export default {
       }
     }
   },
+  created() {
+    this.getList()
+    if (this.$route.query.objectCode) {
+      this.showDetail()
+    }
+  },
   activated() {
     this.getList()
     if (this.$route.query.objectCode) {

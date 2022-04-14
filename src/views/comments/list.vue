@@ -236,6 +236,10 @@ export default {
       }
     }
   },
+  created() {
+    this.getList()
+    this.setOptions()
+  },
   activated() {
     this.getList()
     this.setOptions()

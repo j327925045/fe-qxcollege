@@ -203,6 +203,9 @@ export default {
       }
     }
   },
+  created() {
+    this.getList()
+  },
   activated() {
     this.getList()
   },
@@ -243,7 +246,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteEmployeesItem({objectCode: record.objectCode}).then((res) => {
+          deleteEmployeesItem({ objectCode: record.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()

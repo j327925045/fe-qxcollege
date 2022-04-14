@@ -209,10 +209,10 @@ export default {
       }
     }
   },
-  activated() {
+  created() {
     this.getList()
   },
-  created() {
+  activated() {
     this.getList()
   },
   methods: {
