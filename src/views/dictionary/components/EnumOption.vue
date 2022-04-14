@@ -16,7 +16,6 @@
       ></el-input>
       <el-button
         size="mini"
-        type="primary"
         icon="el-icon-plus"
         round
         @click="addItem"
@@ -24,7 +23,6 @@
       <el-button
         size="mini"
         :disabled="myValue.length===1"
-        type="danger"
         icon="el-icon-delete"
         round
         @click="deleteItem(idx)"

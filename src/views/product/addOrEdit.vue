@@ -111,7 +111,9 @@ export default {
               style: 'width: 100%',
               type: 'textarea',
               rows: 4,
-              placeholder: '请输入'
+              placeholder: '请输入',
+              size: 'medium',
+              showWordLimit: true
             }
           },
           {
