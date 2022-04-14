@@ -238,11 +238,10 @@ export default {
             type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
             },
             filter(val, row) {
-              return val || 0
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {

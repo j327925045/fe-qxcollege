@@ -22,5 +22,10 @@
 .deleteConfirm {
   .el-icon-warning {
     color: #f56c6c !important;
+    font-size: 20px !important;
+  }
+
+  .el-message-box__message {
+    padding-left: 28px !important;
   }
 }

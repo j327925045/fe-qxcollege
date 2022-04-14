@@ -265,10 +265,13 @@ export default {
           {
             prop: 'doctorCount',
             label: '医生数量',
+            type: 'customFilter',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120',
-              align: 'right'
+              'min-width': '120'
+            },
+            filter(val) {
+              return `<div style="text-align: right;">${val}</div>`
             }
           },
           {

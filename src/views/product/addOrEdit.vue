@@ -22,7 +22,7 @@ export default {
     return {
       formConfig: {
         column: 3,
-        gutter: 42,
+        gutter: 56,
         attrs: {
           labelWidth: '140px',
           labelPosition: 'top'
@@ -92,13 +92,25 @@ export default {
           },
           {
             type: 'ImInput',
+            prop: 'skuId',
+            label: '品牌',
+            attrs: {
+              placeholder: '请输入',
+              maxLength: 128,
+              class: 'w-full',
+              options: []
+            }
+          },
+          {
+            type: 'ImInput',
             prop: 'indication',
             label: '产品介绍',
             span: 24,
             attrs: {
               maxLength: 500,
-              style: 'width: 31%',
+              style: 'width: 100%',
               type: 'textarea',
+              rows: 4,
               placeholder: '请输入'
             }
           },
@@ -107,19 +119,6 @@ export default {
             prop: 'imageUrl',
             span: 24,
             label: '产品图片'
-          },
-          {
-            type: 'ImInput',
-            prop: 'skuId',
-            label: '品牌',
-            span: 24,
-            attrs: {
-              placeholder: '请输入',
-              maxLength: 128,
-              style: 'width: 31%',
-              class: 'w-full',
-              options: []
-            }
           }
         ]
       },
