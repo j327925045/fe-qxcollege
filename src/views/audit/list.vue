@@ -111,16 +111,6 @@ export default {
             }
           },
           {
-            prop: 'createTime',
-            label: '创建时间',
-            type: 'customFilter',
-            attrs: {
-            },
-            filter(val, row) {
-              return moment(val).format('YYYY-MM-DD')
-            }
-          },
-          {
             prop: 'objectCode',
             label: '审核编号',
             attrs: {
@@ -153,6 +143,16 @@ export default {
             ]
           },
 
+          {
+            prop: 'createTime',
+            label: '创建时间',
+            type: 'customFilter',
+            attrs: {
+            },
+            filter(val, row) {
+              return moment(val).format('YYYY-MM-DD')
+            }
+          },
           {
             prop: '',
             label: '操作',
@@ -195,7 +195,7 @@ export default {
         record = { objectCode: this.$route.query.objectCode }
       }
       // this.$router.push(`/audit/detail?objectCode=${record.objectCode}`)
-      this.$refs.DetailDialog.show(record)
+      this.$router.push({ name: 'AuditDetail', query: { objectCode: record.objectCode } })
     },
 
     editItem($index, record) {
