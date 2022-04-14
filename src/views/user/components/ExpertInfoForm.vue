@@ -171,6 +171,7 @@ export default {
     setFormPropOptions(prop, options) {
       const formItems = this.formConfig.formItems
       const item = formItems.find((item) => item.prop === prop)
+      // console.log(JSON.parse(JSON.stringify(options)))
       item.attrs.options = options
     },
     validate() {
