@@ -52,9 +52,7 @@
           </div>
         </template>
         <template slot="doctorLevel" slot-scope="scope">
-          <div class="text-center">
-            <DoctorLevelShow :doctor-level="scope.row.doctorLevel"></DoctorLevelShow>
-          </div>
+          <DoctorLevelShow :doctor-level="scope.row.doctorLevel"></DoctorLevelShow>
         </template>
         <template slot="gender" slot-scope="scope">
           <GenderShow :gender="scope.row.gender"></GenderShow>
