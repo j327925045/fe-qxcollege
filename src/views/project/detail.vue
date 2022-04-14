@@ -27,7 +27,7 @@
           <span class="projectText">{{ productDetail.projectDeteils||'-' }}</span>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="创始医生">
-          <span class="projectText">{{ productDetail.foundingCode||'-' }}</span>
+          <span class="projectText">{{ productDetail.foundingName||'-' }}</span>
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="共识医生">
           <div>
@@ -40,8 +40,10 @@
           <img v-if="productDetail.projectPictureUrl" class="imageClass" :src="productDetail.projectPictureUrl" alt="">
         </el-descriptions-item>
         <el-descriptions-item :span="3" label="项目介绍">
-          <div v-if="productDetail.projectIntroduce">-</div>
-          <div v-else v-html="productDetail.projectIntroduce"></div>
+          <div v-if="productDetail.projectIntroduce">
+            <div v-html="productDetail.projectIntroduce?productDetail.projectIntroduce:'-'"></div>
+          </div>
+          <div v-else>-</div>
         </el-descriptions-item>
 
       </el-descriptions>
