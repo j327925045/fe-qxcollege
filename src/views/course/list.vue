@@ -421,6 +421,7 @@ export default {
 
     startAudit($index, record) {
       this.$confirm('是否审核通过该课程?', '提示', {
+        distinguishCancelAndClose: true,
         confirmButtonText: '审核通过',
         cancelButtonText: '审核驳回',
         type: 'warning'
@@ -432,12 +433,14 @@ export default {
           }
           this.changeStatus(params)
         })
-        .catch(() => {
-          const params = {
-            courseCode: record.objectCode,
-            status: 3
+        .catch((action) => {
+          if (action === 'cancel') {
+            const params = {
+              courseCode: record.objectCode,
+              status: 3
+            }
+            this.changeStatus(params)
           }
-          this.changeStatus(params)
         })
     },
 

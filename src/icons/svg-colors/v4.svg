@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="96.5322664%" id="linearGradient-1">
+            <stop stop-color="#FECD73" offset="0%"></stop>
+            <stop stop-color="#8E4D00" offset="100%"></stop>
+        </linearGradient>
+        <path d="M8.89936905,17.7467461 L0.249410718,8.95038407 C0.0212241833,8.7183354 -0.0583585304,8.37496191 0.0438937453,8.06364527 L2.09616215,0.591400047 C2.21218102,0.238169746 2.53723652,0 2.90330852,0 L16.0544998,0 C16.4186805,0 16.7424978,0.235754399 16.860002,0.586443882 L18.9544618,8.06125065 C19.0591588,8.37371768 18.9800862,8.71956406 18.750589,8.95294562 L10.1031496,17.7467461 C9.7705758,18.084418 9.23194286,18.084418 8.89936905,17.7467461 Z" id="path-2"></path>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="95.2009249%" id="linearGradient-4">
+            <stop stop-color="#FFDA95" offset="0%"></stop>
+            <stop stop-color="#CF8D41" offset="100%"></stop>
+        </linearGradient>
+        <path d="M8.89936905,15.4967461 L0.249410718,8.95038407 C0.0212241833,8.7183354 -0.0583585304,8.37496191 0.0438937453,8.06364527 L2.09616215,0.591400047 C2.21218102,0.238169746 2.53723652,0 2.90330852,0 L16.0544998,0 C16.4186805,0 16.7424978,0.235754399 16.860002,0.586443882 L18.9544618,8.06125065 C19.0591588,8.37371768 18.9800862,8.71956406 18.750589,8.95294562 L10.1031496,15.4967461 C9.7705758,15.834418 9.23194286,15.834418 8.89936905,15.4967461 Z" id="path-5"></path>
+        <linearGradient x1="13.8405093%" y1="19.257147%" x2="68.2072425%" y2="75.5116107%" id="linearGradient-7">
+            <stop stop-color="#FFC44E" offset="0%"></stop>
+            <stop stop-color="#C38100" offset="62.9507212%"></stop>
+            <stop stop-color="#C77F2A" offset="100%"></stop>
+        </linearGradient>
+        <path d="M8.89936905,15.4967461 L0.249410718,8.95038407 C0.0212241833,8.7183354 -0.0583585304,8.37496191 0.0438937453,8.06364527 L2.09616215,1.16134268 C2.21218102,0.808112377 2.53723652,0.569942631 2.90330852,0.569942631 L16.0544998,0.569942631 C16.4186805,0.569942631 16.7424978,0.80569703 16.860002,1.15638651 L18.9544618,8.06125065 C19.0591588,8.37371768 18.9800862,8.71956406 18.750589,8.95294562 L10.1031496,15.4967461 C9.7705758,15.834418 9.23194286,15.834418 8.89936905,15.4967461 Z" id="path-8"></path>
+        <filter x="-0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-10">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.644886364 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <text id="text-11" font-family="Helvetica-Bold, Helvetica" font-size="12.1" font-weight="bold" fill="#FFFFFF">
+            <tspan x="8.84637111" y="11.1590909">4</tspan>
+        </text>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-12">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.68627451   0 0 0 0 0.482352941   0 0 0 0 0.368627451  0 0 0 0.7 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+        <text id="text-13" font-family="Helvetica-Bold, Helvetica" font-size="9.9" font-weight="bold" fill="#FFFFFF">
+            <tspan x="3.31738916" y="11.2613636">v</tspan>
+        </text>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-14">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0.68627451   0 0 0 0 0.482352941   0 0 0 0 0.368627451  0 0 0 0.7 0" type="matrix" in="shadowOffsetOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="20220402确定版本" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="0图标补充" transform="translate(-249.000000, -32.000000)">
+            <g id="v4" transform="translate(249.000000, 32.000000)">
+                <g id="编组" transform="translate(2.000000, 4.000000)">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use id="path-3" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                    <mask id="mask-6" fill="white">
+                        <use xlink:href="#path-5"></use>
+                    </mask>
+                    <use id="path-3备份" fill="url(#linearGradient-4)" xlink:href="#path-5"></use>
+                    <mask id="mask-9" fill="white">
+                        <use xlink:href="#path-8"></use>
+                    </mask>
+                    <g id="path-3备份-2">
+                        <use fill="url(#linearGradient-7)" fill-rule="evenodd" xlink:href="#path-8"></use>
+                        <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-8"></use>
+                    </g>
+                    <polygon id="星形备份-2" fill="#FFFFFF" fill-rule="nonzero" opacity="0.198273" mask="url(#mask-9)" transform="translate(4.023710, 8.515100) scale(-1, 1) translate(-4.023710, -8.515100) " points="-0.641237805 16.875 5.75047705 7.93203128 5.94212995 0.155199178 8.68865732 8.40761308"></polygon>
+                    <polygon id="星形备份-2备份" fill="#8B583C" fill-rule="nonzero" opacity="0.198273" mask="url(#mask-9)" points="10.4167261 16.875 16.8084409 7.93203128 17.0000938 0.155199178 19.7466212 8.40761308"></polygon>
+                    <g id="4" mask="url(#mask-9)" fill="#FFFFFF" fill-opacity="1">
+                        <use filter="url(#filter-12)" xlink:href="#text-11"></use>
+                        <use xlink:href="#text-11"></use>
+                    </g>
+                    <g id="v" mask="url(#mask-9)" fill="#FFFFFF" fill-opacity="1">
+                        <use filter="url(#filter-14)" xlink:href="#text-13"></use>
+                        <use xlink:href="#text-13"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
