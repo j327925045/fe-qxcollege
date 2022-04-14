@@ -17,7 +17,7 @@
 
         <el-descriptions-item label="项目名称"><span class="projectName">{{ productDetail.name }}</span></el-descriptions-item>
         <el-descriptions-item label="项目编号"><span class="projectText">{{ productDetail.projectCode }}</span></el-descriptions-item>
-        <el-descriptions-item label="产品数量"><span class="projectText">{{ productDetail.projectProductCodeArr.length }}</span></el-descriptions-item>
+        <el-descriptions-item label="产品数量"><span class="projectText">{{ projectProductCodeArrLength }}</span></el-descriptions-item>
         <el-descriptions-item label="项目明细"><span class="projectText">{{ productDetail.projectDeteils }}</span></el-descriptions-item>
 
         <el-descriptions-item label="产品集合">
@@ -50,19 +50,20 @@ import utils from '@/utils/utils'
 
 import { deleteProjectItem, getProjectDetail } from '@/api/project'
 export default {
-  name: 'DetailDialog',
+  name: 'ProjectDetail',
   data() {
     return {
       moment,
       objectCode: this.$route.query.objectCode,
       detailDialogVisible: false,
-      productDetail: {}
+      productDetail: {},
+      projectProductCodeArrLength: ''
     }
   },
   computed: {
     ...mapGetters(['enums'])
   },
-  created() {
+  activated() {
     this.getItemDetail()
   },
   methods: {
@@ -70,10 +71,12 @@ export default {
      * 获取详情
      */
     getItemDetail() {
+      console.log(this.objectCode)
       getProjectDetail({ objectCode: this.objectCode }).then(res => {
         if (res.code === 200) {
           this.productDetail = res.data
           this.productDetail.projectProductList = res.data.projectProductArr
+          this.projectProductCodeArrLength = this.productDetail.projectProductCodeArr.length
         }
       })
     },

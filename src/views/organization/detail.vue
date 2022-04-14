@@ -136,7 +136,7 @@ export default {
       })
         .then(() => {
           if (this.tableConfig.data.length > 0) {
-            this.$message.error('该机构下有医生 ，不允许删除。')
+            this.$message.error('该集团下有机构 ，不允许删除。')
           } else {
             deleteOrganizationItem({ objectCode: this.objectCode }).then((res) => {
               if (res.code === 200) {

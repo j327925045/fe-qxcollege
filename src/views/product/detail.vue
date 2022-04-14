@@ -41,7 +41,11 @@
       <div slot="header">
         <span class="headertext">关联项目(todo列表需支持筛选)</span>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="projectCodeSlot" slot-scope="scope">
+          <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.objectCode)">{{ scope.row.projectCode }}</el-button>
+        </template>
+      </ImTable>
       <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"></ImPagination>
     </el-card>
   </ImWrapper>
@@ -72,23 +76,23 @@ export default {
     tableConfig() {
       return {
         data: [],
-        tableItems: [
-          {
-            prop: 'projectCode',
-            label: '项目编号',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+        tableItems: [{
+          type: 'slot',
+          label: '项目编号',
+          attrs: {
+            fixed: 'left',
+            minWidth: '120'
           },
-          {
-            prop: 'name',
-            label: '项目名称',
-            attrs: {
-              'show-overflow-tooltip': true,
-              'min-width': '120'
-            }
+          slot: 'projectCodeSlot'
+        },
+        {
+          prop: 'name',
+          label: '项目名称',
+          attrs: {
+            'show-overflow-tooltip': true,
+            'min-width': '120'
           }
+        }
         ]
       }
     }
@@ -140,10 +144,12 @@ export default {
     goListPage() {
       this.$router.replace({ name: 'ProductList' })
     },
-
+    onslotClick(objectCode) {
+      this.$router.push({ name: 'ProjectDetail', query: { objectCode: objectCode } })
+    },
     getList() {
       const params = {
-        objectCode: this.objectCode
+        productCode: this.objectCode
       }
       this.loading = true
       getProjectList(params)
