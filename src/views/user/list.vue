@@ -23,15 +23,15 @@
             <span v-if="scope.row.realAuditStatus==1" style="position: absolute;top:-2px;color:#52C41A;font-size: 50px">·</span>
             <span v-if="scope.row.realAuditStatus==2" style="position: absolute;top:-2px;color:#E1251B;font-size: 50px">·</span>
             <span v-if="scope.row.realAuditStatus==3" style="position: absolute;top:-2px;color:#0093FF;font-size: 50px">·</span>
-            <span style="margin-left:13px"> {{ scope.row.realAuditStatus==1?"审核通过":scope.row.realAuditStatus==2?"审核驳回":scope.row.realAuditStatus==3?"审核中":"-" }}</span>
+            <span style="margin-left:13px"> {{ scope.row.realAuditStatus == 1 ? "审核通过" : scope.row.realAuditStatus == 2 ? "审核驳回" : scope.row.realAuditStatus == 3 ? "审核中" : "-" }}</span>
           </div>
         </template>
         <template slot="regionFullNameSlot" slot-scope="scope">
-          <div v-if="scope.row.userOrgInfoShowDTOList">
-            <div v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
+          <span v-if="scope.row.userOrgInfoShowDTOList">
+            <span v-for="(item, index) in scope.row.userOrgInfoShowDTOList" :key="index">
               <span>{{ item.region }}</span>
-            </div>
-          </div>
+            </span>
+          </span>
           <div v-else>-</div>
         </template>
         <template slot="realHospitalNameSlot" slot-scope="scope">
@@ -70,8 +70,8 @@
 </template>
 
 <script>
-import { getUserList, deleteUserItem } from '@/api/user'
-import { mapGetters } from 'vuex'
+import {getUserList, deleteUserItem} from '@/api/user'
+import {mapGetters} from 'vuex'
 import moment from 'moment'
 import utils from '@/utils/utils'
 
@@ -81,6 +81,7 @@ import EmployeeSelect from '@/views/components/EmployeeSelect'
 import GenderShow from '@/views/components/GenderShow'
 import DoctorLevelShow from '@/views/components/DoctorLevelShow'
 import BindWeChatShow from '@/views/components/BindWeChatShow'
+
 export default {
   name: 'UserList',
   components: {
@@ -369,11 +370,11 @@ export default {
             },
             slot: 'realAuditSlot'
           },
-
           {
             type: 'slot',
             label: '地区',
             attrs: {
+              'show-overflow-tooltip': true,
               width: '260'
             },
             slot: 'regionFullNameSlot'
@@ -500,15 +501,15 @@ export default {
     },
 
     showDetail($index, record) {
-      this.$router.push({ name: 'UserDetail', query: { objectCode: record.objectCode } })
+      this.$router.push({name: 'UserDetail', query: {objectCode: record.objectCode}})
     },
 
     addItem() {
-      this.$router.push({ name: 'UserAddOrEdit' })
+      this.$router.push({name: 'UserAddOrEdit'})
     },
 
     editItem($index, record) {
-      this.$router.push({ name: 'UserAddOrEdit', query: { objectCode: record.objectCode } })
+      this.$router.push({name: 'UserAddOrEdit', query: {objectCode: record.objectCode}})
     },
 
     deleteItem($index, record) {
@@ -519,7 +520,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteUserItem({ objectCode: record.objectCode }).then((res) => {
+          deleteUserItem({objectCode: record.objectCode}).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -528,7 +529,8 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     /**

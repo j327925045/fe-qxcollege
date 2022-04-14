@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { getCourseList, deleteCourseItem, operateCourseShelfStatus, changeCourseStatus } from '@/api/course.js'
-import { mapGetters } from 'vuex'
+import {getCourseList, deleteCourseItem, operateCourseShelfStatus, changeCourseStatus} from '@/api/course.js'
+import {mapGetters} from 'vuex'
 import UserSelect from '@/views/components/UserSelect'
 import DictionaryCascader from '@/views/components/DictionaryCascader'
 
@@ -262,6 +262,7 @@ export default {
             label: '课程分类',
             type: 'slot',
             slot: 'courseType',
+            class: 'w-full',
             attrs: {
               'show-overflow-tooltip': true,
               'min-width': '200'
@@ -302,7 +303,8 @@ export default {
             label: '积分数值',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '120',
+              align: 'right'
             }
           },
           {
@@ -310,7 +312,8 @@ export default {
             label: '观看次数',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '120',
+              align: 'right'
             }
           },
           {
@@ -318,7 +321,8 @@ export default {
             label: '观看人数',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '120',
+              align: 'right'
             }
           },
           {
@@ -326,7 +330,8 @@ export default {
             label: '收藏数',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '120',
+              align: 'right'
             }
           },
           {
@@ -334,7 +339,8 @@ export default {
             label: '点赞数',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '120',
+              align: 'right'
             }
           },
           {
@@ -342,7 +348,8 @@ export default {
             label: '评论数',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              'min-width': '120',
+              align: 'right'
             }
           },
           {
@@ -420,7 +427,8 @@ export default {
           }
           this.changeStatus(params)
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     startAudit($index, record) {
@@ -460,7 +468,8 @@ export default {
           }
           this.operateCourseShelf(params)
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     downItem($index, record) {
@@ -475,7 +484,8 @@ export default {
           }
           this.operateCourseShelf(params)
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     operateCourseShelf(params) {
@@ -529,21 +539,21 @@ export default {
     },
 
     viewItem($index, record) {
-      this.$router.push({ name: 'CourseDetail', query: { objectCode: record.objectCode } })
+      this.$router.push({name: 'CourseDetail', query: {objectCode: record.objectCode}})
     },
 
     /**
      * 编辑
      */
     editItem($index, record) {
-      this.$router.push({ name: 'CourseAddOrEdit', query: { objectCode: record.objectCode } })
+      this.$router.push({name: 'CourseAddOrEdit', query: {objectCode: record.objectCode}})
     },
 
     /**
      * 添加
      */
     addItem() {
-      this.$router.push({ name: 'CourseAddOrEdit' })
+      this.$router.push({name: 'CourseAddOrEdit'})
     },
 
     /**
@@ -557,7 +567,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteCourseItem({ objectCode: record.objectCode }).then((res) => {
+          deleteCourseItem({objectCode: record.objectCode}).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
@@ -566,7 +576,8 @@ export default {
             }
           })
         })
-        .catch(() => {})
+        .catch(() => {
+        })
     },
 
     /**

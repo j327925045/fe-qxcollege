@@ -21,9 +21,10 @@
 </template>
 
 <script>
-import { getPermissionList, deletePermissionItem } from '@/api/permission'
+import {getPermissionList, deletePermissionItem} from '@/api/permission'
 import AddOrEdit from './components/AddOrEdit'
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'PermissionsList',
   components: {
@@ -98,6 +99,7 @@ export default {
             prop: 'name',
             label: '菜单名称',
             attrs: {
+              'show-overflow-tooltip': true,
               'min-width': '180'
             }
           },
@@ -190,7 +192,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deletePermissionItem({ objectCode: record.objectCode }).then(res => {
+          deletePermissionItem({objectCode: record.objectCode}).then(res => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.getList()
