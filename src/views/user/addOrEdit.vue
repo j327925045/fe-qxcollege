@@ -165,6 +165,12 @@ export default {
             ...this.expertInfoData
           }
         }
+        if (data.userOrgInfoDTOList) {
+          const validData = data.userOrgInfoDTOList.filter(item => {
+            return item.hospitalCode && item.orgDepartment && item.relationship && item.post
+          })
+          data.userOrgInfoDTOList = validData
+        }
         if (this.editId) {
           data.objectCode = this.editId
           updateUserItem(data).then((res) => {

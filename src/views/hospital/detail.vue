@@ -23,12 +23,13 @@
         <el-descriptions-item label="所在城市">{{ details.regionFullName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="机构地址">{{ details.location || '-' }}</el-descriptions-item>
         <el-descriptions-item label="所属集团">
-          <el-button type="text" size="medium" style="padding: 3px;" @click="viewOrgItem(details.organizationCode)">{{ details.organizationName || '-' }}</el-button>
+          <el-button type="text" size="medium" style="padding: 3px" @click="viewOrgItem(details.organizationCode)">{{ details.organizationName || '-' }}</el-button>
         </el-descriptions-item>
         <el-descriptions-item label="联系人姓名">{{ details.contactName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="联系人电话">{{ details.contactPhone || '-' }}</el-descriptions-item>
         <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="机构图片">
+          <span v-if="!details.orgPictureUrl">-</span>
           <img v-if="details.orgPictureUrl" class="imageClass" :src="details.orgPictureUrl" alt="" />
         </el-descriptions-item>
       </el-descriptions>
@@ -39,10 +40,17 @@
         <span class="headertext">资质信息</span>
       </div>
       <el-descriptions size="medium" label-class-name="descriptionLabelClass">
-        <el-descriptions-item label="医疗解构许可证">
+        <el-descriptions-item>
+          <div slot="label">
+            <div>医疗机构</div>
+            <div>执业许可</div>
+          </div>
+          <span v-if="!details.licencePictureUrl">-</span>
           <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt="" />
         </el-descriptions-item>
-        <el-descriptions-item label="登记号">{{ details.registrationNo == 0 ? '' : details.registrationNo }}</el-descriptions-item>
+        <el-descriptions-item label="登记号">
+          {{ details.registrationNo === '0' ? '-' : details.registrationNo }}
+        </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
