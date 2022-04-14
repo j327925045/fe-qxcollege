@@ -19,13 +19,15 @@
         <el-descriptions-item label="机构性质">
           {{ getLabelByValue('hospitalNature', details.nature) }}
         </el-descriptions-item>
-        <el-descriptions-item label="成立时间">{{ details.establishedTime?getDate(details.establishedTime):"" }}</el-descriptions-item>
-        <el-descriptions-item label="所在城市">{{ details.regionFullName }}</el-descriptions-item>
-        <el-descriptions-item label="机构地址">{{ details.location }}</el-descriptions-item>
-        <el-descriptions-item label="所属集团">{{ details.organizationName }}</el-descriptions-item>
-        <el-descriptions-item label="联系人姓名">{{ details.contactName }}</el-descriptions-item>
-        <el-descriptions-item label="联系人电话">{{ details.contactPhone }}</el-descriptions-item>
-        <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName }}</el-descriptions-item>
+        <el-descriptions-item label="成立时间">{{ details.establishedTime ? getDate(details.establishedTime) : '-' }}</el-descriptions-item>
+        <el-descriptions-item label="所在城市">{{ details.regionFullName || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="机构地址">{{ details.location || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="所属集团">
+          <el-button type="text" size="medium" style="padding: 3px;" @click="viewOrgItem(details.organizationCode)">{{ details.organizationName || '-' }}</el-button>
+        </el-descriptions-item>
+        <el-descriptions-item label="联系人姓名">{{ details.contactName || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="联系人电话">{{ details.contactPhone || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="销售对接人">{{ details.salesCounterpartName || '-' }}</el-descriptions-item>
         <el-descriptions-item label="机构图片">
           <img v-if="details.orgPictureUrl" class="imageClass" :src="details.orgPictureUrl" alt="" />
         </el-descriptions-item>
@@ -40,7 +42,7 @@
         <el-descriptions-item label="医疗解构许可证">
           <img v-if="details.licencePictureUrl" class="imageClass" :src="details.licencePictureUrl" alt="" />
         </el-descriptions-item>
-        <el-descriptions-item label="登记号">{{ details.registrationNo==0?"":details.registrationNo }}</el-descriptions-item>
+        <el-descriptions-item label="登记号">{{ details.registrationNo == 0 ? '' : details.registrationNo }}</el-descriptions-item>
       </el-descriptions>
     </el-card>
 
@@ -50,11 +52,10 @@
       </div>
       <ImTable :loading="loading" :table="tableConfig">
         <template slot="doctorNumberSlot" slot-scope="scope">
-          <el-button type="text" style="font-size:14px" @click="onslotClick(scope.row.doctorCode)">{{ scope.row.doctorNumber }}</el-button>
+          <el-button type="text" size="medium" @click="onslotClick(scope.row.doctorCode)">{{ scope.row.doctorNumber }}</el-button>
         </template>
       </ImTable>
-      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList">
-      </ImPagination>
+      <ImPagination ref="ImPagination" :page-size.sync="pageSize" :current-page.sync="currentPage" :total="total" @change="getList"> </ImPagination>
     </el-card>
   </ImWrapper>
 </template>
@@ -130,9 +131,14 @@ export default {
     this.getList()
   },
   methods: {
+    viewOrgItem(objectCode) {
+      this.$router.push({ name: 'OrganizationDetail', query: { objectCode } })
+    },
+
     onslotClick(objectCode) {
       this.$router.push({ name: 'UserDetail', query: { objectCode: objectCode } })
     },
+
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
       return item.label || ''
@@ -158,6 +164,7 @@ export default {
       console.log(record)
       this.$confirm('确定要删除该项吗？', '提示', {
         type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })

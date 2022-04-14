@@ -232,6 +232,7 @@ export default {
     deleteItem($index, record) {
       this.$confirm('确定要删除该项吗？', '提示', {
         type: 'warning',
+        customClass: 'deleteConfirm',
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       })

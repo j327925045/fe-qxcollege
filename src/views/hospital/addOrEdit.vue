@@ -88,7 +88,12 @@ export default {
             attrs: {
               style: 'width: 100%',
               type: 'date',
-              placeholder: '请选择成立时间'
+              placeholder: '请选择成立时间',
+              pickerOptions: {
+                disabledDate(time) {
+                  return time.getTime() > Date.now()
+                }
+              }
             }
           },
           {
