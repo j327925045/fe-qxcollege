@@ -33,15 +33,19 @@
       <div slot="header">
         <span class="headertext">收录课程</span>
       </div>
-      <ImTable :loading="loading" :table="tableConfig"></ImTable>
+      <ImTable :loading="loading" :table="tableConfig">
+        <template slot="courseNumSlot" slot-scope="scope">
+          <el-button type="text" style="font-size:14px" @click="viewProjectDetail(scope.row.objectCode)">{{ scope.row.courseNum }}</el-button>
+        </template>
+      </ImTable>
     </el-card>
   </ImWrapper>
 </template>
 
 <script>
-import {getColumnDetail, deleteColumnItem, getColumnCourseList} from '@/api/column'
+import { getColumnDetail, deleteColumnItem, getColumnCourseList } from '@/api/column'
 import moment from 'moment'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import utils from '@/utils/utils'
 
 export default {
@@ -63,11 +67,13 @@ export default {
           {
             prop: 'courseNum',
             label: '课程编号',
+            type: 'slot',
             attrs: {
               fixed: 'left',
               'show-overflow-tooltip': true,
               'min-width': '120'
-            }
+            },
+            slot: 'courseNumSlot'
           },
           {
             prop: 'title',
@@ -126,6 +132,10 @@ export default {
     this.getList()
   },
   methods: {
+
+    viewProjectDetail(objectCode) {
+      this.$router.push({ name: 'CourseDetail', query: { objectCode } })
+    },
     showImgView(url) {
       this.$viewerApi({
         images: [url]
@@ -133,7 +143,7 @@ export default {
     },
 
     onslotClick(objectCode) {
-      this.$router.push({name: 'UserDetail', query: {objectCode: objectCode}})
+      this.$router.push({ name: 'UserDetail', query: { objectCode: objectCode } })
     },
     getLabelByValue(key, value) {
       const item = utils.getOptionsItemByValue(key, value)
@@ -145,7 +155,7 @@ export default {
     },
 
     getItemDetail() {
-      getColumnDetail({objectCode: this.objectCode}).then((res) => {
+      getColumnDetail({ objectCode: this.objectCode }).then((res) => {
         if (res.code === 200) {
           this.details = res.data || {}
         }
@@ -153,7 +163,7 @@ export default {
     },
 
     editItem() {
-      this.$router.push({name: 'ColumnAddOrEdit', query: {objectCode: this.objectCode}})
+      this.$router.push({ name: 'ColumnAddOrEdit', query: { objectCode: this.objectCode } })
     },
 
     deleteItem($index, record) {
@@ -164,7 +174,7 @@ export default {
         cancelButtonText: '取消'
       })
         .then(() => {
-          deleteColumnItem({objectCode: this.objectCode}).then((res) => {
+          deleteColumnItem({ objectCode: this.objectCode }).then((res) => {
             if (res.code === 200) {
               this.$message.success('操作成功！')
               this.goListPage()
@@ -178,7 +188,7 @@ export default {
     },
 
     goListPage() {
-      this.$router.replace({name: 'ColumnList'})
+      this.$router.replace({ name: 'ColumnList' })
     },
 
     getList() {

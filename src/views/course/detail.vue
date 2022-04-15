@@ -356,24 +356,28 @@ export default {
     },
 
     deleteItem($index, record) {
-      this.$confirm('确定要删除该项吗？', '提示', {
-        type: 'warning',
-        customClass: 'deleteConfirm',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      })
-        .then(() => {
-          deleteCourseItem({ objectCode: this.objectCode }).then((res) => {
-            if (res.code === 200) {
-              this.$message.success('操作成功！')
-              this.goListPage()
-            } else {
-              this.$message.error(res.message)
-            }
+      if (this.details.materials) {
+        this.$message.error('该课程关联了素材，请勿删除。')
+      } else {
+        this.$confirm('确定要删除该项吗？', '提示', {
+          type: 'warning',
+          customClass: 'deleteConfirm',
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        })
+          .then(() => {
+            deleteCourseItem({ objectCode: this.objectCode }).then((res) => {
+              if (res.code === 200) {
+                this.$message.success('操作成功！')
+                this.goListPage()
+              } else {
+                this.$message.error(res.message)
+              }
+            })
           })
-        })
-        .catch(() => {
-        })
+          .catch(() => {
+          })
+      }
     },
 
     goListPage() {
