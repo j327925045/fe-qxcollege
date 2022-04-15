@@ -131,8 +131,8 @@ export default {
             label: '名称',
             attrs: {
               'show-overflow-tooltip': true,
-              width: '150',
-              maxLength: 32
+              width: '150'
+
             }
           },
           {
@@ -140,8 +140,7 @@ export default {
             label: '作者',
             attrs: {
               'show-overflow-tooltip': true,
-              width: '150',
-              maxLength: 32
+              width: '150'
             }
           },
           {
@@ -158,8 +157,7 @@ export default {
             label: '简介',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '100',
-              maxLength: 64
+              'min-width': '100'
             }
           },
           {

@@ -49,7 +49,8 @@ export default {
             rules: [{ required: true, message: '请输入作者' }],
             attrs: {
               type: 'text',
-              placeholder: '请输入作者'
+              placeholder: '请输入作者',
+              maxLength: 32
             }
           },
           {
@@ -59,7 +60,8 @@ export default {
             rules: [{ required: true, message: '请输入名称' }],
             attrs: {
               type: 'text',
-              placeholder: '请输入名称'
+              placeholder: '请输入名称',
+              maxLength: 32
             }
           },
           {
@@ -69,7 +71,8 @@ export default {
             rules: [{ required: true, message: '请输入简介' }],
             attrs: {
               type: 'text',
-              placeholder: '请输入简介'
+              placeholder: '请输入简介',
+              maxLength: 64
             }
           },
           // {
