@@ -37,7 +37,7 @@
           <el-button v-if="['1', '2', '3'].includes(scope.row.status)" size="medium" type="text" @click="viewItem(scope.$index, scope.row)">查看</el-button>
           <el-button v-if="scope.row.status===2 && scope.row.shelfStatus==='1'" size="medium" type="text" @click="downItem(scope.$index, scope.row)">下架</el-button>
           <el-button v-if="scope.row.status===2 && scope.row.shelfStatus==='2'" size="medium" type="text" @click="upItem(scope.$index, scope.row)">上架</el-button>
-          <el-button v-if="scope.row.status==='0'" size="medium" type="text" @click="editItem(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="medium" type="text" @click="editItem(scope.$index, scope.row)">编辑</el-button>
           <el-button v-if="scope.row.status==='0'" size="medium" type="text" @click="submitAudit(scope.$index, scope.row)">提交审核</el-button>
           <el-button v-if="scope.row.status==='1'" size="medium" type="text" @click="startAudit(scope.$index, scope.row)">审核</el-button>
           <el-button size="medium" type="text" @click="deleteItem(scope.$index, scope.row)">删除</el-button>
