@@ -23,7 +23,7 @@
     </div>
     <div class="fixed bottom-0 text-right right-0 w-full p-2 bg-white shadow-dark-50 shadow-2xl">
       <el-button @click="closeCurrent">取 消</el-button>
-      <el-button type="primary" @click="submitForm">保 存</el-button>
+      <el-button type="primary" @click="submitForm()">保 存</el-button>
       <el-button type="primary" @click="submitAndAudit">提交审核</el-button>
     </div>
   </ImWrapper>
@@ -260,12 +260,16 @@ export default {
             attrs: {
               class: 'w-full',
               options: []
+            },
+            listeners: {
+              change: this.changepaymentType
             }
           },
           {
             type: 'ImInputNumber',
             prop: 'price',
             label: '积分数值',
+            hidden: true,
             rules: [{ required: true, message: '请输入积分数值' }],
             attrs: {
               min: 0,
@@ -290,6 +294,20 @@ export default {
     }
   },
   methods: {
+    /**
+     * 选择付费类型
+     */
+    changepaymentType(val) {
+      this.setFormPropHidden('price', val + '' === '1')
+    },
+    /**
+     * 统一处理hidden
+     */
+    setFormPropHidden(prop, hidden) {
+      const formItems = this.formConfig.formItems
+      const item = formItems.find(item => item.prop === prop)
+      this.$set(item, 'hidden', hidden)
+    },
     /**
      * 统一处理options
      */
@@ -336,11 +354,14 @@ export default {
             })
             props.courseType = typeArr
           }
+          // 回填付费类型
+          this.changepaymentType(res.data.paymentType)
         }
       })
     },
 
     submitForm(callback) {
+      console.log(callback)
       this.$refs.ImForm.validate(valid => {
         if (!valid) {
           this.$message('请检查表单项！')

@@ -94,9 +94,10 @@ export default {
             prop: 'courseCodes',
             span: 24,
             label: '选择课程',
-            rules: [{ required: true, message: '请选择课程' }],
+            rules: [{ required: true, message: '请选择课程', trigger: 'blur' }],
             slots: {
-              slot: 'CourseSelect'
+              slot: 'CourseSelect',
+              options: []
             }
           }
         ]

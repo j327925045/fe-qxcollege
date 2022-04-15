@@ -131,7 +131,7 @@ export default {
             label: '名称',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '150'
             }
           },
           {
@@ -139,7 +139,7 @@ export default {
             label: '作者',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '120'
+              width: '150'
             }
           },
           {
@@ -166,7 +166,7 @@ export default {
             slot: 'videoItem',
             attrs: {
               'show-overflow-tooltip': true,
-              'min-width': '100'
+              width: '280'
             }
           },
           // {
@@ -221,7 +221,7 @@ export default {
         images: [url]
       })
     },
-    
+
     playVideo(record) {
       this.$refs.VideoPlayer.play(record.fileUrl, record.coverUrl)
     },
