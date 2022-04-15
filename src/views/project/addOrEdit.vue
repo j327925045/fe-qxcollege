@@ -198,7 +198,6 @@ export default {
     setFormPropOptions(prop, options) {
       const formItems = this.formConfig.formItems
       const item = formItems.find(item => item.prop === prop)
-      console.log(item.attrs)
       item.attrs.options = options
     },
     /**
@@ -207,14 +206,22 @@ export default {
     getItemDetail() {
       getProjectDetail({ objectCode: this.editId }).then(res => {
         res.data.projectProductArr = [...new Set(res.data.projectProductCodeArr)]
-        res.data.projectConsensusCodeList = res.data.projectConsensusAddDTOList.map(x => x.consensusCode)
+        if (res.data.projectConsensusCodeList) {
+          res.data.projectConsensusCodeList = res.data.projectConsensusAddDTOList.map(x => x.consensusCode)
+        }
+
         if (res.code === 200) {
           const props = this.formConfig.props
           const keys = Object.keys(props)
           // 直接遍历进行赋值，特殊属性需要单独拿出来处理
+          const dataObj = { }
+          for (const key in res.data) {
+            // console.log(key + ':' + res.data[key] == '0' ? undefined : res.data[key])
+            dataObj[key] = res.data[key] == '0' ? undefined : res.data[key]
+          }
           for (let i = 0; i < keys.length; i++) {
             const key = keys[i]
-            props[key] = res.data[key] || undefined
+            props[key] = dataObj[key] || undefined
           }
         }
       })
