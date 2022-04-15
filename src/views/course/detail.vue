@@ -46,7 +46,7 @@
       </div>
       <el-descriptions size="medium" :column="1" label-class-name="descriptionLabelClass">
         <el-descriptions-item label="课程分类">
-          {{ getCourseTypeLabel(details.courseType) }}
+          <span>{{ getCourseTypeLabel(details.courseType) }}</span>
         </el-descriptions-item>
         <el-descriptions-item label="关联产品">
           {{ getNames(details.courseProducts) }}
@@ -297,7 +297,7 @@ export default {
       const courseTypeLabel = courseType.map((item) => {
         return `${item.firName}-${item.secName}`
       })
-      return courseTypeLabel.join(',')
+      return courseTypeLabel.join(' | ')
     },
 
     playVideo(record) {

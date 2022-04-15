@@ -78,7 +78,7 @@ export default {
               rows: 4,
               placeholder: '请输入',
               size: 'medium',
-              maxLength: 500,
+              maxLength: 64,
               showWordLimit: true
             }
           },
